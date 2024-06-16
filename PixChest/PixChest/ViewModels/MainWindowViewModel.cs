@@ -1,12 +1,14 @@
-using R3;
+using PixChest.Composition.Bases;
+using PixChest.ViewModels.Panes.ViewerPanes;
 
 namespace PixChest.ViewModels;
-public class MainWindowViewModel {
-	public ReactiveProperty<string> Text {
-		get;
-	} = new();
+public class MainWindowViewModel: ViewModelBase {
 
-	public MainWindowViewModel() {
-		this.Text.Value = "Hello, World!";
+	public ViewerSelectorViewModel ViewerSelectorViewModel {
+		get;
+	}
+
+	public MainWindowViewModel(ViewerSelectorViewModel viewerSelectorViewModel) {
+		this.ViewerSelectorViewModel = viewerSelectorViewModel;
 	}
 }

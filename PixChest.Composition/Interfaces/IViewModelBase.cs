@@ -1,3 +1,3 @@
 namespace PixChest.Composition.Bases; 
-internal interface IViewModelBase {
+public interface IViewModelBase {
 }

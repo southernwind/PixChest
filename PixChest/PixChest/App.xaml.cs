@@ -1,12 +1,12 @@
-using System;
-
 using Microsoft.UI.Xaml;
 
 using PixChest.Views;
 
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
-using PixChest.ViewModels;
+using System.Reflection;
+using PixChest.Composition.Bases;
+using System.Windows.Controls;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -23,12 +23,27 @@ public partial class App : Application {
 	/// executed, and as such is the logical equivalent of main() or WinMain().
 	/// </summary>
 	public App() {
+		var serviceCollection = new ServiceCollection();
+
+		var targetTypes = Assembly
+			.GetExecutingAssembly()
+			.GetTypes()
+			.Where(x =>
+				(
+					typeof(IViewModelBase).IsAssignableFrom(x) ||
+					typeof(Window).IsAssignableFrom(x) ||
+					typeof(UserControl).IsAssignableFrom(x)
+				)
+				&& !x.IsAbstract && !x.IsInterface);
+
+		foreach (var targetType in targetTypes) {
+			serviceCollection.AddTransient(targetType);
+		}
+
 		Ioc.Default.ConfigureServices(
-			new ServiceCollection()
-			.AddTransient<MainWindow>()
-			.AddTransient<MainWindowViewModel>()
-			.BuildServiceProvider()
+			serviceCollection.BuildServiceProvider()
 		);
+
 		this.InitializeComponent();
 	}
 

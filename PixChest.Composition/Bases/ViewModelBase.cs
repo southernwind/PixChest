@@ -89,9 +89,5 @@ namespace PixChest.Composition.Bases {
 				this.DisposeLock.Dispose();
 			}
 		}
-
-		public override string ToString() {
-			return $"<[{base.ToString()}] {this.ModelForToString}>";
-		}
 	}
 }
