@@ -10,10 +10,6 @@
     <RuntimeIdentifiers Condition="$([MSBuild]::GetTargetFrameworkVersion('$(TargetFramework)')) &lt; 8">win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <UseWinUI>true</UseWinUI>
   </PropertyGroup>
-  <ItemGroup>
-    <None Remove="Views\Panes\ViewerPanes\DetailViewer.xaml" />
-    <None Remove="Views\Panes\ViewerPanes\ViewerSelector.xaml" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" />
@@ -34,15 +30,4 @@
     <ProjectReference Include="..\..\PixChest.Composition\PixChest.Composition.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Page Update="Views\Panes\ViewerPanes\DetailViewer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\Panes\ViewerPanes\ViewerSelector.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
 </Project>

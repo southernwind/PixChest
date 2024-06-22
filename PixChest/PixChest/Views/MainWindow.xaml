@@ -9,8 +9,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:vm="using:PixChest.ViewModels"
 	xmlns:viewerPane="using:PixChest.Views.Panes.ViewerPanes"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+	Title="PixChest">
 	<Grid>
-		<viewerPane:ViewerSelector DataContext="{x:Bind ViewModel.ViewerSelectorViewModel}"/>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<local:NavigationMenu Grid.Row="0"/>
+		<viewerPane:ViewerSelector
+			Grid.Row="1"
+			DataContext="{x:Bind ViewModel.ViewerSelectorViewModel}"/>
 	</Grid>
 </Window>

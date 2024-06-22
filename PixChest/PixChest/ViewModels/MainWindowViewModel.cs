@@ -4,11 +4,11 @@ using PixChest.ViewModels.Panes.ViewerPanes;
 namespace PixChest.ViewModels;
 public class MainWindowViewModel: ViewModelBase {
 
-	public ViewerSelectorViewModel ViewerSelectorViewModel {
+	public NavigationMenuViewModel ViewerSelectorViewModel {
 		get;
 	}
 
-	public MainWindowViewModel(ViewerSelectorViewModel viewerSelectorViewModel) {
+	public MainWindowViewModel(NavigationMenuViewModel viewerSelectorViewModel) {
 		this.ViewerSelectorViewModel = viewerSelectorViewModel;
 	}
 }
