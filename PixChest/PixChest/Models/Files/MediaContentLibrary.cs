@@ -1,10 +1,10 @@
 using System.IO;
 using System.Threading.Tasks;
 
-using PixChest.ViewModels.Files;
+using PixChest.Composition.Bases;
 
 namespace PixChest.Models.Files; 
-public class MediaContentLibrary {
+public class MediaContentLibrary:ModelBase {
 	public ReactiveCollection<FileModel> Files {
 		get;
 	} = [];

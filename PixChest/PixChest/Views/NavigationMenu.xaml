@@ -12,7 +12,9 @@
 		<MenuBar
 			Grid.Row="0">
 			<MenuBarItem Title="Tools">
-				<MenuFlyoutItem Text="Settings" Click="MenuFlyoutItem_Click"/>
+				<MenuFlyoutItem Text="Folder Manager" Click="MenuFlyoutItem_Click" Tag="FolderManager"/>
+				<MenuFlyoutSeparator/>
+				<MenuFlyoutItem Text="Settings" Click="MenuFlyoutItem_Click" Tag="Settings"/>
 			</MenuBarItem>
 		</MenuBar>
     </Grid>

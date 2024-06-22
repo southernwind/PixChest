@@ -1,12 +1,12 @@
-using System.Collections.Generic;
-
 using PixChest.Composition.Bases;
 using PixChest.Models.Files;
 using PixChest.ViewModels.Files;
 
+using Reactive.Bindings.Extensions;
+
 namespace PixChest.ViewModels.Panes.ViewerPanes;
 public class DetailViewerViewModel :ViewModelBase {
-	public IReadOnlyCollection<FileViewModel> Files {
+	public ReadOnlyReactiveCollection<FileViewModel> Files {
 		get;
 	}
 
@@ -15,9 +15,9 @@ public class DetailViewerViewModel :ViewModelBase {
 	} = new();
 
 	public DetailViewerViewModel(MediaContentLibrary mediaContentLibrary) {
-		this.Files = mediaContentLibrary.Files.ToReadOnlyReactiveCollection(x => new FileViewModel(x));
+		this.Files = mediaContentLibrary.Files.ToReadOnlyReactiveCollection(x => new FileViewModel(x)).AddTo(this.CompositeDisposable);
 		this.ReloadCommand.Subscribe(async _ => {
 			await mediaContentLibrary.Search();
-		});
+		}).AddTo(this.CompositeDisposable);
 	}
 }

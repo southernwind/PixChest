@@ -31,8 +31,8 @@ public partial class App : Application {
 			.GetTypes()
 			.Where(x =>
 				(
+					typeof(IModelBase).IsAssignableFrom(x) ||
 					typeof(IViewModelBase).IsAssignableFrom(x) ||
-					typeof(Window).IsAssignableFrom(x) ||
 					typeof(UserControl).IsAssignableFrom(x)
 				)
 				&& !x.IsAbstract && !x.IsInterface);
@@ -40,6 +40,21 @@ public partial class App : Application {
 		foreach (var targetType in targetTypes) {
 			serviceCollection.AddTransient(targetType);
 		}
+
+
+		var singletonTargetTypes = Assembly
+			.GetExecutingAssembly()
+			.GetTypes()
+			.Where(x =>
+				(
+					typeof(Window).IsAssignableFrom(x)
+				)
+				&& !x.IsAbstract && !x.IsInterface);
+
+		foreach (var singletonTargetType in singletonTargetTypes) {
+			serviceCollection.AddSingleton(singletonTargetType);
+		}
+
 		serviceCollection.AddTransient<MediaContentLibrary>();
 
 		Ioc.Default.ConfigureServices(
