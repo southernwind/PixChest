@@ -1,6 +1,8 @@
+using PixChest.Models.Files;
+
 namespace PixChest.ViewModels.Files; 
-public class FileViewModel {
-	public ReactiveProperty<string> FilePath {
+public class FileViewModel(FileModel fileModel) {
+	public string FilePath {
 		get;
-	} = new();
+	} = fileModel.FilePath;
 }

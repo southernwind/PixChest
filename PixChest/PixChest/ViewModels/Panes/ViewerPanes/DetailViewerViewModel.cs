@@ -1,28 +1,23 @@
-using System;
-using System.IO;
+using System.Collections.Generic;
 
 using PixChest.Composition.Bases;
+using PixChest.Models.Files;
 using PixChest.ViewModels.Files;
 
 namespace PixChest.ViewModels.Panes.ViewerPanes;
 public class DetailViewerViewModel :ViewModelBase {
-	public ReactiveCollection<FileViewModel> Files {
+	public IReadOnlyCollection<FileViewModel> Files {
+		get;
+	}
+
+	public AsyncReactiveCommand ReloadCommand {
 		get;
 	} = new();
 
-	public ReactiveCommand ReloadCommand {
-		get;
-	} = new();
-
-	public DetailViewerViewModel() {
-		this.ReloadCommand.Subscribe(_ => {
-			var files = Directory.EnumerateFiles(@"C:\Users\admin\Pictures", "", SearchOption.AllDirectories);
-			this.Files.Clear();
-			this.Files.AddRangeOnScheduler(files.Select(x => {
-				var vm = new FileViewModel();
-				vm.FilePath.Value = x;
-				return vm;
-			}));
+	public DetailViewerViewModel(MediaContentLibrary mediaContentLibrary) {
+		this.Files = mediaContentLibrary.Files.ToReadOnlyReactiveCollection(x => new FileViewModel(x));
+		this.ReloadCommand.Subscribe(async _ => {
+			await mediaContentLibrary.Search();
 		});
 	}
 }

@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using PixChest.Composition.Bases;
 using System.Windows.Controls;
+using PixChest.Models.Files;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -39,6 +40,7 @@ public partial class App : Application {
 		foreach (var targetType in targetTypes) {
 			serviceCollection.AddTransient(targetType);
 		}
+		serviceCollection.AddTransient<MediaContentLibrary>();
 
 		Ioc.Default.ConfigureServices(
 			serviceCollection.BuildServiceProvider()
