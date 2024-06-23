@@ -8,6 +8,9 @@ using System.Reflection;
 using PixChest.Composition.Bases;
 using System.Windows.Controls;
 using PixChest.Models.Files;
+using Microsoft.Data.Sqlite;
+using PixChest.Database;
+using System.IO;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -46,9 +49,7 @@ public partial class App : Application {
 			.GetExecutingAssembly()
 			.GetTypes()
 			.Where(x =>
-				(
-					typeof(Window).IsAssignableFrom(x)
-				)
+				typeof(Window).IsAssignableFrom(x)				
 				&& !x.IsAbstract && !x.IsInterface);
 
 		foreach (var singletonTargetType in singletonTargetTypes) {
@@ -57,9 +58,18 @@ public partial class App : Application {
 
 		serviceCollection.AddTransient<MediaContentLibrary>();
 
+		// DataBase
+		var sb = new SqliteConnectionStringBuilder {
+			DataSource = Path.Combine(AppDomain.CurrentDomain.BaseDirectory!, "pix.db")
+		};
+		serviceCollection.AddDbContext<PixChestDbContext>(x => {
+			x.UseSqlite(sb.ConnectionString);
+		});
 		Ioc.Default.ConfigureServices(
 			serviceCollection.BuildServiceProvider()
 		);
+		Ioc.Default.GetRequiredService<PixChestDbContext>().Database.EnsureCreated();
+
 
 		this.InitializeComponent();
 	}

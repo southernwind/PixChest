@@ -10,9 +10,14 @@
     <RuntimeIdentifiers Condition="$([MSBuild]::GetTargetFrameworkVersion('$(TargetFramework)')) &lt; 8">win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <UseWinUI>true</UseWinUI>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Views\FolderManager\FolderManagerView.xaml" />
+    <None Remove="Views\Resources\Resoures.xaml" />
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="CommunityToolkit.WinUI.Converters" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
     <PackageReference Include="Microsoft.WindowsAppSDK" />
@@ -28,6 +33,19 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\PixChest.Composition\PixChest.Composition.csproj" />
+    <ProjectReference Include="..\..\PixChest.Database\PixChest.Database.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\FolderManager\FolderManagerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Resources\Resoures.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
 </Project>

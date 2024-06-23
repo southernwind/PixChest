@@ -2,13 +2,13 @@ using PixChest.Composition.Bases;
 using PixChest.ViewModels.Panes.ViewerPanes;
 
 namespace PixChest.ViewModels;
-public class MainWindowViewModel: ViewModelBase {
+public class MainWindowViewModel(ViewerSelectorViewModel viewerSelectorViewModel, NavigationMenuViewModel navigationMenuViewModel) : ViewModelBase {
 
-	public NavigationMenuViewModel ViewerSelectorViewModel {
+	public ViewerSelectorViewModel ViewerSelectorViewModel {
 		get;
-	}
+	} = viewerSelectorViewModel;
 
-	public MainWindowViewModel(NavigationMenuViewModel viewerSelectorViewModel) {
-		this.ViewerSelectorViewModel = viewerSelectorViewModel;
-	}
+	public NavigationMenuViewModel NavigationMenuViewModel {
+		get;
+	} = navigationMenuViewModel;
 }

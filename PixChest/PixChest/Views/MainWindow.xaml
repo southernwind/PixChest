@@ -16,7 +16,7 @@
 			<RowDefinition Height="auto"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-		<local:NavigationMenu Grid.Row="0"/>
+		<local:NavigationMenu Grid.Row="0" DataContext="{x:Bind ViewModel.NavigationMenuViewModel}"/>
 		<viewerPane:ViewerSelector
 			Grid.Row="1"
 			DataContext="{x:Bind ViewModel.ViewerSelectorViewModel}"/>
