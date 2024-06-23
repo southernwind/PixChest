@@ -22,6 +22,10 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
     <PackageReference Include="Microsoft.WindowsAppSDK" />
+    <PackageReference Include="ObservableCollections"/>
+    <PackageReference Include="ObservableCollections.R3" />
+    <PackageReference Include="R3" />
+    <PackageReference Include="R3Extensions.WinUI3" />
     <PackageReference Include="ReactiveProperty" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>

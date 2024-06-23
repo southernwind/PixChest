@@ -11,6 +11,7 @@ using PixChest.Models.Files;
 using Microsoft.Data.Sqlite;
 using PixChest.Database;
 using System.IO;
+using R3;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -57,6 +58,7 @@ public partial class App : Application {
 		}
 
 		serviceCollection.AddTransient<MediaContentLibrary>();
+		serviceCollection.AddSingleton<FileRegistrar>();
 
 		// DataBase
 		var sb = new SqliteConnectionStringBuilder {
@@ -69,7 +71,6 @@ public partial class App : Application {
 			serviceCollection.BuildServiceProvider()
 		);
 		Ioc.Default.GetRequiredService<PixChestDbContext>().Database.EnsureCreated();
-
 
 		this.InitializeComponent();
 	}

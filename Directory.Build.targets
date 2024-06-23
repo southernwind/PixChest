@@ -5,8 +5,12 @@
     <PackageReference Update="Magick.NET-Q16-AnyCPU" Version="13.9.1" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.6" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-    <PackageReference Update="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
-    <PackageReference Update="Microsoft.WindowsAppSDK" Version="1.3.230724000" />
+    <PackageReference Update="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
+    <PackageReference Update="Microsoft.WindowsAppSDK" Version="1.5.240607001" />
+    <PackageReference Update="ObservableCollections" Version="2.1.3" />
+    <PackageReference Update="ObservableCollections.R3" Version="2.1.3" />
+    <PackageReference Update="R3" Version="1.1.12" />
+    <PackageReference Update="R3Extensions.WinUI3" Version="1.1.12" />
     <PackageReference Update="ReactiveProperty" Version="9.5.0" />
     <PackageReference Update="System.Reactive" Version="6.0.1" />
   </ItemGroup>

@@ -2,16 +2,17 @@ using System.Threading.Tasks;
 
 using PixChest.Composition.Bases;
 using PixChest.Database;
+using PixChest.Models.Files;
 
 namespace PixChest.Models.FolderManager;
-public class FolderManagerModel(PixChestDbContext dbContext) : ModelBase{
-	private readonly PixChestDbContext _db = dbContext;
+public class FolderManagerModel(FileRegistrar fileRegistrar) : ModelBase{
+	private readonly FileRegistrar _fileRegistrar = fileRegistrar;
 	public ReactiveCollection<FolderModel> Folders {
 		get;
 	} = [];
 
 	public void AddFolder(string folderPath) {
-		this.Folders.Add(new FolderModel(folderPath, this._db));
+		this.Folders.Add(new FolderModel(folderPath, this._fileRegistrar));
 	}
 
 	public void RemoveFolder(FolderModel folder) {

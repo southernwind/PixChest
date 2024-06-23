@@ -12,6 +12,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 		<RelativePanel Grid.Row="0">
 			<Button
@@ -48,7 +49,6 @@
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="*" />
-							<ColumnDefinition Width="Auto" />
 						</Grid.ColumnDefinitions>
 						<TextBlock
 							Grid.Column="0"
@@ -59,14 +59,25 @@
 								</MenuFlyout>
 							</TextBlock.ContextFlyout>
 						</TextBlock>
-						<ProgressBar
-							Grid.Column="1"
-							IsIndeterminate="{x:Bind ScanProgress.IsIndeterminate.Value}"
-							Value="{x:Bind ScanProgress.Progress.Value}"
-							Visibility="{x:Bind ScanProgress.InProgress, Converter={StaticResource BoolToVisibilityConverter}}" />
 					</Grid>
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
+		<Grid Grid.Row="2">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="auto"/>
+				<RowDefinition Height="auto"/>
+			</Grid.RowDefinitions>
+			<TextBlock>
+				<Run Text="{x:Bind ViewModel.QueueCount.Value,Mode=OneWay}"/>
+				<Run Text=" items remaining"/>
+			</TextBlock>
+			<ProgressBar
+				Grid.Column="1"
+				Width="100"
+				Height="10"
+				IsIndeterminate="True"
+				Visibility="{x:Bind ViewModel.IsScanning.Value, Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" />
+		</Grid>
 	</Grid>
 </local:FolderManagerViewUserControl>
