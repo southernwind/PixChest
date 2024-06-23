@@ -27,7 +27,7 @@
 				<ItemsRepeater.ItemTemplate>
 					<DataTemplate x:DataType="filesVm:FileViewModel">
 						<Grid>
-							<Image Stretch="Uniform" Height="300" Source="{x:Bind FilePath}"/>
+							<Image Stretch="Uniform" Height="300" Source="{x:Bind ThumbnailFilePath}"/>
 						</Grid>
 					</DataTemplate>
 				</ItemsRepeater.ItemTemplate>

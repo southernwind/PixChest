@@ -5,4 +5,9 @@ public class FileModel(string filePath):ModelBase {
 	public string FilePath {
 		get;
 	} = filePath;
+
+	public string? ThumbnailFilePath {
+		get;
+		init;
+	}
 }

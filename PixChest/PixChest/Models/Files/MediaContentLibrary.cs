@@ -1,4 +1,3 @@
-using System.IO;
 using System.Threading.Tasks;
 
 using PixChest.Composition.Bases;
@@ -13,9 +12,11 @@ public class MediaContentLibrary(PixChestDbContext dbContext):ModelBase {
 	} = [];
 
 	public async Task Search() {
-		var files = await this._db.MediaFiles.ToListAsync();
+		var files = await this._db.MediaFiles.Where(x => x.ThumbnailFileName != null).ToListAsync();
 		this.Files.Clear();
-		this.Files.AddRangeOnScheduler(files.Select(x => new FileModel(x.FilePath)));
+		this.Files.AddRangeOnScheduler(files.Select(x => new FileModel(x.FilePath) {
+			ThumbnailFilePath = x.ThumbnailFileName
+		}));
 	}
 
 }
