@@ -19,10 +19,11 @@
     <PackageReference Include="CommunityToolkit.Mvvm" />
     <PackageReference Include="CommunityToolkit.WinUI.Converters" />
     <PackageReference Include="Magick.NET-Q16-AnyCPU" />
+    <PackageReference Include="MetadataExtractor" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
     <PackageReference Include="Microsoft.WindowsAppSDK" />
-    <PackageReference Include="ObservableCollections"/>
+    <PackageReference Include="ObservableCollections" />
     <PackageReference Include="ObservableCollections.R3" />
     <PackageReference Include="R3" />
     <PackageReference Include="R3Extensions.WinUI3" />
@@ -31,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\Files\Metadata\Videos\" />
     <Folder Include="Views\Panes\RepositoryPanes\" />
     <Folder Include="Views\Panes\FilterPanes\" />
     <Folder Include="Views\Panes\DetailPanes\" />
