@@ -14,7 +14,7 @@
 			<MenuBarItem Title="Tools">
 				<MenuFlyoutItem Text="Folder Manager" Click="MenuFlyoutItem_Click" Tag="FolderManager"/>
 				<MenuFlyoutSeparator/>
-				<MenuFlyoutItem Text="Settings" Click="MenuFlyoutItem_Click" Tag="Settings"/>
+				<MenuFlyoutItem Text="Config" Click="MenuFlyoutItem_Click" Tag="Config"/>
 			</MenuBarItem>
 		</MenuBar>
     </Grid>

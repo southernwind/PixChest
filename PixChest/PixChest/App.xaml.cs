@@ -12,6 +12,9 @@ using Microsoft.Data.Sqlite;
 using PixChest.Database;
 using System.IO;
 using R3;
+using PixChest.Models.Settings;
+using PixChest.Models.Preferences.CustomConfig;
+using PixChest.Models.Preferences.CustomStates;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -22,12 +25,19 @@ namespace PixChest;
 /// </summary>
 public partial class App : Application {
 	private Window? _window;
+	private readonly string _stateFilePath;
+	private readonly string _configFilePath;
+	private readonly Config _config;
+	private readonly States _states;
 
 	/// <summary>
 	/// Initializes the singleton application object.  This is the first line of authored code
 	/// executed, and as such is the logical equivalent of main() or WinMain().
 	/// </summary>
 	public App() {
+		var baseDirectory = AppDomain.CurrentDomain.BaseDirectory ?? string.Empty;
+		this._stateFilePath = Path.Combine(baseDirectory, "PixChest.states");
+		this._configFilePath = Path.Combine(baseDirectory, "PixChest.config");
 		var serviceCollection = new ServiceCollection();
 
 		var targetTypes = Assembly
@@ -60,6 +70,14 @@ public partial class App : Application {
 		serviceCollection.AddTransient<MediaContentLibrary>();
 		serviceCollection.AddSingleton<FileRegistrar>();
 
+		// Config
+		serviceCollection.AddSingleton<Config>();
+		serviceCollection.AddSingleton<ScanConfig>();
+
+		// States
+		serviceCollection.AddSingleton<States>();
+		serviceCollection.AddSingleton<SearchStates>();
+
 		// DataBase
 		var sb = new SqliteConnectionStringBuilder {
 			DataSource = Path.Combine(AppDomain.CurrentDomain.BaseDirectory!, "pix.db")
@@ -72,6 +90,15 @@ public partial class App : Application {
 		);
 		Ioc.Default.GetRequiredService<PixChestDbContext>().Database.EnsureCreated();
 
+		this._config = Ioc.Default.GetRequiredService<Config>();
+		this._config.SetFilePath(this._configFilePath);
+		this._config.Load();
+		this._states = Ioc.Default.GetRequiredService<States>();
+		this._states.SetFilePath(this._stateFilePath);
+		this._states.Load();
+
+		UIDispatcherScheduler.Initialize();
+
 		this.InitializeComponent();
 	}
 
@@ -81,6 +108,10 @@ public partial class App : Application {
 	/// <param name="args">Details about the launch request and process.</param>
 	protected override void OnLaunched(LaunchActivatedEventArgs args) {
 		this._window = Ioc.Default.GetRequiredService<MainWindow>();
+		this._window.Closed += (_, _) => {
+			this._states.Save();
+			this._config.Save();
+		};
 		this._window.Activate();
 	}
 }

@@ -6,7 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 using PixChest.Composition.Bases;
 using PixChest.ViewModels.Panes.ViewerPanes;
 using PixChest.Views.FolderManager;
-using PixChest.Views.Settings;
+using PixChest.Views.Preferenses;
 
 namespace PixChest.Views;
 public sealed partial class NavigationMenu : NavigationMenuUserControl {
@@ -20,8 +20,8 @@ public sealed partial class NavigationMenu : NavigationMenuUserControl {
 		}
 		Window? window = null;
 		switch (selectedItem.Tag.ToString()) {
-			case "Settings":
-				window = Ioc.Default.GetRequiredService<SettingsWindow>();
+			case "Config":
+				window = Ioc.Default.GetRequiredService<ConfigWindow>();
 				break;
 			case "FolderManager":
 				window = Ioc.Default.GetRequiredService<FolderManagerWindow>();
