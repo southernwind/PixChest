@@ -1,10 +1,5 @@
 using System.IO;
 using System.Reactive.Linq;
-using System.Runtime.InteropServices;
-
-using MetadataExtractor;
-
-using Microsoft.Extensions.DependencyModel;
 
 using ObservableCollections;
 
