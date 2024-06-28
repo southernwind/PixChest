@@ -4,7 +4,9 @@ using Microsoft.UI.Xaml.Controls;
 using PixChest.ViewModels.Preferenses;
 using PixChest.Views.Preferenses.CustomConfig;
 
-namespace PixChest.Views.Preferenses; 
+namespace PixChest.Views.Preferenses;
+
+[AddTransient]
 public sealed partial class ConfigWindow : Window {
 	public ConfigWindowViewModel ViewModel {
 		get;

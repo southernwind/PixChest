@@ -1,12 +1,10 @@
-using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 using MetadataExtractor.Util;
 
 using PixChest.Models.Files.Metadata.Images.Formats;
 
-namespace PixChest.Models.Files.Metadata.Images; 
+namespace PixChest.Models.Files.Metadata.Images;
 /// <summary>
 /// 画像メタデータクラス
 /// </summary>

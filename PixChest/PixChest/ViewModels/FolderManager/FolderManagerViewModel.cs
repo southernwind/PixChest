@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Reactive.Linq;
 
 using PixChest.Composition.Bases;
@@ -8,6 +7,8 @@ using PixChest.Models.FolderManager;
 using Reactive.Bindings.Extensions;
 
 namespace PixChest.ViewModels.FolderManager;
+
+[AddTransient]
 public class FolderManagerViewModel: ViewModelBase {
 	private readonly FolderManagerModel _folderManager;
 

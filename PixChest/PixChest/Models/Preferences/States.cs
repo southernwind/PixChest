@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xaml;
-using System.Xml;
 
 using PixChest.Models.Preferences.CustomStates;
 
@@ -9,6 +8,7 @@ namespace PixChest.Models.Settings;
 /// <summary>
 /// 状態
 /// </summary>
+[AddSingleton]
 public class States {
 	private string? _statesFilePath;
 

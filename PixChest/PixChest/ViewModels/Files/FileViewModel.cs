@@ -1,6 +1,8 @@
 using PixChest.Models.Files;
 
-namespace PixChest.ViewModels.Files; 
+namespace PixChest.ViewModels.Files;
+
+[AddTransient]
 public class FileViewModel(FileModel fileModel) {
 	public string FilePath {
 		get;

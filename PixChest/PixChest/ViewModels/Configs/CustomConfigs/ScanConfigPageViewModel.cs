@@ -4,6 +4,7 @@ using PixChest.Models.Preferences.CustomConfig.Objects;
 
 namespace PixChest.ViewModels.Preferenses.CustomConfig;
 
+[AddTransient]
 public class ScanConfigPageViewModel:ViewModelBase {
 	public ScanConfigPageViewModel(ScanConfig scanConfig) {
 		this.TargetExtensions = scanConfig.TargetExtensions.ToReadOnlyReactiveCollection();

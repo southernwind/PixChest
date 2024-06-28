@@ -2,6 +2,8 @@ using PixChest.Composition.Bases;
 using PixChest.Utils.Objects;
 
 namespace PixChest.Models.Files;
+
+[AddTransient]
 public class FileModel(string filePath) : ModelBase {
 	public string FilePath {
 		get;

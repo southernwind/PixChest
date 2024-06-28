@@ -2,6 +2,8 @@ using PixChest.Composition.Bases;
 using PixChest.Models.FolderManager;
 
 namespace PixChest.ViewModels.FolderManager;
+
+[AddTransient]
 public class FolderViewModel(FolderModel folderModel) : ViewModelBase {
 	private readonly FolderModel _folderModel = folderModel;
 	public string FolderPath {

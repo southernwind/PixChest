@@ -3,6 +3,8 @@ using PixChest.Models.Settings;
 using PixChest.Utils.Enums;
 
 namespace PixChest.Models.Preferences.CustomConfig;
+
+[AddSingleton]
 public class ScanConfig : SettingsBase {
 	/// <summary>
 	/// 対象拡張子

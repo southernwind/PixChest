@@ -3,6 +3,8 @@ using PixChest.Models.Settings;
 using PixChest.ViewModels.Preferenses.CustomConfig;
 
 namespace PixChest.ViewModels.Preferenses;
+
+[AddTransient]
 public class ConfigWindowViewModel : ViewModelBase {
 	public ConfigWindowViewModel(Config Config,ScanConfigPageViewModel scanConfigPageViewModel) {
 		this.ScanConfigPageViewModel = scanConfigPageViewModel;

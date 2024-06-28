@@ -5,6 +5,8 @@ namespace PixChest.Models.Preferences.CustomStates;
 /// <summary>
 /// 検索状態
 /// </summary>
+
+[AddSingleton]
 public class SearchStates : SettingsBase {
 	/// <summary>
 	/// カレントフィルター条件

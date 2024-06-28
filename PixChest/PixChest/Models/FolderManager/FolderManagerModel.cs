@@ -1,10 +1,11 @@
 using System.Threading.Tasks;
 
 using PixChest.Composition.Bases;
-using PixChest.Database;
 using PixChest.Models.Files;
 
 namespace PixChest.Models.FolderManager;
+
+[AddTransient]
 public class FolderManagerModel(FileRegistrar fileRegistrar) : ModelBase{
 	private readonly FileRegistrar _fileRegistrar = fileRegistrar;
 	public ReactiveCollection<FolderModel> Folders {

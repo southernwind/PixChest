@@ -3,7 +3,9 @@ using System.Threading.Tasks;
 using PixChest.Composition.Bases;
 using PixChest.Database;
 
-namespace PixChest.Models.Files; 
+namespace PixChest.Models.Files;
+
+[AddTransient]
 public class MediaContentLibrary(PixChestDbContext dbContext):ModelBase {
 	private readonly PixChestDbContext _db = dbContext;
 

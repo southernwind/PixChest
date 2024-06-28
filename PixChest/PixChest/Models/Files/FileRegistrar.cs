@@ -12,6 +12,8 @@ using PixChest.Utils.Tools;
 using R3;
 
 namespace PixChest.Models.Files;
+
+[AddSingleton]
 public class FileRegistrar {
 	private readonly PixChestDbContext _db;
 	public ObservableQueue<string> RegistrationQueue {

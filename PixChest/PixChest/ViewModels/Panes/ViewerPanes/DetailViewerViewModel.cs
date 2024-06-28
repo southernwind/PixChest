@@ -5,6 +5,8 @@ using PixChest.ViewModels.Files;
 using Reactive.Bindings.Extensions;
 
 namespace PixChest.ViewModels.Panes.ViewerPanes;
+
+[AddTransient]
 public class DetailViewerViewModel :ViewModelBase {
 	public ReadOnlyReactiveCollection<FileViewModel> Files {
 		get;

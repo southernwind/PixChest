@@ -5,6 +5,8 @@ using PixChest.ViewModels.FolderManager;
 using Windows.Graphics;
 
 namespace PixChest.Views.FolderManager;
+
+[AddTransient]
 public sealed partial class FolderManagerWindow : Window {
 	public FolderManagerViewModel ViewModel {
 		get;

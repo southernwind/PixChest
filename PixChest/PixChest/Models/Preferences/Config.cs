@@ -5,6 +5,8 @@ using System.Xaml;
 using PixChest.Models.Preferences.CustomConfig;
 
 namespace PixChest.Models.Settings;
+
+[AddSingleton]
 public class Config {
 	private string? _configFilePath;
 
