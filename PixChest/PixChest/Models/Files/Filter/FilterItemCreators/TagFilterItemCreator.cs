@@ -2,10 +2,11 @@ using PixChest.Models.Files.Filter.FilterItemCreators;
 using PixChest.Models.FilesFilter.FilterItemObjects;
 using PixChest.Utils.Enums;
 
-namespace PixChest.Models.FilesFilter.FilterItemCreators; 
+namespace PixChest.Models.FilesFilter.FilterItemCreators;
 /// <summary>
 /// タグフィルタークリエイター
 /// </summary>
+[AddTransient]
 public class TagFilterItemCreator : IFilterItemCreator<TagFilterItemObject> {
 	/// <summary>
 	/// フィルター条件の作成

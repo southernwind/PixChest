@@ -8,8 +8,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:vm="using:PixChest.ViewModels"
-	xmlns:viewerPane="using:PixChest.Views.Panes.ViewerPanes"
-    mc:Ignorable="d"
+	xmlns:viewerPane="using:PixChest.Views.Panes.ViewerPanes" xmlns:filterpanes="using:PixChest.Views.Panes.FilterPanes"
+	mc:Ignorable="d"
 	Title="PixChest">
 	<Grid>
 		<Grid.RowDefinitions>
@@ -17,8 +17,17 @@
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 		<local:NavigationMenu Grid.Row="0" DataContext="{x:Bind ViewModel.NavigationMenuViewModel}"/>
-		<viewerPane:ViewerSelector
-			Grid.Row="1"
-			DataContext="{x:Bind ViewModel.ViewerSelectorViewModel}"/>
+		<Grid Grid.Row="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="auto"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<filterpanes:FilterSelector
+				Grid.Column="0"
+				DataContext="{x:Bind ViewModel.FilterSelectorViewModel}"/>
+			<viewerPane:ViewerSelector
+				Grid.Column="1"
+				DataContext="{x:Bind ViewModel.ViewerSelectorViewModel}"/>
+		</Grid>
 	</Grid>
 </Window>

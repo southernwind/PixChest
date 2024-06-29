@@ -1,8 +1,6 @@
 using Microsoft.UI.Xaml.Controls;
 
-using PixChest.Composition.Bases;
 using PixChest.Utils.Enums;
-using PixChest.ViewModels.Panes.ViewerPanes;
 using PixChest.ViewModels.Preferenses;
 using PixChest.ViewModels.Preferenses.CustomConfig;
 

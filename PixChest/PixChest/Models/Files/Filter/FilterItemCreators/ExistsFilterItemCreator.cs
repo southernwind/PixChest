@@ -3,10 +3,11 @@ using System.IO;
 using PixChest.Models.FilesFilter.FilterItemObjects;
 using PixChest.Models.Files.Filter.FilterItemCreators;
 
-namespace PixChest.Models.FilesFilter.FilterItemCreators; 
+namespace PixChest.Models.FilesFilter.FilterItemCreators;
 /// <summary>
 /// ファイル存在フィルタークリエイター
 /// </summary>
+[AddTransient]
 public class ExistsFilterItemCreator : IFilterItemCreator<ExistsFilterItemObject> {
 	/// <summary>
 	/// フィルター条件の作成

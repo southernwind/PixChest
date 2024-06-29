@@ -15,6 +15,7 @@ namespace PixChest.Models.FilesFilter;
 /// <summary>
 /// フィルターマネージャー
 /// </summary>
+[AddSingleton]
 public class FilterDescriptionManager : ModelBase {
 	private readonly States _states;
 

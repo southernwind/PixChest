@@ -11,7 +11,7 @@ public class FilterObject {
 	public IReactiveProperty<string> DisplayName {
 		get;
 		set;
-	} = new ReactivePropertySlim<string>();
+	} = new ReactiveProperty<string>();
 
 	/// <summary>
 	/// フィルター条件オブジェクト

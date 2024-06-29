@@ -13,6 +13,7 @@
     <PackageReference Update="R3" Version="1.1.12" />
     <PackageReference Update="R3Extensions.WinUI3" Version="1.1.12" />
     <PackageReference Update="ReactiveProperty" Version="9.5.0" />
+    <PackageReference Update="System.Interactive" Version="6.0.1" />
     <PackageReference Update="System.Reactive" Version="6.0.1" />
   </ItemGroup>
 </Project>

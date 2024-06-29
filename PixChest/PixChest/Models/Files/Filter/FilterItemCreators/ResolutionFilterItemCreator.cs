@@ -2,10 +2,11 @@ using PixChest.Models.FilesFilter.FilterItemObjects;
 using PixChest.Models.Files.Filter.FilterItemCreators;
 using PixChest.Utils.Enums;
 
-namespace PixChest.Models.FilesFilter.FilterItemCreators; 
+namespace PixChest.Models.FilesFilter.FilterItemCreators;
 /// <summary>
 /// 解像度フィルタークリエイター
 /// </summary>
+[AddTransient]
 public class ResolutionFilterItemCreator : IFilterItemCreator<ResolutionFilterItemObject> {
 	/// <summary>
 	/// フィルター条件の作成

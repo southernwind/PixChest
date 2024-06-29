@@ -2,6 +2,11 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:ctConverters="using:CommunityToolkit.WinUI.Converters">
+	xmlns:ctConverters="using:CommunityToolkit.WinUI.Converters"
+	xmlns:converters="using:PixChest.Views.Resources.Converters">
 	<ctConverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+	<converters:ToVisibilityConverter
+        x:Key="NullToCollapseConverter"
+        Collapse="{x:Null}"
+        Visible="*" />
 </ResourceDictionary>

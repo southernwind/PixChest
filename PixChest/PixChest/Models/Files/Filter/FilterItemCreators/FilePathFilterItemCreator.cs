@@ -7,6 +7,7 @@ namespace PixChest.Models.FilesFilter.FilterItemCreators;
 /// <summary>
 /// ファイルパスフィルタークリエイター
 /// </summary>
+[AddTransient]
 public class FilePathFilterItemCreator : IFilterItemCreator<FilePathFilterItemObject> {
 	/// <summary>
 	/// フィルター条件の作成

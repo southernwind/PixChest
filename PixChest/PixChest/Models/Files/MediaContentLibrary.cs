@@ -1,24 +1,22 @@
 using System.Threading.Tasks;
 
 using PixChest.Composition.Bases;
-using PixChest.Database;
+using PixChest.Models.Files.Loaders;
 
 namespace PixChest.Models.Files;
 
 [AddTransient]
-public class MediaContentLibrary(PixChestDbContext dbContext):ModelBase {
-	private readonly PixChestDbContext _db = dbContext;
+public class MediaContentLibrary(BasicFilesLoader filesLoader):ModelBase {
+	private readonly FilesLoader _filesLoader = filesLoader;
 
 	public ReactiveCollection<FileModel> Files {
 		get;
 	} = [];
 
 	public async Task Search() {
-		var files = await this._db.MediaFiles.Where(x => x.ThumbnailFileName != null).ToListAsync();
+		var files = await this._filesLoader.Load();
 		this.Files.Clear();
-		this.Files.AddRangeOnScheduler(files.Select(x => new FileModel(x.FilePath) {
-			ThumbnailFilePath = x.ThumbnailFileName
-		}));
+		this.Files.AddRangeOnScheduler(files);
 	}
 
 }

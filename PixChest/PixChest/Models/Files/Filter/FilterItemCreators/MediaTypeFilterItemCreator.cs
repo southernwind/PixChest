@@ -11,6 +11,7 @@ namespace PixChest.Models.FilesFilter.FilterItemCreators;
 /// <remarks>
 /// コンストラクタ
 /// </remarks>
+[AddTransient]
 public class MediaTypeFilterItemCreator(Config Config) : IFilterItemCreator<MediaTypeFilterItemObject> {
 
 	/// <summary>

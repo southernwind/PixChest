@@ -1,7 +1,7 @@
 using PixChest.Models.FilesFilter.FilterItemObjects;
 using PixChest.Models.Files.Filter.FilterItemCreators;
 
-namespace PixChest.Models.FilesFilter.FilterItemCreators; 
+namespace PixChest.Models.FilesFilter.FilterItemCreators;
 /// <summary>
 /// 座標に関するフィルタークリエイター
 /// </summary>
@@ -11,6 +11,7 @@ namespace PixChest.Models.FilesFilter.FilterItemCreators;
 /// ・座標情報を含むか否かのフィルター
 /// ・座標範囲フィルター
 /// </remarks>
+[AddTransient]
 public class LocationFilterItemCreator : IFilterItemCreator<LocationFilterItemObject> {
 	/// <summary>
 	/// フィルター条件の作成
