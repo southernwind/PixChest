@@ -3,7 +3,6 @@ using PixChest.Composition.Bases;
 using PixChest.Models.Files.Filter.FilterItemObjects;
 using PixChest.Models.FilesFilter;
 using PixChest.ViewModels.Filters.Creators;
-using Reactive.Bindings.Extensions;
 
 namespace PixChest.ViewModels.Filters;
 
@@ -18,14 +17,14 @@ public class FilteringConditionViewModel : ViewModelBase {
 	/// <summary>
 	/// 表示名
 	/// </summary>
-	public IReactiveProperty<string> DisplayName {
+	public BindableReactiveProperty<string> DisplayName {
 		get;
 	}
 
 	/// <summary>
 	/// フィルター条件クリエイター
 	/// </summary>
-	public ReadOnlyReactiveCollection<IFilterItemObject> FilterItems {
+	public Reactive.Bindings.ReadOnlyReactiveCollection<IFilterItemObject> FilterItems {
 		get;
 	}
 
@@ -39,9 +38,9 @@ public class FilteringConditionViewModel : ViewModelBase {
 	/// <summary>
 	/// 選択中フィルター条件作成VM
 	/// </summary>
-	public IReactiveProperty<IFilterCreatorViewModel> SelectedFilterCreatorViewModel {
+	public BindableReactiveProperty<IFilterCreatorViewModel> SelectedFilterCreatorViewModel {
 		get;
-	} = new ReactivePropertySlim<IFilterCreatorViewModel>();
+	} = new();
 
 	/// <summary>
 	/// フィルター削除コマンド
@@ -53,9 +52,9 @@ public class FilteringConditionViewModel : ViewModelBase {
 
 	public FilteringConditionViewModel(FilteringCondition model) {
 		this.Model = model;
-		this.DisplayName = this.Model.DisplayName.ToReactivePropertyAsSynchronized(x => x.Value).AddTo(this.CompositeDisposable);
+		this.DisplayName = this.Model.DisplayName.ToBindableReactiveProperty(null!);
 
-		this.FilterItems = this.Model.FilterItemObjects.ToReadOnlyReactiveCollection().AddTo(this.CompositeDisposable);
+		this.FilterItems = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(this.Model.FilterItemObjects);
 
 		this.FilterCreatorViewModels = [
 				new ExistsFilterCreatorViewModel(model),

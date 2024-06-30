@@ -9,7 +9,7 @@ namespace PixChest.Models.Files;
 public class MediaContentLibrary(BasicFilesLoader filesLoader):ModelBase {
 	private readonly FilesLoader _filesLoader = filesLoader;
 
-	public ReactiveCollection<FileModel> Files {
+	public Reactive.Bindings.ReactiveCollection<FileModel> Files {
 		get;
 	} = [];
 

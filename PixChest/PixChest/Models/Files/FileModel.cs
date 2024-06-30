@@ -30,7 +30,7 @@ public class FileModel(string filePath) : ModelBase {
 	/// <summary>
 	/// タグリスト
 	/// </summary>
-	public ReactiveCollection<string> Tags {
+	public Reactive.Bindings.ReactiveCollection<string> Tags {
 		get;
 	} = [];
 
@@ -45,7 +45,7 @@ public class FileModel(string filePath) : ModelBase {
 	/// <summary>
 	/// 評価
 	/// </summary>
-	public ReactivePropertySlim<int> Rate {
+	public ReactiveProperty<int> Rate {
 		get;
 	} = new();
 }

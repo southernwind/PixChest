@@ -3,6 +3,6 @@ global using System.Linq;
 
 global using Microsoft.EntityFrameworkCore;
 
-global using Reactive.Bindings;
+global using R3;
 
 global using PixChest.Utils.Attributes;

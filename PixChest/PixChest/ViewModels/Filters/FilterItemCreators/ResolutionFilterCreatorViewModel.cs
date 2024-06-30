@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reactive.Linq;
+
 using PixChest.Composition.Bases;
 using PixChest.Models.FilesFilter;
 using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
+
 using Reactive.Bindings.Extensions;
 
 namespace PixChest.ViewModels.Filters.Creators;
@@ -24,7 +26,7 @@ public class ResolutionFilterCreatorViewModel : ViewModelBase, IFilterCreatorVie
 	/// <summary>
 	/// 解像度フィルター追加コマンド
 	/// </summary>
-	public ReactiveCommand AddResolutionFilterCommand {
+	public ReactiveCommand<Unit> AddResolutionFilterCommand {
 		get;
 	}
 
@@ -32,7 +34,7 @@ public class ResolutionFilterCreatorViewModel : ViewModelBase, IFilterCreatorVie
 	/// 解像度幅
 	/// </summary>
 	[Range(0d, int.MaxValue)]
-	public ReactiveProperty<string?> ResolutionWidthText {
+	public BindableReactiveProperty<string?> ResolutionWidthText {
 		get;
 	}
 
@@ -40,16 +42,16 @@ public class ResolutionFilterCreatorViewModel : ViewModelBase, IFilterCreatorVie
 	/// 解像度高さ
 	/// </summary>
 	[Range(0d, int.MaxValue)]
-	public ReactiveProperty<string?> ResolutionHeightText {
+	public BindableReactiveProperty<string?> ResolutionHeightText {
 		get;
 	}
 
 	/// <summary>
 	/// 検索タイプを選択
 	/// </summary>
-	public IReactiveProperty<DisplayObject<SearchTypeComparison>> SearchType {
+	public BindableReactiveProperty<DisplayObject<SearchTypeComparison>> SearchType {
 		get;
-	} = new ReactivePropertySlim<DisplayObject<SearchTypeComparison>>();
+	} = new();
 
 	/// <summary>
 	/// 含む/含まないの選択候補
@@ -65,21 +67,17 @@ public class ResolutionFilterCreatorViewModel : ViewModelBase, IFilterCreatorVie
 	];
 
 	public ResolutionFilterCreatorViewModel(FilteringCondition model) {
-		this.ResolutionWidthText = new ReactiveProperty<string?>().SetValidateAttribute(() => this.ResolutionWidthText);
-		this.ResolutionHeightText = new ReactiveProperty<string?>().SetValidateAttribute(() => this.ResolutionHeightText);
+		this.ResolutionWidthText = new BindableReactiveProperty<string?>().EnableValidation(() => this.ResolutionWidthText);
+		this.ResolutionHeightText = new BindableReactiveProperty<string?>().EnableValidation(() => this.ResolutionHeightText);
 		this.SearchType.Value = this.SearchTypeList.First(x => x.Value == SearchTypeComparison.GreaterThanOrEqual);
 
 		this.AddResolutionFilterCommand =
-			new[] {
-				new[] {
-						this.ResolutionWidthText.Select(string.IsNullOrEmpty),
-						this.ResolutionHeightText.Select(string.IsNullOrEmpty)
-					}
-					.CombineLatest(x => x.All(b => b)),
-				this.ResolutionWidthText.ObserveHasErrors,
-				this.ResolutionHeightText.ObserveHasErrors
-			}.CombineLatestValuesAreAllFalse()
-			.ToReactiveCommand();
+			this.ResolutionWidthText.Select(string.IsNullOrEmpty).CombineLatest(
+				this.ResolutionHeightText.Select(string.IsNullOrEmpty),
+				this.ResolutionWidthText.ErrorsChangedAsObservable().Select(_ => this.ResolutionWidthText.HasErrors).ToObservable(),
+				this.ResolutionHeightText.ErrorsChangedAsObservable().Select(_ => this.ResolutionHeightText.HasErrors).ToObservable(),
+				(x, x2, x3, x4) => !x && !x2 && !x3 && !x4
+				).ToReactiveCommand();
 
 		this.AddResolutionFilterCommand
 			.Subscribe(_ => {

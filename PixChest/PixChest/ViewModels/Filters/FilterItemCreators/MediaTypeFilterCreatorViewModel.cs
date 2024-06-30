@@ -20,16 +20,16 @@ public class MediaTypeFilterCreatorViewModel : ViewModelBase, IFilterCreatorView
 	/// <summary>
 	/// メディアタイプフィルター追加コマンド
 	/// </summary>
-	public ReactiveCommand AddMediaTypeFilterCommand {
+	public ReactiveCommand<Unit> AddMediaTypeFilterCommand {
 		get;
-	} = new ReactiveCommand();
+	} = new();
 
 	/// <summary>
 	/// メディアタイプ
 	/// </summary>
-	public IReactiveProperty<DisplayObject<bool>> MediaType {
+	public BindableReactiveProperty<DisplayObject<bool>> MediaType {
 		get;
-	} = new ReactivePropertySlim<DisplayObject<bool>>();
+	} = new();
 
 	/// <summary>
 	/// メディアタイプ候補
@@ -43,7 +43,7 @@ public class MediaTypeFilterCreatorViewModel : ViewModelBase, IFilterCreatorView
 
 	public MediaTypeFilterCreatorViewModel(FilteringCondition model) {
 		this.MediaType.Value = this.MediaTypeList.First();
-		this.AddMediaTypeFilterCommand.Subscribe(() => model.AddMediaTypeFilter(this.MediaType.Value.Value));
+		this.AddMediaTypeFilterCommand.Subscribe(_ => model.AddMediaTypeFilter(this.MediaType.Value.Value));
 
 	}
 }

@@ -1,10 +1,7 @@
-using System.Reactive.Linq;
 
 using PixChest.Composition.Bases;
 using PixChest.Models.FilesFilter;
 using PixChest.Models.Settings;
-
-using Reactive.Bindings.Extensions;
 
 namespace PixChest.ViewModels.Filters;
 
@@ -16,23 +13,23 @@ public class FilterManagerViewModel : ViewModelBase {
 	/// <summary>
 	/// カレント条件
 	/// </summary>
-	public IReactiveProperty<FilteringConditionViewModel?> CurrentCondition {
+	public BindableReactiveProperty<FilteringConditionViewModel?> CurrentCondition {
 		get;
-	}
+	} = new();
 
 	/// <summary>
 	/// フィルタリング条件
 	/// </summary>
-	public ReadOnlyReactiveCollection<FilteringConditionViewModel> FilteringConditions {
+	public Reactive.Bindings.ReadOnlyReactiveCollection<FilteringConditionViewModel> FilteringConditions {
 		get;
 	}
 
 	/// <summary>
 	/// フィルタリング条件追加コマンド
 	/// </summary>
-	public ReactiveCommand AddFilteringConditionCommand {
+	public ReactiveCommand<Unit> AddFilteringConditionCommand {
 		get;
-	} = new ReactiveCommand();
+	} = new();
 
 	/// <summary>
 	/// フィルタリング条件削除コマンド
@@ -44,9 +41,9 @@ public class FilterManagerViewModel : ViewModelBase {
 	/// <summary>
 	/// フィルター設定ウィンドウオープン
 	/// </summary>
-	public ReactiveCommand OpenSetFilterWindowCommand {
+	public ReactiveCommand<Unit> OpenSetFilterWindowCommand {
 		get;
-	} = new ReactiveCommand();
+	} = new();
 
 	/// <summary>
 	/// コンストラクタ
@@ -54,13 +51,9 @@ public class FilterManagerViewModel : ViewModelBase {
 	public FilterManagerViewModel(FilterDescriptionManager model, States states) {
 		this._states = states;
 		model.Name.Value = "set";
-		this.FilteringConditions = model.FilteringConditions.ToReadOnlyReactiveCollection(x => new FilteringConditionViewModel(x));
-		this.CurrentCondition = model.CurrentFilteringCondition.ToReactivePropertyAsSynchronized(
-			x => x.Value,
-			x => x == null ? null : new FilteringConditionViewModel(x),
-			x => x?.Model);
+		this.FilteringConditions = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(model.FilteringConditions, x => new FilteringConditionViewModel(x));
 
-		this.AddFilteringConditionCommand.Subscribe(model.AddCondition);
+		this.AddFilteringConditionCommand.Subscribe(_ => model.AddCondition());
 
 		this.RemoveFilteringConditionCommand.Where(x => x != null).Subscribe(x => {
 			model.RemoveCondition(x.Model);

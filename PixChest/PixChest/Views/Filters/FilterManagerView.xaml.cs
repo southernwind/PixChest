@@ -11,7 +11,7 @@ public sealed partial class FilterManagerView: FilterManagerViewUserControl {
 		this.InitializeComponent();
 	}
 
-	private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs args) {
+	private void FilterCreatorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs args) {
 		if (args.AddedItems.FirstOrDefault() is not IFilterCreatorViewModel filterCreatorViewModel) {
 			return;
 		}

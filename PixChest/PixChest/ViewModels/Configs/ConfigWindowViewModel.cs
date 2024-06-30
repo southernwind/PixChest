@@ -13,7 +13,7 @@ public class ConfigWindowViewModel : ViewModelBase {
 		});
 	}
 
-	public ReactiveCommand SaveCommand {
+	public ReactiveCommand<Unit> SaveCommand {
 		get;
 	} = new();
 

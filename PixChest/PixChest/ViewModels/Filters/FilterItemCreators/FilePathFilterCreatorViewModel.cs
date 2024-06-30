@@ -1,10 +1,8 @@
 using System.Collections.Generic;
-using System.Reactive.Linq;
 using PixChest.Composition.Bases;
 using PixChest.Models.FilesFilter;
 using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
-using Reactive.Bindings.Extensions;
 
 namespace PixChest.ViewModels.Filters.Creators;
 /// <summary>
@@ -24,16 +22,16 @@ public class FilePathFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewM
 	/// <summary>
 	/// タグ名
 	/// </summary>
-	public IReactiveProperty<string> FilePath {
+	public BindableReactiveProperty<string> FilePath {
 		get;
-	} = new ReactivePropertySlim<string>();
+	} = new();
 
 	/// <summary>
 	/// 検索条件として指定のタグを含むものを検索するか、含まないものを検索するかを選択する。
 	/// </summary>
-	public IReactiveProperty<DisplayObject<SearchTypeInclude>> SearchType {
+	public BindableReactiveProperty<DisplayObject<SearchTypeInclude>> SearchType {
 		get;
-	} = new ReactivePropertySlim<DisplayObject<SearchTypeInclude>>();
+	} = new();
 
 	/// <summary>
 	/// 含む/含まないの選択候補
@@ -48,7 +46,7 @@ public class FilePathFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewM
 	/// <summary>
 	/// ファイルパスフィルター追加コマンド
 	/// </summary>
-	public ReactiveCommand AddFilePathFilterCommand {
+	public ReactiveCommand<Unit> AddFilePathFilterCommand {
 		get;
 	}
 

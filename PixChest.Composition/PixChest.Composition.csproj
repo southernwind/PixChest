@@ -12,6 +12,7 @@
       <PackageReference Include="CommunityToolkit.Mvvm" />
       <PackageReference Include="Microsoft.WindowsAppSDK" />
       <PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
+      <PackageReference Include="R3" />
       <PackageReference Include="System.Reactive" />
   </ItemGroup>
 </Project>

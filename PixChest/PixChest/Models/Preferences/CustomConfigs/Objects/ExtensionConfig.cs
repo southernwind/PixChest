@@ -9,13 +9,13 @@ public class ExtensionConfig {
 		this.Extension.Value = extension;
 		this.MediaType.Value = mediaType;
 	}
-	public IReactiveProperty<string> Extension {
+	public ReactiveProperty<string> Extension {
 		get;
 		set;
-	} = new ReactiveProperty<string>();
+	} = new();
 
-	public IReactiveProperty<MediaType> MediaType {
+	public ReactiveProperty<MediaType> MediaType {
 		get;
 		set;
-	} = new ReactiveProperty<MediaType>();
+	} = new();
 }

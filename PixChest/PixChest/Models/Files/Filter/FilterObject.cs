@@ -8,15 +8,15 @@ public class FilterObject {
 	/// <summary>
 	/// 表示名
 	/// </summary>
-	public IReactiveProperty<string> DisplayName {
+	public ReactiveProperty<string> DisplayName {
 		get;
 		set;
-	} = new ReactiveProperty<string>();
+	} = new();
 
 	/// <summary>
 	/// フィルター条件オブジェクト
 	/// </summary>
-	public ReactiveCollection<IFilterItemObject> FilterItemObjects {
+	public Reactive.Bindings.ReactiveCollection<IFilterItemObject> FilterItemObjects {
 		get;
 		set;
 	} = [];

@@ -20,16 +20,16 @@ public class LocationFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewM
 	/// <summary>
 	/// メディアタイプフィルター追加コマンド
 	/// </summary>
-	public ReactiveCommand AddLocationFilterCommand {
+	public ReactiveCommand<Unit> AddLocationFilterCommand {
 		get;
-	} = new ReactiveCommand();
+	} = new();
 
 	/// <summary>
 	/// 座標情報を持っているか否か
 	/// </summary>
-	public IReactiveProperty<DisplayObject<bool>> HasLocation {
+	public BindableReactiveProperty<DisplayObject<bool>> HasLocation {
 		get;
-	} = new ReactivePropertySlim<DisplayObject<bool>>();
+	} = new();
 
 	/// <summary>
 	/// 座標情報を持っているか否かの候補

@@ -1,9 +1,4 @@
 using System.Collections.Generic;
-using System.Reactive;
-using System.Reactive.Concurrency;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
-using Reactive.Bindings.Extensions;
 using PixChest.Models.FilesFilter.FilterItemObjects;
 using PixChest.Composition.Bases;
 using PixChest.Models.Files.Filter.FilterItemObjects;
@@ -11,6 +6,7 @@ using PixChest.Database.Tables;
 using PixChest.Models.Files;
 using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
+using Reactive.Bindings.Extensions;
 
 namespace PixChest.Models.FilesFilter;
 /// <summary>
@@ -25,19 +21,19 @@ public class FilteringCondition : ModelBase {
 	/// <summary>
 	/// 表示名
 	/// </summary>
-	public IReactiveProperty<string> DisplayName {
+	public ReactiveProperty<string> DisplayName {
 		get;
 	}
 
 	/// <summary>
 	/// フィルター条件
 	/// </summary>
-	private readonly ReadOnlyReactiveCollection<FilterItem> _filterItems;
+	private readonly Reactive.Bindings.ReadOnlyReactiveCollection<FilterItem> _filterItems;
 
 	/// <summary>
 	/// フィルター条件クリエイター
 	/// </summary>
-	public ReadOnlyReactiveCollection<IFilterItemObject> FilterItemObjects {
+	public Reactive.Bindings.ReadOnlyReactiveCollection<IFilterItemObject> FilterItemObjects {
 		get;
 	}
 
@@ -49,7 +45,7 @@ public class FilteringCondition : ModelBase {
 	/// <summary>
 	/// フィルター条件変更通知
 	/// </summary>
-	public IObservable<Unit> OnUpdateFilteringConditions {
+	public Observable<Unit> OnUpdateFilteringConditions {
 		get {
 			return this._onUpdateFilteringConditions.AsObservable();
 		}
@@ -68,17 +64,12 @@ public class FilteringCondition : ModelBase {
 	/// <param name="filterObject">復元用フィルターオブジェクト</param>
 	public FilteringCondition(FilterObject filterObject) {
 		this.FilterObject = filterObject;
-		this.DisplayName = filterObject.DisplayName.ToReactivePropertyAsSynchronized(x => x.Value).AddTo(this.CompositeDisposable);
+		this.DisplayName = filterObject.DisplayName.ToBindableReactiveProperty(null!);
 		this.FilterItemObjects =
-			this.FilterObject
-				.FilterItemObjects
-				.ToReadOnlyReactiveCollection()
-				.AddTo(this.CompositeDisposable);
+			Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(this.FilterObject.FilterItemObjects);
 
 		this._filterItems =
-			this.FilterItemObjects
-				.ToReadOnlyReactiveCollection(FilterItemFactory.Create, Scheduler.Immediate)
-				.AddTo(this.CompositeDisposable);
+			Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(this.FilterItemObjects,FilterItemFactory.Create, System.Reactive.Concurrency.Scheduler.Immediate);
 
 		this._filterItems.CollectionChangedAsObservable().Subscribe(x => {
 			this._onUpdateFilteringConditions.OnNext(Unit.Default);

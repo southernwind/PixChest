@@ -64,7 +64,7 @@ public partial class App : Application {
 		this._states.SetFilePath(this._stateFilePath);
 		this._states.Load();
 
-		UIDispatcherScheduler.Initialize();
+		Reactive.Bindings.UIDispatcherScheduler.Initialize();
 
 		this.InitializeComponent();
 	}

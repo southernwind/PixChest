@@ -73,7 +73,7 @@
 			</Grid>
 			<StackPanel Grid.Column="1">
 				<ComboBox
-					SelectionChanged="ComboBox_SelectionChanged"
+					SelectionChanged="FilterCreatorComboBox_SelectionChanged"
 					ItemsSource="{x:Bind ViewModel.CurrentCondition.Value.FilterCreatorViewModels, Mode=OneWay}"
 					SelectedItem="{x:Bind ViewModel.CurrentCondition.Value.SelectedFilterCreatorViewModel.Value, Mode=TwoWay}">
 					<ItemsControl.ItemTemplate>

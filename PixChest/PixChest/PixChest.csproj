@@ -20,6 +20,7 @@
   
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="CommunityToolkit.WinUI.Behaviors" />
     <PackageReference Include="CommunityToolkit.WinUI.Converters" />
     <PackageReference Include="Magick.NET-Q16-AnyCPU" />
     <PackageReference Include="MetadataExtractor" />

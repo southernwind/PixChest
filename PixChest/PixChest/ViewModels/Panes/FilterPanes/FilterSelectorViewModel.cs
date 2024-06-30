@@ -2,7 +2,6 @@ using PixChest.Composition.Bases;
 using PixChest.Models.FilesFilter;
 using PixChest.Models.Settings;
 using PixChest.ViewModels.Filters;
-using Reactive.Bindings.Extensions;
 
 namespace PixChest.ViewModels.Panes.FilterPanes;
 
@@ -16,27 +15,31 @@ public class FilterSelectorViewModel :ViewModelBase {
 	/// </summary>
 	public FilterSelectorViewModel(FilterDescriptionManager model, States states) {
 		this._states = states;
-		this.FilteringConditions = model.FilteringConditions.ToReadOnlyReactiveCollection(x => new FilteringConditionViewModel(x));
-		this.CurrentCondition = model.CurrentFilteringCondition.ToReactivePropertyAsSynchronized(
-			x => x.Value,
-			x => x == null ? null : new FilteringConditionViewModel(x),
-			x => x?.Model);
+		this.FilteringConditions = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(model.FilteringConditions, x => new FilteringConditionViewModel(x));
+		this.CurrentCondition = model.CurrentFilteringCondition.Select(x => x == null ? null : new FilteringConditionViewModel(x)).ToBindableReactiveProperty();
+		this.ChangeFilteringConditionSelectionCommand.Subscribe(x => {
+			model.CurrentFilteringCondition.Value = x?.Model;
+		});
 	}
 
 	private readonly States _states;
 	/// <summary>
 	/// カレント条件
 	/// </summary>
-	public IReactiveProperty<FilteringConditionViewModel?> CurrentCondition {
+	public BindableReactiveProperty<FilteringConditionViewModel?> CurrentCondition {
 		get;
 	}
 
 	/// <summary>
 	/// フィルタリング条件
 	/// </summary>
-	public ReadOnlyReactiveCollection<FilteringConditionViewModel> FilteringConditions {
+	public Reactive.Bindings.ReadOnlyReactiveCollection<FilteringConditionViewModel> FilteringConditions {
 		get;
 	}
+
+	public ReactiveCommand<FilteringConditionViewModel> ChangeFilteringConditionSelectionCommand {
+		get;
+	} = new();
 
 	protected override void Dispose(bool disposing) {
 		this._states.Save();

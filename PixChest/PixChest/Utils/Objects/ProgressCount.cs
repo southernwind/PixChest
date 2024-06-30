@@ -1,25 +1,23 @@
-using System.Reactive.Linq;
-
 namespace PixChest.Utils.Objects; 
 public class ProgressCount {
 
-	public ReactivePropertySlim<long> Current {
+	public ReactiveProperty<long> Current {
 		get;
 	} = new(0);
 
-	public ReactivePropertySlim<long?> Total {
+	public ReactiveProperty<long?> Total {
 		get;
 	} = new(null);
 
-	public IReadOnlyReactiveProperty<double> Progress {
+	public ReadOnlyReactiveProperty<double> Progress {
 		get;
 	}
 
-	public ReactivePropertySlim<bool> InProgress {
+	public ReactiveProperty<bool> InProgress {
 		get;
 	} = new(false);
 
-	public IReadOnlyReactiveProperty<bool> IsIndeterminate {
+	public ReadOnlyReactiveProperty<bool> IsIndeterminate {
 		get;
 	}
 
@@ -29,9 +27,9 @@ public class ProgressCount {
 				return 0;
 			}
 			return 100d * current / ltotal;
-		}).ToReadOnlyReactivePropertySlim();
+		}).ToReadOnlyReactiveProperty();
 
-		this.IsIndeterminate = this.Total.Select(x => x == null).ToReadOnlyReactivePropertySlim();
+		this.IsIndeterminate = this.Total.Select(x => x == null).ToReadOnlyReactiveProperty();
 
 		this.Progress.Where(x => x == 100).Subscribe(_ => {
 			this.InProgress.Value = false;

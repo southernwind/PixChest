@@ -1,5 +1,4 @@
 using System.IO;
-using System.Reactive.Linq;
 
 using ObservableCollections;
 
@@ -20,7 +19,7 @@ public class FileRegistrar {
 		get;
 	} = [];
 
-	public ReactivePropertySlim<long> QueueCount {
+	public ReactiveProperty<long> QueueCount {
 		get;
 	} = new();
 

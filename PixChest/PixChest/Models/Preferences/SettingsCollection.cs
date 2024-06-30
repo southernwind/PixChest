@@ -5,7 +5,7 @@ namespace PixChest.Models.Settings;
 /// コレクションの設定値アイテム
 /// </summary>
 /// <typeparam name="T">型</typeparam>
-public class SettingsCollection<T> : ReactiveCollection<T>, ISettingsItem<IEnumerable<T>> {
+public class SettingsCollection<T> : Reactive.Bindings.ReactiveCollection<T>, ISettingsItem<IEnumerable<T>> {
 	/// <summary>
 	/// デフォルト値生成関数
 	/// </summary>
@@ -21,7 +21,7 @@ public class SettingsCollection<T> : ReactiveCollection<T>, ISettingsItem<IEnume
 	}
 
 	/// <summary>
-	/// メンバ編集する場合はtrue
+	/// メンバ編集する場合は、true
 	/// 参照的に変更がなくても、変更ありと判定する。
 	/// </summary>
 	public bool MaybeEditMember {

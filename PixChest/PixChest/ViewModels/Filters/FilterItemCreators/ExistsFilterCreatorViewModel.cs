@@ -20,9 +20,9 @@ public class ExistsFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewMod
 	/// <summary>
 	/// ファイルが存在するか否か
 	/// </summary>
-	public IReactiveProperty<DisplayObject<bool>> Exists {
+	public BindableReactiveProperty<DisplayObject<bool>> Exists {
 		get;
-	} = new ReactivePropertySlim<DisplayObject<bool>>();
+	} = new();
 
 	/// <summary>
 	/// ファイルが存在するか否かの候補
@@ -37,9 +37,9 @@ public class ExistsFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewMod
 	/// <summary>
 	/// ファイル存在フィルター追加コマンド
 	/// </summary>
-	public ReactiveCommand AddExistsFilterCommand {
+	public ReactiveCommand<Unit> AddExistsFilterCommand {
 		get;
-	} = new ReactiveCommand();
+	} = new();
 
 	public ExistsFilterCreatorViewModel(FilteringCondition model) {
 		this.Exists.Value = this.ExistsList.First();

@@ -1,12 +1,9 @@
 using PixChest.Composition.Enum;
 using PixChest.Composition.Objects;
-using System.Reactive.Disposables;
-using System.Reactive.Subjects;
-using System.Reactive;
 using System.Threading;
 using System;
-using System.Reactive.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
+using R3;
 
 namespace PixChest.Composition.Bases;
 public class ModelBase : ObservableObject, IModelBase {
@@ -36,7 +33,7 @@ public class ModelBase : ObservableObject, IModelBase {
 	/// <summary>
 	/// Dispose通知
 	/// </summary>
-	public IObservable<Unit> OnDisposed {
+	public Observable<Unit> OnDisposed {
 		get {
 			return this._onDisposed.AsObservable();
 		}
@@ -47,7 +44,7 @@ public class ModelBase : ObservableObject, IModelBase {
 	/// </summary>
 	public CompositeDisposable CompositeDisposable {
 		get {
-			return this._compositeDisposable ??= new CompositeDisposable();
+			return this._compositeDisposable ??= [];
 		}
 	}
 	/// <summary>

@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reactive.Linq;
+
 using PixChest.Composition.Bases;
 using PixChest.Models.FilesFilter;
 using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
+
 using Reactive.Bindings.Extensions;
 
 namespace PixChest.ViewModels.Filters.Creators;
@@ -25,16 +27,16 @@ public class RateFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel
 	/// 評価 チェック用テキスト
 	/// </summary>
 	[Range(0, 5)]
-	public ReactiveProperty<string?> RateText {
+	public BindableReactiveProperty<string?> RateText {
 		get;
 	}
 
 	/// <summary>
 	/// 検索条件として指定のタグを含むものを検索するか、含まないものを検索するかを選択する。
 	/// </summary>
-	public IReactiveProperty<DisplayObject<SearchTypeComparison>> SearchType {
+	public BindableReactiveProperty<DisplayObject<SearchTypeComparison>> SearchType {
 		get;
-	} = new ReactivePropertySlim<DisplayObject<SearchTypeComparison>>();
+	} = new();
 
 	/// <summary>
 	/// 含む/含まないの選択候補
@@ -52,18 +54,17 @@ public class RateFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel
 	/// <summary>
 	/// 評価フィルター追加コマンド
 	/// </summary>
-	public ReactiveCommand AddRateFilterCommand {
+	public ReactiveCommand<Unit> AddRateFilterCommand {
 		get;
 	}
 
 	public RateFilterCreatorViewModel(FilteringCondition model) {
-		this.RateText = new ReactiveProperty<string?>().SetValidateAttribute(() => this.RateText);
+		this.RateText = new ReactiveProperty<string?>().ToBindableReactiveProperty().EnableValidation(() => this.RateText);
 		this.SearchType.Value = this.SearchTypeList.First(x => x.Value == SearchTypeComparison.GreaterThanOrEqual);
-		this.AddRateFilterCommand = new[] {
-				this.RateText.Select(string.IsNullOrEmpty),
-				this.RateText.ObserveHasErrors
-			}.CombineLatestValuesAreAllFalse()
-			.ToReactiveCommand()
+		this.AddRateFilterCommand =
+			this.RateText.Select(string.IsNullOrEmpty)
+				.CombineLatest(this.RateText.ErrorsChangedAsObservable().Select(_ => this.RateText.HasErrors).ToObservable(), (x, x2) => !x && !x2)
+				.ToReactiveCommand()
 			.AddTo(this.CompositeDisposable);
 		this.AddRateFilterCommand
 			.Subscribe(_ => {

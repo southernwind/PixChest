@@ -1,15 +1,9 @@
 using System.Collections.Generic;
-using System.Reactive;
-using System.Reactive.Concurrency;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
 
 using PixChest.Composition.Bases;
 using PixChest.Database.Tables;
 using PixChest.Models.Files;
 using PixChest.Models.Settings;
-
-using Reactive.Bindings.Extensions;
 
 namespace PixChest.Models.FilesFilter;
 /// <summary>
@@ -22,9 +16,9 @@ public class FilterDescriptionManager : ModelBase {
 	/// <summary>
 	/// カレント条件
 	/// </summary>
-	public IReactiveProperty<FilteringCondition?> CurrentFilteringCondition {
+	public ReactiveProperty<FilteringCondition?> CurrentFilteringCondition {
 		get;
-	} = new ReactivePropertySlim<FilteringCondition?>(mode: ReactivePropertyMode.DistinctUntilChanged);
+	} = new();
 
 	/// <summary>
 	/// フィルター条件変更通知Subject
@@ -34,14 +28,14 @@ public class FilterDescriptionManager : ModelBase {
 	/// <summary>
 	/// 設定値保存用名前
 	/// </summary>
-	public IReactiveProperty<string> Name {
+	public ReactiveProperty<string> Name {
 		get;
-	} = new ReactivePropertySlim<string>();
+	} = new();
 
 	/// <summary>
 	/// フィルター条件変更通知
 	/// </summary>
-	public IObservable<Unit> OnFilteringConditionChanged {
+	public Observable<Unit> OnFilteringConditionChanged {
 		get {
 			return this._onUpdateFilteringChanged.AsObservable();
 		}
@@ -50,7 +44,7 @@ public class FilterDescriptionManager : ModelBase {
 	/// <summary>
 	/// フィルター条件リスト
 	/// </summary>
-	public ReadOnlyReactiveCollection<FilteringCondition> FilteringConditions {
+	public Reactive.Bindings.ReadOnlyReactiveCollection<FilteringCondition> FilteringConditions {
 		get;
 	}
 
@@ -72,10 +66,10 @@ public class FilterDescriptionManager : ModelBase {
 			.AddTo(this.CompositeDisposable);
 
 		this.FilteringConditions =
-			states
+			Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(states
 				.SearchStates
 				.FilteringConditions
-				.ToReadOnlyReactiveCollection(x => new FilteringCondition(x), ImmediateScheduler.Instance);
+				,x => new FilteringCondition(x), System.Reactive.Concurrency.ImmediateScheduler.Instance);
 
 		// 初期カレント値読み込み
 		this.Name.Where(x => x != null).Subscribe(name => {
