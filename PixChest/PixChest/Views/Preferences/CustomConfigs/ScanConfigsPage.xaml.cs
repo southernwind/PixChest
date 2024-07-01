@@ -1,10 +1,10 @@
 using Microsoft.UI.Xaml.Controls;
 
 using PixChest.Utils.Enums;
-using PixChest.ViewModels.Preferenses;
-using PixChest.ViewModels.Preferenses.CustomConfig;
+using PixChest.ViewModels.Preferences;
+using PixChest.ViewModels.Preferences.CustomConfig;
 
-namespace PixChest.Views.Preferenses.CustomConfig;
+namespace PixChest.Views.Preferences.CustomConfig;
 public sealed partial class ScanConfigPage : Page {
 	public ScanConfigPage() {
 		this.InitializeComponent();

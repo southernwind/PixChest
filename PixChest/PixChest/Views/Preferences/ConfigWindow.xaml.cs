@@ -1,10 +1,10 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-using PixChest.ViewModels.Preferenses;
-using PixChest.Views.Preferenses.CustomConfig;
+using PixChest.ViewModels.Preferences;
+using PixChest.Views.Preferences.CustomConfig;
 
-namespace PixChest.Views.Preferenses;
+namespace PixChest.Views.Preferences;
 
 [AddTransient]
 public sealed partial class ConfigWindow : Window {

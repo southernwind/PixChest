@@ -1,8 +1,8 @@
 using PixChest.Composition.Bases;
 using PixChest.Models.Settings;
-using PixChest.ViewModels.Preferenses.CustomConfig;
+using PixChest.ViewModels.Preferences.CustomConfig;
 
-namespace PixChest.ViewModels.Preferenses;
+namespace PixChest.ViewModels.Preferences;
 
 [AddTransient]
 public class ConfigWindowViewModel : ViewModelBase {

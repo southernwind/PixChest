@@ -2,7 +2,7 @@ using PixChest.Composition.Bases;
 using PixChest.Models.Preferences.CustomConfig;
 using PixChest.Models.Preferences.CustomConfig.Objects;
 
-namespace PixChest.ViewModels.Preferenses.CustomConfig;
+namespace PixChest.ViewModels.Preferences.CustomConfig;
 
 [AddTransient]
 public class ScanConfigPageViewModel:ViewModelBase {

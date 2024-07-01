@@ -6,7 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 using PixChest.Composition.Bases;
 using PixChest.ViewModels.Panes.ViewerPanes;
 using PixChest.Views.FolderManager;
-using PixChest.Views.Preferenses;
+using PixChest.Views.Preferences;
 
 namespace PixChest.Views;
 public sealed partial class NavigationMenu : NavigationMenuUserControl {
