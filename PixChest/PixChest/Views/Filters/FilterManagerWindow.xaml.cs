@@ -10,7 +10,7 @@ public sealed partial class FilterManagerWindow : Window {
 		this.InitializeComponent();
 		this.ViewModel = filterManagerViewModel;
 		this.ViewModel.LoadCommand.Execute(Unit.Default);
-		this.AppWindow.Resize(new SizeInt32(600, 400));
+		this.AppWindow.Resize(new SizeInt32(1000, 700));
 	}
 
 	public FilterManagerViewModel ViewModel {

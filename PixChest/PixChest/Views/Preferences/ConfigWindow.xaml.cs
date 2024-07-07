@@ -3,7 +3,9 @@ using Microsoft.UI.Xaml.Controls;
 
 using PixChest.ViewModels.Preferences;
 using PixChest.Views.Preferences.CustomConfig;
- 
+
+using Windows.Graphics;
+
 namespace PixChest.Views.Preferences;
 
 [AddTransient]
@@ -15,6 +17,7 @@ public sealed partial class ConfigWindow : Window {
 		this.InitializeComponent();
 		this.ViewModel = ConfigWindowViewModel;
 		this.ViewModel.LoadCommand.Execute(Unit.Default);
+		this.AppWindow.Resize(new SizeInt32(1000, 700));
 	}
 
 	private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {

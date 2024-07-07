@@ -14,6 +14,6 @@ public sealed partial class FolderManagerWindow : Window {
 	public FolderManagerWindow(FilterManagerViewModel viewModel) {
 		this.InitializeComponent();
 		this.ViewModel = viewModel;
-		this.AppWindow.Resize(new SizeInt32(600,400));
+		this.AppWindow.Resize(new SizeInt32(1000, 700));
 	}
 }
