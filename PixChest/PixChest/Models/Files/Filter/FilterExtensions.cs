@@ -12,7 +12,7 @@ public static class FilterExtensions {
 	/// <param name="query">絞り込みクエリを適用するクエリ</param>
 	/// <param name="filter">適用するフィルター</param>
 	/// <returns>フィルター適用後クエリ</returns>
-	public static IEnumerable<MediaFile> Where(this IQueryable<MediaFile> query, FilterDescriptionManager filter) {
+	public static IEnumerable<MediaFile> Where(this IQueryable<MediaFile> query, FilterSelector filter) {
 		return filter.SetFilterConditions(query);
 	}
 
@@ -22,7 +22,7 @@ public static class FilterExtensions {
 	/// <param name="files">絞り込みを適用するシーケンス</param>
 	/// <param name="filter">適用するフィルター</param>
 	/// <returns>フィルター適用後シーケンス</returns>
-	public static IEnumerable<FileModel> Where(this IEnumerable<FileModel> files, FilterDescriptionManager filter) {
+	public static IEnumerable<FileModel> Where(this IEnumerable<FileModel> files, FilterSelector filter) {
 		return filter.SetFilterConditions(files);
 	}
 }

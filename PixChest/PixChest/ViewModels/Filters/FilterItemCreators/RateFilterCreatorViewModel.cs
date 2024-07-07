@@ -58,7 +58,7 @@ public class RateFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel
 		get;
 	}
 
-	public RateFilterCreatorViewModel(FilteringCondition model) {
+	public RateFilterCreatorViewModel(FilteringConditionEditor model) {
 		this.RateText = new ReactiveProperty<string?>().ToBindableReactiveProperty().EnableValidation(() => this.RateText);
 		this.SearchType.Value = this.SearchTypeList.First(x => x.Value == SearchTypeComparison.GreaterThanOrEqual);
 		this.AddRateFilterCommand =

@@ -8,8 +8,8 @@ using PixChest.Models.FilesFilter;
 
 namespace PixChest.Models.Files.Loaders;
 
-public abstract class FilesLoader(PixChestDbContext dbContext, FilterDescriptionManager filterSetter) {
-	protected FilterDescriptionManager FilterSetter = filterSetter;
+public abstract class FilesLoader(PixChestDbContext dbContext, FilterSelector filterSetter) {
+	protected FilterSelector FilterSetter = filterSetter;
 
 	public async Task<IEnumerable<FileModel>> Load() {
 		var files =

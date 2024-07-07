@@ -41,7 +41,7 @@ public class ExistsFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewMod
 		get;
 	} = new();
 
-	public ExistsFilterCreatorViewModel(FilteringCondition model) {
+	public ExistsFilterCreatorViewModel(FilteringConditionEditor model) {
 		this.Exists.Value = this.ExistsList.First();
 		this.AddExistsFilterCommand.Subscribe(_ => {
 			model.AddExistsFilter(this.Exists.Value.Value);

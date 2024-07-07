@@ -9,18 +9,19 @@ namespace PixChest.ViewModels.Filters;
 public class FilterManagerViewModel : ViewModelBase {
 
 	private readonly States _states;
+	private readonly FilterManager _filterManager;
 
 	/// <summary>
 	/// カレント条件
 	/// </summary>
-	public BindableReactiveProperty<FilteringConditionViewModel?> CurrentCondition {
+	public BindableReactiveProperty<FilteringConditionEditorViewModel?> CurrentCondition {
 		get;
 	} = new();
 
 	/// <summary>
 	/// フィルタリング条件
 	/// </summary>
-	public Reactive.Bindings.ReadOnlyReactiveCollection<FilteringConditionViewModel> FilteringConditions {
+	public Reactive.Bindings.ReadOnlyReactiveCollection<FilteringConditionEditorViewModel> FilteringConditions {
 		get;
 	}
 
@@ -34,34 +35,73 @@ public class FilterManagerViewModel : ViewModelBase {
 	/// <summary>
 	/// フィルタリング条件削除コマンド
 	/// </summary>
-	public ReactiveCommand<FilteringConditionViewModel> RemoveFilteringConditionCommand {
+	public ReactiveCommand<FilteringConditionEditorViewModel> RemoveFilteringConditionCommand {
 		get;
-	} = new ReactiveCommand<FilteringConditionViewModel>();
+	} = new ReactiveCommand<FilteringConditionEditorViewModel>();
 
 	/// <summary>
-	/// フィルター設定ウィンドウオープン
+	/// 保存コマンド
 	/// </summary>
-	public ReactiveCommand<Unit> OpenSetFilterWindowCommand {
+	public ReactiveCommand<Unit> SaveCommand {
+		get;
+	} = new();
+
+	/// <summary>
+	/// 読み込みコマンド
+	/// </summary>
+	public ReactiveCommand<Unit> LoadCommand {
 		get;
 	} = new();
 
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	public FilterManagerViewModel(FilterDescriptionManager model, States states) {
+	public FilterManagerViewModel(FilterManager filterManager, States states) {
 		this._states = states;
-		model.Name.Value = "set";
-		this.FilteringConditions = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(model.FilteringConditions, x => new FilteringConditionViewModel(x));
+		this._filterManager = filterManager;
 
-		this.AddFilteringConditionCommand.Subscribe(_ => model.AddCondition());
-
-		this.RemoveFilteringConditionCommand.Where(x => x != null).Subscribe(x => {
-			model.RemoveCondition(x.Model);
+		this.AddFilteringConditionCommand.Subscribe(_ => {
+			this.Add();
 		});
+
+		this.RemoveFilteringConditionCommand.Where(x => x != null).Subscribe(this.Remove);
+
+		this.SaveCommand.Subscribe(_ => {
+			this.Save();
+		}).AddTo(this.CompositeDisposable);
+
+		this.LoadCommand.Subscribe(_ => {
+			this.Load();
+		}).AddTo(this.CompositeDisposable);
+
+		this.FilteringConditions = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(filterManager.FilteringConditions,x => new FilteringConditionEditorViewModel(x));
 	}
 
-	protected override void Dispose(bool disposing) {
-		this._states.Save();
-		base.Dispose(disposing);
+	/// <summary>
+	/// 追加
+	/// </summary>
+	public void Add() {
+		this._filterManager.AddCondition();
+	}
+
+	/// <summary>
+	/// 削除
+	/// </summary>
+	public void Remove(FilteringConditionEditorViewModel filteringConditionViewModel) {
+		this._filterManager.RemoveCondition(filteringConditionViewModel.Model);
+	}
+
+	/// <summary>
+	/// 読み込み
+	/// </summary>
+	public void Load() {
+		this._filterManager.Load();
+	}
+
+	/// <summary>
+	/// 保存
+	/// </summary>
+	public void Save() {
+		this._filterManager.Save();
 	}
 }

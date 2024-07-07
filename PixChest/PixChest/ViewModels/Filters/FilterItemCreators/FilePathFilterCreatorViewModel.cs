@@ -50,7 +50,7 @@ public class FilePathFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewM
 		get;
 	}
 
-	public FilePathFilterCreatorViewModel(FilteringCondition model) {
+	public FilePathFilterCreatorViewModel(FilteringConditionEditor model) {
 		this.SearchType.Value = this.SearchTypeList.First();
 		this.AddFilePathFilterCommand = this.FilePath.Select(x => !string.IsNullOrEmpty(x)).ToReactiveCommand();
 		this.AddFilePathFilterCommand.Subscribe(_ => model.AddFilePathFilter(this.FilePath.Value, this.SearchType.Value.Value)).AddTo(this.CompositeDisposable);

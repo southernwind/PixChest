@@ -8,8 +8,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
 	Title="Filter Manager">
-
 	<Grid>
 		<local:FilterManagerView DataContext="{x:Bind ViewModel,Mode=OneWay}"/>
+		<Button Command="{x:Bind ViewModel.SaveCommand}">
+			<TextBlock Text="Save"/>
+		</Button>
 	</Grid>
 </Window>

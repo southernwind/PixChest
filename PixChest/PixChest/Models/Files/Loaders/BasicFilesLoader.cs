@@ -1,16 +1,14 @@
 using System.Linq.Expressions;
-using System.Linq;
 
 using PixChest.Database;
 using PixChest.Database.Tables;
 using PixChest.Models.FilesFilter;
 using PixChest.Models.Maps;
-using PixChest.Utils.Tools;
 
 namespace PixChest.Models.Files.Loaders;
 
 [AddTransient]
-public class BasicFilesLoader(PixChestDbContext dbContext, FilterDescriptionManager filterSetter) : FilesLoader(dbContext, filterSetter) {
+public class BasicFilesLoader(PixChestDbContext dbContext, FilterSelector filterSetter) : FilesLoader(dbContext, filterSetter) {
 	/// <summary>
 	/// 検索条件 タグ名
 	/// </summary>

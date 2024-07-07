@@ -66,7 +66,7 @@ public class ResolutionFilterCreatorViewModel : ViewModelBase, IFilterCreatorVie
 		new DisplayObject<SearchTypeComparison>("未満",SearchTypeComparison.LessThan)
 	];
 
-	public ResolutionFilterCreatorViewModel(FilteringCondition model) {
+	public ResolutionFilterCreatorViewModel(FilteringConditionEditor model) {
 		this.ResolutionWidthText = new BindableReactiveProperty<string?>().EnableValidation(() => this.ResolutionWidthText);
 		this.ResolutionHeightText = new BindableReactiveProperty<string?>().EnableValidation(() => this.ResolutionHeightText);
 		this.SearchType.Value = this.SearchTypeList.First(x => x.Value == SearchTypeComparison.GreaterThanOrEqual);

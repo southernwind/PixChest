@@ -1,7 +1,6 @@
 using CommunityToolkit.Mvvm.DependencyInjection;
 
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 
 using PixChest.Composition.Bases;
 using PixChest.ViewModels.Panes.FilterPanes;

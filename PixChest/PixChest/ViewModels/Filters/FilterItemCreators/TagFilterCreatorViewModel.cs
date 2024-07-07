@@ -49,7 +49,7 @@ public class TagFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel 
 		get;
 	}
 
-	public TagFilterCreatorViewModel(FilteringCondition model) {
+	public TagFilterCreatorViewModel(FilteringConditionEditor model) {
 		this.SearchType.Value = this.SearchTypeList.First();
 		this.AddTagFilterCommand = this.TagName.Select(x => !string.IsNullOrEmpty(x)).ToReactiveCommand();
 		this.AddTagFilterCommand.Subscribe(_ => model.AddTagFilter(this.TagName.Value, this.SearchType.Value.Value)).AddTo(this.CompositeDisposable);

@@ -41,7 +41,7 @@ public class LocationFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewM
 		new DisplayObject<bool>("座標情報を含まない",false)
 	];
 
-	public LocationFilterCreatorViewModel(FilteringCondition model) {
+	public LocationFilterCreatorViewModel(FilteringConditionEditor model) {
 		this.HasLocation.Value = this.HasLocationList.First();
 		this.AddLocationFilterCommand.Subscribe(_ => {
 			model.AddLocationFilter(this.HasLocation.Value.Value);

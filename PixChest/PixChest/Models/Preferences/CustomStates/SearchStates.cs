@@ -11,9 +11,9 @@ public class SearchStates : SettingsBase {
 	/// <summary>
 	/// カレントフィルター条件
 	/// </summary>
-	public SettingsItemWithKey<string, FilterObject?> CurrentFilteringCondition {
+	public SettingsItem<FilterObject?> CurrentFilteringCondition {
 		get;
-	} = new SettingsItemWithKey<string, FilterObject?>([], null);
+	} = new SettingsItem<FilterObject?>(null);
 
 	/// <summary>
 	/// フィルター条件リスト

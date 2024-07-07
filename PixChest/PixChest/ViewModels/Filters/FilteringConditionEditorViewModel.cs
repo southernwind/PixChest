@@ -6,11 +6,11 @@ using PixChest.ViewModels.Filters.Creators;
 
 namespace PixChest.ViewModels.Filters;
 
-public class FilteringConditionViewModel : ViewModelBase {
+public class FilteringConditionEditorViewModel : ViewModelBase {
 	/// <summary>
 	/// モデル
 	/// </summary>
-	public FilteringCondition Model {
+	public FilteringConditionEditor Model {
 		get;
 	}
 
@@ -50,9 +50,12 @@ public class FilteringConditionViewModel : ViewModelBase {
 	} = new ReactiveCommand<IFilterItemObject>();
 
 
-	public FilteringConditionViewModel(FilteringCondition model) {
+	public FilteringConditionEditorViewModel(FilteringConditionEditor model) {
 		this.Model = model;
 		this.DisplayName = this.Model.DisplayName.ToBindableReactiveProperty(null!);
+		this.DisplayName.Subscribe(x => {
+			this.Model.DisplayName.Value = x;
+		});
 
 		this.FilterItems = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(this.Model.FilterItemObjects);
 

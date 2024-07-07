@@ -41,7 +41,7 @@ public class MediaTypeFilterCreatorViewModel : ViewModelBase, IFilterCreatorView
 		new DisplayObject<bool>("動画",true)
 	];
 
-	public MediaTypeFilterCreatorViewModel(FilteringCondition model) {
+	public MediaTypeFilterCreatorViewModel(FilteringConditionEditor model) {
 		this.MediaType.Value = this.MediaTypeList.First();
 		this.AddMediaTypeFilterCommand.Subscribe(_ => model.AddMediaTypeFilter(this.MediaType.Value.Value));
 
