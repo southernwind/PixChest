@@ -56,6 +56,14 @@ public class FilteringConditionEditor : ModelBase {
 	}
 
 	/// <summary>
+	/// フィルター追加
+	/// </summary>
+	/// <param name="filterItemObject">追加するフィルター</param>
+	public void AddFilter(IFilterItemObject filterItemObject) {
+		this.FilterItemObjects.Add(filterItemObject);
+	}
+
+	/// <summary>
 	/// タグフィルター追加
 	/// </summary>
 	/// <param name="tagName">タグ名</param>

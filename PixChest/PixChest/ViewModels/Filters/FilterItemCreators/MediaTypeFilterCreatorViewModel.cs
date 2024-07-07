@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using PixChest.Composition.Bases;
 using PixChest.Models.FilesFilter;
+using PixChest.Models.FilesFilter.FilterItemObjects;
 using PixChest.Utils.Objects;
 
 namespace PixChest.ViewModels.Filters.Creators;
@@ -18,9 +19,9 @@ public class MediaTypeFilterCreatorViewModel : ViewModelBase, IFilterCreatorView
 	}
 
 	/// <summary>
-	/// メディアタイプフィルター追加コマンド
+	/// フィルター追加コマンド
 	/// </summary>
-	public ReactiveCommand<Unit> AddMediaTypeFilterCommand {
+	public ReactiveCommand<Unit> AddFilterCommand {
 		get;
 	} = new();
 
@@ -41,9 +42,12 @@ public class MediaTypeFilterCreatorViewModel : ViewModelBase, IFilterCreatorView
 		new DisplayObject<bool>("動画",true)
 	];
 
-	public MediaTypeFilterCreatorViewModel(FilteringConditionEditor model) {
+	public MediaTypeFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target) {
 		this.MediaType.Value = this.MediaTypeList.First();
-		this.AddMediaTypeFilterCommand.Subscribe(_ => model.AddMediaTypeFilter(this.MediaType.Value.Value));
+		this.AddFilterCommand.Subscribe(vm => {
+			var filter = new MediaTypeFilterItemObject(this.MediaType.Value.Value);
+			target.Value?.AddFilter(filter);
+		});
 
 	}
 }

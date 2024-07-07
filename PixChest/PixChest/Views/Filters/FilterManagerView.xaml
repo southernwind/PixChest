@@ -74,8 +74,8 @@
 			<StackPanel Grid.Column="1">
 				<ComboBox
 					SelectionChanged="FilterCreatorComboBox_SelectionChanged"
-					ItemsSource="{x:Bind ViewModel.CurrentCondition.Value.FilterCreatorViewModels, Mode=OneWay}"
-					SelectedItem="{x:Bind ViewModel.CurrentCondition.Value.SelectedFilterCreatorViewModel.Value, Mode=TwoWay}">
+					ItemsSource="{x:Bind ViewModel.FilterCreatorViewModels, Mode=OneWay}"
+					SelectedItem="{x:Bind ViewModel.SelectedFilterCreatorViewModel.Value, Mode=TwoWay}">
 					<ItemsControl.ItemTemplate>
 						<DataTemplate x:DataType="creators:IFilterCreatorViewModel">
 							<StackPanel Orientation="Horizontal">
@@ -85,7 +85,7 @@
 					</ItemsControl.ItemTemplate>
 				</ComboBox>
 				<Grid>
-					<Frame x:Name="ContentFrame" DataContext="{x:Bind ViewModel.CurrentCondition.Value.SelectedFilterCreatorViewModel.Value, Mode=OneWay}"/>
+					<Frame x:Name="ContentFrame" DataContext="{x:Bind ViewModel.SelectedFilterCreatorViewModel.Value, Mode=OneWay}"/>
 				</Grid>
 			</StackPanel>
 		</Grid>

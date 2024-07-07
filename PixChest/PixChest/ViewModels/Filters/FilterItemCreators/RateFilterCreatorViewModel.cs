@@ -4,6 +4,7 @@ using System.Reactive.Linq;
 
 using PixChest.Composition.Bases;
 using PixChest.Models.FilesFilter;
+using PixChest.Models.FilesFilter.FilterItemObjects;
 using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
 
@@ -52,27 +53,26 @@ public class RateFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel
 	];
 
 	/// <summary>
-	/// 評価フィルター追加コマンド
+	/// フィルター追加コマンド
 	/// </summary>
-	public ReactiveCommand<Unit> AddRateFilterCommand {
+	public ReactiveCommand<Unit> AddFilterCommand {
 		get;
 	}
 
-	public RateFilterCreatorViewModel(FilteringConditionEditor model) {
+	public RateFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target) {
 		this.RateText = new ReactiveProperty<string?>().ToBindableReactiveProperty().EnableValidation(() => this.RateText);
 		this.SearchType.Value = this.SearchTypeList.First(x => x.Value == SearchTypeComparison.GreaterThanOrEqual);
-		this.AddRateFilterCommand =
+		this.AddFilterCommand =
 			this.RateText.Select(string.IsNullOrEmpty)
 				.CombineLatest(this.RateText.ErrorsChangedAsObservable().Select(_ => this.RateText.HasErrors).ToObservable(), (x, x2) => !x && !x2)
-				.ToReactiveCommand()
-			.AddTo(this.CompositeDisposable);
-		this.AddRateFilterCommand
-			.Subscribe(_ => {
-				if (int.TryParse(this.RateText.Value, out var r)) {
-					model.AddRateFilter(r, this.SearchType.Value.Value);
-				}
+				.ToReactiveCommand<Unit>();
 
-				this.RateText.Value = null;
+		this.AddFilterCommand
+			.Subscribe(vm => {
+				if (int.TryParse(this.RateText.Value, out var r)) {
+					var filter = new RateFilterItemObject(r, this.SearchType.Value.Value);
+					target.Value?.AddFilter(filter);
+				}
 			})
 			.AddTo(this.CompositeDisposable);
 

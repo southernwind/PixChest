@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using PixChest.Composition.Bases;
 using PixChest.Models.FilesFilter;
+using PixChest.Models.FilesFilter.FilterItemObjects;
 using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
 
@@ -44,15 +45,18 @@ public class FilePathFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewM
 	];
 
 	/// <summary>
-	/// ファイルパスフィルター追加コマンド
+	/// フィルター追加コマンド
 	/// </summary>
-	public ReactiveCommand<Unit> AddFilePathFilterCommand {
+	public ReactiveCommand<Unit> AddFilterCommand {
 		get;
 	}
 
-	public FilePathFilterCreatorViewModel(FilteringConditionEditor model) {
+	public FilePathFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target) {
 		this.SearchType.Value = this.SearchTypeList.First();
-		this.AddFilePathFilterCommand = this.FilePath.Select(x => !string.IsNullOrEmpty(x)).ToReactiveCommand();
-		this.AddFilePathFilterCommand.Subscribe(_ => model.AddFilePathFilter(this.FilePath.Value, this.SearchType.Value.Value)).AddTo(this.CompositeDisposable);
+		this.AddFilterCommand = this.FilePath.Select(x => !string.IsNullOrEmpty(x)).ToReactiveCommand<Unit>();
+		this.AddFilterCommand.Subscribe(vm => {
+			var filter = new FilePathFilterItemObject(this.FilePath.Value, this.SearchType.Value.Value);
+			target.Value?.AddFilter(filter);
+		}).AddTo(this.CompositeDisposable);
 	}
 }

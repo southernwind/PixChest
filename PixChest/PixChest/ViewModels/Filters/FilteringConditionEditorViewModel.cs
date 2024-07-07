@@ -29,20 +29,6 @@ public class FilteringConditionEditorViewModel : ViewModelBase {
 	}
 
 	/// <summary>
-	/// フィルター条件作成VMリスト
-	/// </summary>
-	public IEnumerable<IFilterCreatorViewModel> FilterCreatorViewModels {
-		get;
-	}
-
-	/// <summary>
-	/// 選択中フィルター条件作成VM
-	/// </summary>
-	public BindableReactiveProperty<IFilterCreatorViewModel> SelectedFilterCreatorViewModel {
-		get;
-	} = new();
-
-	/// <summary>
 	/// フィルター削除コマンド
 	/// </summary>
 	public ReactiveCommand<IFilterItemObject> RemoveFilterCommand {
@@ -59,18 +45,11 @@ public class FilteringConditionEditorViewModel : ViewModelBase {
 
 		this.FilterItems = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(this.Model.FilterItemObjects);
 
-		this.FilterCreatorViewModels = [
-				new ExistsFilterCreatorViewModel(model),
-				new FilePathFilterCreatorViewModel(model),
-				new LocationFilterCreatorViewModel(model),
-				new MediaTypeFilterCreatorViewModel(model),
-				new RateFilterCreatorViewModel(model),
-				new ResolutionFilterCreatorViewModel(model),
-				new TagFilterCreatorViewModel(model)
-			];
-		this.SelectedFilterCreatorViewModel.Value = this.FilterCreatorViewModels.First();
-
 		// 削除
 		this.RemoveFilterCommand.Subscribe(this.Model.RemoveFilter).AddTo(this.CompositeDisposable);
+	}
+
+	public void AddFilter(IFilterItemObject filterItemObject) {
+		this.Model.AddFilter(filterItemObject);
 	}
 }

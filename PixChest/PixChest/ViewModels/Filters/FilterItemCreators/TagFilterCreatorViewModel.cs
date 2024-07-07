@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+
 using PixChest.Composition.Bases;
-using PixChest.Models.FilesFilter;
+using PixChest.Models.FilesFilter.FilterItemObjects;
 using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
 
@@ -43,15 +44,18 @@ public class TagFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel 
 	];
 
 	/// <summary>
-	/// タグフィルター追加コマンド
+	/// フィルター追加コマンド
 	/// </summary>
-	public ReactiveCommand<Unit> AddTagFilterCommand {
+	public ReactiveCommand<Unit> AddFilterCommand {
 		get;
 	}
 
-	public TagFilterCreatorViewModel(FilteringConditionEditor model) {
+	public TagFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target) {
 		this.SearchType.Value = this.SearchTypeList.First();
-		this.AddTagFilterCommand = this.TagName.Select(x => !string.IsNullOrEmpty(x)).ToReactiveCommand();
-		this.AddTagFilterCommand.Subscribe(_ => model.AddTagFilter(this.TagName.Value, this.SearchType.Value.Value)).AddTo(this.CompositeDisposable);
+		this.AddFilterCommand = this.TagName.Select(x => !string.IsNullOrEmpty(x)).ToReactiveCommand<Unit>();
+		this.AddFilterCommand.Subscribe(_ => {
+			var filter = new TagFilterItemObject(this.TagName.Value, this.SearchType.Value.Value);
+			target.Value?.AddFilter(filter);
+		}).AddTo(this.CompositeDisposable);
 	}
 }

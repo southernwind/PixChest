@@ -20,6 +20,6 @@
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
 		</ComboBox>
-		<Button Command="{x:Bind ViewModel.AddResolutionFilterCommand}" Content="Add Filter" />
+		<Button Command="{x:Bind ViewModel.AddFilterCommand}" Content="Add Filter" />
 	</StackPanel>
 </local:ResolutionFilterPageBase>

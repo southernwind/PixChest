@@ -14,6 +14,6 @@
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
 		</ComboBox>
-		<Button Command="{x:Bind ViewModel.AddExistsFilterCommand}" Content="Add Filter" />
+		<Button Command="{x:Bind ViewModel.AddFilterCommand}" Content="Add Filter" />
 	</StackPanel>
 </local:ExistsFilterPageBase>

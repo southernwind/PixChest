@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using PixChest.Composition.Bases;
 using PixChest.Models.FilesFilter;
+using PixChest.Models.FilesFilter.FilterItemObjects;
 using PixChest.Utils.Objects;
 
 namespace PixChest.ViewModels.Filters.Creators;
@@ -18,9 +19,9 @@ public class LocationFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewM
 	}
 
 	/// <summary>
-	/// メディアタイプフィルター追加コマンド
+	/// フィルター追加コマンド
 	/// </summary>
-	public ReactiveCommand<Unit> AddLocationFilterCommand {
+	public ReactiveCommand<Unit> AddFilterCommand {
 		get;
 	} = new();
 
@@ -41,10 +42,11 @@ public class LocationFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewM
 		new DisplayObject<bool>("座標情報を含まない",false)
 	];
 
-	public LocationFilterCreatorViewModel(FilteringConditionEditor model) {
+	public LocationFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target) {
 		this.HasLocation.Value = this.HasLocationList.First();
-		this.AddLocationFilterCommand.Subscribe(_ => {
-			model.AddLocationFilter(this.HasLocation.Value.Value);
+		this.AddFilterCommand.Subscribe(vm => {
+			var filter = new LocationFilterItemObject(this.HasLocation.Value.Value);
+			target.Value?.AddFilter(filter);
 		});
 	}
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using PixChest.Composition.Bases;
 using PixChest.Models.FilesFilter;
+using PixChest.Models.FilesFilter.FilterItemObjects;
 using PixChest.Utils.Objects;
 
 namespace PixChest.ViewModels.Filters.Creators;
@@ -35,16 +36,17 @@ public class ExistsFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewMod
 	];
 
 	/// <summary>
-	/// ファイル存在フィルター追加コマンド
+	/// フィルター追加コマンド
 	/// </summary>
-	public ReactiveCommand<Unit> AddExistsFilterCommand {
+	public ReactiveCommand<Unit> AddFilterCommand {
 		get;
 	} = new();
 
-	public ExistsFilterCreatorViewModel(FilteringConditionEditor model) {
+	public ExistsFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target) {
 		this.Exists.Value = this.ExistsList.First();
-		this.AddExistsFilterCommand.Subscribe(_ => {
-			model.AddExistsFilter(this.Exists.Value.Value);
+		this.AddFilterCommand.Subscribe(vm => {
+			var filter = new ExistsFilterItemObject(this.Exists.Value.Value);
+			target.Value?.AddFilter(filter);
 		});
 	}
 }

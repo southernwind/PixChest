@@ -1,7 +1,10 @@
 
+using System.Collections.Generic;
+
 using PixChest.Composition.Bases;
 using PixChest.Models.FilesFilter;
 using PixChest.Models.Settings;
+using PixChest.ViewModels.Filters.Creators;
 
 namespace PixChest.ViewModels.Filters;
 
@@ -53,6 +56,21 @@ public class FilterManagerViewModel : ViewModelBase {
 		get;
 	} = new();
 
+
+	/// <summary>
+	/// フィルター条件作成VMリスト
+	/// </summary>
+	public IEnumerable<IFilterCreatorViewModel> FilterCreatorViewModels {
+		get;
+	}
+
+	/// <summary>
+	/// 選択中フィルター条件作成VM
+	/// </summary>
+	public BindableReactiveProperty<IFilterCreatorViewModel> SelectedFilterCreatorViewModel {
+		get;
+	} = new();
+
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
@@ -75,6 +93,17 @@ public class FilterManagerViewModel : ViewModelBase {
 		}).AddTo(this.CompositeDisposable);
 
 		this.FilteringConditions = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(filterManager.FilteringConditions,x => new FilteringConditionEditorViewModel(x));
+
+		this.FilterCreatorViewModels = [
+				new ExistsFilterCreatorViewModel(this.CurrentCondition),
+				new FilePathFilterCreatorViewModel(this.CurrentCondition),
+				new LocationFilterCreatorViewModel(this.CurrentCondition),
+				new MediaTypeFilterCreatorViewModel(this.CurrentCondition),
+				new RateFilterCreatorViewModel(this.CurrentCondition),
+				new ResolutionFilterCreatorViewModel(this.CurrentCondition),
+				new TagFilterCreatorViewModel(this.CurrentCondition)
+			];
+		this.SelectedFilterCreatorViewModel.Value = this.FilterCreatorViewModels.First();
 	}
 
 	/// <summary>

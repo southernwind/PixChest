@@ -18,7 +18,7 @@
 			</ItemsControl.ItemTemplate>
 		</ComboBox>
 		<Button
-			Command="{x:Bind ViewModel.AddFilePathFilterCommand}"
+			Command="{x:Bind ViewModel.AddFilterCommand}"
 			Content="Add Filter" />
 	</StackPanel>
 </local:FlePathFilterPageBase>

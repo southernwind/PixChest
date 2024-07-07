@@ -17,7 +17,7 @@
 			</ItemsControl.ItemTemplate>
 		</ComboBox>
 		<Button
-			Command="{x:Bind ViewModel.AddRateFilterCommand}"
+			Command="{x:Bind ViewModel.AddFilterCommand}"
 			Content="Add Filter" />
 	</StackPanel>
 </local:RateFilterUserPageBase>
