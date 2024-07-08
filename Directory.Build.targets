@@ -2,6 +2,7 @@
   <ItemGroup>
     <PackageReference Update="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Update="CommunityToolkit.WinUI.Behaviors" Version="8.0.240109"/>
+    <PackageReference Update="CommunityToolkit.WinUI.Controls.Primitives" Version="8.0.240109" />
     <PackageReference Update="CommunityToolkit.WinUI.Converters" Version="8.0.240109" />
     <PackageReference Update="Magick.NET-Q16-AnyCPU" Version="13.9.1" />
     <PackageReference Update="MetadataExtractor" Version="2.8.1" />
