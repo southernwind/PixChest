@@ -4,15 +4,21 @@ namespace PixChest.ViewModels.Panes.ViewerPanes;
 
 [AddTransient]
 public class ViewerSelectorViewModel : ViewModelBase {
-	public ViewerSelectorViewModel(MediaContentLibraryViewModel mediaContentLibraryViewModel, WrapViewerViewModel wrapViewerViewModel,ListViewerViewModel listViewerViewModel) {
+	public ViewerSelectorViewModel(
+		MediaContentLibraryViewModel mediaContentLibraryViewModel,
+		WrapViewerViewModel wrapViewerViewModel,
+		ListViewerViewModel listViewerViewModel,
+		DetailViewerViewModel detailViewerViewModel) {
 		this.MediaContentLibraryViewModel = mediaContentLibraryViewModel;
 		this.ViewerPaneViewModels = [
 			wrapViewerViewModel,
-			listViewerViewModel
+			listViewerViewModel,
+			detailViewerViewModel
 		];
 		this.SelectedViewerPane.Value = wrapViewerViewModel;
 		this.WrapViewerViewModel = wrapViewerViewModel;
 		this.ListViewerViewModel = listViewerViewModel;
+		this.DetailViewerViewModel = detailViewerViewModel;
 	}
 
 	public MediaContentLibraryViewModel MediaContentLibraryViewModel {
@@ -26,10 +32,13 @@ public class ViewerSelectorViewModel : ViewModelBase {
 	public ViewerPaneViewModelBase[] ViewerPaneViewModels {
 		get;
 	}
-	public ViewerPaneViewModelBase WrapViewerViewModel {
+	public WrapViewerViewModel WrapViewerViewModel {
 		get;
 	}
-	public ViewerPaneViewModelBase ListViewerViewModel {
+	public ListViewerViewModel ListViewerViewModel {
+		get;
+	}
+	public DetailViewerViewModel DetailViewerViewModel {
 		get;
 	}
 }

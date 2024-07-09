@@ -15,6 +15,7 @@
     <None Remove="Views\Filters\FilterManagerWindow.xaml" />
     <None Remove="Views\FolderManager\FolderManagerView.xaml" />
     <None Remove="Views\Panes\FilterPanes\FilterSelector.xaml" />
+    <None Remove="Views\Panes\ViewerPanes\DetailViewer.xaml" />
     <None Remove="Views\Panes\ViewerPanes\ListViewer.xaml" />
     <None Remove="Views\Resources\Resoures.xaml" />
   </ItemGroup>
@@ -71,6 +72,10 @@
   <ItemGroup>
     <Page Update="Views\FolderManager\FolderManagerView.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Panes\ViewerPanes\DetailViewer.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Panes\ViewerPanes\ListViewer.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>

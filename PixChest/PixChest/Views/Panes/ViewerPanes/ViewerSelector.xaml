@@ -31,6 +31,9 @@
 			<controls:Case Value="{x:Bind ViewModel.ListViewerViewModel}">
 				<local:ListViewer DataContext="{x:Bind ViewModel}"/>
 			</controls:Case>
+			<controls:Case Value="{x:Bind ViewModel.DetailViewerViewModel}">
+				<local:DetailViewer DataContext="{x:Bind ViewModel}"/>
+			</controls:Case>
 		</controls:SwitchPresenter>
 	</Grid>
 </local:ViewerSelectorUserControl>
