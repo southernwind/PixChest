@@ -28,6 +28,9 @@
 			<controls:Case Value="{x:Bind ViewModel.WrapViewerViewModel}">
 				<local:WrapViewer DataContext="{x:Bind ViewModel.WrapViewerViewModel}"/>
 			</controls:Case>
+			<controls:Case Value="{x:Bind ViewModel.ListViewerViewModel}">
+				<local:ListViewer DataContext="{x:Bind ViewModel.ListViewerViewModel}"/>
+			</controls:Case>
 		</controls:SwitchPresenter>
 	</Grid>
 </local:ViewerSelectorUserControl>

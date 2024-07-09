@@ -24,7 +24,7 @@ public abstract class ViewerPaneViewModelBase : ViewModelBase {
 		get;
 	}
 
-	public ReactiveProperty<FileViewModel> SelectedFile {
+	public BindableReactiveProperty<FileViewModel> SelectedFile {
 		get;
 	} = new();
 
