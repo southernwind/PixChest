@@ -8,11 +8,16 @@ using PixChest.ViewModels.Files;
 namespace PixChest.ViewModels.Panes.ViewerPanes;
 
 public abstract class ViewerPaneViewModelBase : ViewModelBase {
-	public ViewerPaneViewModelBase(MediaContentLibrary mediaContentLibrary) {
+	public ViewerPaneViewModelBase(MediaContentLibrary mediaContentLibrary, string name) {
 		this.Files = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(mediaContentLibrary.Files, x => new FileViewModel(x));
 		this.ExecuteCommand.Subscribe(async _ => {
 			await this.Execute();
 		}).AddTo(this.CompositeDisposable);
+		this.Name = name;
+	}
+
+	public string Name {
+		get;
 	}
 
 	public Reactive.Bindings.ReadOnlyReactiveCollection<FileViewModel> Files {

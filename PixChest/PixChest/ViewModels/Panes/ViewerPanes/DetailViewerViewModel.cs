@@ -1,15 +1,13 @@
 using PixChest.Models.Files;
-using PixChest.ViewModels.Files;
-
 namespace PixChest.ViewModels.Panes.ViewerPanes;
 
 [AddTransient]
-public class DetailViewerViewModel : ViewerPaneViewModelBase {
+public class WrapViewerViewModel : ViewerPaneViewModelBase {
 	public ReactiveCommand<Unit> ReloadCommand {
 		get;
 	} = new();
 
-	public DetailViewerViewModel(MediaContentLibrary mediaContentLibrary) : base (mediaContentLibrary){
+	public WrapViewerViewModel(MediaContentLibrary mediaContentLibrary) : base (mediaContentLibrary, "Wrap"){
 		this.ReloadCommand.Subscribe(async _ => {
 			await mediaContentLibrary.Search();
 		}).AddTo(this.CompositeDisposable);
