@@ -4,9 +4,9 @@ using PixChest.ViewModels.Panes.ViewerPanes;
 
 namespace PixChest.Views.Panes.ViewerPanes;
 
-public class ViewerPaneBase<T>: UserControlBase<T> where T : ViewerPaneViewModelBase {
+public class ViewerPaneBase: UserControlBase<ViewerSelectorViewModel> {
 
 	protected void File_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e) {
-		this.ViewModel?.ExecuteCommand.Execute(Unit.Default);
+		this.ViewModel?.MediaContentLibraryViewModel.ExecuteCommand.Execute(Unit.Default);
 	}
 }

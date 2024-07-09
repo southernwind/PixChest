@@ -1,9 +1,9 @@
-using PixChest.ViewModels.Panes.ViewerPanes;
+using System.Diagnostics;
+
 namespace PixChest.Views.Panes.ViewerPanes;
-public sealed partial class ListViewer : ListViewerUserControl {
+public sealed partial class ListViewer : ViewerPaneBase {
 	public ListViewer() {
 		this.InitializeComponent();
 	}
 }
-public abstract class ListViewerUserControl : ViewerPaneBase<ListViewerViewModel>;
 

@@ -26,10 +26,10 @@
 			Grid.Row="1"
 			Value="{x:Bind ViewModel.SelectedViewerPane.Value,Mode=OneWay}">
 			<controls:Case Value="{x:Bind ViewModel.WrapViewerViewModel}">
-				<local:WrapViewer DataContext="{x:Bind ViewModel.WrapViewerViewModel}"/>
+				<local:WrapViewer DataContext="{x:Bind ViewModel}"/>
 			</controls:Case>
 			<controls:Case Value="{x:Bind ViewModel.ListViewerViewModel}">
-				<local:ListViewer DataContext="{x:Bind ViewModel.ListViewerViewModel}"/>
+				<local:ListViewer DataContext="{x:Bind ViewModel}"/>
 			</controls:Case>
 		</controls:SwitchPresenter>
 	</Grid>
