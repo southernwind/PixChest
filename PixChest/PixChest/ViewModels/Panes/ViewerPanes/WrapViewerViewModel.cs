@@ -1,4 +1,3 @@
-using PixChest.Models.Files;
 namespace PixChest.ViewModels.Panes.ViewerPanes;
 
 [AddTransient]
