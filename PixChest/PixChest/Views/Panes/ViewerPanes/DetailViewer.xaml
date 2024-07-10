@@ -8,6 +8,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:filesVm="using:PixChest.ViewModels.Files"
 	xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+	xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
+	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
 	mc:Ignorable="d">
 	<Grid>
 		<Grid.RowDefinitions>
@@ -15,11 +18,22 @@
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="auto"/>
 		</Grid.RowDefinitions>
-		<Button
-			Grid.Row="0"
-			Command="{x:Bind ViewModel.MediaContentLibraryViewModel.ReloadCommand}">
-			<TextBlock Text="reload"/>
-		</Button>
+		<RelativePanel Grid.Row="0">
+			<Button
+				RelativePanel.AlignLeftWithPanel="True"
+				Command="{x:Bind ViewModel.MediaContentLibraryViewModel.ReloadCommand}">
+				<TextBlock Text="reload"/>
+			</Button>
+			<TextBox
+				RelativePanel.AlignRightWithPanel="True"
+				Text="{x:Bind ViewModel.MediaContentLibraryViewModel.SearchWord.Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+				<interactivity:Interaction.Behaviors>
+					<behaviors:KeyDownTriggerBehavior Key="Enter">
+						<core:InvokeCommandAction Command="{x:Bind ViewModel.MediaContentLibraryViewModel.ReloadCommand}"/>
+					</behaviors:KeyDownTriggerBehavior>
+				</interactivity:Interaction.Behaviors>
+			</TextBox>
+		</RelativePanel>
 		<Viewbox Grid.Row="1">
 			<Image Source="{x:Bind ViewModel.MediaContentLibraryViewModel.SelectedFile.Value.FilePath, Mode=OneWay}"/>
 		</Viewbox>

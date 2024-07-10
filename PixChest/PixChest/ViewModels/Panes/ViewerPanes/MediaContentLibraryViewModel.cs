@@ -18,11 +18,18 @@ public class MediaContentLibraryViewModel : ViewModelBase {
 		this.ReloadCommand.Subscribe(async _ => {
 			await mediaContentLibrary.Search();
 		}).AddTo(this.CompositeDisposable);
+		this.SearchWord.Subscribe(x => {
+			mediaContentLibrary.Word = x;
+		});
 	}
 
 	public Reactive.Bindings.ReadOnlyReactiveCollection<FileViewModel> Files {
 		get;
 	}
+
+	public BindableReactiveProperty<string> SearchWord {
+		get;
+	} = new();
 
 	public BindableReactiveProperty<FileViewModel> SelectedFile {
 		get;
