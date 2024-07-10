@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 
 using PixChest.Database;
 using PixChest.Database.Tables;
-using PixChest.Models.FilesFilter;
+using PixChest.Models.Files.Filter;
 using PixChest.Models.Maps;
 
 namespace PixChest.Models.Files.Loaders;

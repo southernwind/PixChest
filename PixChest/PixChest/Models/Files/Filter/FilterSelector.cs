@@ -3,10 +3,10 @@ using System.Reactive.Linq;
 
 using PixChest.Composition.Bases;
 using PixChest.Database.Tables;
-using PixChest.Models.Files;
+using PixChest.Models.FilesFilter;
 using PixChest.Models.Settings;
 
-namespace PixChest.Models.FilesFilter;
+namespace PixChest.Models.Files.Filter;
 /// <summary>
 /// フィルターマネージャー
 /// </summary>
