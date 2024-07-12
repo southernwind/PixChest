@@ -1,5 +1,3 @@
-using Microsoft.UI.Xaml.Controls;
-
 using PixChest.Composition.Bases;
 using PixChest.ViewModels.Panes.ViewerPanes;
 

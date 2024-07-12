@@ -2,9 +2,8 @@ using System.Linq.Expressions;
 
 using PixChest.Composition.Bases;
 using PixChest.Database.Tables;
-using PixChest.Models.Files;
 
-namespace PixChest.Models.FilesFilter;
+namespace PixChest.Models.Files.Filter;
 /// <summary>
 /// フィルター条件
 /// </summary>

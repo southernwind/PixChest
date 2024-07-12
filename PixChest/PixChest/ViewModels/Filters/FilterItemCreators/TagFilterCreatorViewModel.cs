@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 
 using PixChest.Composition.Bases;
-using PixChest.Models.FilesFilter.FilterItemObjects;
+using PixChest.Models.Files.Filter.FilterItemObjects;
 using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
 
-namespace PixChest.ViewModels.Filters.Creators;
+namespace PixChest.ViewModels.Filters.FilterItemCreators;
 /// <summary>
 /// タグフィルター作成ViewModel
 /// </summary>

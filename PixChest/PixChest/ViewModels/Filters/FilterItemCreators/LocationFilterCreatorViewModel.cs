@@ -1,10 +1,10 @@
 using System.Collections.Generic;
+
 using PixChest.Composition.Bases;
-using PixChest.Models.FilesFilter;
-using PixChest.Models.FilesFilter.FilterItemObjects;
+using PixChest.Models.Files.Filter.FilterItemObjects;
 using PixChest.Utils.Objects;
 
-namespace PixChest.ViewModels.Filters.Creators;
+namespace PixChest.ViewModels.Filters.FilterItemCreators;
 /// <summary>
 /// 座標フィルター作成ViewModel
 /// </summary>

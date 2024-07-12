@@ -1,9 +1,8 @@
-using PixChest.Models.Files.Filter.FilterItemCreators;
-using PixChest.Models.FilesFilter.FilterItemObjects;
+using PixChest.Models.Files.Filter.FilterItemObjects;
 using PixChest.Utils.Enums;
 
 
-namespace PixChest.Models.FilesFilter.FilterItemCreators;
+namespace PixChest.Models.Files.Filter.FilterItemCreators;
 /// <summary>
 /// ファイルパスフィルタークリエイター
 /// </summary>

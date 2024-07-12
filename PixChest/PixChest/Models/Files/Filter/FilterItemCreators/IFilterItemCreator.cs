@@ -1,8 +1,6 @@
 using PixChest.Models.Files.Filter.FilterItemObjects;
-using PixChest.Models.FilesFilter;
 
-namespace PixChest.Models.Files.Filter.FilterItemCreators;
-
+namespace PixChest.Models.Files.Filter.FilterItemCreators; 
 /// <summary>
 /// フィルタークリエイターインターフェイス
 /// </summary>

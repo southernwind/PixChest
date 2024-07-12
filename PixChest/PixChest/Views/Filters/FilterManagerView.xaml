@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:filteritemobjects="using:PixChest.Models.Files.Filter.FilterItemObjects"
-	xmlns:creators="using:PixChest.ViewModels.Filters.Creators"
+	xmlns:creators="using:PixChest.ViewModels.Filters.FilterItemCreators"
 	mc:Ignorable="d">
 
     <Grid x:Name="ControlRoot">

@@ -1,7 +1,6 @@
-using PixChest.Models.Files.Filter.FilterItemObjects;
 using PixChest.Utils.Enums;
 
-namespace PixChest.Models.FilesFilter.FilterItemObjects;
+namespace PixChest.Models.Files.Filter.FilterItemObjects;
 /// <summary>
 /// ファイルパスフィルターアイテムオブジェクト
 /// </summary>

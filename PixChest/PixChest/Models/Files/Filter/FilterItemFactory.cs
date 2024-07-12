@@ -1,10 +1,9 @@
 using CommunityToolkit.Mvvm.DependencyInjection;
 
+using PixChest.Models.Files.Filter.FilterItemCreators;
 using PixChest.Models.Files.Filter.FilterItemObjects;
-using PixChest.Models.FilesFilter.FilterItemCreators;
-using PixChest.Models.FilesFilter.FilterItemObjects;
 
-namespace PixChest.Models.FilesFilter; 
+namespace PixChest.Models.Files.Filter;
 public static class FilterItemFactory {
 
 	public static FilterItem Create<T>(T filterItemObject) where T : IFilterItemObject {

@@ -1,7 +1,6 @@
-using PixChest.Models.Files.Filter.FilterItemObjects;
 using PixChest.Utils.Objects;
 
-namespace PixChest.Models.FilesFilter.FilterItemObjects;
+namespace PixChest.Models.Files.Filter.FilterItemObjects;
 /// <summary>
 /// 座標に関するフィルターアイテムオブジェクト
 /// </summary>

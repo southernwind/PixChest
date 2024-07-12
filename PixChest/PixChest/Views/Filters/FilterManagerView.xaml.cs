@@ -2,7 +2,7 @@ using Microsoft.UI.Xaml.Controls;
 
 using PixChest.Composition.Bases;
 using PixChest.ViewModels.Filters;
-using PixChest.ViewModels.Filters.Creators;
+using PixChest.ViewModels.Filters.FilterItemCreators;
 using PixChest.Views.Filters.FilterItemCreators;
 
 namespace PixChest.Views.Filters;

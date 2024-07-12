@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using PixChest.Composition.Bases;
 using PixChest.Models.Settings;
 
-namespace PixChest.Models.FilesFilter;
+namespace PixChest.Models.Files.Filter;
 /// <summary>
 /// フィルターマネージャー
 /// </summary>

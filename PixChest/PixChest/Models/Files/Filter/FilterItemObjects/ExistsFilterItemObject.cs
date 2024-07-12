@@ -1,6 +1,4 @@
-using PixChest.Models.Files.Filter.FilterItemObjects;
-
-namespace PixChest.Models.FilesFilter.FilterItemObjects; 
+namespace PixChest.Models.Files.Filter.FilterItemObjects;
 /// <summary>
 /// ファイル存在フィルターアイテムオブジェクト
 /// </summary>

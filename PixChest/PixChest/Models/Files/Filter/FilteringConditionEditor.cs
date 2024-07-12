@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using PixChest.Models.FilesFilter.FilterItemObjects;
+
 using PixChest.Composition.Bases;
 using PixChest.Models.Files.Filter.FilterItemObjects;
 using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
 
-namespace PixChest.Models.FilesFilter;
+namespace PixChest.Models.Files.Filter;
 /// <summary>
 /// フィルタリング条件
 /// </summary>
@@ -40,7 +40,7 @@ public class FilteringConditionEditor : ModelBase {
 		get;
 	}
 
-    public void Load() {
+	public void Load() {
 		this.DisplayName.Value = this.FilterObject.DisplayName.Value;
 		this.FilterItemObjects.Clear();
 		this.FilterItemObjects.AddRange(this.FilterObject.FilterItemObjects);

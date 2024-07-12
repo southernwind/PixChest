@@ -3,9 +3,8 @@ using PixChest.Composition.Bases;
 using PixChest.Models.Files.Filter.FilterItemObjects;
 using System.Reactive.Concurrency;
 using PixChest.Database.Tables;
-using PixChest.Models.Files;
 
-namespace PixChest.Models.FilesFilter;
+namespace PixChest.Models.Files.Filter;
 /// <summary>
 /// フィルタリング条件
 /// </summary>

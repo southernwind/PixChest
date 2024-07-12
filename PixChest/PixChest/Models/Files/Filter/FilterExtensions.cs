@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 
 using PixChest.Database.Tables;
-using PixChest.Models.Files;
-using PixChest.Models.Files.Filter;
 
 
-namespace PixChest.Models.FilesFilter;
+namespace PixChest.Models.Files.Filter;
 public static class FilterExtensions {
 	/// <summary>
 	/// フィルターマネージャーで選択したフィルターを引数に渡されたクエリに適用して返却する。

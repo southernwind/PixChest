@@ -1,6 +1,4 @@
-using PixChest.Models.FilesFilter;
-
-namespace PixChest.ViewModels.Filters.Creators;
+namespace PixChest.ViewModels.Filters.FilterItemCreators;
 /// <summary>
 /// フィルター作成VM
 /// </summary>

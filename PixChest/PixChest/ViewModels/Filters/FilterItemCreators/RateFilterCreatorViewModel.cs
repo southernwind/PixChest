@@ -3,14 +3,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Reactive.Linq;
 
 using PixChest.Composition.Bases;
-using PixChest.Models.FilesFilter;
-using PixChest.Models.FilesFilter.FilterItemObjects;
+using PixChest.Models.Files.Filter.FilterItemObjects;
 using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
 
 using Reactive.Bindings.Extensions;
 
-namespace PixChest.ViewModels.Filters.Creators;
+namespace PixChest.ViewModels.Filters.FilterItemCreators;
 /// <summary>
 /// 評価フィルター作成ViewModel
 /// </summary>

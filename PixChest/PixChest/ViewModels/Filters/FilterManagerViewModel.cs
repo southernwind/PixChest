@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 
 using PixChest.Composition.Bases;
-using PixChest.Models.FilesFilter;
+using PixChest.Models.Files.Filter;
 using PixChest.Models.Settings;
-using PixChest.ViewModels.Filters.Creators;
+using PixChest.ViewModels.Filters.FilterItemCreators;
 
 namespace PixChest.ViewModels.Filters;
 

@@ -1,4 +1,4 @@
-namespace PixChest.Models.Files.Filter.FilterItemObjects;
+namespace PixChest.Models.Files.Filter.FilterItemObjects; 
 public interface IFilterItemObject {
 	/// <summary>
 	/// 表示名

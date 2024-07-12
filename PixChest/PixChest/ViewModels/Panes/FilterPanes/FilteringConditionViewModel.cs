@@ -1,6 +1,6 @@
 using PixChest.Composition.Bases;
+using PixChest.Models.Files.Filter;
 using PixChest.Models.Files.Filter.FilterItemObjects;
-using PixChest.Models.FilesFilter;
 
 namespace PixChest.ViewModels.Panes.FilterPanes;
 

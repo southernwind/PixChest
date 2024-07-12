@@ -1,6 +1,6 @@
 using PixChest.Models.Files.Filter.FilterItemObjects;
 
-namespace PixChest.Models.FilesFilter; 
+namespace PixChest.Models.Files.Filter;
 /// <summary>
 /// フィルター設定復元用オブジェクト
 /// </summary>

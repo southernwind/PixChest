@@ -1,4 +1,4 @@
-using PixChest.Models.FilesFilter;
+using PixChest.Models.Files.Filter;
 using PixChest.Models.Settings;
 
 namespace PixChest.Models.Preferences.CustomStates;

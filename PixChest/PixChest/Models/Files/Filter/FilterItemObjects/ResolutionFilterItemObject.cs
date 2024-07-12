@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 
-using PixChest.Models.Files.Filter.FilterItemObjects;
 using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
 
-namespace PixChest.Models.FilesFilter.FilterItemObjects;
+namespace PixChest.Models.Files.Filter.FilterItemObjects;
 /// <summary>
 /// 解像度フィルターアイテムオブジェクト
 /// </summary>

@@ -1,7 +1,6 @@
-using PixChest.Models.FilesFilter.FilterItemObjects;
-using PixChest.Models.Files.Filter.FilterItemCreators;
+using PixChest.Models.Files.Filter.FilterItemObjects;
 
-namespace PixChest.Models.FilesFilter.FilterItemCreators;
+namespace PixChest.Models.Files.Filter.FilterItemCreators;
 /// <summary>
 /// 座標に関するフィルタークリエイター
 /// </summary>
@@ -28,7 +27,7 @@ public class LocationFilterItemCreator : IFilterItemCreator<LocationFilterItemOb
 		if (filterItemObject.Contains is { } b) {
 			return new FilterItem(
 				x => (x.Latitude == null && x.Longitude == null) != b,
-				x => (x.Location == null) != b,
+				x => x.Location == null != b,
 				true);
 		}
 		if (filterItemObject.LeftTop != null && filterItemObject.RightBottom != null) {

@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 
-using PixChest.Models.Files.Filter.FilterItemObjects;
 using PixChest.Utils.Enums;
 
-namespace PixChest.Models.FilesFilter.FilterItemObjects;
+namespace PixChest.Models.Files.Filter.FilterItemObjects;
 /// <summary>
 /// 評価フィルターアイテムオブジェクト
 /// </summary>
