@@ -1,4 +1,5 @@
 using PixChest.Models.Files;
+using PixChest.Utils.Objects;
 
 namespace PixChest.ViewModels.Files;
 
@@ -11,4 +12,11 @@ public class FileViewModel(FileModel fileModel) {
 	public string? ThumbnailFilePath {
 		get;
 	} = fileModel.ThumbnailFilePath;
+
+	/// <summary>
+	/// プロパティ
+	/// </summary>
+	public virtual Attributes<string> Properties {
+		get;
+	} = fileModel.Properties;
 }

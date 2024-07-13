@@ -114,6 +114,30 @@ namespace PixChest.Database.Tables {
 		}
 
 		/// <summary>
+		/// 作成日時
+		/// </summary>
+		public DateTime CreationTime {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// 編集日時
+		/// </summary>
+		public DateTime ModifiedTime {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// 最終アクセス日時
+		/// </summary>
+		public DateTime LastAccessTime {
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// 不正ファイルか否か
 		/// </summary>
 		public bool IsInvalid {

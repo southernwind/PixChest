@@ -1,21 +1,39 @@
 using PixChest.Composition.Bases;
+using PixChest.ViewModels.Panes.DetailPanes;
 using PixChest.ViewModels.Panes.FilterPanes;
 using PixChest.ViewModels.Panes.ViewerPanes;
 
 namespace PixChest.ViewModels;
 
 [AddSingleton]
-public class MainWindowViewModel(ViewerSelectorViewModel viewerSelectorViewModel, NavigationMenuViewModel navigationMenuViewModel, FilterSelectorViewModel filterSelectorViewModel) : ViewModelBase {
+public class MainWindowViewModel : ViewModelBase {
+	public MainWindowViewModel(
+		ViewerSelectorViewModel viewerSelectorViewModel,
+		NavigationMenuViewModel navigationMenuViewModel,
+		FilterSelectorViewModel filterSelectorViewModel,
+		DetailSelectorViewModel detailSelectorViewModel) {
+		this.ViewerSelectorViewModel = viewerSelectorViewModel;
+		this.NavigationMenuViewModel = navigationMenuViewModel;
+		this.FilterSelectorViewModel = filterSelectorViewModel;
+		this.DetailSelectorViewModel = detailSelectorViewModel;
+
+		this.ViewerSelectorViewModel.MediaContentLibraryViewModel.SelectedFile.Subscribe(x => {
+			this.DetailSelectorViewModel.TargetFile.Value = x;
+		});
+	}
 
 	public ViewerSelectorViewModel ViewerSelectorViewModel {
 		get;
-	} = viewerSelectorViewModel;
+	}
 
 	public NavigationMenuViewModel NavigationMenuViewModel {
 		get;
-	} = navigationMenuViewModel;
+	}
 
 	public FilterSelectorViewModel FilterSelectorViewModel {
 		get;
-	} = filterSelectorViewModel;
+	}
+	public DetailSelectorViewModel DetailSelectorViewModel {
+		get;
+	}
 }

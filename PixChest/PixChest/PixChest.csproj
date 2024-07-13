@@ -14,6 +14,8 @@
     <None Remove="Views\Filters\FilterManagerView.xaml" />
     <None Remove="Views\Filters\FilterManagerWindow.xaml" />
     <None Remove="Views\FolderManager\FolderManagerView.xaml" />
+    <None Remove="Views\Panes\DetailPanes\DetailSelector.xaml" />
+    <None Remove="Views\Panes\DetailPanes\PropertiesDetail.xaml" />
     <None Remove="Views\Panes\FilterPanes\FilterSelector.xaml" />
     <None Remove="Views\Panes\ViewerPanes\DetailViewer.xaml" />
     <None Remove="Views\Panes\ViewerPanes\ListViewer.xaml" />
@@ -43,12 +45,23 @@
   <ItemGroup>
     <Folder Include="Models\Files\Metadata\Videos\" />
     <Folder Include="Views\Panes\RepositoryPanes\" />
-    <Folder Include="Views\Panes\DetailPanes\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\PixChest.Composition\PixChest.Composition.csproj" />
     <ProjectReference Include="..\..\PixChest.Database\PixChest.Database.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Panes\DetailPanes\PropertiesDetail.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Panes\DetailPanes\DetailSelector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>

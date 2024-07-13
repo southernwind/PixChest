@@ -24,7 +24,11 @@ public abstract class FilesLoader(PixChestDbContext dbContext, FilterSelector fi
 				.Where(x => x.ThumbnailFileName != null)
 				.ToArrayAsync())
 				.Select(x => new FileModel(x.FilePath) {
-					ThumbnailFilePath = x.ThumbnailFileName
+					ThumbnailFilePath = x.ThumbnailFileName,
+					FileSize = x.FileSize,
+					CreationTime = x.CreationTime,
+					ModifiedTime = x.ModifiedTime,
+					LastAccessTime = x.LastAccessTime,
 				})
 				.Where(this.FilterSetter);
 					
