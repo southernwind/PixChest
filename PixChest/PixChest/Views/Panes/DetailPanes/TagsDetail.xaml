@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<local:DetailPaneBase
+    x:Class="PixChest.Views.Panes.DetailPanes.TagsDetail"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PixChest.Views.Panes.DetailPanes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+	xmlns:ui="using:CommunityToolkit.WinUI"
+	mc:Ignorable="d">
+
+    <Grid>
+		<controls:TokenizingTextBox
+			Header="Tags"
+			ItemsSource="{x:Bind ViewModel.TargetFile.Value.Tags, Mode=OneWay}"
+			PlaceholderText="Add tags"
+			TokenDelimiter=","
+			QueryIcon="{ui:FontIconSource Glyph=&#xE721;}"
+			SuggestedItemsSource="{x:Bind ViewModel.FilteredTagCandidates, Mode=OneWay}"
+			Text="{x:Bind ViewModel.Text.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+			TokenItemAdding="TokenizingTextBox_TokenItemAdding">
+		</controls:TokenizingTextBox>
+    </Grid>
+</local:DetailPaneBase>

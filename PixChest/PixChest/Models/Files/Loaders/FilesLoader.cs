@@ -23,12 +23,16 @@ public abstract class FilesLoader(PixChestDbContext dbContext, FilterSelector fi
 				.Include(mf => mf.Position)
 				.Where(x => x.ThumbnailFileName != null)
 				.ToArrayAsync())
-				.Select(x => new FileModel(x.FilePath) {
-					ThumbnailFilePath = x.ThumbnailFileName,
-					FileSize = x.FileSize,
-					CreationTime = x.CreationTime,
-					ModifiedTime = x.ModifiedTime,
-					LastAccessTime = x.LastAccessTime,
+				.Select(x => {
+					var file = new FileModel(x.MediaFileId, x.FilePath) {
+						ThumbnailFilePath = x.ThumbnailFileName,
+						FileSize = x.FileSize,
+						CreationTime = x.CreationTime,
+						ModifiedTime = x.ModifiedTime,
+						LastAccessTime = x.LastAccessTime,
+						Tags = x.MediaFileTags.Select(mft => mft.Tag.TagName),
+					};
+					return file;
 				})
 				.Where(this.FilterSetter);
 					

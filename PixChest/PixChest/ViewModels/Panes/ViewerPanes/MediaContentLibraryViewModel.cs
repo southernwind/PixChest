@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 
 using PixChest.Composition.Bases;
+using PixChest.Models.FileEditors;
 using PixChest.Models.Files;
 using PixChest.ViewModels.Files;
 
@@ -9,8 +10,8 @@ namespace PixChest.ViewModels.Panes.ViewerPanes;
 
 [AddTransient]
 public class MediaContentLibraryViewModel : ViewModelBase {
-	public MediaContentLibraryViewModel(MediaContentLibrary mediaContentLibrary) {
-		this.Files = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(mediaContentLibrary.Files, x => new FileViewModel(x));
+	public MediaContentLibraryViewModel(MediaContentLibrary mediaContentLibrary, TagsManager tagsManager) {
+		this.Files = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(mediaContentLibrary.Files, x => new FileViewModel(x, tagsManager));
 		this.ExecuteCommand.Subscribe(async _ => {
 			await this.Execute();
 		}).AddTo(this.CompositeDisposable);

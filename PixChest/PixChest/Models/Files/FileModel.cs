@@ -6,7 +6,11 @@ using PixChest.Utils.Objects;
 namespace PixChest.Models.Files;
 
 [AddTransient]
-public class FileModel(string filePath) : ModelBase {
+public class FileModel(long id, string filePath) : ModelBase {
+	public long Id {
+		get;
+	} = id;
+
 	public string FilePath {
 		get;
 	} = filePath;
@@ -32,8 +36,9 @@ public class FileModel(string filePath) : ModelBase {
 	/// <summary>
 	/// タグリスト
 	/// </summary>
-	public Reactive.Bindings.ReactiveCollection<string> Tags {
+	public IEnumerable<string> Tags {
 		get;
+		set;
 	} = [];
 
 	/// <summary>
