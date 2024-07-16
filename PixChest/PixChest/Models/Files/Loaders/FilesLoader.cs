@@ -30,7 +30,7 @@ public abstract class FilesLoader(PixChestDbContext dbContext, FilterSelector fi
 						CreationTime = x.CreationTime,
 						ModifiedTime = x.ModifiedTime,
 						LastAccessTime = x.LastAccessTime,
-						Tags = x.MediaFileTags.Select(mft => mft.Tag.TagName),
+						Tags = x.MediaFileTags.Select(mft => mft.Tag.TagName).ToList(),
 					};
 					return file;
 				})

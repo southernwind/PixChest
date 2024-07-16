@@ -8,7 +8,7 @@ public sealed partial class DetailViewer : ViewerPaneBase {
 		this.InitializeComponent();
 	}
 
-	public async void List_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+	protected override async void List_SelectionChanged(object sender, SelectionChangedEventArgs e) {
 		if (sender is ListView listView) {
 			await listView.SmoothScrollIntoViewWithIndexAsync(listView.SelectedIndex, ScrollItemPlacement.Center, false, true);
 		}

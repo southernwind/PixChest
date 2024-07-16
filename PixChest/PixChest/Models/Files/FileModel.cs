@@ -36,7 +36,7 @@ public class FileModel(long id, string filePath) : ModelBase {
 	/// <summary>
 	/// タグリスト
 	/// </summary>
-	public IEnumerable<string> Tags {
+	public List<string> Tags {
 		get;
 		set;
 	} = [];

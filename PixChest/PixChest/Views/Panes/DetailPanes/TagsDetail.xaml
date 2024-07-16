@@ -13,7 +13,7 @@
     <Grid>
 		<controls:TokenizingTextBox
 			Header="Tags"
-			ItemsSource="{x:Bind ViewModel.TargetFile.Value.Tags, Mode=OneWay}"
+			ItemsSource="{x:Bind ViewModel.Tags, Mode=OneWay}"
 			PlaceholderText="Add tags"
 			TokenDelimiter=","
 			QueryIcon="{ui:FontIconSource Glyph=&#xE721;}"

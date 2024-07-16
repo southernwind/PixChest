@@ -1,28 +1,23 @@
 using System.Diagnostics;
+using System.Threading.Tasks;
 
-using PixChest.Models.FileEditors;
 using PixChest.Models.Files;
 using PixChest.Utils.Objects;
-
-using Reactive.Bindings;
-using Reactive.Bindings.Extensions;
 
 namespace PixChest.ViewModels.Files;
 
 [AddTransient]
 public class FileViewModel {
-	public FileViewModel(FileModel fileModel, TagsManager tagsManager) {
+	public FileViewModel(FileModel fileModel) {
+		this.FileModel= fileModel;
 		this.FilePath = fileModel.FilePath;
 		this.ThumbnailFilePath = fileModel.ThumbnailFilePath;
 		this.Properties = fileModel.Properties;
-		this.Tags.AddRange(fileModel.Tags);
-		this.Tags.ObserveAddChanged().Subscribe(async x => {
-			await tagsManager.AddTag(fileModel, x);
-		});
-		this.Tags.ObserveRemoveChanged().Subscribe(async x => {
-			await tagsManager.RemoveTag(fileModel, x);
-		});
 	}
+	public FileModel FileModel {
+		get;
+	}
+
 	public string FilePath {
 		get;
 	}
@@ -38,7 +33,12 @@ public class FileViewModel {
 		get;
 	}
 
-	public ReactiveCollection<string> Tags {
-		get;
-	} = [];
+	public virtual Task ExecuteFile() {
+		var psi = new ProcessStartInfo {
+			FileName = this.FilePath,
+			UseShellExecute = true
+		};
+		_ = Process.Start(psi);
+		return Task.CompletedTask;
+	}
 }

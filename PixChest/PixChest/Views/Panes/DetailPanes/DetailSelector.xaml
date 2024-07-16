@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-	<TabView IsAddTabButtonVisible="False" Visibility="{x:Bind ViewModel.TargetFile.Value,Mode=OneWay, Converter={StaticResource NullToCollapseConverter}}">
+	<TabView IsAddTabButtonVisible="False" Visibility="{x:Bind ViewModel.TargetFiles.Value,Mode=OneWay, Converter={StaticResource NullToCollapseConverter}}">
 		<TabViewItem Header="Property" IsClosable="False">
 			<local:PropertiesDetail DataContext="{x:Bind ViewModel}"/>
 		</TabViewItem>

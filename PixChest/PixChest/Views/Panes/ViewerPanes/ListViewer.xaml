@@ -11,6 +11,7 @@
 	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
 	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+	xmlns:viewerControls="using:PixChest.Views.Panes.ViewerPanes.Controls"
 	mc:Ignorable="d">
 	<Grid>
 		<Grid.RowDefinitions>
@@ -39,6 +40,8 @@
 			Grid.Row="1"
 			ItemsSource="{x:Bind ViewModel.MediaContentLibraryViewModel.Files, Mode=OneWay}"
 			SelectedItem="{x:Bind ViewModel.MediaContentLibraryViewModel.SelectedFile.Value, Mode=TwoWay}"
+			SelectionMode="Extended"
+			SelectionChanged="List_SelectionChanged"
 			ScrollViewer.VerticalScrollMode="Auto"
 			ScrollViewer.VerticalScrollBarVisibility="Auto">
 			<ListBox.ItemsPanel>

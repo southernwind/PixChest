@@ -9,17 +9,27 @@
     mc:Ignorable="d">
 
     <Grid>
-		<ItemsView ItemsSource="{x:Bind ViewModel.TargetFile.Value.Properties, Mode=OneWay}">
+		<ItemsView ItemsSource="{x:Bind ViewModel.Properties.Value, Mode=OneWay}">
 			<ItemsView.ItemTemplate>
 				<DataTemplate>
 					<ItemContainer>
 						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="100"/>
-								<ColumnDefinition Width="100"/>
-							</Grid.ColumnDefinitions>
-							<TextBlock Grid.Column="0" Text="{Binding Title}"/>
-							<TextBlock Grid.Column="1" Text="{Binding Value}"/>
+							<Grid Visibility="{Binding HasMultipleValues, Converter={StaticResource InvertBoolToVisibilityConverter}}">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="100"/>
+									<ColumnDefinition Width="100"/>
+								</Grid.ColumnDefinitions>
+								<TextBlock Grid.Column="0" Text="{Binding Title}"/>
+								<TextBlock Grid.Column="1" Text="{Binding RepresentativeValue.Value}"/>
+							</Grid>
+							<Grid Visibility="{Binding HasMultipleValues, Converter={StaticResource BoolToVisibilityConverter}}">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="100"/>
+									<ColumnDefinition Width="100"/>
+								</Grid.ColumnDefinitions>
+								<TextBlock Grid.Column="0" Text="{Binding Title}"/>
+								<TextBlock Grid.Column="1" Text="(Multiple values)"/>
+							</Grid>
 						</Grid>
 					</ItemContainer>
 				</DataTemplate>

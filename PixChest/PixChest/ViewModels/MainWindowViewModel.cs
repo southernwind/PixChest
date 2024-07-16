@@ -17,8 +17,8 @@ public class MainWindowViewModel : ViewModelBase {
 		this.FilterSelectorViewModel = filterSelectorViewModel;
 		this.DetailSelectorViewModel = detailSelectorViewModel;
 
-		this.ViewerSelectorViewModel.MediaContentLibraryViewModel.SelectedFile.Subscribe(x => {
-			this.DetailSelectorViewModel.TargetFile.Value = x;
+		this.ViewerSelectorViewModel.MediaContentLibraryViewModel.SelectedFiles.Subscribe(x => {
+			this.DetailSelectorViewModel.TargetFiles.Value = x;
 		});
 	}
 

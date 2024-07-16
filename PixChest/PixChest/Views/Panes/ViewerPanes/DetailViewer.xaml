@@ -43,6 +43,7 @@
 			Grid.Row="2"
 			ItemsSource="{x:Bind ViewModel.MediaContentLibraryViewModel.Files, Mode=OneWay}"
 			SelectedItem="{x:Bind ViewModel.MediaContentLibraryViewModel.SelectedFile.Value, Mode=TwoWay}"
+			SelectionMode="Single"
 			SelectionChanged="List_SelectionChanged"
 			ScrollViewer.HorizontalScrollMode="Auto"
 			ScrollViewer.HorizontalScrollBarVisibility="Auto">
