@@ -5,15 +5,24 @@ namespace PixChest.ViewModels.Panes.RepositoryPanes;
 
 [AddTransient]
 public class FolderRepositoryViewModel : RepositoryViewModelBase {
-	public FolderRepositoryViewModel(FolderRepository folderRepository) {
+	public FolderRepositoryViewModel(FolderRepository folderRepository): base(folderRepository) {
 		this.RootFolder = folderRepository.RootFolder.ToBindableReactiveProperty(null!);
-		this.LoadCommand.Subscribe(async _ => await folderRepository.Load());
+		this.SetRepositoryCondition.Subscribe(_ => {
+			if(this.SelectedFolder.Value is not { } folder) {
+				return;
+			}
+			folderRepository.SetRepositoryCandidate(folder);
+		});
 	}
 	public BindableReactiveProperty<FolderObject> RootFolder {
 		get;
 	}
 
-	public ReactiveCommand<Unit> LoadCommand {
+	public BindableReactiveProperty<FolderObject?> SelectedFolder {
+		get;
+	} = new();
+
+	public ReactiveCommand<Unit> SetRepositoryCondition {
 		get;
 	} = new();
 }

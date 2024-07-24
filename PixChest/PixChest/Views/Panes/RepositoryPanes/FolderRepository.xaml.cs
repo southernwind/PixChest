@@ -12,8 +12,15 @@ public sealed partial class FolderRepository : FolderRepositoryUserControl {
 		if (newViewModel == null) {
 			return;
 		}
-		newViewModel.FolderRepositoryViewModel.LoadCommand.Execute(Unit.Default);
+		newViewModel.LoadCommand.Execute(Unit.Default);
 	}
+
+	private void TreeViewItem_DoubleTapped(object sender, Microsoft.UI.Xaml.Input.DoubleTappedRoutedEventArgs e) {
+		if (this.ViewModel is not { } vm) {
+			return;
+		}
+		vm.FolderRepositoryViewModel.SetRepositoryCondition.Execute(Unit.Default);
+    }
 }
 
 public abstract class FolderRepositoryUserControl : UserControlBase<RepositorySelectorViewModel>;

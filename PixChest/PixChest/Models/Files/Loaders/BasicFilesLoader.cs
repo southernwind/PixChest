@@ -4,11 +4,12 @@ using PixChest.Database;
 using PixChest.Database.Tables;
 using PixChest.Models.Files.Filter;
 using PixChest.Models.Maps;
+using PixChest.Models.Settings;
 
 namespace PixChest.Models.Files.Loaders;
 
 [AddTransient]
-public class BasicFilesLoader(PixChestDbContext dbContext, FilterSelector filterSetter) : FilesLoader(dbContext, filterSetter) {
+public class BasicFilesLoader(PixChestDbContext dbContext, FilterSelector filterSetter, States states) : FilesLoader(dbContext, filterSetter, states) {
 	/// <summary>
 	/// 検索条件 タグ名
 	/// </summary>

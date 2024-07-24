@@ -1,4 +1,9 @@
-﻿namespace PixChest.ViewModels.Panes.RepositoryPanes;
+using PixChest.Models.Repositories;
 
-public class RepositoryViewModelBase {
+namespace PixChest.ViewModels.Panes.RepositoryPanes;
+
+public class RepositoryViewModelBase(RepositoryBase model) {
+	public RepositoryBase Model {
+		get;
+	} = model;
 }

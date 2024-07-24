@@ -9,12 +9,17 @@
 	xmlns:objects="using:PixChest.Models.Repositories.Objects"
 	mc:Ignorable="d">
 
-	<TreeView ItemsSource="{x:Bind ViewModel.FolderRepositoryViewModel.RootFolder.Value.ChildFolders}">
+
+	<TreeView
+		ItemsSource="{x:Bind ViewModel.FolderRepositoryViewModel.RootFolder.Value.ChildFolders}"
+		SelectedItem="{x:Bind ViewModel.FolderRepositoryViewModel.SelectedFolder.Value,Mode=TwoWay}">
 		<TreeView.ItemTemplate>
 			<DataTemplate x:DataType="objects:FolderObject">
 				<TreeViewItem
 					AutomationProperties.Name="{x:Bind FolderName}"
-					ItemsSource="{x:Bind ChildFolders}" IsExpanded="True">
+					ItemsSource="{x:Bind ChildFolders}"
+					DoubleTapped="TreeViewItem_DoubleTapped"
+					IsExpanded="True">
 					<StackPanel Orientation="Horizontal">
 						<FontIcon Glyph="&#xE838;" />
 						<TextBlock Margin="0,0,10,0"/>

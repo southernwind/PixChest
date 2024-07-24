@@ -1,4 +1,5 @@
 using PixChest.Models.Files.Filter;
+using PixChest.Models.Repositories.Objects;
 using PixChest.Models.Settings;
 
 namespace PixChest.Models.Preferences.CustomStates;
@@ -21,4 +22,12 @@ public class SearchStates : SettingsBase {
 	public SettingsCollection<FilterObject> FilteringConditions {
 		get;
 	} = new SettingsCollection<FilterObject>([]) { MaybeEditMember = true };
+
+	/// <summary>
+	/// カレントリポジトリ条件
+	/// </summary>
+	public SettingsItem<RepositoryConditionObject?> CurrentRepositoryCondition {
+		get;
+	} = new (null);
+
 }

@@ -1,4 +1,7 @@
-﻿namespace PixChest.Models.Repositories;
+using System.Threading.Tasks;
 
-public class RepositoryBase {
+namespace PixChest.Models.Repositories;
+
+public abstract class RepositoryBase {
+	public abstract Task Load();
 }

@@ -1,22 +1,23 @@
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using PixChest.Database;
 using PixChest.Models.Repositories.Objects;
+using PixChest.Models.Settings;
 using PixChest.Utils.Objects;
 
 namespace PixChest.Models.Repositories;
 
 [AddTransient]
-public class FolderRepository(PixChestDbContext dbContext): RepositoryBase {
+public class FolderRepository(PixChestDbContext dbContext,States states): RepositoryBase {
 	private readonly PixChestDbContext _db = dbContext;
+	private readonly States _states = states;
 
 	public ReactiveProperty<FolderObject> RootFolder {
 		get;
 	} = new();
 
-	public async Task Load() {
+	public override async Task Load() {
 		var list = (await this._db
 			.MediaFiles
 			.GroupBy(x => x.DirectoryPath)
@@ -48,5 +49,12 @@ public class FolderRepository(PixChestDbContext dbContext): RepositoryBase {
 		}
 
 		this.RootFolder.Value = new FolderObject(null, "", [.. list.OrderBy(x => x.Value)]);
+	}
+
+	public void SetRepositoryCandidate(FolderObject folderObject) {
+		var rco = new FolderRepositoryConditionObject() {
+			DirectoryPath = folderObject.FolderPath
+		};
+		this._states.SearchStates.CurrentRepositoryCondition.Value = rco;
 	}
 }
