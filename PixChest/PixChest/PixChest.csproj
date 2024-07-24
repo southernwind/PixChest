@@ -47,67 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Files\Metadata\Videos\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\PixChest.Composition\PixChest.Composition.csproj" />
     <ProjectReference Include="..\..\PixChest.Database\PixChest.Database.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\Panes\RepositoryPanes\RepositorySelector.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\Panes\DetailPanes\PropertiesDetail.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\Panes\DetailPanes\DetailSelector.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\Filters\FilterManagerView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\Filters\FilterManagerWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\Panes\FilterPanes\FilterSelector.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\FolderManager\FolderManagerView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Panes\ViewerPanes\DetailViewer.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\Panes\ViewerPanes\ListViewer.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\Resources\Resoures.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
 </Project>
