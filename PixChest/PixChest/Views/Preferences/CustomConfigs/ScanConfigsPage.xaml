@@ -6,7 +6,7 @@
     xmlns:local="using:PixChest.Views.Preferences.CustomConfig"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:obj="using:PixChest.Models.Preferences.CustomConfig.Objects"
+	xmlns:obj="using:PixChest.Models.Preferences.CustomConfigs.Objects"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	x:Name="PageRoot">

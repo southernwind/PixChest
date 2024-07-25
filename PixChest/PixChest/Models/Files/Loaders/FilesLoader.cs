@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using PixChest.Database;
 using PixChest.Database.Tables;
 using PixChest.Models.Files.Filter;
+using PixChest.Models.Repositories;
 using PixChest.Models.Settings;
 
 namespace PixChest.Models.Files.Loaders;
 
-public abstract class FilesLoader(PixChestDbContext dbContext, FilterSelector filterSetter,States states) {
+public abstract class FilesLoader(PixChestDbContext dbContext, FilterSelector filterSetter, RepositorySelector repositorySelector) {
 	protected FilterSelector FilterSetter = filterSetter;
-	private readonly States states = states;
+	private readonly RepositorySelector repositorySelector = repositorySelector;
 
 	public async Task<IEnumerable<FileModel>> Load() {
 		var files =
@@ -25,7 +26,7 @@ public abstract class FilesLoader(PixChestDbContext dbContext, FilterSelector fi
 				.Include(mf => mf.VideoFile)
 				.Include(mf => mf.Position)
 				.Where(x => x.ThumbnailFileName != null)
-				.Where(this.states.SearchStates.CurrentRepositoryCondition.Value?.WherePredicate() ?? (_ => true))
+				.Where(this.repositorySelector.CurrentRepositoryCondition.CurrentValue?.WherePredicate() ?? (_ => true))
 				.ToArrayAsync())
 				.Select(x => {
 					var file = new FileModel(x.MediaFileId, x.FilePath) {
