@@ -1,6 +1,6 @@
 using PixChest.Utils.Enums;
 
-namespace PixChest.Models.Preferences.CustomConfig.Objects;
+namespace PixChest.Models.Preferences.CustomConfigs.Objects;
 
 public class ExtensionConfig {
 	public ExtensionConfig() {

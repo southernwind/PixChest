@@ -1,8 +1,8 @@
-using PixChest.Models.Preferences.CustomConfig.Objects;
+using PixChest.Models.Preferences.CustomConfigs.Objects;
 using PixChest.Models.Settings;
 using PixChest.Utils.Enums;
 
-namespace PixChest.Models.Preferences.CustomConfig;
+namespace PixChest.Models.Preferences.CustomConfigs;
 
 [AddSingleton]
 public class ScanConfig : SettingsBase {
@@ -13,7 +13,7 @@ public class ScanConfig : SettingsBase {
 	public SettingsCollection<ExtensionConfig> TargetExtensions {
 		get;
 	} = new SettingsCollection<ExtensionConfig>(
-		new ExtensionConfig(".jpg",MediaType.Image),
+		new ExtensionConfig(".jpg", MediaType.Image),
 		new ExtensionConfig(".jpeg", MediaType.Image),
 		new ExtensionConfig(".png", MediaType.Image),
 		new ExtensionConfig(".gif", MediaType.Image),

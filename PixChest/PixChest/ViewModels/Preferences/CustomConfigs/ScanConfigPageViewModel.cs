@@ -1,6 +1,6 @@
 using PixChest.Composition.Bases;
-using PixChest.Models.Preferences.CustomConfig;
-using PixChest.Models.Preferences.CustomConfig.Objects;
+using PixChest.Models.Preferences.CustomConfigs;
+using PixChest.Models.Preferences.CustomConfigs.Objects;
 using PixChest.ViewModels.Preferences.CustomConfigs;
 
 namespace PixChest.ViewModels.Preferences.CustomConfig;

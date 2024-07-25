@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xaml;
 
-using PixChest.Models.Preferences.CustomConfig;
+using PixChest.Models.Preferences.CustomConfigs;
 
 namespace PixChest.Models.Settings;
 
