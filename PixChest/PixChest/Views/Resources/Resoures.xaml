@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:ctConverters="using:CommunityToolkit.WinUI.Converters"
 	xmlns:converters="using:PixChest.Views.Resources.Converters"
-	xmlns:system="using:System">
+	xmlns:system="using:System" xmlns:specialized="using:System.Collections.Specialized">
 	<ctConverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 	<converters:ToVisibilityConverter
         x:Key="NullToCollapseConverter"
@@ -13,4 +13,7 @@
 	<converters:InvertBoolToVisibilityConverter
         x:Key="InvertBoolToVisibilityConverter">
 	</converters:InvertBoolToVisibilityConverter>
+	<converters:SortKeyToDisplayNameConverter x:Key="SortKeyToDisplayNameConverter"/>
+	<converters:ListSortDirectionToIconGlyphConverter x:Key="ListSortDirectionToIconGlyphConverter"/>
+	<converters:ListSortDirectionToBooleanConverter x:Key="ListSortDirectionToBooleanConverter"/>
 </ResourceDictionary>

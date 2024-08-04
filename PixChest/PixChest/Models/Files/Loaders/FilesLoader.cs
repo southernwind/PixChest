@@ -1,18 +1,18 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 using PixChest.Database;
 using PixChest.Database.Tables;
 using PixChest.Models.Files.Filter;
+using PixChest.Models.Files.Sort;
 using PixChest.Models.Repositories;
-using PixChest.Models.Settings;
 
 namespace PixChest.Models.Files.Loaders;
 
-public abstract class FilesLoader(PixChestDbContext dbContext, FilterSelector filterSetter, RepositorySelector repositorySelector) {
+public abstract class FilesLoader(PixChestDbContext dbContext, SortSelector sortSelector,FilterSelector filterSetter, RepositorySelector repositorySelector) {
 	protected FilterSelector FilterSetter = filterSetter;
+	protected SortSelector SortSelector = sortSelector;
 	private readonly RepositorySelector repositorySelector = repositorySelector;
 
 	public async Task<IEnumerable<FileModel>> Load() {
@@ -40,8 +40,8 @@ public abstract class FilesLoader(PixChestDbContext dbContext, FilterSelector fi
 					return file;
 				})
 				.Where(this.FilterSetter);
-					
-		return files;
+
+		return this.SortSelector.SetSortConditions(files);
 	}
 
 	/// <summary>

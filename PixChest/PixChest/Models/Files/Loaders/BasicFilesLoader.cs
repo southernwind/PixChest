@@ -3,14 +3,14 @@ using System.Linq.Expressions;
 using PixChest.Database;
 using PixChest.Database.Tables;
 using PixChest.Models.Files.Filter;
+using PixChest.Models.Files.Sort;
 using PixChest.Models.Maps;
 using PixChest.Models.Repositories;
-using PixChest.Models.Settings;
 
 namespace PixChest.Models.Files.Loaders;
 
 [AddTransient]
-public class BasicFilesLoader(PixChestDbContext dbContext, FilterSelector filterSetter, RepositorySelector repositorySelector) : FilesLoader(dbContext, filterSetter, repositorySelector) {
+public class BasicFilesLoader(PixChestDbContext dbContext, SortSelector sortSelector, FilterSelector filterSetter, RepositorySelector repositorySelector) : FilesLoader(dbContext, sortSelector, filterSetter, repositorySelector) {
 	/// <summary>
 	/// 検索条件 タグ名
 	/// </summary>
