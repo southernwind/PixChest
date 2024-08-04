@@ -22,6 +22,8 @@
     <None Remove="Views\Panes\ViewerPanes\DetailViewer.xaml" />
     <None Remove="Views\Panes\ViewerPanes\ListViewer.xaml" />
     <None Remove="Views\Resources\Resoures.xaml" />
+    <None Remove="Views\Sort\SortManagerView.xaml" />
+    <None Remove="Views\Sort\SortManagerWindow.xaml" />
   </ItemGroup>
   
   <ItemGroup>
@@ -49,5 +51,15 @@
   <ItemGroup>
     <ProjectReference Include="..\..\PixChest.Composition\PixChest.Composition.csproj" />
     <ProjectReference Include="..\..\PixChest.Database\PixChest.Database.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Sort\SortManagerView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Sort\SortManagerWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

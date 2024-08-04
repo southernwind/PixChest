@@ -97,7 +97,6 @@ public class ResolutionFilterCreatorViewModel : ViewModelBase, IFilterCreatorVie
 					filterItemObject = new ResolutionFilterItemObject(width, height, this.SearchType.Value.Value);
 				}
 				target.Value?.AddFilter(filterItemObject);
-			})
-			.AddTo(this.CompositeDisposable);
+			});
 	}
 }

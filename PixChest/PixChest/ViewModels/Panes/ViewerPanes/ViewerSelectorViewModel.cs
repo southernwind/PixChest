@@ -8,7 +8,8 @@ public class ViewerSelectorViewModel : ViewModelBase {
 		MediaContentLibraryViewModel mediaContentLibraryViewModel,
 		WrapViewerViewModel wrapViewerViewModel,
 		ListViewerViewModel listViewerViewModel,
-		DetailViewerViewModel detailViewerViewModel) {
+		DetailViewerViewModel detailViewerViewModel,
+		SortSelectorViewModel sortSelectorViewModel) {
 		this.MediaContentLibraryViewModel = mediaContentLibraryViewModel;
 		this.ViewerPaneViewModels = [
 			wrapViewerViewModel,
@@ -19,6 +20,7 @@ public class ViewerSelectorViewModel : ViewModelBase {
 		this.WrapViewerViewModel = wrapViewerViewModel;
 		this.ListViewerViewModel = listViewerViewModel;
 		this.DetailViewerViewModel = detailViewerViewModel;
+		this.SortSelectorViewModel = sortSelectorViewModel;
 	}
 
 	public MediaContentLibraryViewModel MediaContentLibraryViewModel {
@@ -39,6 +41,9 @@ public class ViewerSelectorViewModel : ViewModelBase {
 		get;
 	}
 	public DetailViewerViewModel DetailViewerViewModel {
+		get;
+	}
+	public SortSelectorViewModel SortSelectorViewModel {
 		get;
 	}
 }

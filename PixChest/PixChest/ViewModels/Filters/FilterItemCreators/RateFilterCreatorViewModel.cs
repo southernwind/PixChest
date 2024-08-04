@@ -72,8 +72,7 @@ public class RateFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel
 					var filter = new RateFilterItemObject(r, this.SearchType.Value.Value);
 					target.Value?.AddFilter(filter);
 				}
-			})
-			.AddTo(this.CompositeDisposable);
+			});
 
 	}
 }
