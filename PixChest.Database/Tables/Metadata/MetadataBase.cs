@@ -1,30 +1,27 @@
-using System;
+namespace PixChest.Database.Tables.Metadata;
+/// <summary>
+/// メタデータテーブル共通部
+/// </summary>
+public abstract class MetadataBase {
+	private MediaFile? _mediaFile;
 
-namespace PixChest.Database.Tables.Metadata {
 	/// <summary>
-	/// メタデータテーブル共通部
+	/// メディアファイルID
 	/// </summary>
-	public abstract class MetadataBase {
-		private MediaFile? _mediaFile;
+	public long MediaFileId {
+		get;
+		set;
+	}
 
-		/// <summary>
-		/// メディアファイルID
-		/// </summary>
-		public long MediaFileId {
-			get;
-			set;
+	/// <summary>
+	/// メディアファイル
+	/// </summary>
+	public MediaFile MediaFile {
+		get {
+			return this._mediaFile ?? throw new InvalidOperationException();
 		}
-
-		/// <summary>
-		/// メディアファイル
-		/// </summary>
-		public MediaFile MediaFile {
-			get {
-				return this._mediaFile ?? throw new InvalidOperationException();
-			}
-			set {
-				this._mediaFile = value;
-			}
+		set {
+			this._mediaFile = value;
 		}
 	}
 }
