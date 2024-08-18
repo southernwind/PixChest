@@ -1,5 +1,5 @@
 using PixChest.Composition.Bases;
-using PixChest.Models.Settings;
+using PixChest.Models.Preferences;
 using PixChest.ViewModels.Preferences.CustomConfig;
 using PixChest.ViewModels.Preferences.CustomConfigs;
 

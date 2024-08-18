@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-
 using PixChest.Composition.Bases;
 using PixChest.Utils.Objects;
 
-namespace PixChest.Models.Files;
+namespace PixChest.Models.Files.FileTypes.Base;
 
 [AddTransient]
 public class FileModel(long id, string filePath) : ModelBase {

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 using PixChest.Database;
 using PixChest.Database.Tables;
+using PixChest.Models.Files.FileTypes.Base;
 using PixChest.Models.Files.Filter;
 using PixChest.Models.Files.Sort;
 using PixChest.Models.Repositories;

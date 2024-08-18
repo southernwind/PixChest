@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace PixChest.Models.Settings;
+namespace PixChest.Models.Preferences;
 /// <summary>
 /// コレクションの設定値アイテム
 /// </summary>

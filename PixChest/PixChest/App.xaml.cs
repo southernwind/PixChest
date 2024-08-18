@@ -9,7 +9,8 @@ using Microsoft.Data.Sqlite;
 using PixChest.Database;
 using System.IO;
 using R3;
-using PixChest.Models.Settings;
+using PixChest.Models.Preferences;
+using FFMpegCore;
 namespace PixChest;
 
 public partial class App : Application {
@@ -63,9 +64,13 @@ public partial class App : Application {
 		this._states = Ioc.Default.GetRequiredService<States>();
 		this._states.SetFilePath(this._stateFilePath);
 		this._states.Load();
+		Directory.CreateDirectory(this._config.PathConfig.TemporaryFolderPath.Value);
 
 		Reactive.Bindings.UIDispatcherScheduler.Initialize();
 
+		GlobalFFOptions.Configure(options => {
+			options.BinaryFolder = Path.Combine(this._config.PathConfig.FFMpegFolderPath.Value);
+		});
 		this.InitializeComponent();
 	}
 

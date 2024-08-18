@@ -1,4 +1,4 @@
-namespace PixChest.Models.Settings; 
+namespace PixChest.Models.Preferences;
 /// <summary>
 /// 設定アイテムインターフェイス
 /// </summary>

@@ -1,17 +1,23 @@
 using System.Text;
 using System.Security.Cryptography;
 using System.IO;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using PixChest.Utils.Enums;
+using PixChest.Models.Preferences;
 
 namespace PixChest.Utils.Tools;
-internal static class FilePathUtility
-{
+internal static class FilePathUtility {
+	private static readonly Config _config;
+	static FilePathUtility() {
+		_config = Ioc.Default.GetRequiredService<Config>();
+	}
     /// <summary>
     /// サムネイル相対ファイルパス取得
     /// </summary>
     /// <param name="filePath">生成元ファイルパス</param>
     /// <returns>サムネイル相対ファイルパス</returns>
     public static string GetThumbnailRelativeFilePath(string filePath) {
-		var thumbDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory!, "thumbs");
+		var thumbDir = _config.PathConfig.ThumbnailFolderPath.Value;
 		return $"{Path.Combine(thumbDir, $"{string.Join("", SHA512.HashData(Encoding.UTF8.GetBytes(filePath)).Select(b => $"{b:X2}"))}".Insert(2, @"\"))}.jpg";
 	}
 
@@ -19,19 +25,26 @@ internal static class FilePathUtility
 	/// 指定したファイルパスのファイルが管理対象の拡張子を持っているかどうかを調べる
 	/// </summary>
 	/// <param name="path">ファイルパス</param>
-	/// <param name="targetExtension">対象ファイル拡張子</param>
 	/// <returns>管理対象か否か</returns>
-	public static bool IsTargetFile(this string path, string[] targetExtension) {
-		return targetExtension.Contains(Path.GetExtension(path).ToLower());
+	public static bool IsTargetFile(this string path) {
+		return _config.ScanConfig.TargetExtensions.Select(x => x.Extension.Value.ToLower()).Contains(Path.GetExtension(path).ToLower());
 	}
 
 	/// <summary>
 	/// 指定したファイルパスのファイルが動画拡張子を持っているかどうかを調べる
 	/// </summary>
 	/// <param name="path">ファイルパス</param>
-	/// <param name="videoExtension">動画ファイル拡張子</param>
 	/// <returns>動画ファイルか否か</returns>
-	public static bool IsVideoFile(this string path, string[] videoExtension) {
-		return videoExtension.Contains(Path.GetExtension(path).ToLower()!);
+	public static bool IsVideoFile(this string path) {
+		return _config.ScanConfig.TargetExtensions.Where(x => x.MediaType.Value == MediaType.Video).Select(x => x.Extension.Value.ToLower()).Contains(Path.GetExtension(path).ToLower());
+	}
+
+	/// <summary>
+	/// 指定したファイルパスのメディアタイプを取得する
+	/// </summary>
+	/// <param name="path">ファイルパス</param>
+	/// <returns>メディアタイプ</returns>
+	public static MediaType? GetMediaType(this string path) {
+		return _config.ScanConfig.TargetExtensions.Where(x => x.Extension.Value.ToLower() == Path.GetExtension(path).ToLower()).Select(x => x.MediaType.Value as MediaType?).FirstOrDefault();
 	}
 }

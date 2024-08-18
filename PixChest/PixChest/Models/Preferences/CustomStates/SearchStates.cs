@@ -1,7 +1,6 @@
 using PixChest.Models.Files.Filter;
 using PixChest.Models.Files.Sort;
 using PixChest.Models.Repositories.Objects;
-using PixChest.Models.Settings;
 using PixChest.Utils.Enums;
 
 namespace PixChest.Models.Preferences.CustomStates;

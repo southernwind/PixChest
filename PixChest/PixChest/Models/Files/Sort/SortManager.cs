@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 using PixChest.Composition.Bases;
 using PixChest.Models.Files.Filter;
-using PixChest.Models.Settings;
+using PixChest.Models.Preferences;
 
 namespace PixChest.Models.Files.Sort;
 /// <summary>

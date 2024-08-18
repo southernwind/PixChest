@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 
 using PixChest.Composition.Bases;
+using PixChest.Models.Files.FileTypes.Base;
 using PixChest.Models.Files.Loaders;
 
 namespace PixChest.Models.Files;

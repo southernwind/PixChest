@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace PixChest.Models.Settings;
+namespace PixChest.Models.Preferences;
 
 /// <summary>
 /// 設定基底クラス

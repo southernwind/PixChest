@@ -3,6 +3,7 @@ using PixChest.Composition.Bases;
 using PixChest.Models.Files.Filter.FilterItemObjects;
 using System.Reactive.Concurrency;
 using PixChest.Database.Tables;
+using PixChest.Models.Files.FileTypes.Base;
 
 namespace PixChest.Models.Files.Filter;
 /// <summary>

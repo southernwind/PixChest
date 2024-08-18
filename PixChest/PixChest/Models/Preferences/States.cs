@@ -4,7 +4,7 @@ using System.Xaml;
 
 using PixChest.Models.Preferences.CustomStates;
 
-namespace PixChest.Models.Settings;
+namespace PixChest.Models.Preferences;
 /// <summary>
 /// 状態
 /// </summary>

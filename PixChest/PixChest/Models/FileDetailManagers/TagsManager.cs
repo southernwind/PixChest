@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 using PixChest.Database;
 using PixChest.Database.Tables;
-using PixChest.Models.Files;
+using PixChest.Models.Files.FileTypes.Base;
 
 namespace PixChest.Models.FileDetailManagers;
 

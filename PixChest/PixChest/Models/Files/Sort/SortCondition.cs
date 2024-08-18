@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 
 using PixChest.Composition.Bases;
+using PixChest.Models.Files.FileTypes.Base;
 using PixChest.Utils.Enums;
 
 namespace PixChest.Models.Files.Sort;

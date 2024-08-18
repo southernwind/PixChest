@@ -4,11 +4,18 @@ using System.Xaml;
 
 using PixChest.Models.Preferences.CustomConfigs;
 
-namespace PixChest.Models.Settings;
+namespace PixChest.Models.Preferences;
 
 [AddSingleton]
 public class Config {
 	private string? _configFilePath;
+	/// <summary>
+	/// 一般設定
+	/// </summary>
+	public PathConfig PathConfig {
+		get;
+		set;
+	}
 
 	/// <summary>
 	/// スキャン設定
@@ -21,13 +28,15 @@ public class Config {
 	[Obsolete("for serialize")]
 	public Config() {
 		this.ScanConfig = null!;
+		this.PathConfig = null!;
 	}
 
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	public Config(ScanConfig scanConfig) {
+	public Config(PathConfig pathConfig,ScanConfig scanConfig) {
 		this.ScanConfig = scanConfig;
+		this.PathConfig = pathConfig;
 	}
 
 	/// <summary>
@@ -47,7 +56,8 @@ public class Config {
 		}
 		using var ms = new MemoryStream();
 		var d = new SettingsBase[] {
-			this.ScanConfig
+			this.ScanConfig,
+			this.PathConfig
 		}.ToDictionary(x => x.GetType(), x => x.Export());
 		XamlServices.Save(ms, d);
 		using var fs = File.Create(this._configFilePath);
@@ -81,6 +91,7 @@ public class Config {
 	/// デフォルト設定ロード
 	/// </summary>
 	private void LoadDefault() {
+		this.PathConfig.LoadDefault();
 		this.ScanConfig.LoadDefault();
 	}
 
@@ -88,6 +99,7 @@ public class Config {
 	/// 破棄
 	/// </summary>
 	public void Dispose() {
+		this.PathConfig.Dispose();
 		this.ScanConfig.Dispose();
 	}
 }

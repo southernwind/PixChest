@@ -2,8 +2,8 @@ using System.IO;
 using System.Threading.Tasks;
 
 using PixChest.Database;
+using PixChest.Models.Preferences;
 using PixChest.Models.Repositories.Objects;
-using PixChest.Models.Settings;
 using PixChest.Utils.Objects;
 
 namespace PixChest.Models.Repositories;

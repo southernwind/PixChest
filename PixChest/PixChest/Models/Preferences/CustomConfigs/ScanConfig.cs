@@ -1,5 +1,4 @@
 using PixChest.Models.Preferences.CustomConfigs.Objects;
-using PixChest.Models.Settings;
 using PixChest.Utils.Enums;
 
 namespace PixChest.Models.Preferences.CustomConfigs;

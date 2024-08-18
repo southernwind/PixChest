@@ -12,6 +12,10 @@
     <SupportedOSPlatformVersion>10.0.22621.0</SupportedOSPlatformVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Assets\ffmpeg.exe" />
+    <Content Remove="Assets\ffprobe.exe" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Views\Filters\FilterManagerView.xaml" />
     <None Remove="Views\Filters\FilterManagerWindow.xaml" />
     <None Remove="Views\FolderManager\FolderManagerView.xaml" />
@@ -34,6 +38,7 @@
     <PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" />
     <PackageReference Include="CommunityToolkit.WinUI.Converters" />
+    <PackageReference Include="FFMpegCore" />
     <PackageReference Include="Magick.NET-Q16-AnyCPU" />
     <PackageReference Include="MetadataExtractor" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
@@ -51,6 +56,15 @@
   <ItemGroup>
     <ProjectReference Include="..\..\PixChest.Composition\PixChest.Composition.csproj" />
     <ProjectReference Include="..\..\PixChest.Database\PixChest.Database.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Assets\ffmpeg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\ffprobe.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

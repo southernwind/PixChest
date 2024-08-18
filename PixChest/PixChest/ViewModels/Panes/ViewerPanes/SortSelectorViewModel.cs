@@ -2,7 +2,7 @@ using System.ComponentModel;
 
 using PixChest.Composition.Bases;
 using PixChest.Models.Files.Sort;
-using PixChest.Models.Settings;
+using PixChest.Models.Preferences;
 
 namespace PixChest.ViewModels.Panes.ViewerPanes;
 

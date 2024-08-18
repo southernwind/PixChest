@@ -1,5 +1,5 @@
+using PixChest.Models.Preferences;
 using PixChest.Models.Repositories.Objects;
-using PixChest.Models.Settings;
 
 namespace PixChest.Models.Repositories;
 [AddSingleton]

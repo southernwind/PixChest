@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
-
-using PixChest.Models.Files;
+using PixChest.Models.Files.FileTypes.Base;
 using PixChest.Utils.Objects;
 
 namespace PixChest.ViewModels.Files;
