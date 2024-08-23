@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using PixChest.Database;
@@ -10,21 +11,22 @@ namespace PixChest.Models.FileDetailManagers;
 public class TagsManager(PixChestDbContext dbContext) {
 	private readonly PixChestDbContext _db = dbContext;
 
-	public Reactive.Bindings.ReactiveCollection<Tag> TagCandidates {
+	public Reactive.Bindings.ReactiveCollection<Tag> Tags {
 		get;
 	} = [];
 
-	public async Task AddTag(FileModel[] fileModels, string tagName) {
+	public async Task AddTag(FileModel[] fileModels, string tagName, string detail = "") {
 		var target = fileModels.Where(x => !x.Tags.Any(t => t == tagName)).ToArray();
 		using var transaction = this._db.Database.BeginTransaction();
 		var tag = await this._db.Tags.FirstOrDefaultAsync(x => x.TagName == tagName);
 		if(tag == null) {
 			tag = new Tag {
-				TagName = tagName
+				TagName = tagName,
+				Detail = detail,
 			};
 			await this._db.AddAsync(tag);
 			await this._db.SaveChangesAsync();
-			this.TagCandidates.Add(tag);
+			this.Tags.Add(tag);
 		}
 		await this._db.MediaFileTags.AddRangeAsync(target.Select(x => new MediaFileTag {
 			MediaFileId = x.Id,
@@ -56,9 +58,28 @@ public class TagsManager(PixChestDbContext dbContext) {
 		}
 	}
 
+	public async Task UpdateTag(int tagId, string tagName, string detail, IEnumerable<string> aliases) {
+		using var transaction = this._db.Database.BeginTransaction();
+		var tag = this._db.Tags.First(x => x.TagId == tagId);
+		tag.TagName = tagName;
+		tag.Detail = detail;
+		this._db.Tags.Update(tag);
+
+		this._db.TagAliases.RemoveRange(this._db.TagAliases.Where(x => x.TagId == tagId));
+		this._db.TagAliases.AddRange(aliases.Select((x,i) => new TagAlias {
+			TagId = tagId,
+			TagAliasId = i,
+			Alias = x
+		}));
+
+		await transaction.CommitAsync();
+		await this._db.SaveChangesAsync();
+
+	}
+
 	public async Task Load() {
-		this.TagCandidates.Clear();
-		var tags = await this._db.Tags.ToArrayAsync();
-		this.TagCandidates.AddRange(tags);
+		this.Tags.Clear();
+		var tags = await this._db.Tags.Include(x => x.TagAliases).ToArrayAsync();
+		this.Tags.AddRange(tags);
 	}
 }

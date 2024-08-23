@@ -1,6 +1,3 @@
-using System.Diagnostics;
-using System.Threading.Tasks;
-
 using PixChest.Composition.Bases;
 using PixChest.Models.FileDetailManagers;
 using PixChest.Models.Files;

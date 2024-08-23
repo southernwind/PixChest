@@ -3,8 +3,8 @@ namespace PixChest.Database.Tables;
 /// タグテーブル
 /// </summary>
 public class Tag {
-	private string? _tagName;
 	private ICollection<MediaFileTag>? _mediaFileTags;
+	private ICollection<TagAlias>? _tagAliases;
 
 	/// <summary>
 	/// タグID
@@ -17,13 +17,17 @@ public class Tag {
 	/// <summary>
 	/// タグ名
 	/// </summary>
-	public string TagName {
-		get {
-			return this._tagName ?? throw new InvalidOperationException();
-		}
-		set {
-			this._tagName = value;
-		}
+	public required string TagName {
+		get;
+		set;
+	}
+
+	/// <summary>
+	/// タグ説明
+	/// </summary>
+	public required string Detail {
+		get;
+		set;
 	}
 
 	/// <summary>
@@ -35,6 +39,18 @@ public class Tag {
 		}
 		set {
 			this._mediaFileTags = value;
+		}
+	}
+
+	/// <summary>
+	/// タグの別名
+	/// </summary>
+	public virtual ICollection<TagAlias> TagAliases {
+		get {
+			return this._tagAliases ?? throw new InvalidOperationException();
+		}
+		set {
+			this._tagAliases = value;
 		}
 	}
 }

@@ -8,18 +8,52 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:controls="using:CommunityToolkit.WinUI.Controls"
 	xmlns:ui="using:CommunityToolkit.WinUI"
+	xmlns:tags="using:PixChest.ViewModels.Tags"
+	xmlns:tables="using:PixChest.Database.Tables"
 	mc:Ignorable="d">
 
-    <Grid>
-		<controls:TokenizingTextBox
-			Header="Tags"
-			ItemsSource="{x:Bind ViewModel.Tags, Mode=OneWay}"
+	<StackPanel x:Name="ControlRoot">
+		<AutoSuggestBox
+			ItemsSource="{x:Bind ViewModel.FilteredTagCandidates, Mode=OneWay}"
 			PlaceholderText="Add tags"
-			TokenDelimiter=","
-			QueryIcon="{ui:FontIconSource Glyph=&#xE721;}"
-			SuggestedItemsSource="{x:Bind ViewModel.FilteredTagCandidates, Mode=OneWay}"
 			Text="{x:Bind ViewModel.Text.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-			TokenItemAdding="TokenizingTextBox_TokenItemAdding">
-		</controls:TokenizingTextBox>
-    </Grid>
+			SuggestionChosen="AutoSuggestBox_SuggestionChosen"
+			PreviewKeyDown="AutoSuggestBox_PreviewKeyDown">
+			<AutoSuggestBox.ItemTemplate>
+				<DataTemplate x:DataType="tables:Tag">
+					<TextBlock Text="{x:Bind TagName}"/>
+				</DataTemplate>
+			</AutoSuggestBox.ItemTemplate>
+		</AutoSuggestBox>
+		<ListBox ItemsSource="{x:Bind ViewModel.Tags, Mode=OneWay}">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto"/>
+							<ColumnDefinition Width="Auto"/>
+						</Grid.ColumnDefinitions>
+						<TextBlock
+							Grid.Column="0"
+							Text="{Binding }"/>
+						<Button
+							Grid.Column="1"
+							Command="{Binding DataContext.RemoveTagCommand, ElementName=ControlRoot}"
+							CommandParameter="{Binding }">
+							<FontIcon Glyph="&#xE74D;" />
+						</Button>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<controls:WrapPanel Orientation="Horizontal"/>
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+		</ListBox>
+		<Button
+			Content="Open Tag Manager"
+			Click="OpenTagManagerButton_Click"
+		/>
+	</StackPanel>
 </local:DetailPaneBase>

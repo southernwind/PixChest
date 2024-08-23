@@ -3,12 +3,11 @@ using System.Reactive.Linq;
 using CommunityToolkit.WinUI.Collections;
 
 using PixChest.Composition.Bases;
+using PixChest.Database.Tables;
 using PixChest.Models.FileDetailManagers;
 using PixChest.Models.FileDetailManagers.Objects;
 using PixChest.Utils.Objects;
 using PixChest.ViewModels.Files;
-
-using Reactive.Bindings.Extensions;
 
 namespace PixChest.ViewModels.Panes.DetailPanes;
 
@@ -18,12 +17,16 @@ public class DetailSelectorViewModel : ViewModelBase
 	private bool _isTargetChanging = false;
 	public DetailSelectorViewModel(TagsManager tagsManager)
     {
-		this.TagCandidates = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(tagsManager.TagCandidates, x => x.TagName);
+		this.TagCandidates = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(tagsManager.Tags);
 		this.LoadTagCandidatesCommand.Subscribe(async _ => await tagsManager.Load());
 		this.FilteredTagCandidates = new AdvancedCollectionView(this.TagCandidates) {
 			Filter = x => {
-				if (x is string s) {
-					return s.Contains(this.Text.Value ?? "");
+				var text = this.Text.Value ?? "";
+				if (text.Length == 0) {
+					return false;
+				}
+				if (x is Tag tag) {
+					return tag.TagAliases.Select(x => x.Alias).Concat([tag.TagName]).Any(x => x.Contains(text));
 				}
 				return false;
 			}
@@ -31,16 +34,9 @@ public class DetailSelectorViewModel : ViewModelBase
 		this.Text.Subscribe(x => {
 			this.FilteredTagCandidates.RefreshFilter();
 		});
-		this.Tags.ObserveAddChanged().Where(_ => !this._isTargetChanging).Subscribe(async x => {
-			await tagsManager.AddTag(this.TargetFiles.Value.Select(x => x.FileModel).ToArray(), x);
-		});
-		this.Tags.ObserveRemoveChanged().Where(_=> !this._isTargetChanging).Subscribe(async x => {
-			await tagsManager.RemoveTag(this.TargetFiles.Value.Select(x => x.FileModel).ToArray(), x);
-		});
 		this.TargetFiles.Where(x => x != null).Subscribe(x => {
 			this._isTargetChanging = true;
-			this.Tags.Clear();
-			this.Tags.AddRange(x.SelectMany(x => x.FileModel.Tags).Distinct());
+			this.UpdateTags();
 			this.Properties.Value =
 				this.TargetFiles.Value
 					.SelectMany(x => x.Properties)
@@ -50,6 +46,20 @@ public class DetailSelectorViewModel : ViewModelBase
 						x.GroupBy(g => g.Value).Select(g => new ValueCountPair<string?>(g.Key, g.Count()))
 					)).ToArray();
 			this._isTargetChanging = false;
+		});
+
+		this.RemoveTagCommand.Subscribe(async x => {
+			await tagsManager.RemoveTag(this.TargetFiles.Value.Select(x => x.FileModel).ToArray(), x);
+			this.UpdateTags();
+		});
+
+		this.AddTagCommand.Subscribe(async x => {
+			if (string.IsNullOrEmpty(this.Text.Value)) {
+				return;
+			}
+			await tagsManager.AddTag(this.TargetFiles.Value.Select(x => x.FileModel).ToArray(), this.Text.Value);
+			this.Text.Value = "";
+			this.UpdateTags();
 		});
 	}
 
@@ -61,7 +71,7 @@ public class DetailSelectorViewModel : ViewModelBase
 		get;
 	} = new();
 
-	public Reactive.Bindings.ReadOnlyReactiveCollection<string> TagCandidates {
+	public Reactive.Bindings.ReadOnlyReactiveCollection<Tag> TagCandidates {
 		get;
 	}
 
@@ -80,4 +90,17 @@ public class DetailSelectorViewModel : ViewModelBase
 	public BindableReactiveProperty<FileProperty[]> Properties {
 		get;
 	} = new([]);
+
+	public ReactiveCommand<string> RemoveTagCommand {
+		get;
+	} = new();
+
+	public ReactiveCommand<Unit> AddTagCommand {
+		get;
+	} = new();
+
+	private void UpdateTags() {
+		this.Tags.Clear();
+		this.Tags.AddRange(this.TargetFiles.Value.SelectMany(x => x.FileModel.Tags).Distinct());
+	}
 }

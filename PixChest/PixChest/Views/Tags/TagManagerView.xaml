@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<local:TagManagerViewUserControl
+	x:Class="PixChest.Views.Tags.TagManagerView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PixChest.Views.Tags"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:sortVm="using:PixChest.ViewModels.Sort"
+	xmlns:tables="using:PixChest.Database.Tables" xmlns:tags="using:PixChest.ViewModels.Tags"
+	mc:Ignorable="d">
+
+	<Grid x:Name="Root">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="200" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+		<Border Grid.Column="0">
+			<ListBox
+				ItemsSource="{x:Bind ViewModel.Tags,Mode=OneWay}"
+				SelectedItem="{x:Bind ViewModel.SelectedTag.Value,Mode=TwoWay}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate x:DataType="tags:TagViewModel">
+						<TextBlock Text="{x:Bind TagName.Value}" />
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ListBox>
+		</Border>
+		<Grid
+			Grid.Column="1"
+			Visibility="{x:Bind ViewModel.SelectedTag.Value, Mode=OneWay, Converter={StaticResource NullToCollapseConverter}}">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+			<TextBox Grid.Row="0" Text="{x:Bind ViewModel.SelectedTag.Value.TagName.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+			<TextBlock
+				Grid.Row="1"
+				Margin="0,5"
+				Text="Tag Aliases : " />
+			<ItemsControl
+				Grid.Row="2"
+				ItemsSource="{x:Bind ViewModel.SelectedTag.Value.TagAliases, Mode=OneWay}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate x:DataType="tags:TagAliasViewModel">
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<TextBox Grid.Column="0" Text="{x:Bind Alias.Value, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+							<Button
+								Grid.Column="1"
+								Command="{Binding DataContext.SelectedTag.Value.RemoveTagAliasCommand, ElementName=Root}"
+								CommandParameter="{x:Bind Mode=OneWay}">
+								<FontIcon Glyph="&#xF78A;" />
+							</Button>
+						</Grid>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+			<Button
+				Content="Add Alias"
+				Command="{x:Bind ViewModel.SelectedTag.Value.AddTagAliasCommand, Mode=OneWay}"
+				Grid.Row="3"
+				/>
+		</Grid>
+	</Grid>
+</local:TagManagerViewUserControl>

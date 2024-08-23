@@ -28,6 +28,8 @@
     <None Remove="Views\Resources\Resoures.xaml" />
     <None Remove="Views\Sort\SortManagerView.xaml" />
     <None Remove="Views\Sort\SortManagerWindow.xaml" />
+    <None Remove="Views\Tags\TagManagerView.xaml" />
+    <None Remove="Views\Tags\TagManagerWindow.xaml" />
   </ItemGroup>
   
   <ItemGroup>
@@ -65,15 +67,5 @@
     <None Update="Assets\ffprobe.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\Sort\SortManagerView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\Sort\SortManagerWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 </Project>
