@@ -32,7 +32,7 @@ public class DetailSelectorViewModel : ViewModelBase
 				return false;
 			}
 		};
-		this.Text.Subscribe(x => {
+		this.RefreshFilteredTagCandidatesCommand.Subscribe(x => {
 			this.FilteredTagCandidates.RefreshFilter();
 		});
 		this.TargetFiles.Where(x => x != null).Subscribe(x => {
@@ -50,7 +50,7 @@ public class DetailSelectorViewModel : ViewModelBase
 		});
 
 		this.RemoveTagCommand.Subscribe(async x => {
-			await tagsManager.RemoveTag(this.TargetFiles.Value.Select(x => x.FileModel).ToArray(), x);
+			await tagsManager.RemoveTag(this.TargetFiles.Value.Select(x => x.FileModel).ToArray(), x.Value);
 			this.UpdateTags();
 		});
 
@@ -80,6 +80,10 @@ public class DetailSelectorViewModel : ViewModelBase
 		get;
 	}
 
+	public ReactiveCommand<Unit> RefreshFilteredTagCandidatesCommand {
+		get;
+	} = new();
+
 	public ReactiveCommand<Unit> LoadTagCandidatesCommand {
 		get;
 	} = new();
@@ -92,7 +96,7 @@ public class DetailSelectorViewModel : ViewModelBase
 		get;
 	} = new([]);
 
-	public ReactiveCommand<string> RemoveTagCommand {
+	public ReactiveCommand<ValueCountPair<string>> RemoveTagCommand {
 		get;
 	} = new();
 

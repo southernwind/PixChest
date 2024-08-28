@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 using CommunityToolkit.Mvvm.DependencyInjection;
 
 using Microsoft.UI.Xaml.Controls;
@@ -8,7 +10,7 @@ using PixChest.Database.Tables;
 
 namespace PixChest.Views.Panes.DetailPanes;
 public sealed partial class TagsDetail : DetailPaneBase {
-	public TagsDetail(){
+	public TagsDetail() {
 		this.InitializeComponent();
 	}
 
@@ -21,13 +23,11 @@ public sealed partial class TagsDetail : DetailPaneBase {
 		if (e.Key == Windows.System.VirtualKey.Enter) {
 			this.ViewModel?.AddTagCommand.Execute(Unit.Default);
 		}
-
 	}
 
-	private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args) {
-		if (args.SelectedItem is not Tag tag) {
-			return;
+	private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args) {
+		if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput) {
+			this.ViewModel?.RefreshFilteredTagCandidatesCommand.Execute(Unit.Default);
 		}
-		sender.Text = tag.TagName;
 	}
 }

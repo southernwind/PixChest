@@ -21,7 +21,8 @@
 			ItemsSource="{x:Bind ViewModel.FilteredTagCandidates, Mode=OneWay}"
 			PlaceholderText="Add tags"
 			Text="{x:Bind ViewModel.Text.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-			SuggestionChosen="AutoSuggestBox_SuggestionChosen"
+			TextMemberPath="TagName"
+			TextChanged="AutoSuggestBox_TextChanged"
 			PreviewKeyDown="AutoSuggestBox_PreviewKeyDown">
 			<AutoSuggestBox.ItemTemplate>
 				<DataTemplate x:DataType="tables:Tag">
