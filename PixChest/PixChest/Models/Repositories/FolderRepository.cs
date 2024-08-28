@@ -27,7 +27,7 @@ public class FolderRepository(PixChestDbContext dbContext,States states): Reposi
 			.ToList();
 
 		var all = list.Select(x => (x.Value, x.Count, Split: x.Value.Split(Path.DirectorySeparatorChar))).ToArray();
-		var maxPathDepth = all.Max(x => x.Split.Length);
+		var maxPathDepth = all.Length == 0 ? 0 : all.Max(x => x.Split.Length);
 		
 		// ルート追加
 		list.Add(new ("",list.Sum(x => x.Count)));
