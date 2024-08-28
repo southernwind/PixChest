@@ -13,6 +13,10 @@
 	mc:Ignorable="d">
 
 	<StackPanel x:Name="ControlRoot">
+		<Button
+			Content="Open Tag Manager"
+			Click="OpenTagManagerButton_Click"
+		/>
 		<AutoSuggestBox
 			ItemsSource="{x:Bind ViewModel.FilteredTagCandidates, Mode=OneWay}"
 			PlaceholderText="Add tags"
@@ -54,9 +58,5 @@
 				</ItemsPanelTemplate>
 			</ListBox.ItemsPanel>
 		</ListBox>
-		<Button
-			Content="Open Tag Manager"
-			Click="OpenTagManagerButton_Click"
-		/>
 	</StackPanel>
 </local:DetailPaneBase>
