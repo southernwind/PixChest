@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Reactive.Linq;
 
 using CommunityToolkit.WinUI.Collections;
@@ -83,7 +84,7 @@ public class DetailSelectorViewModel : ViewModelBase
 		get;
 	} = new();
 
-	public Reactive.Bindings.ReactiveCollection<string> Tags {
+	public Reactive.Bindings.ReactiveCollection<ValueCountPair<string>> Tags {
 		get;
 	} = [];
 
@@ -101,6 +102,12 @@ public class DetailSelectorViewModel : ViewModelBase
 
 	private void UpdateTags() {
 		this.Tags.Clear();
-		this.Tags.AddRange(this.TargetFiles.Value.SelectMany(x => x.FileModel.Tags).Distinct());
+		this.Tags.AddRange(
+			this.TargetFiles
+				.Value
+				.SelectMany(x => x.FileModel.Tags)
+				.GroupBy(x => x)
+				.Select(x => new ValueCountPair<string>(x.Key, x.Count()))
+		);
 	}
 }
