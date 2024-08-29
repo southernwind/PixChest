@@ -35,7 +35,23 @@
 			</TextBox>
 		</RelativePanel>
 		<Viewbox Grid.Row="1">
-			<Image Source="{x:Bind ViewModel.MediaContentLibraryViewModel.SelectedFile.Value.FilePath, Mode=OneWay}"/>
+			<controls:SwitchPresenter
+				Value="{x:Bind ViewModel.MediaContentLibraryViewModel.SelectedFile.Value.MediaType,Mode=OneWay}">
+				<controls:Case Value="{x:Bind MediaTypeImage}">
+					<Image Source="{x:Bind ViewModel.MediaContentLibraryViewModel.SelectedFile.Value.FilePath, Mode=OneWay}"/>
+				</controls:Case>
+				<controls:Case Value="{x:Bind MediaTypeVideo}">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*"/>
+						</Grid.RowDefinitions>
+						<MediaPlayerElement
+							Grid.Row="0"
+							Source="{x:Bind ViewModel.MediaContentLibraryViewModel.SelectedFile.Value.FilePath, Mode=OneWay, Converter={StaticResource PathToMediaPlaybackSourceConverter}}"
+							AreTransportControlsEnabled="True"/>
+					</Grid>
+				</controls:Case>
+			</controls:SwitchPresenter>
 		</Viewbox>
 		<ListView
 			x:Name="List"

@@ -1,12 +1,10 @@
-using System.Diagnostics;
-
 using CommunityToolkit.Mvvm.DependencyInjection;
 
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 
+using PixChest.Utils.Objects;
 using PixChest.Views.Tags;
-using PixChest.Database.Tables;
 
 namespace PixChest.Views.Panes.DetailPanes;
 public sealed partial class TagsDetail : DetailPaneBase {
@@ -30,4 +28,11 @@ public sealed partial class TagsDetail : DetailPaneBase {
 			this.ViewModel?.RefreshFilteredTagCandidatesCommand.Execute(Unit.Default);
 		}
 	}
+
+	private void TagGrid_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e) {
+		if (this.TagListBox.SelectedItem is not ValueCountPair<string> tag) {
+			return;
+		}
+		this.ViewModel?.SearchTaggedFilesCommand.Execute(tag);
+    }
 }

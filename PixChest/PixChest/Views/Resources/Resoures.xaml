@@ -16,4 +16,5 @@
 	<converters:SortKeyToDisplayNameConverter x:Key="SortKeyToDisplayNameConverter"/>
 	<converters:ListSortDirectionToIconGlyphConverter x:Key="ListSortDirectionToIconGlyphConverter"/>
 	<converters:ListSortDirectionToBooleanConverter x:Key="ListSortDirectionToBooleanConverter"/>
+	<converters:PathToMediaPlaybackSourceConverter x:Key="PathToMediaPlaybackSourceConverter"/>
 </ResourceDictionary>

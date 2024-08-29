@@ -1,5 +1,3 @@
-using System.ComponentModel;
-using System.IO;
 using System.Reflection;
 
 using ObservableCollections;
@@ -7,7 +5,6 @@ using ObservableCollections;
 using PixChest.Database;
 using PixChest.Models.Files.FileTypes.Interfaces;
 using PixChest.Models.Preferences;
-using PixChest.Utils.Enums;
 
 namespace PixChest.Models.Files;
 

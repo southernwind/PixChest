@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 using PixChest.Database;
 using PixChest.Database.Tables;
 using PixChest.Models.Files.FileTypes.Base;
+using PixChest.Models.Files.FileTypes.Image;
+using PixChest.Models.Files.FileTypes.Video;
 using PixChest.Models.Files.Filter;
 using PixChest.Models.Files.Sort;
 using PixChest.Models.Repositories;
+using PixChest.Utils.Enums;
 
 namespace PixChest.Models.Files.Loaders;
 
@@ -26,20 +29,30 @@ public abstract class FilesLoader(PixChestDbContext dbContext, SortSelector sort
 				.Include(mf => mf.ImageFile)
 				.Include(mf => mf.VideoFile)
 				.Include(mf => mf.Position)
-				.Where(x => x.ThumbnailFileName != null)
 				.Where(this.repositorySelector.CurrentRepositoryCondition.CurrentValue?.WherePredicate() ?? (_ => true))
 				.ToArrayAsync())
 				.Select(x => {
-					var file = new FileModel(x.MediaFileId, x.FilePath) {
-						ThumbnailFilePath = x.ThumbnailFileName,
-						FileSize = x.FileSize,
-						CreationTime = x.CreationTime,
-						ModifiedTime = x.ModifiedTime,
-						LastAccessTime = x.LastAccessTime,
-						Tags = x.MediaFileTags.Select(mft => mft.Tag.TagName).ToList(),
+					return x.FilePath.GetMediaType() switch {
+						MediaType.Image => new ImageFileModel(x.MediaFileId, x.FilePath) {
+							ThumbnailFilePath = x.ThumbnailFileName,
+							FileSize = x.FileSize,
+							CreationTime = x.CreationTime,
+							ModifiedTime = x.ModifiedTime,
+							LastAccessTime = x.LastAccessTime,
+							Tags = x.MediaFileTags.Select(mft => mft.Tag.TagName).ToList(),
+						} as FileModel,
+						MediaType.Video => new VideoFileModel(x.MediaFileId, x.FilePath) {
+							ThumbnailFilePath = x.ThumbnailFileName,
+							FileSize = x.FileSize,
+							CreationTime = x.CreationTime,
+							ModifiedTime = x.ModifiedTime,
+							LastAccessTime = x.LastAccessTime,
+							Tags = x.MediaFileTags.Select(mft => mft.Tag.TagName).ToList(),
+						},
+						_ => throw new Exception(),
 					};
-					return file;
 				})
+				
 				.Where(this.FilterSetter);
 
 		return this.SortSelector.SetSortConditions(files);

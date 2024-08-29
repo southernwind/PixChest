@@ -30,10 +30,12 @@
 				</DataTemplate>
 			</AutoSuggestBox.ItemTemplate>
 		</AutoSuggestBox>
-		<ListBox ItemsSource="{x:Bind ViewModel.Tags, Mode=OneWay}">
+		<ListBox
+			x:Name="TagListBox"
+			ItemsSource="{x:Bind ViewModel.Tags, Mode=OneWay}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
-					<Grid>
+					<Grid DoubleTapped="TagGrid_DoubleTapped">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="Auto"/>
 							<ColumnDefinition Width="Auto"/>

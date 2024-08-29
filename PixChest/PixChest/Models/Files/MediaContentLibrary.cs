@@ -6,7 +6,7 @@ using PixChest.Models.Files.Loaders;
 
 namespace PixChest.Models.Files;
 
-[AddTransient]
+[AddSingleton]
 public class MediaContentLibrary(BasicFilesLoader filesLoader):ModelBase {
 	private readonly BasicFilesLoader _filesLoader = filesLoader;
 

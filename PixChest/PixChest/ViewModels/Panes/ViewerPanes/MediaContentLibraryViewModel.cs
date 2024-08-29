@@ -5,7 +5,7 @@ using PixChest.ViewModels.Files;
 
 namespace PixChest.ViewModels.Panes.ViewerPanes;
 
-[AddTransient]
+[AddSingleton]
 public class MediaContentLibraryViewModel : ViewModelBase {
 	public MediaContentLibraryViewModel(MediaContentLibrary mediaContentLibrary, TagsManager tagsManager) {
 		this.Files = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(mediaContentLibrary.Files, x => new FileViewModel(x));

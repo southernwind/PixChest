@@ -7,8 +7,10 @@ using PixChest.Composition.Bases;
 using PixChest.Database.Tables;
 using PixChest.Models.FileDetailManagers;
 using PixChest.Models.FileDetailManagers.Objects;
+using PixChest.Models.Files;
 using PixChest.Utils.Objects;
 using PixChest.ViewModels.Files;
+using PixChest.ViewModels.Panes.ViewerPanes;
 
 namespace PixChest.ViewModels.Panes.DetailPanes;
 
@@ -16,7 +18,7 @@ namespace PixChest.ViewModels.Panes.DetailPanes;
 public class DetailSelectorViewModel : ViewModelBase
 {
 	private bool _isTargetChanging = false;
-	public DetailSelectorViewModel(TagsManager tagsManager)
+	public DetailSelectorViewModel(TagsManager tagsManager, MediaContentLibraryViewModel mediaContentLibraryViewModel)
     {
 		this.TagCandidates = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(tagsManager.Tags);
 		this.LoadTagCandidatesCommand.Subscribe(async _ => await tagsManager.Load());
@@ -62,6 +64,10 @@ public class DetailSelectorViewModel : ViewModelBase
 			this.Text.Value = "";
 			this.UpdateTags();
 		});
+		this.SearchTaggedFilesCommand.Subscribe(x => {
+			mediaContentLibraryViewModel.SearchWord.Value = x.Value;
+			mediaContentLibraryViewModel.ReloadCommand.Execute(Unit.Default);
+		});
 	}
 
 	public BindableReactiveProperty<FileViewModel[]> TargetFiles {
@@ -91,6 +97,10 @@ public class DetailSelectorViewModel : ViewModelBase
 	public Reactive.Bindings.ReactiveCollection<ValueCountPair<string>> Tags {
 		get;
 	} = [];
+
+	public ReactiveCommand<ValueCountPair<string>> SearchTaggedFilesCommand {
+		get;
+	} = new();
 
 	public BindableReactiveProperty<FileProperty[]> Properties {
 		get;

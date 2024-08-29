@@ -1,6 +1,9 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using PixChest.Models.Files.FileTypes.Base;
+using PixChest.Models.Files.FileTypes.Image;
+using PixChest.Models.Files.FileTypes.Video;
+using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
 
 namespace PixChest.ViewModels.Files;
@@ -31,6 +34,20 @@ public class FileViewModel {
 	public Attributes<string> Properties {
 		get;
 	}
+
+	public MediaType MediaType {
+		get {
+			switch (this.FileModel) {
+				case ImageFileModel:
+					return MediaType.Image;
+				case VideoFileModel:
+					return MediaType.Video;
+				default:
+					throw new Exception();
+			}
+		}
+	}
+
 
 	public virtual Task ExecuteFile() {
 		var psi = new ProcessStartInfo {
