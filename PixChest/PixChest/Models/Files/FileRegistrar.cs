@@ -60,7 +60,6 @@ public class FileRegistrar {
 				fileOperator.RegisterFile(filepath);
 			} catch (Exception e) {
 				Console.WriteLine(e);
-				throw;
 			}
 		}
 	}

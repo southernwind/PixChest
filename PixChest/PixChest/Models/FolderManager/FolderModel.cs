@@ -1,4 +1,3 @@
-using PixChest.Database;
 using PixChest.Models.Files;
 
 using System.IO;
@@ -14,7 +13,7 @@ public class FolderModel(string folderPath, FileRegistrar fileRegistrar) {
 	public async Task Scan() {
 		var files = Directory.EnumerateFiles(this.FolderPath, "", SearchOption.AllDirectories);
 		await Task.Run(() => {
-			this._fileRegistrar.RegistrationQueue.EnqueueRange(files);
+			this._fileRegistrar.RegistrationQueue.EnqueueRange(files.Where(x => x.IsTargetFile()));
 		});
 	}
 }
