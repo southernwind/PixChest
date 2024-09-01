@@ -22,7 +22,7 @@
 		<local:NavigationMenu Grid.Row="0" DataContext="{x:Bind ViewModel.NavigationMenuViewModel}"/>
 		<Grid Grid.Row="1">
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="auto"/>
+				<ColumnDefinition Width="250"/>
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="250"/>
 			</Grid.ColumnDefinitions>

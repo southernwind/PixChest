@@ -9,10 +9,14 @@ namespace PixChest.Views.Panes.ViewerPanes;
 
 public class ViewerPaneBase: UserControlBase<ViewerSelectorViewModel> {
 	protected virtual void List_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-		if (this.ViewModel is not { } vm || sender is not ListBox listBox) {
+		if (this.ViewModel is not { } vm) {
 			return;
 		}
-		vm.MediaContentLibraryViewModel.SelectedFiles.Value = listBox.SelectedItems.Select(x => x as FileViewModel).Where(x => x is not null).ToArray()!;
+		if (sender is ListBox listBox) {
+			vm.MediaContentLibraryViewModel.SelectedFiles.Value = listBox.SelectedItems.Select(x => x as FileViewModel).Where(x => x is not null).ToArray()!;
+		}else if(sender is GridView gridView) {
+			vm.MediaContentLibraryViewModel.SelectedFiles.Value = gridView.SelectedItems.Select(x => x as FileViewModel).Where(x => x is not null).ToArray()!;
+		}
 	}
 
 	protected void File_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e) {

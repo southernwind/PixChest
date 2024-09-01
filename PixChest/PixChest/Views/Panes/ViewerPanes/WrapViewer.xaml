@@ -36,7 +36,7 @@
 			</TextBox>
 		</RelativePanel>
 		
-		<ListBox
+		<GridView
 			Grid.Row="1"
 			ItemsSource="{x:Bind ViewModel.MediaContentLibraryViewModel.Files, Mode=OneWay}"
 			SelectedItem="{x:Bind ViewModel.MediaContentLibraryViewModel.SelectedFile.Value, Mode=TwoWay}"
@@ -44,18 +44,13 @@
 			SelectionChanged="List_SelectionChanged"
 			ScrollViewer.VerticalScrollMode="Auto"
 			ScrollViewer.VerticalScrollBarVisibility="Auto">
-			<ListBox.ItemsPanel>
-				<ItemsPanelTemplate>
-					<controls:WrapPanel Orientation="Horizontal"/>
-				</ItemsPanelTemplate>
-			</ListBox.ItemsPanel>
-			<ListBox.ItemTemplate>
+			<GridView.ItemTemplate>
 				<DataTemplate x:DataType="filesVm:FileViewModel">
 					<Grid DoubleTapped="File_DoubleTapped">
 						<Image Stretch="Uniform" Height="300" Source="{x:Bind ThumbnailFilePath}"/>
 					</Grid>
 				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
+			</GridView.ItemTemplate>
+		</GridView>
 	</Grid>
 </local:ViewerPaneBase>

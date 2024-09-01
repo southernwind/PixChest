@@ -41,7 +41,7 @@ public class FilterSelector : ModelBase {
 	/// <summary>
 	/// フィルター条件変更通知Subject
 	/// </summary>
-	private readonly Subject<Unit> _onUpdateFilteringChanged = new Subject<Unit>();
+	private readonly Subject<Unit> _onUpdateFilteringChanged = new();
 
 	/// <summary>
 	/// フィルター条件変更通知
