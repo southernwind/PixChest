@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using PixChest.Models.Files.FileTypes.Base;
 using PixChest.Models.Files.FileTypes.Image;
 using PixChest.Models.Files.FileTypes.Video;
+using PixChest.Utils.Constants;
 using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
 
@@ -13,7 +14,7 @@ public class FileViewModel {
 	public FileViewModel(FileModel fileModel) {
 		this.FileModel= fileModel;
 		this.FilePath = fileModel.FilePath;
-		this.ThumbnailFilePath = fileModel.ThumbnailFilePath;
+		this.ThumbnailFilePath = fileModel.ThumbnailFilePath ?? FilePathConstants.NoThumbnailFilePath;
 		this.Properties = fileModel.Properties;
 	}
 	public FileModel FileModel {
@@ -24,7 +25,7 @@ public class FileViewModel {
 		get;
 	}
 
-	public string? ThumbnailFilePath {
+	public string ThumbnailFilePath {
 		get;
 	}
 

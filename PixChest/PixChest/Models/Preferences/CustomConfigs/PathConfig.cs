@@ -21,7 +21,7 @@ public class PathConfig : SettingsBase {
 	} = new(Path.Combine(AppDomain.CurrentDomain.BaseDirectory!, "temp"));
 
 	/// <summary>
-	/// 一時フォルダパス
+	/// FFMpegフォルダパス
 	/// </summary>
 
 	public SettingsItem<string> FFMpegFolderPath {

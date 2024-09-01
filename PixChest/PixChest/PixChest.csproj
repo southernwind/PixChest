@@ -61,6 +61,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Assets\thumbnail_creation_failed.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Assets\ffmpeg.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
