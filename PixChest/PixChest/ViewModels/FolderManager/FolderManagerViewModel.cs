@@ -37,7 +37,7 @@ public class FolderManagerViewModel: ViewModelBase {
 		this.AddFolderCommand.Subscribe(x => this._folderManager.AddFolder(x)).AddTo(this.CompositeDisposable);
 		this.RemoveFolderCommand.Subscribe(x => this._folderManager.RemoveFolder(x.GetModel())).AddTo(this.CompositeDisposable);
 		this.ScanCommand.Subscribe(async x => await this._folderManager.Scan()).AddTo(this.CompositeDisposable);
-		this.QueueCount = fileRegistrar.QueueCount.ToBindableReactiveProperty();
-		this.IsScanning = fileRegistrar.QueueCount.Select(x => x > 0).ToBindableReactiveProperty();
+		this.QueueCount = fileRegistrar.QueueCount.ObserveOnCurrentSynchronizationContext().ToBindableReactiveProperty();
+		this.IsScanning = fileRegistrar.QueueCount.ObserveOnCurrentSynchronizationContext().Select(x => x > 0).ToBindableReactiveProperty();
 	}
 }
