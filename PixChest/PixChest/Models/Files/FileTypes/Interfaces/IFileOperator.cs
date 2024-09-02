@@ -11,4 +11,8 @@ public interface IFileOperator {
 	public void RegisterFile(string filepath);
 
 	public Task UpdateRateAsync(long mediaFileId, int rate);
+
+	public Task IncrementUsageCountAsync(long mediaFileId);
+
+	public Task UpdateDescriptionAsync(long mediaFileId, string description);
 }

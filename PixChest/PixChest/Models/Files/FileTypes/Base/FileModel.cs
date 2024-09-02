@@ -63,6 +63,22 @@ public abstract class FileModel(long id, string filePath, IFileOperator fileOper
 	}
 
 	/// <summary>
+	/// 使用回数
+	/// </summary>
+	public int UsageCount {
+		get;
+		set;
+	}
+
+	/// <summary>
+	/// 説明
+	/// </summary>
+	public string Description {
+		get;
+		set;
+	}
+
+	/// <summary>
 	/// 作成日時
 	/// </summary>
 	public DateTime CreationTime {
@@ -113,5 +129,15 @@ public abstract class FileModel(long id, string filePath, IFileOperator fileOper
 	public async Task UpdateRateAsync(int rate) {
 		await this.FileOperator.UpdateRateAsync(this.Id, rate);
 		this.Rate = rate;
+	}
+
+	public async Task IncrementUsageCountAsync() {
+		await this.FileOperator.IncrementUsageCountAsync(this.Id);
+		this.UsageCount++;
+	}
+
+	public async Task UpdateDescriptionAsync(string description) {
+		await this.FileOperator.UpdateDescriptionAsync(this.Id, description);
+		this.Description = description;
 	}
 }

@@ -5,8 +5,6 @@ namespace PixChest.Database.Tables;
 /// メディアファイルテーブル
 /// </summary>
 public class MediaFile {
-	private string? _directoryPath;
-	private string? _filePath;
 	private ICollection<MediaFileTag>? _mediaFileTags;
 
 	/// <summary>
@@ -20,25 +18,17 @@ public class MediaFile {
 	/// <summary>
 	/// ディレクトリパス
 	/// </summary>
-	public string DirectoryPath {
-		get {
-			return this._directoryPath ?? throw new InvalidOperationException();
-		}
-		set {
-			this._directoryPath = value;
-		}
+	public required string DirectoryPath {
+		get;
+		set;
 	}
 
 	/// <summary>
 	/// ファイル名
 	/// </summary>
-	public string FilePath {
-		get {
-			return this._filePath ?? throw new InvalidOperationException();
-		}
-		set {
-			this._filePath = value;
-		}
+	public required string FilePath {
+		get;
+		set;
 	}
 
 	/// <summary>
@@ -85,6 +75,22 @@ public class MediaFile {
 	/// 評価
 	/// </summary>
 	public int Rate {
+		get;
+		set;
+	}
+
+	/// <summary>
+	/// 使用回数
+	/// </summary>
+	public int UsageCount {
+		get;
+		set;
+	}
+
+	/// <summary>
+	/// 説明
+	/// </summary>
+	public required string Description {
 		get;
 		set;
 	}

@@ -40,19 +40,29 @@ public class DetailSelectorViewModel : ViewModelBase
 		});
 		this.TargetFiles.Where(x => x != null).Subscribe(x => {
 			this._isTargetChanging = true;
-			this.UpdateTags();
-			this.Properties.Value =
-				this.TargetFiles.Value
-					.SelectMany(x => x.Properties)
-					.GroupBy(x => x.Title)
-					.Select(x => new FileProperty(
-						x.Key,
-						x.GroupBy(g => g.Value).Select(g => new ValueCountPair<string?>(g.Key, g.Count()))
-					)).ToArray();
 			if (this.TargetFiles.Value.Length > 0) {
+				this.UpdateTags();
+				this.Properties.Value =
+					this.TargetFiles.Value
+						.SelectMany(x => x.Properties)
+						.GroupBy(x => x.Title)
+						.Select(x => new FileProperty(
+							x.Key,
+							x.GroupBy(g => g.Value).Select(g => new ValueCountPair<string?>(g.Key, g.Count()))
+						)).ToArray();
 				this.Rate.Value = this.TargetFiles.Value.Average(x => x.FileModel.Rate);
+				this.UsageCount.Value = this.TargetFiles.Value.Average(x => x.FileModel.UsageCount);
+				if (this.TargetFiles.Value.Count() > 1) {
+					this.Description.Value = "Multiple Files";
+				} else {
+					this.Description.Value = this.TargetFiles.Value.First().FileModel.Description;
+				}
 			}
 			this._isTargetChanging = false;
+		});
+
+		this.UpdateDescriptionCommnd.Subscribe(async _ => {
+			await this.TargetFiles.Value.First().FileModel.UpdateDescriptionAsync(this.Description.Value);
 		});
 
 		this.RemoveTagCommand.Subscribe(async x => {
@@ -128,6 +138,18 @@ public class DetailSelectorViewModel : ViewModelBase
 	/// 評価
 	/// </summary>
 	public BindableReactiveProperty<double> Rate {
+		get;
+	} = new();
+
+	public BindableReactiveProperty<string> Description {
+		get;
+	} = new();
+
+	public BindableReactiveProperty<double> UsageCount {
+		get;
+	} = new();
+
+	public ReactiveCommand<Unit> UpdateDescriptionCommnd {
 		get;
 	} = new();
 

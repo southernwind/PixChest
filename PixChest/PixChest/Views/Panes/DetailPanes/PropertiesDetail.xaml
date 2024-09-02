@@ -13,6 +13,14 @@
 			Value="{x:Bind ViewModel.Rate.Value, Mode=TwoWay}"
 			IsClearEnabled="True"
 			Caption="{x:Bind ViewModel.Rate.Value, Mode=OneWay}"/>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="100"/>
+				<ColumnDefinition Width="100"/>
+			</Grid.ColumnDefinitions>
+			<TextBlock Grid.Column="0" Text="Usage Count"/>
+			<TextBlock Grid.Column="1" Text="{x:Bind ViewModel.UsageCount.Value, Mode=OneWay}"/>
+		</Grid>
 		<ItemsView ItemsSource="{x:Bind ViewModel.Properties.Value, Mode=OneWay}">
 			<ItemsView.ItemTemplate>
 				<DataTemplate>
@@ -39,5 +47,16 @@
 				</DataTemplate>
 			</ItemsView.ItemTemplate>
 		</ItemsView>
-    </StackPanel>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="80"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+			<TextBox Grid.Row="0" Text="{x:Bind ViewModel.Description.Value, Mode=TwoWay}" AcceptsReturn="True"/>
+			<Button Grid.Row="1" Content="Update" Command="{x:Bind ViewModel.UpdateDescriptionCommnd}"/>
+		</Grid>
+	</StackPanel>
 </local:DetailPaneBase>

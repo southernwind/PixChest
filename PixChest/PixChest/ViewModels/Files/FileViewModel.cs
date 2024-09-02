@@ -50,12 +50,12 @@ public class FileViewModel {
 	}
 
 
-	public virtual Task ExecuteFile() {
+	public virtual async Task ExecuteFile() {
 		var psi = new ProcessStartInfo {
 			FileName = this.FilePath,
 			UseShellExecute = true
 		};
 		_ = Process.Start(psi);
-		return Task.CompletedTask;
+		await this.FileModel.IncrementUsageCountAsync();
 	}
 }

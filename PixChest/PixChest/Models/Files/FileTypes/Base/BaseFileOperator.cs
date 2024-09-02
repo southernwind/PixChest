@@ -27,6 +27,31 @@ public abstract class BaseFileOperator : IFileOperator {
 		await this._db.SaveChangesAsync();
 	}
 
+	public virtual async Task IncrementUsageCountAsync(long mediaFileId) {
+		using var transaction = await this._db.Database.BeginTransactionAsync();
+		var file = await this._db.MediaFiles.FirstOrDefaultAsync(x => x.MediaFileId == mediaFileId);
+		if (file is not { } mediaFile) {
+			return;
+		}
+		mediaFile.UsageCount++;
+		this._db.Update(mediaFile);
+		await transaction.CommitAsync();
+		await this._db.SaveChangesAsync();
+	}
+
+	public virtual async Task UpdateDescriptionAsync(long mediaFileId, string description) {
+		using var transaction = await this._db.Database.BeginTransactionAsync();
+		var file = await this._db.MediaFiles.FirstOrDefaultAsync(x => x.MediaFileId == mediaFileId);
+		if (file is not { } mediaFile) {
+			return;
+		}
+		mediaFile.Description = description;
+		this._db.Update(mediaFile);
+		await transaction.CommitAsync();
+		await this._db.SaveChangesAsync();
+	}
+
+
 	public abstract MediaType TargetMediaType {
 		get;
 	}

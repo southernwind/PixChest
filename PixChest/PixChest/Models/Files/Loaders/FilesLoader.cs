@@ -39,6 +39,8 @@ public abstract class FilesLoader(PixChestDbContext dbContext, SortSelector sort
 						MediaType.Image => new ImageFileModel(x.MediaFileId, x.FilePath) {
 							ThumbnailFilePath = x.ThumbnailFileName,
 							Rate = x.Rate,
+							Description = x.Description,
+							UsageCount = x.UsageCount,
 							FileSize = x.FileSize,
 							CreationTime = x.CreationTime,
 							ModifiedTime = x.ModifiedTime,
@@ -48,6 +50,8 @@ public abstract class FilesLoader(PixChestDbContext dbContext, SortSelector sort
 						MediaType.Video => new VideoFileModel(x.MediaFileId, x.FilePath) {
 							ThumbnailFilePath = x.ThumbnailFileName,
 							Rate = x.Rate,
+							Description = x.Description,
+							UsageCount = x.UsageCount,
 							FileSize = x.FileSize,
 							CreationTime = x.CreationTime,
 							ModifiedTime = x.ModifiedTime,
