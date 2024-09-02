@@ -15,7 +15,7 @@ public class RateFilterItemCreator : IFilterItemCreator<RateFilterItemObject> {
 		var op = SearchTypeConverters.SearchTypeToFunc<int>(filterItemObject.SearchType);
 		return new FilterItem(
 			x => op(x.Rate, filterItemObject.Rate),
-			x => op(x.Rate.Value, filterItemObject.Rate),
+			x => op(x.Rate, filterItemObject.Rate),
 			false);
 	}
 }

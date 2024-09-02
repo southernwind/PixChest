@@ -8,7 +8,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
+    <StackPanel>
+		<RatingControl
+			Value="{x:Bind ViewModel.Rate.Value, Mode=TwoWay}"
+			IsClearEnabled="True"
+			Caption="{x:Bind ViewModel.Rate.Value, Mode=OneWay}"/>
 		<ItemsView ItemsSource="{x:Bind ViewModel.Properties.Value, Mode=OneWay}">
 			<ItemsView.ItemTemplate>
 				<DataTemplate>
@@ -35,5 +39,5 @@
 				</DataTemplate>
 			</ItemsView.ItemTemplate>
 		</ItemsView>
-    </Grid>
+    </StackPanel>
 </local:DetailPaneBase>

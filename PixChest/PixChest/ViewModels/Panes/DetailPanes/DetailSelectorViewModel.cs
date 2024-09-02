@@ -8,6 +8,7 @@ using PixChest.Database.Tables;
 using PixChest.Models.FileDetailManagers;
 using PixChest.Models.FileDetailManagers.Objects;
 using PixChest.Models.Files;
+using PixChest.Models.Files.FileTypes.Base;
 using PixChest.Utils.Objects;
 using PixChest.ViewModels.Files;
 using PixChest.ViewModels.Panes.ViewerPanes;
@@ -48,6 +49,9 @@ public class DetailSelectorViewModel : ViewModelBase
 						x.Key,
 						x.GroupBy(g => g.Value).Select(g => new ValueCountPair<string?>(g.Key, g.Count()))
 					)).ToArray();
+			if (this.TargetFiles.Value.Length > 0) {
+				this.Rate.Value = this.TargetFiles.Value.Average(x => x.FileModel.Rate);
+			}
 			this._isTargetChanging = false;
 		});
 
@@ -67,6 +71,20 @@ public class DetailSelectorViewModel : ViewModelBase
 		this.SearchTaggedFilesCommand.Subscribe(x => {
 			mediaContentLibraryViewModel.SearchWord.Value = x.Value;
 			mediaContentLibraryViewModel.ReloadCommand.Execute(Unit.Default);
+		});
+		this.Rate.Subscribe(async x => {
+			if(this._isTargetChanging) {
+				return;
+			}
+			if (!double.IsInteger(x)) {
+				return;
+			}
+			if (this.TargetFiles.Value is null) {
+				return;
+			}
+			foreach (var file in this.TargetFiles.Value) {
+				await file.FileModel.UpdateRateAsync((int)x);
+			}
 		});
 	}
 
@@ -105,6 +123,13 @@ public class DetailSelectorViewModel : ViewModelBase
 	public BindableReactiveProperty<FileProperty[]> Properties {
 		get;
 	} = new([]);
+
+	/// <summary>
+	/// 評価
+	/// </summary>
+	public BindableReactiveProperty<double> Rate {
+		get;
+	} = new();
 
 	public ReactiveCommand<ValueCountPair<string>> RemoveTagCommand {
 		get;

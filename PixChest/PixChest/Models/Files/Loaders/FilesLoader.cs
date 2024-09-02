@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading.Tasks;
 
 using PixChest.Database;
 using PixChest.Database.Tables;
 using PixChest.Models.Files.FileTypes.Base;
 using PixChest.Models.Files.FileTypes.Image;
+using PixChest.Models.Files.FileTypes.Interfaces;
 using PixChest.Models.Files.FileTypes.Video;
 using PixChest.Models.Files.Filter;
 using PixChest.Models.Files.Sort;
@@ -17,6 +19,7 @@ namespace PixChest.Models.Files.Loaders;
 public abstract class FilesLoader(PixChestDbContext dbContext, SortSelector sortSelector,FilterSelector filterSetter, RepositorySelector repositorySelector) {
 	protected FilterSelector FilterSetter = filterSetter;
 	protected SortSelector SortSelector = sortSelector;
+	private static IFileOperator[] _fileOperators;
 	private readonly RepositorySelector repositorySelector = repositorySelector;
 
 	public async Task<IEnumerable<FileModel>> Load() {
@@ -35,6 +38,7 @@ public abstract class FilesLoader(PixChestDbContext dbContext, SortSelector sort
 					return x.FilePath.GetMediaType() switch {
 						MediaType.Image => new ImageFileModel(x.MediaFileId, x.FilePath) {
 							ThumbnailFilePath = x.ThumbnailFileName,
+							Rate = x.Rate,
 							FileSize = x.FileSize,
 							CreationTime = x.CreationTime,
 							ModifiedTime = x.ModifiedTime,
@@ -43,6 +47,7 @@ public abstract class FilesLoader(PixChestDbContext dbContext, SortSelector sort
 						} as FileModel,
 						MediaType.Video => new VideoFileModel(x.MediaFileId, x.FilePath) {
 							ThumbnailFilePath = x.ThumbnailFileName,
+							Rate = x.Rate,
 							FileSize = x.FileSize,
 							CreationTime = x.CreationTime,
 							ModifiedTime = x.ModifiedTime,

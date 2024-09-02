@@ -1,12 +1,17 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using PixChest.Composition.Bases;
+using PixChest.Models.Files.FileTypes.Interfaces;
 using PixChest.Utils.Objects;
 
 namespace PixChest.Models.Files.FileTypes.Base;
 
-[AddTransient]
-public class FileModel(long id, string filePath) : ModelBase {
+public abstract class FileModel(long id, string filePath, IFileOperator fileOperator) : ModelBase {
+	protected IFileOperator FileOperator {
+		get;
+	} = fileOperator;
+
 	public long Id {
 		get;
 	} = id;
@@ -52,9 +57,10 @@ public class FileModel(long id, string filePath) : ModelBase {
 	/// <summary>
 	/// 評価
 	/// </summary>
-	public ReactiveProperty<int> Rate {
+	public int Rate {
 		get;
-	} = new();
+		set;
+	}
 
 	/// <summary>
 	/// 作成日時
@@ -102,5 +108,10 @@ public class FileModel(long id, string filePath) : ModelBase {
 					{ "解像度" , $"{this.Resolution?.ToString()}" }
 				}.ToAttributes();
 		}
+	}
+
+	public async Task UpdateRateAsync(int rate) {
+		await this.FileOperator.UpdateRateAsync(this.Id, rate);
+		this.Rate = rate;
 	}
 }

@@ -45,7 +45,7 @@ public class SortItemCreator {
 				SortItemKeys.ModifiedTime => new SortItem<DateTime>(this.SortItemKey, x => x.ModifiedTime, this.Direction),
 				SortItemKeys.LastAccessTime => new SortItem<DateTime>(this.SortItemKey, x => x.LastAccessTime, this.Direction),
 				SortItemKeys.FileSize => new SortItem<long>(this.SortItemKey, x => x.FileSize, this.Direction),
-				SortItemKeys.Rate => new SortItem<double>(this.SortItemKey, x => x.Rate.Value, this.Direction),
+				SortItemKeys.Rate => new SortItem<double>(this.SortItemKey, x => x.Rate, this.Direction),
 				SortItemKeys.Location => new SortItem<GpsLocation?>(this.SortItemKey, x => x.Location, this.Direction),
 				SortItemKeys.Resolution => new SortItem<ComparableSize?>(this.SortItemKey, x => x.Resolution, this.Direction),
 				_ => throw new ArgumentException(),
