@@ -46,4 +46,8 @@ public class ViewerSelectorViewModel : ViewModelBase {
 	public SortSelectorViewModel SortSelectorViewModel {
 		get;
 	}
+
+	public BindableReactiveProperty<int> ItemSize {
+		get;
+	} = new(150);
 }

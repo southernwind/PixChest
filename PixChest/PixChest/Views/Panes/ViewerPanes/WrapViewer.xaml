@@ -37,6 +37,7 @@
 		</RelativePanel>
 		
 		<GridView
+			x:Name="List"
 			Grid.Row="1"
 			ItemsSource="{x:Bind ViewModel.MediaContentLibraryViewModel.Files, Mode=OneWay}"
 			SelectedItem="{x:Bind ViewModel.MediaContentLibraryViewModel.SelectedFile.Value, Mode=TwoWay}"
@@ -47,7 +48,7 @@
 			<GridView.ItemTemplate>
 				<DataTemplate x:DataType="filesVm:FileViewModel">
 					<Grid DoubleTapped="File_DoubleTapped">
-						<Image Stretch="Uniform" Height="300" Source="{x:Bind ThumbnailFilePath}"/>
+						<Image Stretch="Uniform" Height="{Binding DataContext.ItemSize.Value, Mode=OneWay, ElementName=List}" Source="{x:Bind ThumbnailFilePath}"/>
 					</Grid>
 				</DataTemplate>
 			</GridView.ItemTemplate>

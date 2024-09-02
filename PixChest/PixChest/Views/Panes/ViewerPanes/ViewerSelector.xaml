@@ -14,6 +14,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="auto"/>
 			<RowDefinition Height="*"/>
+			<RowDefinition Height="auto"/>
 		</Grid.RowDefinitions>
 		<Grid Grid.Row="0">
 			<Grid.ColumnDefinitions>
@@ -61,5 +62,17 @@
 				<local:DetailViewer DataContext="{x:Bind ViewModel}"/>
 			</controls:Case>
 		</controls:SwitchPresenter>
+		<controls:DockPanel Grid.Row="2">
+			<Slider
+				controls:DockPanel.Dock="Right"
+				TickFrequency="50"
+				TickPlacement="TopLeft"
+				StepFrequency="10"
+				Minimum="50"
+				Maximum="500"
+				Width="200"
+				Value="{x:Bind ViewModel.ItemSize.Value, Mode=TwoWay}"
+				/>
+		</controls:DockPanel>
 	</Grid>
 </local:ViewerSelectorUserControl>
