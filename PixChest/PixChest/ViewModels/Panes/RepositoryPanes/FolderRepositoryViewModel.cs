@@ -12,7 +12,7 @@ public class FolderRepositoryViewModel : RepositoryViewModelBase {
 			if(this.SelectedFolder.Value is not { } folder) {
 				return;
 			}
-			folderRepository.SetRepositoryCandidate(folder);
+			folderRepository.SetRepositoryCandidate(folder, this.IncludeSubDirectories.Value);
 			await mediaContentLibrary.SearchAsync();
 		});
 	}
@@ -25,6 +25,10 @@ public class FolderRepositoryViewModel : RepositoryViewModelBase {
 	} = new();
 
 	public ReactiveCommand<Unit> SetRepositoryConditionCommand {
+		get;
+	} = new();
+
+	public BindableReactiveProperty<bool> IncludeSubDirectories {
 		get;
 	} = new();
 }

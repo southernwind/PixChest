@@ -1,3 +1,4 @@
+using System.IO;
 using System.Linq.Expressions;
 
 using PixChest.Database.Tables;
@@ -9,10 +10,21 @@ public class FolderRepositoryConditionObject : RepositoryConditionObject {
 		init;
 	}
 
+	public required bool IncludeSubDirectories {
+		get;
+		init;
+	}
+
 	public override Expression<Func<MediaFile, bool>> WherePredicate() {
 		if (this.DirectoryPath == null) {
 			throw new InvalidOperationException();
 		}
-		return mediaFile => mediaFile.DirectoryPath.StartsWith(this.DirectoryPath);
+		if (this.IncludeSubDirectories) {
+			return mediaFile =>
+				mediaFile.DirectoryPath == this.DirectoryPath || mediaFile.DirectoryPath.StartsWith($"{this.DirectoryPath}{Path.DirectorySeparatorChar}");
+		} else {
+			return mediaFile =>
+				mediaFile.DirectoryPath == this.DirectoryPath;
+		}
 	}
 }

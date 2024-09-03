@@ -9,29 +9,38 @@
 	xmlns:objects="using:PixChest.Models.Repositories.Objects"
 	mc:Ignorable="d">
 
-
-	<TreeView
-		ItemsSource="{x:Bind ViewModel.FolderRepositoryViewModel.RootFolder.Value.ChildFolders}"
-		SelectedItem="{x:Bind ViewModel.FolderRepositoryViewModel.SelectedFolder.Value,Mode=TwoWay}">
-		<TreeView.ItemTemplate>
-			<DataTemplate x:DataType="objects:FolderObject">
-				<TreeViewItem
-					AutomationProperties.Name="{x:Bind FolderName}"
-					ItemsSource="{x:Bind ChildFolders}"
-					DoubleTapped="TreeViewItem_DoubleTapped"
-					IsExpanded="{x:Bind IsExpanded}">
-					<StackPanel Orientation="Horizontal">
-						<FontIcon Glyph="&#xE838;" />
-						<TextBlock Margin="0,0,10,0"/>
-						<TextBlock>
-							<Run Text="{x:Bind FolderName}" />
-							<Run Text=" (" />
-							<Run Text="{x:Bind FileCount}" />
-							<Run Text=")" />
-						</TextBlock>
-					</StackPanel>
-				</TreeViewItem>
-			</DataTemplate>
-		</TreeView.ItemTemplate>
-	</TreeView>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<CheckBox Grid.Row="0" IsChecked="{x:Bind ViewModel.FolderRepositoryViewModel.IncludeSubDirectories.Value,Mode=TwoWay}">
+			<TextBlock Text="Include Subdirectories"/>
+		</CheckBox>
+		<TreeView
+			Grid.Row="1"
+			ItemsSource="{x:Bind ViewModel.FolderRepositoryViewModel.RootFolder.Value.ChildFolders}"
+			SelectedItem="{x:Bind ViewModel.FolderRepositoryViewModel.SelectedFolder.Value,Mode=TwoWay}">
+			<TreeView.ItemTemplate>
+				<DataTemplate x:DataType="objects:FolderObject">
+					<TreeViewItem
+						AutomationProperties.Name="{x:Bind FolderName}"
+						ItemsSource="{x:Bind ChildFolders}"
+						DoubleTapped="TreeViewItem_DoubleTapped"
+						IsExpanded="{x:Bind IsExpanded}">
+						<StackPanel Orientation="Horizontal">
+							<FontIcon Glyph="&#xE838;" />
+							<TextBlock Margin="0,0,10,0"/>
+							<TextBlock>
+								<Run Text="{x:Bind FolderName}" />
+								<Run Text=" (" />
+								<Run Text="{x:Bind FileCount}" />
+								<Run Text=")" />
+							</TextBlock>
+						</StackPanel>
+					</TreeViewItem>
+				</DataTemplate>
+			</TreeView.ItemTemplate>
+		</TreeView>
+	</Grid>
 </local:FolderRepositoryUserControl>

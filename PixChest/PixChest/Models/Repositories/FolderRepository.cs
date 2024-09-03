@@ -51,9 +51,10 @@ public class FolderRepository(PixChestDbContext dbContext,States states): Reposi
 		this.RootFolder.Value = new FolderObject(null, "", [.. list.OrderBy(x => x.Value)]);
 	}
 
-	public void SetRepositoryCandidate(FolderObject folderObject) {
+	public void SetRepositoryCandidate(FolderObject folderObject,bool includeSubDirectory) {
 		var rco = new FolderRepositoryConditionObject() {
-			DirectoryPath = folderObject.FolderPath
+			DirectoryPath = folderObject.FolderPath,
+			IncludeSubDirectories = includeSubDirectory
 		};
 		this._states.SearchStates.CurrentRepositoryCondition.Value = rco;
 	}
