@@ -32,6 +32,6 @@ public class ScanConfigPageViewModel:ViewModelBase, IConfigPageViewModel {
 	}
 
 	public void Load() {
-		this.TargetExtensions.AddRangeOnScheduler(this._scanConfig.TargetExtensions);
+		this.TargetExtensions.AddRange(this._scanConfig.TargetExtensions);
 	}
 }

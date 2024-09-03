@@ -23,7 +23,7 @@ public class MediaContentLibrary(BasicFilesLoader filesLoader):ModelBase {
 		this._filesLoader.Word = this.Word;
 		var files = await this._filesLoader.Load();
 		this.Files.Clear();
-		this.Files.AddRangeOnScheduler(files);
+		this.Files.AddRange(files);
 	}
 
 }

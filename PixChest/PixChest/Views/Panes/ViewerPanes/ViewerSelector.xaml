@@ -63,6 +63,10 @@
 			</controls:Case>
 		</controls:SwitchPresenter>
 		<controls:DockPanel Grid.Row="2">
+			<TextBlock>
+				<Run Text="Count: "/>
+				<Run Text="{x:Bind ViewModel.MediaContentLibraryViewModel.Files.Count,Mode=OneWay}"/>
+			</TextBlock>
 			<Slider
 				controls:DockPanel.Dock="Right"
 				TickFrequency="50"
