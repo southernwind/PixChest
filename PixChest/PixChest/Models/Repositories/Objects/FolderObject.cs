@@ -41,11 +41,11 @@ public partial class FolderObject {
 				// 自分自身は除外
 				continue;
 			}
-			if (children.Any(x => $"{dir.Value}{Path.DirectorySeparatorChar}".StartsWith(x.FolderPath))) {
+			if (children.Any(x => dir.Value.StartsWith($"{x.FolderPath}{Path.DirectorySeparatorChar}"))) {
 				// すでに親が含まれている
 				continue;
 			}
-			children.Add(new(this, dir.Value, directories.Where(x => x.Value.StartsWith(dir.Value)).ToArray()));
+			children.Add(new(this, dir.Value, directories.Where(x => $"{x.Value}{Path.DirectorySeparatorChar}".StartsWith($"{dir.Value}{Path.DirectorySeparatorChar}")).ToArray()));
 		}
 		this.ChildFolders = [.. children];
 
