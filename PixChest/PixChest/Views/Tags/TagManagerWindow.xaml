@@ -9,8 +9,12 @@
     mc:Ignorable="d"
 	Title="Tag Manager">
 	<Grid>
-		<local:TagManagerView DataContext="{x:Bind ViewModel,Mode=OneWay}"/>
-		<Button Command="{x:Bind ViewModel.SaveCommand}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<local:TagManagerView Grid.Row="0" DataContext="{x:Bind ViewModel,Mode=OneWay}"/>
+		<Button Grid.Row="1" Command="{x:Bind ViewModel.SaveCommand}">
 			<TextBlock Text="Save"/>
 		</Button>
 	</Grid>
