@@ -86,7 +86,7 @@ public class TagsManager(PixChestDbContext dbContext) {
 		this.TagsWithKanaRomajiAliases.Clear();
 		var tags = await this._db.Tags.Include(x => x.TagAliases).ToArrayAsync();
 		foreach (var tag in tags) {
-			var aliases = tag.TagAliases.Select(x => x.Alias ); 
+			var aliases = tag.TagAliases.Select(x => x.Alias).Concat([tag.TagName]); 
 			var hiragana = aliases.Select(x => x.KatakanaToHiragana());
 			var romaji = hiragana.Select(x => x.HiraganaToRomaji());
 			var newTag = new Tag() {
