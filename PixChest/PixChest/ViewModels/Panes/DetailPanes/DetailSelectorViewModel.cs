@@ -55,8 +55,10 @@ public class DetailSelectorViewModel : ViewModelBase
 			}
 			if (this.TargetFiles.Value.Count() == 1) {
 				this.RepresentativeFile.Value = this.TargetFiles.Value.First();
+				this.Description.Value = this.RepresentativeFile.Value.FileModel.Description;
 			} else {
 				this.RepresentativeFile.Value = null;
+				this.Description.Value = string.Empty;
 			}
 			this._isTargetChanging = false;
 		});
