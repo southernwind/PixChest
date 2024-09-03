@@ -52,11 +52,11 @@ public class DetailSelectorViewModel : ViewModelBase
 						)).ToArray();
 				this.Rate.Value = this.TargetFiles.Value.Average(x => x.FileModel.Rate);
 				this.UsageCount.Value = this.TargetFiles.Value.Average(x => x.FileModel.UsageCount);
-				if (this.TargetFiles.Value.Count() > 1) {
-					this.Description.Value = "Multiple Files";
-				} else {
-					this.Description.Value = this.TargetFiles.Value.First().FileModel.Description;
-				}
+			}
+			if (this.TargetFiles.Value.Count() == 1) {
+				this.RepresentativeFile.Value = this.TargetFiles.Value.First();
+			} else {
+				this.RepresentativeFile.Value = null;
 			}
 			this._isTargetChanging = false;
 		});
@@ -99,6 +99,13 @@ public class DetailSelectorViewModel : ViewModelBase
 	}
 
 	public BindableReactiveProperty<FileViewModel[]> TargetFiles {
+		get;
+	} = new();
+
+	/// <summary>
+	/// 代表ファイル 複数選択時はnull
+	/// </summary>
+	public BindableReactiveProperty<FileViewModel?> RepresentativeFile {
 		get;
 	} = new();
 

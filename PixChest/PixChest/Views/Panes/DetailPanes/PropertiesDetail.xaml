@@ -21,6 +21,14 @@
 			<TextBlock Grid.Column="0" Text="Usage Count"/>
 			<TextBlock Grid.Column="1" Text="{x:Bind ViewModel.UsageCount.Value, Mode=OneWay}"/>
 		</Grid>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="100"/>
+				<ColumnDefinition Width="100"/>
+			</Grid.ColumnDefinitions>
+			<TextBlock Grid.Column="0" Text="FilePath"/>
+			<TextBlock Grid.Column="1" Text="{x:Bind ViewModel.RepresentativeFile.Value.FileModel.FilePath, Mode=OneWay}" IsTextSelectionEnabled="True" TextWrapping="Wrap"/>
+		</Grid>
 		<ItemsView ItemsSource="{x:Bind ViewModel.Properties.Value, Mode=OneWay}">
 			<ItemsView.ItemTemplate>
 				<DataTemplate>
