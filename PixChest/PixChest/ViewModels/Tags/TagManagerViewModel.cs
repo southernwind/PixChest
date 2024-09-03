@@ -7,10 +7,11 @@ public class TagManagerViewModel : ViewModelBase {
 	public TagManagerViewModel(TagsManager tagsManager) {
 		this.Tags = [.. tagsManager.Tags.Select(x => new TagViewModel(x, tagsManager))];
 		this.LoadCommand.Subscribe(async _ => await tagsManager.Load());
-		this.SaveCommand.Subscribe(_ => {
+		this.SaveCommand.Subscribe(async _ => {
 			foreach (var tag in this.Tags) {
 				tag.UpdateTagCommand.Execute(Unit.Default);
 			}
+			await tagsManager.Load();
 		});
 	}
 

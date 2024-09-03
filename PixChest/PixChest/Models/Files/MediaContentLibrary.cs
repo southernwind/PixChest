@@ -19,7 +19,7 @@ public class MediaContentLibrary(BasicFilesLoader filesLoader):ModelBase {
 		set;
 	}
 
-	public async Task Search() {
+	public async Task SearchAsync() {
 		this._filesLoader.Word = this.Word;
 		var files = await this._filesLoader.Load();
 		this.Files.Clear();

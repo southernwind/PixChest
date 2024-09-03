@@ -21,7 +21,7 @@ public class DetailSelectorViewModel : ViewModelBase
 	private bool _isTargetChanging = false;
 	public DetailSelectorViewModel(TagsManager tagsManager, MediaContentLibraryViewModel mediaContentLibraryViewModel)
     {
-		this.TagCandidates = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(tagsManager.Tags);
+		this.TagCandidates = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(tagsManager.TagsWithKanaRomajiAliases);
 		this.LoadTagCandidatesCommand.Subscribe(async _ => await tagsManager.Load());
 		this.FilteredTagCandidates = new AdvancedCollectionView(this.TagCandidates) {
 			Filter = x => {

@@ -1,6 +1,7 @@
 using System.ComponentModel;
 
 using PixChest.Composition.Bases;
+using PixChest.Models.Files;
 using PixChest.Models.Files.Sort;
 using PixChest.Models.Preferences;
 
@@ -14,16 +15,18 @@ public class SortSelectorViewModel : ViewModelBase {
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	public SortSelectorViewModel(SortSelector model, States states) {
+	public SortSelectorViewModel(SortSelector model, States states, MediaContentLibrary mediaContentLibrary) {
 		this._states = states;
 		this.SortConditions = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(model.SortConditions, x => new SortConditionViewModel(x));
 		this.CurrentCondition.Value = this.SortConditions.FirstOrDefault(c => c.Model == model.CurrentSortCondition.Value);
-		this.CurrentCondition.Subscribe(x => {
+		this.CurrentCondition.Subscribe(async x => {
 			model.CurrentSortCondition.Value = x?.Model;
+			await mediaContentLibrary.SearchAsync();
 		});
 		this.Direction.Value = model.Direction.Value;
-		this.Direction.Subscribe(x => {
+		this.Direction.Subscribe(async x => {
 			model.Direction.Value = x;
+			await mediaContentLibrary.SearchAsync();
 		});
 	}
 

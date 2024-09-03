@@ -1,4 +1,5 @@
 using PixChest.Composition.Bases;
+using PixChest.Models.Files;
 using PixChest.Models.Files.Filter;
 using PixChest.Models.Preferences;
 
@@ -12,12 +13,13 @@ public class FilterSelectorViewModel :ViewModelBase {
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	public FilterSelectorViewModel(FilterSelector model, States states) {
+	public FilterSelectorViewModel(FilterSelector model, States states,MediaContentLibrary mediaContentLibrary) {
 		this._states = states;
 		this.FilteringConditions = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(model.FilteringConditions, x => new FilteringConditionViewModel(x));
 		this.CurrentCondition = model.CurrentFilteringCondition.Select(x => this.FilteringConditions.FirstOrDefault(c => c.Model == x)).ToBindableReactiveProperty();
-		this.ChangeFilteringConditionSelectionCommand.Subscribe(x => {
+		this.ChangeFilteringConditionSelectionCommand.Subscribe(async x => {
 			model.CurrentFilteringCondition.Value = x?.Model;
+			await mediaContentLibrary.SearchAsync();
 		});
 	}
 

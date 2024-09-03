@@ -19,7 +19,7 @@ public sealed partial class FolderRepository : FolderRepositoryUserControl {
 		if (this.ViewModel is not { } vm) {
 			return;
 		}
-		vm.FolderRepositoryViewModel.SetRepositoryCondition.Execute(Unit.Default);
+		vm.FolderRepositoryViewModel.SetRepositoryConditionCommand.Execute(Unit.Default);
     }
 }
 

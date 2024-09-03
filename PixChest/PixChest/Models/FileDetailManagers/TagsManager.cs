@@ -15,6 +15,10 @@ public class TagsManager(PixChestDbContext dbContext) {
 		get;
 	} = [];
 
+	public Reactive.Bindings.ReactiveCollection<Tag> TagsWithKanaRomajiAliases {
+		get;
+	} = [];
+
 	public async Task AddTag(FileModel[] fileModels, string tagName, string detail = "") {
 		var target = fileModels.Where(x => !x.Tags.Any(t => t == tagName)).ToArray();
 		using var transaction = this._db.Database.BeginTransaction();
@@ -75,12 +79,23 @@ public class TagsManager(PixChestDbContext dbContext) {
 
 		await transaction.CommitAsync();
 		await this._db.SaveChangesAsync();
-
 	}
 
 	public async Task Load() {
 		this.Tags.Clear();
+		this.TagsWithKanaRomajiAliases.Clear();
 		var tags = await this._db.Tags.Include(x => x.TagAliases).ToArrayAsync();
+		foreach (var tag in tags) {
+			var aliases = tag.TagAliases.Select(x => x.Alias ); 
+			var hiragana = aliases.Select(x => x.KatakanaToHiragana());
+			var romaji = hiragana.Select(x => x.HiraganaToRomaji());
+			var newTag = new Tag() {
+				TagName = tag.TagName,
+				Detail = tag.Detail,
+				TagAliases = aliases.Concat(hiragana).Concat(romaji).Distinct().Select(x => new TagAlias() { Alias = x }).ToArray()
+			};
+			this.TagsWithKanaRomajiAliases.Add(newTag);
+		}
 		this.Tags.AddRange(tags);
 	}
 }

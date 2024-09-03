@@ -1,4 +1,5 @@
 using PixChest.Composition.Bases;
+using PixChest.Models.Files;
 using PixChest.Models.Repositories;
 
 namespace PixChest.ViewModels.Panes.RepositoryPanes;
@@ -7,9 +8,9 @@ namespace PixChest.ViewModels.Panes.RepositoryPanes;
 public class RepositorySelectorViewModel: ViewModelBase {
 
 	public RepositorySelectorViewModel(
-		RepositorySelector repositorySelector) {
+		RepositorySelector repositorySelector, MediaContentLibrary mediaContentLibrary) {
 		this.RepositoryPaneViewModels = repositorySelector.Repositories.Select(x => x switch {
-			FolderRepository folderRepository => new FolderRepositoryViewModel(folderRepository),
+			FolderRepository folderRepository => new FolderRepositoryViewModel(folderRepository, mediaContentLibrary),
 			_ => throw new NotImplementedException()
 		}).ToArray();
 		this.FolderRepositoryViewModel = (this.RepositoryPaneViewModels.First(vm => vm is FolderRepositoryViewModel) as FolderRepositoryViewModel)!;

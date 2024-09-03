@@ -10,7 +10,7 @@ public class MediaContentLibraryViewModel : ViewModelBase {
 	public MediaContentLibraryViewModel(MediaContentLibrary mediaContentLibrary, TagsManager tagsManager) {
 		this.Files = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(mediaContentLibrary.Files, x => new FileViewModel(x));
 		this.ReloadCommand.Subscribe(async _ => {
-			await mediaContentLibrary.Search();
+			await mediaContentLibrary.SearchAsync();
 		}).AddTo(this.CompositeDisposable);
 		this.SearchWord.Subscribe(x => {
 			mediaContentLibrary.Word = x;

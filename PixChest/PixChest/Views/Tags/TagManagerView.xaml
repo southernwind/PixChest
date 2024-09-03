@@ -41,27 +41,29 @@
 				Grid.Row="1"
 				Margin="0,5"
 				Text="Tag Aliases : " />
-			<ItemsControl
-				Grid.Row="2"
-				ItemsSource="{x:Bind ViewModel.SelectedTag.Value.TagAliases, Mode=OneWay}">
-				<ItemsControl.ItemTemplate>
-					<DataTemplate x:DataType="tags:TagAliasViewModel">
-						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="Auto"/>
-							</Grid.ColumnDefinitions>
-							<TextBox Grid.Column="0" Text="{x:Bind Alias.Value, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-							<Button
-								Grid.Column="1"
-								Command="{Binding DataContext.SelectedTag.Value.RemoveTagAliasCommand, ElementName=Root}"
-								CommandParameter="{x:Bind Mode=OneWay}">
-								<FontIcon Glyph="&#xF78A;" />
-							</Button>
-						</Grid>
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-			</ItemsControl>
+			<ScrollViewer Grid.Row="2">
+				<ItemsControl
+					
+					ItemsSource="{x:Bind ViewModel.SelectedTag.Value.TagAliases, Mode=OneWay}">
+					<ItemsControl.ItemTemplate>
+						<DataTemplate x:DataType="tags:TagAliasViewModel">
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto" MinWidth="200"/>
+									<ColumnDefinition Width="Auto"/>
+								</Grid.ColumnDefinitions>
+								<TextBox Grid.Column="0" Text="{x:Bind Alias.Value, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+								<Button
+									Grid.Column="1"
+									Command="{Binding DataContext.SelectedTag.Value.RemoveTagAliasCommand, ElementName=Root}"
+									CommandParameter="{x:Bind Mode=OneWay}">
+									<FontIcon Glyph="&#xF78A;" />
+								</Button>
+							</Grid>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</ScrollViewer>
 			<Button
 				Content="Add Alias"
 				Command="{x:Bind ViewModel.SelectedTag.Value.AddTagAliasCommand, Mode=OneWay}"
