@@ -23,6 +23,7 @@ public class TagsManager(PixChestDbContext dbContext) {
 			tag = new Tag {
 				TagName = tagName,
 				Detail = detail,
+				TagAliases = []
 			};
 			await this._db.AddAsync(tag);
 			await this._db.SaveChangesAsync();
