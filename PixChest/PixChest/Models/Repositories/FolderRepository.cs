@@ -38,8 +38,8 @@ public class FolderRepository(PixChestDbContext dbContext,States states): Reposi
 				.Select(x =>
 					(
 						item: x,
-						joined: string.Join("\\", x.Split[0..depth]), // 対象の深さまでのパス
-						joinedPlus: string.Join("\\", x.Split[0..(depth + 1)]) // 対象の深さ+1までのパス
+						joined: string.Join(Path.DirectorySeparatorChar, x.Split[0..depth]), // 対象の深さまでのパス
+						joinedPlus: string.Join(Path.DirectorySeparatorChar, x.Split[0..(depth + 1)]) // 対象の深さ+1までのパス
 					)
 				)
 				.Where(x => !all.Any(y => y.Value == x.joined)) // 対象のパスがすでに含まれていたら除外

@@ -42,7 +42,7 @@ public partial class FolderObject {
 				// 自分自身は除外
 				continue;
 			}
-			if (children.Any(x => dir.Value.StartsWith(x.FolderPath))) {
+			if (children.Any(x => $"{dir.Value}{Path.DirectorySeparatorChar}".StartsWith(x.FolderPath))) {
 				// すでに親が含まれている
 				continue;
 			}
