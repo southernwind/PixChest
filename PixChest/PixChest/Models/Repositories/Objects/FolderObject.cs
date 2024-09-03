@@ -1,12 +1,7 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 using PixChest.Utils.Objects;
-
-using Reactive.Bindings.Helpers;
 
 namespace PixChest.Models.Repositories.Objects;
 
@@ -30,6 +25,10 @@ public partial class FolderObject {
 	public long FileCount {
 		get;
 	}
+
+	public bool IsExpanded {
+		get;
+	} = false;
 
 	public FolderObject(FolderObject? parent, string currentPath, ValueCountPair<string>[] directories) {
 		this.Parent = parent;

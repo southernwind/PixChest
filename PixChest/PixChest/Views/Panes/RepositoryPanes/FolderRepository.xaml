@@ -19,7 +19,7 @@
 					AutomationProperties.Name="{x:Bind FolderName}"
 					ItemsSource="{x:Bind ChildFolders}"
 					DoubleTapped="TreeViewItem_DoubleTapped"
-					IsExpanded="True">
+					IsExpanded="{x:Bind IsExpanded}">
 					<StackPanel Orientation="Horizontal">
 						<FontIcon Glyph="&#xE838;" />
 						<TextBlock Margin="0,0,10,0"/>
