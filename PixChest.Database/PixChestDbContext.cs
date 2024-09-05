@@ -83,6 +83,14 @@ public class PixChestDbContext(DbContextOptions dbContextOptions) : DbContext(db
 	} = null!;
 
 	/// <summary>
+	/// タグ分類テーブル
+	/// </summary>
+	public DbSet<TagCategory> TagCategories {
+		get;
+		set;
+	} = null!;
+
+	/// <summary>
 	/// メディアファイル・タグ中間テーブル
 	/// </summary>
 	public DbSet<MediaFileTag> MediaFileTags {

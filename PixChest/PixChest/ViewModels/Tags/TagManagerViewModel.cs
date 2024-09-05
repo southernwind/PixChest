@@ -5,20 +5,27 @@ namespace PixChest.ViewModels.Tags;
 [AddTransient]
 public class TagManagerViewModel : ViewModelBase {
 	public TagManagerViewModel(TagsManager tagsManager) {
-		this.Tags = [.. tagsManager.Tags.Select(x => new TagViewModel(x, tagsManager))];
+		this.TagCategories = [.. tagsManager.TagCategories.Select(x => new TagCategoryViewModel(x, tagsManager))];
 		this.LoadCommand.Subscribe(async _ => await tagsManager.Load());
 		this.SaveCommand.Subscribe(async _ => {
-			foreach (var tag in this.Tags) {
-				tag.UpdateTagCommand.Execute(Unit.Default);
+			foreach (var tagCategory in this.TagCategories) {
+				tagCategory.UpdateTagCategoryCommand.Execute(Unit.Default);
 			}
 			await tagsManager.Load();
 		});
+		this.AddTagCategoryCommand.Subscribe(_ => {
+			this.TagCategories.Add(new(new() {
+				TagCategoryName = "",
+				Tags = [],
+				Detail = ""
+			}, tagsManager));
+		});
 	}
 
-	public Reactive.Bindings.ReactiveCollection<TagViewModel> Tags {
+	public Reactive.Bindings.ReactiveCollection<TagCategoryViewModel> TagCategories {
 		get;
 	}
-	public BindableReactiveProperty<TagViewModel> SelectedTag {
+	public BindableReactiveProperty<TagCategoryViewModel> SelectedTagCategory {
 		get;
 	} = new();
 
@@ -27,6 +34,9 @@ public class TagManagerViewModel : ViewModelBase {
 	} = new();
 
 	public ReactiveCommand<Unit> SaveCommand {
+		get;
+	} = new();
+	public ReactiveCommand<Unit> AddTagCategoryCommand {
 		get;
 	} = new();
 }

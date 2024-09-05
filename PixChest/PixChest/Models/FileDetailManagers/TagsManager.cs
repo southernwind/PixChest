@@ -12,7 +12,7 @@ namespace PixChest.Models.FileDetailManagers;
 public class TagsManager(PixChestDbContext dbContext) {
 	private readonly PixChestDbContext _db = dbContext;
 
-	public Reactive.Bindings.ReactiveCollection<Tag> Tags {
+	public Reactive.Bindings.ReactiveCollection<TagCategory> TagCategories {
 		get;
 	} = [];
 
@@ -32,7 +32,17 @@ public class TagsManager(PixChestDbContext dbContext) {
 			};
 			await this._db.AddAsync(tag);
 			await this._db.SaveChangesAsync();
-			this.Tags.Add(tag);
+			var targetCategory = this.TagCategories.FirstOrDefault(x => x.TagCategoryId == -1);
+			if(targetCategory == null) {
+				targetCategory = new TagCategory {
+					TagCategoryId = -1,
+					TagCategoryName = "No Category",
+					Detail = "No Category Tags",
+					Tags = []
+				};
+				this.TagCategories.Add(targetCategory);
+			}
+			targetCategory.Tags.Add(tag);
 		}
 		await this._db.MediaFileTags.AddRangeAsync(target.Select(x => new MediaFileTag {
 			MediaFileId = x.Id,
@@ -64,9 +74,10 @@ public class TagsManager(PixChestDbContext dbContext) {
 		}
 	}
 
-	public async Task UpdateTag(int tagId, string tagName, string detail, IEnumerable<TagAlias> aliases) {
+	public async Task UpdateTag(int tagId, int? tagCategoryId, string tagName, string detail, IEnumerable<TagAlias> aliases) {
 		using var transaction = this._db.Database.BeginTransaction();
 		var tag = this._db.Tags.First(x => x.TagId == tagId);
+		tag.TagCategoryId = tagCategoryId;
 		tag.TagName = tagName;
 		tag.Detail = detail;
 		this._db.Tags.Update(tag);
@@ -83,11 +94,32 @@ public class TagsManager(PixChestDbContext dbContext) {
 		await this._db.SaveChangesAsync();
 	}
 
+	public async Task UpdateTagCategoryAsync(int tagCategoryId, string tagCategoryName, string detail) {
+		using var transaction = this._db.Database.BeginTransaction();
+		var tagCategory = this._db.TagCategories.FirstOrDefault(x => x.TagCategoryId == tagCategoryId);
+		if (tagCategory != null) {
+			tagCategory.TagCategoryName = tagCategoryName;
+			tagCategory.Detail = detail;
+			this._db.TagCategories.Update(tagCategory);
+		} else {
+			tagCategory = new TagCategory() {
+				TagCategoryId = tagCategoryId,
+				TagCategoryName = tagCategoryName,
+				Detail = detail,
+				Tags = []
+			};
+			this._db.TagCategories.Add(tagCategory);
+		}
+		await transaction.CommitAsync();
+		await this._db.SaveChangesAsync();
+	}
+
 	public async Task Load() {
-		this.Tags.Clear();
+		this.TagCategories.Clear();
 		this.TagsWithKanaRomajiAliases.Clear();
-		var tags = await this._db.Tags.Include(x => x.TagAliases).ToArrayAsync();
-		foreach (var tag in tags) {
+		var tagCategories = await this._db.TagCategories.Include(x => x.Tags).ThenInclude(x => x.TagAliases).ToArrayAsync();
+		var noCategoryTags = await this._db.Tags.Include(x => x.TagAliases).Where(x => x.TagCategoryId == null).ToArrayAsync();
+		foreach (var tag in tagCategories.SelectMany(x => x.Tags).Concat(noCategoryTags)) {
 			var aliases = tag.TagAliases.Select(x => (x.Alias, x.Ruby)).Concat([(Alias: tag.TagName, Ruby: null)]);
 			var newTag = new TagWithRomaji() {
 				TagName = tag.TagName,
@@ -100,6 +132,6 @@ public class TagsManager(PixChestDbContext dbContext) {
 			};
 			this.TagsWithKanaRomajiAliases.Add(newTag);
 		}
-		this.Tags.AddRange(tags);
+		this.TagCategories.AddRange(tagCategories.Concat([new TagCategory() { TagCategoryId = -1, TagCategoryName = "No Category", Tags = noCategoryTags, Detail = "No Category Tags" }]));
 	}
 }
