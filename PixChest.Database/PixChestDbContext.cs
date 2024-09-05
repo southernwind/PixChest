@@ -146,6 +146,7 @@ public class PixChestDbContext(DbContextOptions dbContextOptions) : DbContext(db
 		modelBuilder.Entity<MediaFileTag>().HasKey(mft => new { mft.MediaFileId, mft.TagId });
 		modelBuilder.Entity<Tag>().HasKey(t => t.TagId);
 		modelBuilder.Entity<TagAlias>().HasKey(ta => new { ta.TagId, ta.TagAliasId });
+		modelBuilder.Entity<TagCategory>().HasKey(tc => tc.TagCategoryId);
 		modelBuilder.Entity<Jpeg>().HasKey(j => j.MediaFileId);
 		modelBuilder.Entity<Png>().HasKey(p => p.MediaFileId);
 		modelBuilder.Entity<Bmp>().HasKey(b => b.MediaFileId);
@@ -204,6 +205,11 @@ public class PixChestDbContext(DbContextOptions dbContextOptions) : DbContext(db
 		modelBuilder.Entity<TagAlias>()
 			.HasOne(t => t.Tag)
 			.WithMany(t => t.TagAliases)
+			.OnDelete(DeleteBehavior.Cascade);
+
+		modelBuilder.Entity<TagCategory>()
+			.HasMany(tc => tc.Tags)
+			.WithOne(t => t.TagCategory)
 			.OnDelete(DeleteBehavior.Cascade);
 
 		modelBuilder.Entity<Jpeg>()

@@ -50,11 +50,13 @@
 							<Grid>
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="Auto" MinWidth="200"/>
+									<ColumnDefinition Width="Auto" MinWidth="200"/>
 									<ColumnDefinition Width="Auto"/>
 								</Grid.ColumnDefinitions>
 								<TextBox Grid.Column="0" Text="{x:Bind Alias.Value, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+								<TextBox Grid.Column="1" Text="{x:Bind Ruby.Value, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
 								<Button
-									Grid.Column="1"
+									Grid.Column="2"
 									Command="{Binding DataContext.SelectedTag.Value.RemoveTagAliasCommand, ElementName=Root}"
 									CommandParameter="{x:Bind Mode=OneWay}">
 									<FontIcon Glyph="&#xF78A;" />

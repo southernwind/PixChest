@@ -15,6 +15,14 @@ public class Tag {
 	}
 
 	/// <summary>
+	/// タグ分類
+	/// </summary>
+	public int? TagCategoryId {
+		get;
+		set;
+	}
+
+	/// <summary>
 	/// タグ名
 	/// </summary>
 	public required string TagName {
@@ -52,5 +60,13 @@ public class Tag {
 		set {
 			this._tagAliases = value;
 		}
+	}
+
+	/// <summary>
+	/// タグ分類
+	/// </summary>
+	public virtual TagCategory? TagCategory {
+		get;
+		set;
 	}
 }

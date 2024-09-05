@@ -29,8 +29,8 @@ public class DetailSelectorViewModel : ViewModelBase
 				if (text.Length == 0) {
 					return false;
 				}
-				if (x is Tag tag) {
-					return tag.TagAliases.Select(x => x.Alias).Concat([tag.TagName]).Any(x => x.Contains(text));
+				if (x is TagWithRomaji tag) {
+					return tag.TagAliases.Select(x => new string?[] { x.Alias, x.Ruby, x.Romaji }).SelectMany(x => x).Concat([tag.TagName]).Where(x => x is { }).Any(x => x!.Contains(text));
 				}
 				return false;
 			}
@@ -115,7 +115,7 @@ public class DetailSelectorViewModel : ViewModelBase
 		get;
 	} = new();
 
-	public Reactive.Bindings.ReadOnlyReactiveCollection<Tag> TagCandidates {
+	public Reactive.Bindings.ReadOnlyReactiveCollection<TagWithRomaji> TagCandidates {
 		get;
 	}
 

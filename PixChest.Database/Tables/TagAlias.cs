@@ -34,6 +34,14 @@ public class TagAlias {
 	}
 
 	/// <summary>
+	/// 読み仮名
+	/// </summary>
+	public string? Ruby {
+		get;
+		set;
+	}
+
+	/// <summary>
 	/// 関連するタグ
 	/// </summary>
 	public virtual Tag Tag {

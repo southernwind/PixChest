@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 using PixChest.Database;
 using PixChest.Database.Tables;
+using PixChest.Models.FileDetailManagers.Objects;
 using PixChest.Models.Files.FileTypes.Base;
 
 namespace PixChest.Models.FileDetailManagers;
@@ -15,7 +16,7 @@ public class TagsManager(PixChestDbContext dbContext) {
 		get;
 	} = [];
 
-	public Reactive.Bindings.ReactiveCollection<Tag> TagsWithKanaRomajiAliases {
+	public Reactive.Bindings.ReactiveCollection<TagWithRomaji> TagsWithKanaRomajiAliases {
 		get;
 	} = [];
 
@@ -63,7 +64,7 @@ public class TagsManager(PixChestDbContext dbContext) {
 		}
 	}
 
-	public async Task UpdateTag(int tagId, string tagName, string detail, IEnumerable<string> aliases) {
+	public async Task UpdateTag(int tagId, string tagName, string detail, IEnumerable<TagAlias> aliases) {
 		using var transaction = this._db.Database.BeginTransaction();
 		var tag = this._db.Tags.First(x => x.TagId == tagId);
 		tag.TagName = tagName;
@@ -74,7 +75,8 @@ public class TagsManager(PixChestDbContext dbContext) {
 		this._db.TagAliases.AddRange(aliases.Select((x,i) => new TagAlias {
 			TagId = tagId,
 			TagAliasId = i,
-			Alias = x
+			Alias = x.Alias,
+			Ruby = x.Ruby
 		}));
 
 		await transaction.CommitAsync();
@@ -86,13 +88,15 @@ public class TagsManager(PixChestDbContext dbContext) {
 		this.TagsWithKanaRomajiAliases.Clear();
 		var tags = await this._db.Tags.Include(x => x.TagAliases).ToArrayAsync();
 		foreach (var tag in tags) {
-			var aliases = tag.TagAliases.Select(x => x.Alias).Concat([tag.TagName]); 
-			var hiragana = aliases.Select(x => x.KatakanaToHiragana());
-			var romaji = hiragana.Select(x => x.HiraganaToRomaji());
-			var newTag = new Tag() {
+			var aliases = tag.TagAliases.Select(x => (x.Alias, x.Ruby)).Concat([(Alias: tag.TagName, Ruby: null)]);
+			var newTag = new TagWithRomaji() {
 				TagName = tag.TagName,
 				Detail = tag.Detail,
-				TagAliases = aliases.Concat(hiragana).Concat(romaji).Distinct().Select(x => new TagAlias() { Alias = x }).ToArray()
+				TagAliases = aliases.Select(x => new TagAliasWithRomaji() {
+					Alias = x.Alias,
+					Ruby = x.Ruby,
+					Romaji = (x.Ruby ?? x.Alias.KatakanaToHiragana()).HiraganaToRomaji()
+				}).ToList()
 			};
 			this.TagsWithKanaRomajiAliases.Add(newTag);
 		}
