@@ -4,11 +4,8 @@ using System.Reactive.Linq;
 using CommunityToolkit.WinUI.Collections;
 
 using PixChest.Composition.Bases;
-using PixChest.Database.Tables;
 using PixChest.Models.FileDetailManagers;
 using PixChest.Models.FileDetailManagers.Objects;
-using PixChest.Models.Files;
-using PixChest.Models.Files.FileTypes.Base;
 using PixChest.Utils.Objects;
 using PixChest.ViewModels.Files;
 using PixChest.ViewModels.Panes.ViewerPanes;
@@ -30,7 +27,21 @@ public class DetailSelectorViewModel : ViewModelBase
 					return false;
 				}
 				if (x is TagWithRomaji tag) {
-					return tag.TagAliases.Select(x => new string?[] { x.Alias, x.Ruby, x.Romaji }).SelectMany(x => x).Concat([tag.TagName]).Where(x => x is { }).Any(x => x!.Contains(text));
+					if(tag.TagName.Contains(text)){
+						tag.RepresentativeText.Value = null;
+						return true;
+					}
+					var result =
+						tag
+							.TagAliases
+							.FirstOrDefault(
+								x =>
+									x.Alias.Contains(text) ||
+									(x.Ruby?.Contains(text) ?? false) ||
+									(x.Romaji?.Contains(text) ?? false)
+							);
+					tag.RepresentativeText.Value = result?.Alias;
+					return result != null;
 				}
 				return false;
 			}

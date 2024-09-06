@@ -8,4 +8,9 @@ public class TagWithRomaji : Tag {
 		get;
 		set;
 	}
+
+	public BindableReactiveProperty<string?> RepresentativeText {
+		get;
+		set;
+	} = new();
 }

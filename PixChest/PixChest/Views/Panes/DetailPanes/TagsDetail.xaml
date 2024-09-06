@@ -9,7 +9,7 @@
 	xmlns:controls="using:CommunityToolkit.WinUI.Controls"
 	xmlns:ui="using:CommunityToolkit.WinUI"
 	xmlns:tags="using:PixChest.ViewModels.Tags"
-	xmlns:tables="using:PixChest.Database.Tables"
+	xmlns:objects="using:PixChest.Models.FileDetailManagers.Objects"
 	mc:Ignorable="d">
 
 	<StackPanel x:Name="ControlRoot">
@@ -25,8 +25,18 @@
 			TextChanged="AutoSuggestBox_TextChanged"
 			PreviewKeyDown="AutoSuggestBox_PreviewKeyDown">
 			<AutoSuggestBox.ItemTemplate>
-				<DataTemplate x:DataType="tables:Tag">
-					<TextBlock Text="{x:Bind TagName}"/>
+				<DataTemplate x:DataType="objects:TagWithRomaji">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+						<TextBlock Grid.Row="0" Text="{x:Bind TagName}"/>
+						<TextBlock
+							Grid.Row="1"
+							Text="{x:Bind RepresentativeText.Value, Mode=OneWay}"
+							FontSize="10"/>
+					</Grid>
 				</DataTemplate>
 			</AutoSuggestBox.ItemTemplate>
 		</AutoSuggestBox>
