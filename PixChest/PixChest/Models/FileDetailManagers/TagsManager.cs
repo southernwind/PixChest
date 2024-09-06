@@ -109,8 +109,15 @@ public class TagsManager(PixChestDbContext dbContext) {
 	public async Task Load() {
 		this.TagCategories.Clear();
 		this.TagsWithKanaRomajiAliases.Clear();
-		var tagCategories = await this._db.TagCategories.Include(x => x.Tags).ThenInclude(x => x.TagAliases).ToArrayAsync();
-		foreach (var tag in tagCategories.SelectMany(x => x.Tags)) {
+		var tagCategories =
+			await
+				this._db.TagCategories
+					.Include(x => x.Tags)
+					.ThenInclude(x => x.TagAliases)
+					.Include(x => x.Tags)
+					.ThenInclude(x => x.MediaFileTags)
+					.ToArrayAsync();
+		foreach (var tag in tagCategories.SelectMany(x => x.Tags).OrderByDescending(x => x.MediaFileTags.Count)) {
 			var aliases = tag.TagAliases.Select(x => (x.Alias, x.Ruby)).Concat([(Alias: tag.TagName, Ruby: null)]);
 			var newTag = new TagWithRomaji() {
 				TagCategory = tag.TagCategory,

@@ -17,29 +17,40 @@
 			Content="Open Tag Manager"
 			Click="OpenTagManagerButton_Click"
 		/>
-		<AutoSuggestBox
-			ItemsSource="{x:Bind ViewModel.FilteredTagCandidates, Mode=OneWay}"
-			PlaceholderText="Add tags"
-			Text="{x:Bind ViewModel.Text.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-			TextMemberPath="TagName"
-			TextChanged="AutoSuggestBox_TextChanged"
-			PreviewKeyDown="AutoSuggestBox_PreviewKeyDown">
-			<AutoSuggestBox.ItemTemplate>
-				<DataTemplate x:DataType="objects:TagWithRomaji">
-					<Grid>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-						</Grid.RowDefinitions>
-						<TextBlock Grid.Row="0" Text="{x:Bind TagName}"/>
-						<TextBlock
-							Grid.Row="1"
-							Text="{x:Bind RepresentativeText.Value, Mode=OneWay}"
-							FontSize="10"/>
-					</Grid>
-				</DataTemplate>
-			</AutoSuggestBox.ItemTemplate>
-		</AutoSuggestBox>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="Auto"/>
+			</Grid.ColumnDefinitions>
+			<AutoSuggestBox
+				Grid.Column="0"
+				ItemsSource="{x:Bind ViewModel.FilteredTagCandidates, Mode=OneWay}"
+				PlaceholderText="Add tags"
+				Text="{x:Bind ViewModel.Text.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+				TextMemberPath="TagName"
+				TextChanged="AutoSuggestBox_TextChanged"
+				PreviewKeyDown="AutoSuggestBox_PreviewKeyDown">
+				<AutoSuggestBox.ItemTemplate>
+					<DataTemplate x:DataType="objects:TagWithRomaji">
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+							</Grid.RowDefinitions>
+							<TextBlock Grid.Row="0" Text="{x:Bind TagName}"/>
+							<TextBlock
+								Grid.Row="1"
+								Text="{x:Bind RepresentativeText.Value, Mode=OneWay}"
+								FontSize="10"/>
+						</Grid>
+					</DataTemplate>
+				</AutoSuggestBox.ItemTemplate>
+			</AutoSuggestBox>
+			<Button
+				Grid.Column="1"
+				Content="Add"
+				Command="{x:Bind ViewModel.AddTagCommand}"/>
+		</Grid>
 		<ListBox
 			x:Name="TagListBox"
 			ItemsSource="{x:Bind ViewModel.Tags, Mode=OneWay}">
