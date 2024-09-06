@@ -17,7 +17,7 @@ public class Tag {
 	/// <summary>
 	/// タグ分類
 	/// </summary>
-	public int? TagCategoryId {
+	public int TagCategoryId {
 		get;
 		set;
 	}
@@ -65,7 +65,7 @@ public class Tag {
 	/// <summary>
 	/// タグ分類
 	/// </summary>
-	public virtual TagCategory? TagCategory {
+	public virtual required TagCategory TagCategory {
 		get;
 		set;
 	}

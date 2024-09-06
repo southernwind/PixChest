@@ -25,24 +25,16 @@ public class TagsManager(PixChestDbContext dbContext) {
 		using var transaction = this._db.Database.BeginTransaction();
 		var tag = await this._db.Tags.FirstOrDefaultAsync(x => x.TagName == tagName);
 		if(tag == null) {
+			var targetCategory = this.TagCategories.MinBy(x => x.TagCategoryId)!;
 			tag = new Tag {
+				TagCategoryId = targetCategory.TagCategoryId,
 				TagName = tagName,
 				Detail = detail,
-				TagAliases = []
+				TagAliases = [],
+				TagCategory = targetCategory
 			};
 			await this._db.AddAsync(tag);
 			await this._db.SaveChangesAsync();
-			var targetCategory = this.TagCategories.FirstOrDefault(x => x.TagCategoryId == -1);
-			if(targetCategory == null) {
-				targetCategory = new TagCategory {
-					TagCategoryId = -1,
-					TagCategoryName = "No Category",
-					Detail = "No Category Tags",
-					Tags = []
-				};
-				this.TagCategories.Add(targetCategory);
-			}
-			targetCategory.Tags.Add(tag);
 		}
 		await this._db.MediaFileTags.AddRangeAsync(target.Select(x => new MediaFileTag {
 			MediaFileId = x.Id,
@@ -74,7 +66,7 @@ public class TagsManager(PixChestDbContext dbContext) {
 		}
 	}
 
-	public async Task UpdateTag(int tagId, int? tagCategoryId, string tagName, string detail, IEnumerable<TagAlias> aliases) {
+	public async Task UpdateTag(int tagId, int tagCategoryId, string tagName, string detail, IEnumerable<TagAlias> aliases) {
 		using var transaction = this._db.Database.BeginTransaction();
 		var tag = this._db.Tags.First(x => x.TagId == tagId);
 		tag.TagCategoryId = tagCategoryId;
@@ -118,10 +110,10 @@ public class TagsManager(PixChestDbContext dbContext) {
 		this.TagCategories.Clear();
 		this.TagsWithKanaRomajiAliases.Clear();
 		var tagCategories = await this._db.TagCategories.Include(x => x.Tags).ThenInclude(x => x.TagAliases).ToArrayAsync();
-		var noCategoryTags = await this._db.Tags.Include(x => x.TagAliases).Where(x => x.TagCategoryId == null).ToArrayAsync();
-		foreach (var tag in tagCategories.SelectMany(x => x.Tags).Concat(noCategoryTags)) {
+		foreach (var tag in tagCategories.SelectMany(x => x.Tags)) {
 			var aliases = tag.TagAliases.Select(x => (x.Alias, x.Ruby)).Concat([(Alias: tag.TagName, Ruby: null)]);
 			var newTag = new TagWithRomaji() {
+				TagCategory = tag.TagCategory,
 				TagName = tag.TagName,
 				Detail = tag.Detail,
 				TagAliases = aliases.Select(x => new TagAliasWithRomaji() {
@@ -132,6 +124,6 @@ public class TagsManager(PixChestDbContext dbContext) {
 			};
 			this.TagsWithKanaRomajiAliases.Add(newTag);
 		}
-		this.TagCategories.AddRange(tagCategories.Concat([new TagCategory() { TagCategoryId = -1, TagCategoryName = "No Category", Tags = noCategoryTags, Detail = "No Category Tags" }]));
+		this.TagCategories.AddRange(tagCategories);
 	}
 }

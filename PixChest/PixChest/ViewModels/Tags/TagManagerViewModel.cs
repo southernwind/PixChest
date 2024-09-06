@@ -12,6 +12,8 @@ public class TagManagerViewModel : ViewModelBase {
 				tagCategory.UpdateTagCategoryCommand.Execute(Unit.Default);
 			}
 			await tagsManager.Load();
+			this.TagCategories.Clear();
+			this.TagCategories.AddRange(tagsManager.TagCategories.Select(x => new TagCategoryViewModel(x, tagsManager)));
 		});
 		this.AddTagCategoryCommand.Subscribe(_ => {
 			this.TagCategories.Add(new(new() {

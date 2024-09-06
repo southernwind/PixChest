@@ -8,9 +8,9 @@ public class TagViewModel : ViewModelBase {
 	public TagViewModel(Tag tag, TagsManager tagsManager) {
 		this.TagName.Value = tag.TagName;
 		this.Detail.Value = tag.Detail;
-		this.TagAliases.AddRange(tag.TagAliases.Select(x => new TagAliasViewModel(x)));
+		this.TagAliases.AddRange(tag.TagAliases.Select(x => new TagAliasViewModel(x, this)));
 		this.TagCategoryCandidates = tagsManager.TagCategories;
-		this.TagCategory.Value = this.TagCategoryCandidates.FirstOrDefault(x => x.TagCategoryId == (tag.TagCategoryId ?? -1));
+		this.TagCategory.Value = this.TagCategoryCandidates.First(x => x.TagCategoryId == tag.TagCategoryId);
 		this.UpdateTagCommand = this.TagName.CombineLatest(this.Detail, (x,y) => !string.IsNullOrWhiteSpace(x) && !string.IsNullOrWhiteSpace(y)).ToReactiveCommand();
 		this.UpdateTagCommand.Subscribe(async _ => {
 			if (!this._editedFlag) {
@@ -18,7 +18,7 @@ public class TagViewModel : ViewModelBase {
 			}
 			await tagsManager.UpdateTag(
 				tag.TagId,
-				this.TagCategory.Value?.TagCategoryId,
+				this.TagCategory.Value.TagCategoryId,
 				this.TagName.Value,
 				this.Detail.Value,
 				this.TagAliases.Select(x =>
@@ -36,10 +36,10 @@ public class TagViewModel : ViewModelBase {
 		});
 
 		this.TagName
-			.Select(_ => Unit.Default)
-			.Concat(this.Detail.Select(_ => Unit.Default))
-			.Concat(Reactive.Bindings.Extensions.INotifyCollectionChangedExtensions.CollectionChangedAsObservable(this.TagAliases).ToObservable().Select(_ => Unit.Default))
-			.Concat(this.TagCategory.Select(_ => Unit.Default))
+			.ToUnit()
+			.Merge(this.Detail.ToUnit())
+			.Merge(Reactive.Bindings.Extensions.INotifyCollectionChangedExtensions.CollectionChangedAsObservable(this.TagAliases).ToObservable().ToUnit())
+			.Merge(this.TagCategory.ToUnit())
 			.Subscribe(_ => {
 			this._editedFlag = true;
 		});
@@ -56,7 +56,7 @@ public class TagViewModel : ViewModelBase {
 		get;
 	} = new();
 
-	public BindableReactiveProperty<TagCategory?> TagCategory {
+	public BindableReactiveProperty<TagCategory> TagCategory {
 		get;
 	} = new();
 
@@ -79,4 +79,8 @@ public class TagViewModel : ViewModelBase {
 	public ReactiveCommand<TagAliasViewModel> RemoveTagAliasCommand {
 		get;
 	} = new();
+
+	public void MarkAsEdited() {
+		this._editedFlag = true;
+	}
 }

@@ -56,7 +56,9 @@ public partial class App : Application {
 		Ioc.Default.ConfigureServices(
 			serviceCollection.BuildServiceProvider()
 		);
-		Ioc.Default.GetRequiredService<PixChestDbContext>().Database.EnsureCreated();
+		var db = Ioc.Default.GetRequiredService<PixChestDbContext>();
+		db.Database.EnsureCreated();
+		InitialDataRegisterer.Register(db);
 
 		this._config = Ioc.Default.GetRequiredService<Config>();
 		this._config.SetFilePath(this._configFilePath);
