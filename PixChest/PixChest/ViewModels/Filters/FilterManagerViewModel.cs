@@ -24,7 +24,7 @@ public class FilterManagerViewModel : ViewModelBase {
 	/// <summary>
 	/// フィルタリング条件
 	/// </summary>
-	public Reactive.Bindings.ReadOnlyReactiveCollection<FilteringConditionEditorViewModel> FilteringConditions {
+	public INotifyCollectionChangedSynchronizedViewList<FilteringConditionEditorViewModel> FilteringConditions {
 		get;
 	}
 
@@ -92,7 +92,7 @@ public class FilterManagerViewModel : ViewModelBase {
 			this.Load();
 		}).AddTo(this.CompositeDisposable);
 
-		this.FilteringConditions = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(filterManager.FilteringConditions,x => new FilteringConditionEditorViewModel(x));
+		this.FilteringConditions = filterManager.FilteringConditions.CreateView(x => new FilteringConditionEditorViewModel(x)).ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 
 		this.FilterCreatorViewModels = [
 				new ExistsFilterCreatorViewModel(this.CurrentCondition),

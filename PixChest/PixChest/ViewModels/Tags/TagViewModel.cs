@@ -8,8 +8,9 @@ public class TagViewModel : ViewModelBase {
 	public TagViewModel(Tag tag, TagsManager tagsManager) {
 		this.TagName.Value = tag.TagName;
 		this.Detail.Value = tag.Detail;
-		this.TagAliases.AddRange(tag.TagAliases.Select(x => new TagAliasViewModel(x, this)));
-		this.TagCategoryCandidates = tagsManager.TagCategories;
+		this._tagAliases.AddRange(tag.TagAliases.Select(x => new TagAliasViewModel(x, this)));
+		this.TagAliases = this._tagAliases.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
+		this.TagCategoryCandidates = tagsManager.TagCategories.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 		this.TagCategory.Value = this.TagCategoryCandidates.First(x => x.TagCategoryId == tag.TagCategoryId);
 		this.UpdateTagCommand = this.TagName.CombineLatest(this.Detail, (x,y) => !string.IsNullOrWhiteSpace(x) && !string.IsNullOrWhiteSpace(y)).ToReactiveCommand();
 		this.UpdateTagCommand.Subscribe(async _ => {
@@ -29,10 +30,10 @@ public class TagViewModel : ViewModelBase {
 			this._editedFlag = false;
 		});
 		this.RemoveTagAliasCommand.Subscribe(x => {
-			this.TagAliases.Remove(x);
+			this._tagAliases.Remove(x);
 		});
 		this.AddTagAliasCommand.Subscribe(_ => {
-			this.TagAliases.Add(new());
+			this._tagAliases.Add(new());
 		});
 
 		this.TagName
@@ -47,7 +48,7 @@ public class TagViewModel : ViewModelBase {
 	}
 
 	private bool _editedFlag = false;
-
+	private readonly ObservableList<TagAliasViewModel> _tagAliases = [];
 	public BindableReactiveProperty<string> TagName {
 		get;
 	} = new();
@@ -60,13 +61,13 @@ public class TagViewModel : ViewModelBase {
 		get;
 	} = new();
 
-	public Reactive.Bindings.ReactiveCollection<TagCategory> TagCategoryCandidates {
+	public INotifyCollectionChangedSynchronizedViewList<TagCategory> TagCategoryCandidates {
 		get;
 	}
 
-	public Reactive.Bindings.ReactiveCollection<TagAliasViewModel> TagAliases {
+	public INotifyCollectionChangedSynchronizedViewList<TagAliasViewModel> TagAliases {
 		get;
-	} = [];
+	}
 
 	public ReactiveCommand<Unit> UpdateTagCommand {
 		get;

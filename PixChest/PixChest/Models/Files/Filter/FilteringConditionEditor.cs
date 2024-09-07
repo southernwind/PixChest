@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 using PixChest.Composition.Bases;
 using PixChest.Models.Files.Filter.FilterItemObjects;
 using PixChest.Utils.Enums;
@@ -29,7 +27,7 @@ public class FilteringConditionEditor : ModelBase {
 	/// <summary>
 	/// フィルター条件クリエイター
 	/// </summary>
-	public Reactive.Bindings.ReactiveCollection<IFilterItemObject> FilterItemObjects {
+	public ObservableList<IFilterItemObject> FilterItemObjects {
 		get;
 	} = [];
 

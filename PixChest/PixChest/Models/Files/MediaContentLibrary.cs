@@ -10,10 +10,10 @@ namespace PixChest.Models.Files;
 public class MediaContentLibrary(BasicFilesLoader filesLoader):ModelBase {
 	private readonly BasicFilesLoader _filesLoader = filesLoader;
 
-	public Reactive.Bindings.ReactiveCollection<FileModel> Files {
+	public ObservableList<FileModel> Files {
 		get;
 	} = [];
-
+	 
 	public string? Word {
 		get;
 		set;

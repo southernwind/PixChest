@@ -8,19 +8,21 @@ namespace PixChest.ViewModels.Preferences.CustomConfig;
 [AddTransient]
 public class ScanConfigPageViewModel:ViewModelBase, IConfigPageViewModel {
 	private readonly ScanConfig _scanConfig;
+	private readonly ObservableList<ExtensionConfig> _targetExtensions = [];
 	public ScanConfigPageViewModel(ScanConfig scanConfig) {
 		this._scanConfig = scanConfig;
 		this.AddExtensionCommand.Subscribe(_ => {
 			scanConfig.TargetExtensions.Add(new ExtensionConfig());
 		});
+		this.TargetExtensions = this._targetExtensions.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 	}
 
 	/// <summary>
 	/// 対象拡張子
 	/// </summary>
-	public Reactive.Bindings.ReactiveCollection<ExtensionConfig> TargetExtensions {
+	public INotifyCollectionChangedSynchronizedViewList<ExtensionConfig> TargetExtensions {
 		get;
-	} = [];
+	}
 
 	public ReactiveCommand<Unit> AddExtensionCommand {
 		get;
@@ -32,6 +34,6 @@ public class ScanConfigPageViewModel:ViewModelBase, IConfigPageViewModel {
 	}
 
 	public void Load() {
-		this.TargetExtensions.AddRange(this._scanConfig.TargetExtensions);
+		this._targetExtensions.AddRange(this._scanConfig.TargetExtensions);
 	}
 }

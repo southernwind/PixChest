@@ -15,7 +15,7 @@ public class SortManager(States states) : ModelBase {
 	/// <summary>
 	/// ソート条件リスト
 	/// </summary>
-	public Reactive.Bindings.ReactiveCollection<SortConditionEditor> SortConditions {
+	public ObservableList<SortConditionEditor> SortConditions {
 		get;
 	} = [];
 

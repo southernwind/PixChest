@@ -23,7 +23,7 @@ public class SortManagerViewModel : ViewModelBase {
 		this.LoadCommand.Subscribe(_ => {
 			this.Load();
 		}).AddTo(this.CompositeDisposable);
-		this.SortConditions = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(this._sortManager.SortConditions, x => new SortConditionEditorViewModel(x));
+		this.SortConditions = this._sortManager.SortConditions.CreateView(x => new SortConditionEditorViewModel(x)).ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 
 	}
 
@@ -41,7 +41,7 @@ public class SortManagerViewModel : ViewModelBase {
 	/// <summary>
 	/// ソート条件
 	/// </summary>
-	public Reactive.Bindings.ReadOnlyReactiveCollection<SortConditionEditorViewModel> SortConditions {
+	public INotifyCollectionChangedSynchronizedViewList<SortConditionEditorViewModel> SortConditions {
 		get;
 	}
 

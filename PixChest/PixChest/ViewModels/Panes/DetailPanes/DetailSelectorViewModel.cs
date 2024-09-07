@@ -18,36 +18,11 @@ public class DetailSelectorViewModel : ViewModelBase
 	private bool _isTargetChanging = false;
 	public DetailSelectorViewModel(TagsManager tagsManager, MediaContentLibraryViewModel mediaContentLibraryViewModel)
     {
-		this.TagCandidates = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(tagsManager.TagsWithKanaRomajiAliases);
+		this.TagCandidates = tagsManager.TagsWithKanaRomajiAliases.CreateView(x => x);
 		this.LoadTagCandidatesCommand.Subscribe(async _ => await tagsManager.Load());
-		this.FilteredTagCandidates = new AdvancedCollectionView(this.TagCandidates) {
-			Filter = x => {
-				var text = this.Text.Value ?? "";
-				if (text.Length == 0) {
-					return false;
-				}
-				if (x is TagWithRomaji tag) {
-					if(tag.TagName.Contains(text)){
-						tag.RepresentativeText.Value = null;
-						return true;
-					}
-					var result =
-						tag
-							.TagAliases
-							.FirstOrDefault(
-								x =>
-									x.Alias.Contains(text) ||
-									(x.Ruby?.Contains(text) ?? false) ||
-									(x.Romaji?.Contains(text) ?? false)
-							);
-					tag.RepresentativeText.Value = result?.Alias;
-					return result != null;
-				}
-				return false;
-			}
-		};
+		this.FilteredTagCandidates = this.TagCandidates.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 		this.RefreshFilteredTagCandidatesCommand.Subscribe(x => {
-			this.FilteredTagCandidates.RefreshFilter();
+			this.RefreshTagCandidateFilter();
 		});
 		this.TargetFiles.Where(x => x != null).Subscribe(x => {
 			this._isTargetChanging = true;
@@ -109,7 +84,11 @@ public class DetailSelectorViewModel : ViewModelBase
 				await file.FileModel.UpdateRateAsync((int)x);
 			}
 		});
+
+		this.Tags = this._tags.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 	}
+
+	private readonly ObservableList<ValueCountPair<string>> _tags = [];
 
 	public BindableReactiveProperty<FileViewModel[]> TargetFiles {
 		get;
@@ -126,11 +105,11 @@ public class DetailSelectorViewModel : ViewModelBase
 		get;
 	} = new();
 
-	public Reactive.Bindings.ReadOnlyReactiveCollection<TagWithRomaji> TagCandidates {
+	public ISynchronizedView<TagWithRomaji, TagWithRomaji> TagCandidates {
 		get;
 	}
 
-	public IAdvancedCollectionView FilteredTagCandidates {
+	public INotifyCollectionChangedSynchronizedViewList<TagWithRomaji> FilteredTagCandidates {
 		get;
 	}
 
@@ -142,9 +121,9 @@ public class DetailSelectorViewModel : ViewModelBase
 		get;
 	} = new();
 
-	public Reactive.Bindings.ReactiveCollection<ValueCountPair<string>> Tags {
+	public INotifyCollectionChangedSynchronizedViewList<ValueCountPair<string>> Tags {
 		get;
-	} = [];
+	}
 
 	public ReactiveCommand<ValueCountPair<string>> SearchTaggedFilesCommand {
 		get;
@@ -182,13 +161,37 @@ public class DetailSelectorViewModel : ViewModelBase
 	} = new();
 
 	private void UpdateTags() {
-		this.Tags.Clear();
-		this.Tags.AddRange(
+		this._tags.Clear();
+		this._tags.AddRange(
 			this.TargetFiles
 				.Value
 				.SelectMany(x => x.FileModel.Tags)
 				.GroupBy(x => x)
 				.Select(x => new ValueCountPair<string>(x.Key, x.Count()))
 		);
+	}
+
+	private void RefreshTagCandidateFilter() {
+		this.TagCandidates.AttachFilter(tag => {
+			var text = this.Text.Value ?? "";
+			if (text.Length == 0) {
+				return false;
+			}
+			if (tag.TagName.Contains(text)) {
+				tag.RepresentativeText.Value = null;
+				return true;
+			}
+			var result =
+				tag
+					.TagAliases
+					.FirstOrDefault(
+						x =>
+							x.Alias.Contains(text) ||
+							(x.Ruby?.Contains(text) ?? false) ||
+							(x.Romaji?.Contains(text) ?? false)
+					);
+			tag.RepresentativeText.Value = result?.Alias;
+			return result != null;
+		});
 	}
 }

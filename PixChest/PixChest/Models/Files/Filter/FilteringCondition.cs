@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using PixChest.Composition.Bases;
 using PixChest.Models.Files.Filter.FilterItemObjects;
-using System.Reactive.Concurrency;
 using PixChest.Database.Tables;
 using PixChest.Models.Files.FileTypes.Base;
 
@@ -21,12 +20,11 @@ public class FilteringCondition : ModelBase {
 	public FilteringCondition(FilterObject filterObject) {
 		this.FilterObject = filterObject;
 		this.DisplayName = filterObject.DisplayName.ToReadOnlyReactiveProperty();
-		this.FilterItemObjects =
-			Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(this.FilterObject.FilterItemObjects);
+		this.FilterItemObjects = this.FilterObject.FilterItemObjects;
 
-		this._filterItems = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(this.FilterItemObjects, FilterItemFactory.Create, Scheduler.Immediate);
+		this._filterItems = this.FilterItemObjects.CreateView(FilterItemFactory.Create);
 
-		Reactive.Bindings.Extensions.INotifyCollectionChangedExtensions.CollectionChangedAsObservable(this._filterItems).Subscribe(x => {
+		this.FilterItemObjects.ObserveCountChanged().Subscribe(_ => {
 			this._onUpdateFilteringConditions.OnNext(Unit.Default);
 		}).AddTo(this.CompositeDisposable);
 	}
@@ -41,12 +39,12 @@ public class FilteringCondition : ModelBase {
 	/// <summary>
 	/// フィルター条件
 	/// </summary>
-	private readonly Reactive.Bindings.ReadOnlyReactiveCollection<FilterItem> _filterItems;
+	private readonly ISynchronizedView<IFilterItemObject, FilterItem> _filterItems;
 
 	/// <summary>
 	/// フィルター条件クリエイター
 	/// </summary>
-	public Reactive.Bindings.ReadOnlyReactiveCollection<IFilterItemObject> FilterItemObjects {
+	public IReadOnlyObservableList<IFilterItemObject> FilterItemObjects {
 		get;
 	}
 

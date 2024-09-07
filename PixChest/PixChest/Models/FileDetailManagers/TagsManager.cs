@@ -12,11 +12,11 @@ namespace PixChest.Models.FileDetailManagers;
 public class TagsManager(PixChestDbContext dbContext) {
 	private readonly PixChestDbContext _db = dbContext;
 
-	public Reactive.Bindings.ReactiveCollection<TagCategory> TagCategories {
+	public ObservableList<TagCategory> TagCategories {
 		get;
 	} = [];
 
-	public Reactive.Bindings.ReactiveCollection<TagWithRomaji> TagsWithKanaRomajiAliases {
+	public ObservableList<TagWithRomaji> TagsWithKanaRomajiAliases {
 		get;
 	} = [];
 

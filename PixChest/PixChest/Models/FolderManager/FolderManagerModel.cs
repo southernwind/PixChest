@@ -8,7 +8,7 @@ namespace PixChest.Models.FolderManager;
 [AddTransient]
 public class FolderManagerModel(FileRegistrar fileRegistrar) : ModelBase{
 	private readonly FileRegistrar _fileRegistrar = fileRegistrar;
-	public Reactive.Bindings.ReactiveCollection<FolderModel> Folders {
+	public ObservableList<FolderModel> Folders {
 		get;
 	} = [];
 

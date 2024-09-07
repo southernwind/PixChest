@@ -27,7 +27,7 @@ public class SortConditionEditor : ModelBase {
 	/// <summary>
 	/// ソート条件クリエイター
 	/// </summary>
-	public Reactive.Bindings.ReactiveCollection<SortItemCreator> SortItemCreators {
+	public ObservableList<SortItemCreator> SortItemCreators {
 		get;
 	} = [];
 

@@ -16,7 +16,7 @@ public class FilterObject {
 	/// <summary>
 	/// フィルター条件オブジェクト
 	/// </summary>
-	public Reactive.Bindings.ReactiveCollection<IFilterItemObject> FilterItemObjects {
+	public ObservableList<IFilterItemObject> FilterItemObjects {
 		get;
 		set;
 	} = [];

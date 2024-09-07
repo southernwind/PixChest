@@ -1,6 +1,7 @@
 using PixChest.Composition.Bases;
 using PixChest.Models.FileDetailManagers;
 using PixChest.Models.Files;
+using PixChest.Models.Files.FileTypes.Base;
 using PixChest.ViewModels.Files;
 
 namespace PixChest.ViewModels.Panes.ViewerPanes;
@@ -8,7 +9,7 @@ namespace PixChest.ViewModels.Panes.ViewerPanes;
 [AddSingleton]
 public class MediaContentLibraryViewModel : ViewModelBase {
 	public MediaContentLibraryViewModel(MediaContentLibrary mediaContentLibrary, TagsManager tagsManager) {
-		this.Files = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(mediaContentLibrary.Files, x => new FileViewModel(x));
+		this.Files = mediaContentLibrary.Files.CreateView(x => new FileViewModel(x)).ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 		this.ReloadCommand.Subscribe(async _ => {
 			await mediaContentLibrary.SearchAsync();
 		}).AddTo(this.CompositeDisposable);
@@ -17,7 +18,7 @@ public class MediaContentLibraryViewModel : ViewModelBase {
 		});
 	}
 
-	public Reactive.Bindings.ReadOnlyReactiveCollection<FileViewModel> Files {
+	public INotifyCollectionChangedSynchronizedViewList<FileViewModel> Files {
 		get;
 	}
 

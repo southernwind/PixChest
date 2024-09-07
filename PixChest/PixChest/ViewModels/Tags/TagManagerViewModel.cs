@@ -5,18 +5,19 @@ namespace PixChest.ViewModels.Tags;
 [AddTransient]
 public class TagManagerViewModel : ViewModelBase {
 	public TagManagerViewModel(TagsManager tagsManager) {
-		this.TagCategories = [.. tagsManager.TagCategories.Select(x => new TagCategoryViewModel(x, tagsManager))];
+		this._tagCategories = [.. tagsManager.TagCategories.Select(x => new TagCategoryViewModel(x, tagsManager))];
+		this.TagCategories = this._tagCategories.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 		this.LoadCommand.Subscribe(async _ => await tagsManager.Load());
 		this.SaveCommand.Subscribe(async _ => {
 			foreach (var tagCategory in this.TagCategories) {
 				tagCategory.UpdateTagCategoryCommand.Execute(Unit.Default);
 			}
 			await tagsManager.Load();
-			this.TagCategories.Clear();
-			this.TagCategories.AddRange(tagsManager.TagCategories.Select(x => new TagCategoryViewModel(x, tagsManager)));
+			this._tagCategories.Clear();
+			this._tagCategories.AddRange(tagsManager.TagCategories.Select(x => new TagCategoryViewModel(x, tagsManager)));
 		});
 		this.AddTagCategoryCommand.Subscribe(_ => {
-			this.TagCategories.Add(new(new() {
+			this._tagCategories.Add(new(new() {
 				TagCategoryName = "",
 				Tags = [],
 				Detail = ""
@@ -24,9 +25,12 @@ public class TagManagerViewModel : ViewModelBase {
 		});
 	}
 
-	public Reactive.Bindings.ReactiveCollection<TagCategoryViewModel> TagCategories {
+
+	private readonly ObservableList<TagCategoryViewModel> _tagCategories = [];
+	public INotifyCollectionChangedSynchronizedViewList<TagCategoryViewModel> TagCategories {
 		get;
 	}
+
 	public BindableReactiveProperty<TagCategoryViewModel> SelectedTagCategory {
 		get;
 	} = new();

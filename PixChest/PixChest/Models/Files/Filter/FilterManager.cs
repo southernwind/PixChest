@@ -16,7 +16,7 @@ public class FilterManager(States states) : ModelBase {
 	/// <summary>
 	/// フィルター条件リスト
 	/// </summary>
-	public Reactive.Bindings.ReactiveCollection<FilteringConditionEditor> FilteringConditions {
+	public ObservableList<FilteringConditionEditor> FilteringConditions {
 		get;
 	} = [];
 

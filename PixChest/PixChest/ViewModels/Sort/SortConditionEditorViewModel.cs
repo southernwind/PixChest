@@ -13,7 +13,7 @@ public class SortConditionEditorViewModel : ViewModelBase {
 			this.Model.DisplayName.Value = x;
 		});
 
-		this.SortItemCreators = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(this.Model.SortItemCreators);
+		this.SortItemCreators = this.Model.SortItemCreators.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 
 		this.AddSortItemCommand.Subscribe(this.Model.AddSortItem).AddTo(this.CompositeDisposable);
 		this.RemoveSortItemCommand.Subscribe(this.Model.RemoveSortItem).AddTo(this.CompositeDisposable);
@@ -36,7 +36,7 @@ public class SortConditionEditorViewModel : ViewModelBase {
 	/// <summary>
 	/// ソート条件クリエイター
 	/// </summary>
-	public Reactive.Bindings.ReadOnlyReactiveCollection<SortItemCreator> SortItemCreators {
+	public INotifyCollectionChangedSynchronizedViewList<SortItemCreator> SortItemCreators {
 		get;
 	}
 

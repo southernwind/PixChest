@@ -16,7 +16,7 @@ public class SortObject {
 		/// <summary>
 		/// フィルター条件クリエイター
 		/// </summary>
-		public Reactive.Bindings.ReactiveCollection<SortItemCreator> SortItemCreators {
+		public ObservableList<SortItemCreator> SortItemCreators {
 			get;
 			set;
 		} = [];

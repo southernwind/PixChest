@@ -22,7 +22,7 @@ public class FilteringConditionEditorViewModel : ViewModelBase {
 	/// <summary>
 	/// フィルター条件クリエイター
 	/// </summary>
-	public Reactive.Bindings.ReadOnlyReactiveCollection<IFilterItemObject> FilterItems {
+	public INotifyCollectionChangedSynchronizedViewList<IFilterItemObject> FilterItems {
 		get;
 	}
 
@@ -41,7 +41,7 @@ public class FilteringConditionEditorViewModel : ViewModelBase {
 			this.Model.DisplayName.Value = x;
 		});
 
-		this.FilterItems = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(this.Model.FilterItemObjects);
+		this.FilterItems = this.Model.FilterItemObjects.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 
 		// 削除
 		this.RemoveFilterCommand.Subscribe(this.Model.RemoveFilter).AddTo(this.CompositeDisposable);

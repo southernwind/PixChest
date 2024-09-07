@@ -9,7 +9,7 @@ namespace PixChest.Models.Files.Sort;
 /// ソート条件
 /// </summary>
 public class SortCondition : ModelBase {
-	private readonly Reactive.Bindings.ReadOnlyReactiveCollection<ISortItem> _sortItems;
+	private readonly ISynchronizedView<SortItemCreator, ISortItem> _sortItems;
 
 	public SortObject SortObject {
 		get;
@@ -26,7 +26,7 @@ public class SortCondition : ModelBase {
 	/// <summary>
 	/// ソート条件
 	/// </summary>
-	public Reactive.Bindings.ReadOnlyReactiveCollection<SortItemCreator> SortItemCreators {
+	public IReadOnlyObservableList<SortItemCreator> SortItemCreators {
 		get;
 	}
 
@@ -47,7 +47,7 @@ public class SortCondition : ModelBase {
 	/// <summary>
 	///　設定用ソート項目リスト
 	/// </summary>
-	public Reactive.Bindings.ReactiveCollection<SortItemCreator> CandidateSortItemCreators {
+	public ObservableList<SortItemCreator> CandidateSortItemCreators {
 		get;
 	} = [];
 
@@ -58,15 +58,16 @@ public class SortCondition : ModelBase {
 	public SortCondition(SortObject sortObject) {
 		this.SortObject = sortObject;
 		this.DisplayName = sortObject.DisplayName.ToReadOnlyReactiveProperty();
-		this.SortItemCreators = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(sortObject.SortItemCreators);
-		this._sortItems = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(this.SortItemCreators, x => x.Create());
+		this.SortItemCreators = sortObject.SortItemCreators;
+		this._sortItems = this.SortItemCreators.CreateView(x => x.Create());
 
-		Reactive.Bindings.ReadOnlyReactiveCollection.ToCollectionChanged(this.SortItemCreators)
+		this.SortItemCreators
+			.ObserveCountChanged()
 			.Subscribe(_ => {
 				this._onUpdateSortConditions.OnNext(Unit.Default);
 			}).AddTo(this.CompositeDisposable);
 
-		this.CandidateSortItemCreators.AddRange(Enum.GetValues(typeof(SortItemKeys)).OfType<SortItemKeys>().Select(x => new SortItemCreator(x)));
+		this.CandidateSortItemCreators.AddRange(Enum.GetValues<SortItemKeys>().Select(x => new SortItemCreator(x)));
 	}
 
 	/// <summary>

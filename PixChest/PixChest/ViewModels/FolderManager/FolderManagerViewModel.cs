@@ -8,7 +8,7 @@ namespace PixChest.ViewModels.FolderManager;
 public class FolderManagerViewModel: ViewModelBase {
 	private readonly FolderManagerModel _folderManager;
 
-	public Reactive.Bindings.ReadOnlyReactiveCollection<FolderViewModel> Folders {
+	public INotifyCollectionChangedSynchronizedViewList<FolderViewModel> Folders {
 		get;
 	}
 
@@ -33,7 +33,7 @@ public class FolderManagerViewModel: ViewModelBase {
 
 	public FolderManagerViewModel(FolderManagerModel folderManager, FileRegistrar fileRegistrar) {
 		this._folderManager = folderManager;
-		this.Folders = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(this._folderManager.Folders, x => new FolderViewModel(x));
+		this.Folders = this._folderManager.Folders.CreateView(x => new FolderViewModel(x)).ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 		this.AddFolderCommand.Subscribe(x => this._folderManager.AddFolder(x)).AddTo(this.CompositeDisposable);
 		this.RemoveFolderCommand.Subscribe(x => this._folderManager.RemoveFolder(x.GetModel())).AddTo(this.CompositeDisposable);
 		this.ScanCommand.Subscribe(async x => await this._folderManager.Scan()).AddTo(this.CompositeDisposable);

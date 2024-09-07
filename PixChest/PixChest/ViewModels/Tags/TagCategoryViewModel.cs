@@ -7,7 +7,8 @@ public class TagCategoryViewModel {
 	public TagCategoryViewModel(TagCategory tagCategory, TagsManager tagsManager) {
 		this.TagCategoryName.Value = tagCategory.TagCategoryName;
 		this.Detail.Value = tagCategory.Detail;
-		this.Tags.AddRange(tagCategory.Tags.Select(x => new TagViewModel(x, tagsManager)));
+		this.Tags = this._tags.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
+		this._tags.AddRange(tagCategory.Tags.Select(x => new TagViewModel(x, tagsManager)));
 		this.UpdateTagCategoryCommand = this.TagCategoryName.CombineLatest(this.Detail, (x, y) => !string.IsNullOrWhiteSpace(x) && !string.IsNullOrWhiteSpace(y)).ToReactiveCommand();
 		this.UpdateTagCategoryCommand.Subscribe(async _ => {
 			if (tagCategory.TagCategoryId != -1) {
@@ -22,9 +23,11 @@ public class TagCategoryViewModel {
 		});
 	}
 
-	public Reactive.Bindings.ReactiveCollection<TagViewModel> Tags {
+	private readonly ObservableList<TagViewModel> _tags = [];
+
+	public INotifyCollectionChangedSynchronizedViewList<TagViewModel> Tags {
 		get;
-	} = [];
+	}
 
 	public BindableReactiveProperty<TagViewModel> SelectedTag {
 		get;
