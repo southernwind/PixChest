@@ -76,7 +76,6 @@ public partial class VideoFileOperator: BaseFileOperator {
 	/// サムネイル作成
 	/// </summary>
 	/// <param name="filePath">動画ファイルパス</param>
-	/// <param name="thumbnailFilePath">サムネイルファイルパス</param>
 	/// <param name="originalWidth">元動画幅</param>
 	/// <param name="originalHeight">元動画高さ</param>
 	/// <param name="width">サムネイル幅</param>

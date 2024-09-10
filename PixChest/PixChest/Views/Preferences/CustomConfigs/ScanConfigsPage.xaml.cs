@@ -24,6 +24,6 @@ public sealed partial class ScanConfigPage : Page {
 
 	public MediaType[] MediaTypeConditions {
 		get;
-	} = [MediaType.Image, MediaType.Video];
+	} = Enum.GetValues<MediaType>();
 
 }

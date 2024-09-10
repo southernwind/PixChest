@@ -51,6 +51,9 @@
 							AreTransportControlsEnabled="True"/>
 					</Grid>
 				</controls:Case>
+				<controls:Case Value="{x:Bind MediaTypePdf}">
+					<Image Source="{x:Bind ViewModel.MediaContentLibraryViewModel.SelectedFile.Value.ThumbnailFilePath, Mode=OneWay}"/>
+				</controls:Case>
 			</controls:SwitchPresenter>
 		</Viewbox>
 		<ListView

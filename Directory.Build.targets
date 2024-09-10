@@ -16,6 +16,7 @@
     <PackageReference Update="Microsoft.WindowsAppSDK" Version="1.5.240802000" />
     <PackageReference Update="ObservableCollections" Version="3.0.1" />
     <PackageReference Update="ObservableCollections.R3" Version="3.0.1" />
+    <PackageReference Update="Pdfium.Net.SDK" Version="4.92.2704" />
     <PackageReference Update="R3" Version="1.2.8" />
     <PackageReference Update="R3Extensions.WinUI3" Version="1.2.8" />
     <PackageReference Update="ReactiveProperty" Version="9.6.0" />

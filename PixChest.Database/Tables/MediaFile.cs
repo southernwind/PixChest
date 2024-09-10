@@ -234,4 +234,12 @@ public class MediaFile {
 		get;
 		set;
 	}
+
+	/// <summary>
+	/// Container メタデータ
+	/// </summary>
+	public virtual Container? Container {
+		get;
+		set;
+	}
 }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Reflection;
 using System.Threading.Tasks;
 
 using PixChest.Database;
@@ -8,6 +7,7 @@ using PixChest.Database.Tables;
 using PixChest.Models.Files.FileTypes.Base;
 using PixChest.Models.Files.FileTypes.Image;
 using PixChest.Models.Files.FileTypes.Interfaces;
+using PixChest.Models.Files.FileTypes.Pdf;
 using PixChest.Models.Files.FileTypes.Video;
 using PixChest.Models.Files.Filter;
 using PixChest.Models.Files.Sort;
@@ -48,6 +48,17 @@ public abstract class FilesLoader(PixChestDbContext dbContext, SortSelector sort
 							Tags = x.MediaFileTags.Select(mft => mft.Tag.TagName).ToList(),
 						} as FileModel,
 						MediaType.Video => new VideoFileModel(x.MediaFileId, x.FilePath) {
+							ThumbnailFilePath = x.ThumbnailFileName,
+							Rate = x.Rate,
+							Description = x.Description,
+							UsageCount = x.UsageCount,
+							FileSize = x.FileSize,
+							CreationTime = x.CreationTime,
+							ModifiedTime = x.ModifiedTime,
+							LastAccessTime = x.LastAccessTime,
+							Tags = x.MediaFileTags.Select(mft => mft.Tag.TagName).ToList(),
+						},
+						MediaType.Pdf => new PdfFileModel(x.MediaFileId, x.FilePath) {
 							ThumbnailFilePath = x.ThumbnailFileName,
 							Rate = x.Rate,
 							Description = x.Description,

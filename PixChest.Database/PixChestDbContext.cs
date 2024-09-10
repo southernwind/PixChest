@@ -139,6 +139,14 @@ public class PixChestDbContext(DbContextOptions dbContextOptions) : DbContext(db
 	} = null!;
 
 	/// <summary>
+	/// Containerメタデータテーブル
+	/// </summary>
+	public DbSet<Container> Containers {
+		get;
+		set;
+	} = null!;
+
+	/// <summary>
 	/// テーブル設定
 	/// </summary>
 	/// <param name="modelBuilder"></param>
@@ -160,6 +168,7 @@ public class PixChestDbContext(DbContextOptions dbContextOptions) : DbContext(db
 		modelBuilder.Entity<Bmp>().HasKey(b => b.MediaFileId);
 		modelBuilder.Entity<Gif>().HasKey(b => b.MediaFileId);
 		modelBuilder.Entity<Heif>().HasKey(b => b.MediaFileId);
+		modelBuilder.Entity<Container>().HasKey(b => b.MediaFileId);
 
 		// Index
 		modelBuilder.Entity<MediaFile>()
@@ -169,12 +178,12 @@ public class PixChestDbContext(DbContextOptions dbContextOptions) : DbContext(db
 		// Relation
 		modelBuilder.Entity<ImageFile>()
 			.HasOne(i => i.MediaFile)
-			.WithOne(m => m.ImageFile!)
+			.WithOne(m => m.ImageFile)
 			.OnDelete(DeleteBehavior.Cascade);
 
 		modelBuilder.Entity<VideoFile>()
 			.HasOne(v => v.MediaFile)
-			.WithOne(m => m.VideoFile!)
+			.WithOne(m => m.VideoFile)
 			.OnDelete(DeleteBehavior.Cascade);
 
 		modelBuilder.Entity<VideoMetadataValue>()
@@ -222,27 +231,32 @@ public class PixChestDbContext(DbContextOptions dbContextOptions) : DbContext(db
 
 		modelBuilder.Entity<Jpeg>()
 			.HasOne(j => j.MediaFile)
-			.WithOne(m => m.Jpeg!)
+			.WithOne(m => m.Jpeg)
 			.OnDelete(DeleteBehavior.Cascade);
 
 		modelBuilder.Entity<Png>()
 			.HasOne(p => p.MediaFile)
-			.WithOne(m => m.Png!)
+			.WithOne(m => m.Png)
 			.OnDelete(DeleteBehavior.Cascade);
 
 		modelBuilder.Entity<Bmp>()
 			.HasOne(b => b.MediaFile)
-			.WithOne(m => m.Bmp!)
+			.WithOne(m => m.Bmp)
 			.OnDelete(DeleteBehavior.Cascade);
 
 		modelBuilder.Entity<Gif>()
 			.HasOne(g => g.MediaFile)
-			.WithOne(m => m.Gif!)
+			.WithOne(m => m.Gif)
 			.OnDelete(DeleteBehavior.Cascade);
 
 		modelBuilder.Entity<Heif>()
 			.HasOne(g => g.MediaFile)
-			.WithOne(m => m.Heif!)
+			.WithOne(m => m.Heif)
+			.OnDelete(DeleteBehavior.Cascade);
+
+		modelBuilder.Entity<Container>()
+			.HasOne(g => g.MediaFile)
+			.WithOne(m => m.Container)
 			.OnDelete(DeleteBehavior.Cascade);
 	}
 }

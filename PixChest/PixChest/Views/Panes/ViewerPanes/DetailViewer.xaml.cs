@@ -17,6 +17,9 @@ public sealed partial class DetailViewer : ViewerPaneBase {
 	public MediaType MediaTypeVideo {
 		get;
 	} = MediaType.Video;
+	public MediaType MediaTypePdf {
+		get;
+	} = MediaType.Pdf;
 
 	protected override async void List_SelectionChanged(object sender, SelectionChangedEventArgs e) {
 		if (sender is ListView listView) {

@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using PixChest.Models.Files.FileTypes.Base;
 using PixChest.Models.Files.FileTypes.Image;
+using PixChest.Models.Files.FileTypes.Pdf;
 using PixChest.Models.Files.FileTypes.Video;
 using PixChest.Utils.Constants;
 using PixChest.Utils.Enums;
@@ -43,6 +44,8 @@ public class FileViewModel {
 					return MediaType.Image;
 				case VideoFileModel:
 					return MediaType.Video;
+					case PdfFileModel:
+					return MediaType.Pdf;
 				default:
 					throw new Exception();
 			}

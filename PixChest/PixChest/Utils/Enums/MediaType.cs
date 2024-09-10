@@ -14,5 +14,10 @@ public enum MediaType {
 	/// 動画
 	/// </summary>
 	[Description("Video")]
-	Video
+	Video,
+	/// <summary>
+	/// PDF
+	/// </summary>
+	[Description("Pdf")]
+	Pdf
 }

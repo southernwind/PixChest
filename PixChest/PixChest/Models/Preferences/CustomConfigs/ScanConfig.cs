@@ -37,7 +37,8 @@ public class ScanConfig : SettingsBase {
 		new ExtensionConfig(".f4v", MediaType.Video),
 		new ExtensionConfig(".wmv", MediaType.Video),
 		new ExtensionConfig(".webm", MediaType.Video),
-		new ExtensionConfig(".ogm", MediaType.Video)) {
+		new ExtensionConfig(".ogm", MediaType.Video),
+		new ExtensionConfig(".pdf", MediaType.Pdf)) {
 		MaybeEditMember = true
 	};
 }
