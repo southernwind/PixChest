@@ -1,6 +1,8 @@
 using System.Reflection;
 
-using ObservableCollections;
+using CommunityToolkit.Mvvm.DependencyInjection;
+
+using Microsoft.Extensions.DependencyInjection;
 
 using PixChest.Database;
 using PixChest.Models.Files.FileTypes.Interfaces;
@@ -25,16 +27,7 @@ public class FileRegistrar {
 	}
 
 	static FileRegistrar() {
-		_fileOperators =
-			Assembly
-				.GetExecutingAssembly()
-				.GetTypes()
-				.Where(x =>
-					x.GetInterfaces()
-					.Any(t => t == typeof(IFileOperator)))
-				.Where(x => x.IsAbstract == false)
-				.Select(x => Activator.CreateInstance(x) as IFileOperator)
-				.ToArray()!;
+		_fileOperators = Ioc.Default.GetServices<IFileOperator>().ToArray();
 	}
 
 	public FileRegistrar(PixChestDbContext dbContext, Config config) {

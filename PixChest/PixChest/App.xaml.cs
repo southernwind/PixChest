@@ -8,9 +8,9 @@ using System.Reflection;
 using Microsoft.Data.Sqlite;
 using PixChest.Database;
 using System.IO;
-using R3;
 using PixChest.Models.Preferences;
 using FFMpegCore;
+using PixChest.Models.Files.FileTypes.Interfaces;
 namespace PixChest;
 
 public partial class App : Application {
@@ -26,7 +26,7 @@ public partial class App : Application {
 		this._configFilePath = Path.Combine(baseDirectory, "PixChest.config");
 		var serviceCollection = new ServiceCollection();
 
-		var targetTypes = Assembly
+		var targetTypes = Assembly 
 			.GetExecutingAssembly()
 			.GetTypes()
 			.Where(x =>
@@ -44,6 +44,18 @@ public partial class App : Application {
 
 		foreach (var singletonTargetType in singletonTargetTypes) {
 			serviceCollection.AddSingleton(singletonTargetType);
+		}
+
+		var fileOperators =
+			Assembly
+				.GetExecutingAssembly()
+				.GetTypes()
+				.Where(x =>
+					x.GetInterfaces()
+					.Any(t => t == typeof(IFileOperator)))
+				.Where(x => x.IsAbstract == false);
+		foreach (var fileOperatorType in fileOperators) {
+			serviceCollection.AddSingleton(typeof(IFileOperator), fileOperatorType);
 		}
 
 		// DataBase
