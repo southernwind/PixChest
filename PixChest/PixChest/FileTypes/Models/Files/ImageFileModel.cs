@@ -1,6 +1,6 @@
-using PixChest.Models.Files.FileTypes.Base;
+using PixChest.FileTypes.Models.Operators;
 
-namespace PixChest.Models.Files.FileTypes.Image;
+namespace PixChest.FileTypes.Models.Files;
 public class ImageFileModel(long id, string filePath) : FileModel(id, filePath, _fileOperator) {
 	private static readonly ImageFileOperator _fileOperator = new();
 }

@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using PixChest.Composition.Bases;
-using PixChest.Models.Files.FileTypes.Interfaces;
+using PixChest.FileTypes.Models.Operators.Intarfaces;
 using PixChest.Utils.Objects;
 
-namespace PixChest.Models.Files.FileTypes.Base;
+namespace PixChest.FileTypes.Models.Files;
 
 public abstract class FileModel(long id, string filePath, IFileOperator fileOperator) : ModelBase {
 	protected IFileOperator FileOperator {

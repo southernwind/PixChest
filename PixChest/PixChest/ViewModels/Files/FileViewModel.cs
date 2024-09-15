@@ -1,9 +1,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
-using PixChest.Models.Files.FileTypes.Base;
-using PixChest.Models.Files.FileTypes.Image;
-using PixChest.Models.Files.FileTypes.Pdf;
-using PixChest.Models.Files.FileTypes.Video;
+
+using PixChest.FileTypes.Models.Files;
 using PixChest.Utils.Constants;
 using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;

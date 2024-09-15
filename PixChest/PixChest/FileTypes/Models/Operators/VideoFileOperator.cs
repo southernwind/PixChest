@@ -7,7 +7,8 @@ using PixChest.Database.Tables.Metadata;
 using PixChest.Utils.Enums;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using System.Drawing;
-using PixChest.Models.Files.FileTypes.Base;
+using PixChest.FileTypes.Models.Operators;
+using PixChest.FileTypes.Models.Files;
 
 namespace PixChest.Models.Files.FileTypes.Video;
 [AddTransient]

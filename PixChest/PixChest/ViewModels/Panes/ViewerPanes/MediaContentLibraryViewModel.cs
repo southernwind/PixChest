@@ -1,7 +1,6 @@
 using PixChest.Composition.Bases;
 using PixChest.Models.FileDetailManagers;
 using PixChest.Models.Files;
-using PixChest.Models.Files.FileTypes.Base;
 using PixChest.ViewModels.Files;
 
 namespace PixChest.ViewModels.Panes.ViewerPanes;

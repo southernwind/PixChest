@@ -1,5 +1,5 @@
+using PixChest.FileTypes.Models.Operators;
 using PixChest.Models.FileDetailManagers;
-using PixChest.Models.Files.FileTypes.Pdf;
 using PixChest.ViewModels.Thumbnails.FileTypes.Base;
 
 namespace PixChest.ViewModels.Thumbnails.FileTypes.Pdf;

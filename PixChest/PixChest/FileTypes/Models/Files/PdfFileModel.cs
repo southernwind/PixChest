@@ -1,6 +1,6 @@
-using PixChest.Models.Files.FileTypes.Base;
+using PixChest.FileTypes.Models.Operators;
 
-namespace PixChest.Models.Files.FileTypes.Pdf;
+namespace PixChest.FileTypes.Models.Files;
 public class PdfFileModel(long id, string filePath) : FileModel(id, filePath, _fileOperator) {
 	private static readonly PdfFileOperator _fileOperator = new();
 }

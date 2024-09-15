@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 
 using PixChest.Database.Tables;
-using PixChest.Models.Files.FileTypes.Base;
-
+using PixChest.FileTypes.Models.Files;
 
 namespace PixChest.Models.Files.Filter;
 public static class FilterExtensions {

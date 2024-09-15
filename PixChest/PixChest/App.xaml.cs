@@ -10,7 +10,7 @@ using PixChest.Database;
 using System.IO;
 using PixChest.Models.Preferences;
 using FFMpegCore;
-using PixChest.Models.Files.FileTypes.Interfaces;
+using PixChest.FileTypes.Models.Operators.Intarfaces;
 namespace PixChest;
 
 public partial class App : Application {

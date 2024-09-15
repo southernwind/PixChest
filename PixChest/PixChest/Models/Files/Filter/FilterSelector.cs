@@ -3,7 +3,7 @@ using System.Reactive.Linq;
 
 using PixChest.Composition.Bases;
 using PixChest.Database.Tables;
-using PixChest.Models.Files.FileTypes.Base;
+using PixChest.FileTypes.Models.Files;
 using PixChest.Models.Preferences;
 
 namespace PixChest.Models.Files.Filter;

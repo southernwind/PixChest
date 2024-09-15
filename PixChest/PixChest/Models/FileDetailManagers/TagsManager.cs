@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 using PixChest.Database;
 using PixChest.Database.Tables;
+using PixChest.FileTypes.Models.Files;
 using PixChest.Models.FileDetailManagers.Objects;
-using PixChest.Models.Files.FileTypes.Base;
 
 namespace PixChest.Models.FileDetailManagers;
 

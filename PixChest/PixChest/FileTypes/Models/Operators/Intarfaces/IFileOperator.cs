@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 using PixChest.Utils.Enums;
 
-namespace PixChest.Models.Files.FileTypes.Interfaces;
+namespace PixChest.FileTypes.Models.Operators.Intarfaces;
 public interface IFileOperator {
 	public MediaType TargetMediaType {
 		get;

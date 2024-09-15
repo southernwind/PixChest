@@ -1,8 +1,8 @@
 using System.IO;
 using System.Threading.Tasks;
 
+using PixChest.FileTypes.Models.Operators;
 using PixChest.Models.FileDetailManagers;
-using PixChest.Models.Files.FileTypes.Image;
 using PixChest.ViewModels.Thumbnails.FileTypes.Base;
 
 namespace PixChest.ViewModels.Thumbnails.FileTypes.Image;

@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.DependencyInjection;
 
 using PixChest.Database;
-using PixChest.Models.Files.FileTypes.Interfaces;
+using PixChest.FileTypes.Models.Operators.Intarfaces;
 using PixChest.Utils.Enums;
 
-namespace PixChest.Models.Files.FileTypes.Base;
+namespace PixChest.FileTypes.Models.Operators;
 
 public abstract class BaseFileOperator : IFileOperator {
 	protected readonly PixChestDbContext _db;

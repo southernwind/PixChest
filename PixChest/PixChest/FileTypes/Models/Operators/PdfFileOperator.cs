@@ -1,12 +1,11 @@
 using PixChest.Database.Tables;
 using System.IO;
 using PixChest.Utils.Enums;
-using PixChest.Models.Files.FileTypes.Base;
 using Patagames.Pdf.Net;
 using Patagames.Pdf.Enums;
 using System.Drawing.Imaging;
 
-namespace PixChest.Models.Files.FileTypes.Pdf;
+namespace PixChest.FileTypes.Models.Operators;
 [AddTransient]
 public partial class PdfFileOperator : BaseFileOperator {
 
@@ -26,10 +25,10 @@ public partial class PdfFileOperator : BaseFileOperator {
 			var image = this.CreateThumbnail(filePath, 300, 300, 1);
 			new FileInfo(thumbPath).Directory?.Create();
 			File.WriteAllBytes(thumbPath, image);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			thumbPath = null;
 		}
-		
+
 		var pdfDocument = PdfDocument.Load(filePath);
 		var fileInfo = new FileInfo(filePath);
 

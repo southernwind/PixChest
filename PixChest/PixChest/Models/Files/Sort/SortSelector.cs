@@ -1,4 +1,4 @@
-using PixChest.Models.Files.FileTypes.Base;
+using PixChest.FileTypes.Models.Files;
 using PixChest.Models.Preferences;
 
 using System.Collections.Generic;

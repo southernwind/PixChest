@@ -4,12 +4,12 @@ using PixChest.Models.Files.Metadata.Images;
 using PixChest.Models.Files.Metadata.Images.Formats;
 using ImageMagick;
 using PixChest.Utils.Enums;
-using PixChest.Models.Files.FileTypes.Base;
+using PixChest.FileTypes.Models.Files;
 
-namespace PixChest.Models.Files.FileTypes.Image;
+namespace PixChest.FileTypes.Models.Operators;
 [AddTransient]
 public class ImageFileOperator : BaseFileOperator {
-    public override MediaType TargetMediaType {
+	public override MediaType TargetMediaType {
 		get;
 	} = MediaType.Image;
 
@@ -54,8 +54,8 @@ public class ImageFileOperator : BaseFileOperator {
 		using var meta = ImageMetadataFactory.Create(fileMs);
 
 		if (meta.Latitude != null && meta.Longitude != null && meta.LatitudeRef != null && meta.LongitudeRef != null) {
-			var latitude = (meta.Latitude[0].ToDouble() + (meta.Latitude[1].ToDouble() / 60) + (meta.Latitude[2].ToDouble() / 3600)) * (meta.LatitudeRef == "S" ? -1 : 1);
-			var longitude = (meta.Longitude[0].ToDouble() + (meta.Longitude[1].ToDouble() / 60) + (meta.Longitude[2].ToDouble() / 3600)) * (meta.LongitudeRef == "W" ? -1 : 1);
+			var latitude = (meta.Latitude[0].ToDouble() + meta.Latitude[1].ToDouble() / 60 + meta.Latitude[2].ToDouble() / 3600) * (meta.LatitudeRef == "S" ? -1 : 1);
+			var longitude = (meta.Longitude[0].ToDouble() + meta.Longitude[1].ToDouble() / 60 + meta.Longitude[2].ToDouble() / 3600) * (meta.LongitudeRef == "W" ? -1 : 1);
 			mf.Altitude = meta.Altitude?.ToDouble() * (meta.AltitudeRef == 1 ? -1 : 1);
 			mf.Latitude = latitude;
 			mf.Longitude = longitude;
