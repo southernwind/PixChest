@@ -7,6 +7,7 @@ using Patagames.Pdf.Enums;
 using System.Drawing.Imaging;
 
 namespace PixChest.Models.Files.FileTypes.Pdf;
+[AddTransient]
 public partial class PdfFileOperator : BaseFileOperator {
 
 	public override MediaType TargetMediaType {

@@ -30,6 +30,8 @@
     <None Remove="Views\Sort\SortManagerWindow.xaml" />
     <None Remove="Views\Tags\TagManagerView.xaml" />
     <None Remove="Views\Tags\TagManagerWindow.xaml" />
+    <None Remove="Views\Thumbnails\ThumbnailPickerView.xaml" />
+    <None Remove="Views\Thumbnails\ThumbnailPickerWindow.xaml" />
   </ItemGroup>
   
   <ItemGroup>
@@ -74,5 +76,11 @@
     <None Update="Assets\ffprobe.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\Thumbnails\ThumbnailPickerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Thumbnails\ThumbnailPickerWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

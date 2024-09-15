@@ -53,7 +53,7 @@ public class FileViewModel {
 	}
 
 
-	public virtual async Task ExecuteFile() {
+	public virtual async Task ExecuteFileAsync() {
 		var psi = new ProcessStartInfo {
 			FileName = this.FilePath,
 			UseShellExecute = true

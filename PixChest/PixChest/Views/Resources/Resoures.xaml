@@ -17,4 +17,6 @@
 	<converters:ListSortDirectionToIconGlyphConverter x:Key="ListSortDirectionToIconGlyphConverter"/>
 	<converters:ListSortDirectionToBooleanConverter x:Key="ListSortDirectionToBooleanConverter"/>
 	<converters:PathToMediaPlaybackSourceConverter x:Key="PathToMediaPlaybackSourceConverter"/>
+	<converters:BinaryToImageSourceConverter x:Key="BinaryToImageSourceConverter"/>
+	<converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
 </ResourceDictionary>

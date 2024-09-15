@@ -49,6 +49,11 @@
 				<DataTemplate x:DataType="filesVm:FileViewModel">
 					<Grid DoubleTapped="File_DoubleTapped">
 						<Image Stretch="Uniform" Height="{Binding DataContext.ItemSize.Value, Mode=OneWay, ElementName=List}" Source="{x:Bind ThumbnailFilePath}"/>
+						<Grid.ContextFlyout>
+							<MenuFlyout>
+								<MenuFlyoutItem Text="Recreate Thumbnail" Click="MenuFlyoutItem_Click" Tag="RecreateThumbnail" />
+							</MenuFlyout>
+						</Grid.ContextFlyout>
 					</Grid>
 				</DataTemplate>
 			</GridView.ItemTemplate>

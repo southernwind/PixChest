@@ -7,6 +7,7 @@ using PixChest.Utils.Enums;
 using PixChest.Models.Files.FileTypes.Base;
 
 namespace PixChest.Models.Files.FileTypes.Image;
+[AddTransient]
 public class ImageFileOperator : BaseFileOperator {
     public override MediaType TargetMediaType {
 		get;
@@ -81,6 +82,16 @@ public class ImageFileOperator : BaseFileOperator {
 		this._db.MediaFiles.Add(mf);
 		this._db.SaveChanges();
 		transaction.Commit();
+	}
+	public byte[] CreateThumbnail(FileModel fileModel, int width, int height) {
+		using var fileFs = File.OpenRead(fileModel.FilePath);
+		using var ms = new MemoryStream();
+		using var mi = new MagickImage(fileFs);
+		mi.AutoOrient();
+		mi.Thumbnail(width, height);
+		mi.Format = MagickFormat.Jpg;
+		mi.Write(ms);
+		return ms.ToArray();
 	}
 
 	public byte[] CreateThumbnail(Stream fileStream, int width, int height) {

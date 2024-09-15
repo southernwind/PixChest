@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="PixChest.Views.Thumbnails.ThumbnailPickerWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PixChest.Views.Thumbnails"
+    xmlns:imageV="using:PixChest.Views.Thumbnails.FileTypes.Image"
+    xmlns:pdfV="using:PixChest.Views.Thumbnails.FileTypes.Pdf"
+    xmlns:videoV="using:PixChest.Views.Thumbnails.FileTypes.Video"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+	mc:Ignorable="d"
+    Title="Thumbnail Picker">
+	<controls:SwitchPresenter
+				Value="{x:Bind ViewModel.ThumbnailPickerViewModel.Value ,Mode=OneWay}">
+		<controls:Case Value="{x:Bind ViewModel.ImageThumbnailPickerViewModel, Mode=OneTime}">
+			<imageV:ImageThumbnailPickerView DataContext="{x:Bind ViewModel.ImageThumbnailPickerViewModel}"/>
+		</controls:Case>
+		<controls:Case Value="{x:Bind ViewModel.PdfThumbnailPickerViewModel, Mode=OneTime}">
+			<pdfV:PdfThumbnailPickerView DataContext="{x:Bind ViewModel.PdfThumbnailPickerViewModel}"/>
+		</controls:Case>
+		<controls:Case Value="{x:Bind ViewModel.VideoThumbnailPickerViewModel, Mode=OneTime}">
+			<videoV:VideoThumbnailPickerView DataContext="{x:Bind ViewModel.VideoThumbnailPickerViewModel}"/>
+		</controls:Case>
+	</controls:SwitchPresenter>
+</Window>

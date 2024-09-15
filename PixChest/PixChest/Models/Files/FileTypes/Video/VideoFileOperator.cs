@@ -10,6 +10,7 @@ using System.Drawing;
 using PixChest.Models.Files.FileTypes.Base;
 
 namespace PixChest.Models.Files.FileTypes.Video;
+[AddTransient]
 public partial class VideoFileOperator: BaseFileOperator {
 	private readonly Config _config;
 
@@ -70,6 +71,23 @@ public partial class VideoFileOperator: BaseFileOperator {
 		this._db.MediaFiles.Add(mf);
 		this._db.SaveChanges();
 		transaction.Commit();
+	}
+	/// <summary>
+	/// サムネイル作成
+	/// </summary>
+	/// <param name="fileModel">動画ファイル</param>
+	/// <param name="width">サムネイル幅</param>
+	/// <param name="height">サムネイル高さ</param>
+	/// <param name="time">時間指定</param>
+	/// <returns>作成されたサムネイルファイル名</returns>
+	public byte[] CreateThumbnail(FileModel fileModel, int width, int height, TimeSpan time) {
+
+
+		var metadata = FFProbe.Analyse(fileModel.FilePath);
+		if (metadata.PrimaryVideoStream is not { } videoStream) {
+			throw new Exception("PrimaryVideoStream is null");
+		}
+		return this.CreateThumbnail(fileModel.FilePath, videoStream.Width, videoStream.Height, width, height, time);
 	}
 
 	/// <summary>
