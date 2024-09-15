@@ -1,7 +1,10 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-using PixChest.FileTypes.Models.Files;
+using PixChest.FileTypes.Base.Models;
+using PixChest.FileTypes.Image.Models;
+using PixChest.FileTypes.Pdf.Models;
+using PixChest.FileTypes.Video.Models;
 using PixChest.Utils.Constants;
 using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
@@ -10,13 +13,13 @@ namespace PixChest.ViewModels.Files;
 
 [AddTransient]
 public class FileViewModel {
-	public FileViewModel(FileModel fileModel) {
+	public FileViewModel(BaseFileModel fileModel) {
 		this.FileModel= fileModel;
 		this.FilePath = fileModel.FilePath;
 		this.ThumbnailFilePath = fileModel.ThumbnailFilePath ?? FilePathConstants.NoThumbnailFilePath;
 		this.Properties = fileModel.Properties;
 	}
-	public FileModel FileModel {
+	public BaseFileModel FileModel {
 		get;
 	}
 

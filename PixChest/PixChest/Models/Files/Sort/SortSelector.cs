@@ -1,4 +1,4 @@
-using PixChest.FileTypes.Models.Files;
+using PixChest.FileTypes.Base.Models;
 using PixChest.Models.Preferences;
 
 using System.Collections.Generic;
@@ -76,7 +76,7 @@ public class SortSelector {
 	/// </summary>
 	/// <param name="array">ソート対象の配列</param>
 	/// <returns>ソート済み配列</returns>
-	public IEnumerable<FileModel> SetSortConditions(IEnumerable<FileModel> array) {
+	public IEnumerable<BaseFileModel> SetSortConditions(IEnumerable<BaseFileModel> array) {
 		return this.CurrentSortCondition.Value?.ApplySort(array, this.Direction.Value == ListSortDirection.Descending) ?? array;
 	}
 }

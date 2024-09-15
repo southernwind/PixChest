@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 using PixChest.Database;
 using PixChest.Database.Tables;
-using PixChest.FileTypes.Models.Files;
+using PixChest.FileTypes.Base.Models;
 using PixChest.Models.FileDetailManagers.Objects;
 
 namespace PixChest.Models.FileDetailManagers;
@@ -20,7 +20,7 @@ public class TagsManager(PixChestDbContext dbContext) {
 		get;
 	} = [];
 
-	public async Task AddTag(FileModel[] fileModels, string tagName, string detail = "") {
+	public async Task AddTag(BaseFileModel[] fileModels, string tagName, string detail = "") {
 		var target = fileModels.Where(x => !x.Tags.Any(t => t == tagName)).ToArray();
 		using var transaction = this._db.Database.BeginTransaction();
 		var tag = await this._db.Tags.FirstOrDefaultAsync(x => x.TagName == tagName);
@@ -47,7 +47,7 @@ public class TagsManager(PixChestDbContext dbContext) {
 		await transaction.CommitAsync();
 	}
 
-	public async Task RemoveTag(FileModel[] fileModels, string tagName) {
+	public async Task RemoveTag(BaseFileModel[] fileModels, string tagName) {
 		var ids = fileModels.Select(x => x.Id);
 		using var transaction = this._db.Database.BeginTransaction();
 		var rel =

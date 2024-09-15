@@ -83,4 +83,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="FileTypes\Base\Views\" />
+    <Folder Include="FileTypes\Pdf\Views\" />
+    <Folder Include="FileTypes\Video\Views\" />
+  </ItemGroup>
 </Project>

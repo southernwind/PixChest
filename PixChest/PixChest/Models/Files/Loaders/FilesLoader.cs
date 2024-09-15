@@ -4,8 +4,11 @@ using System.Threading.Tasks;
 
 using PixChest.Database;
 using PixChest.Database.Tables;
-using PixChest.FileTypes.Models.Files;
-using PixChest.FileTypes.Models.Operators.Intarfaces;
+using PixChest.FileTypes.Base.Models;
+using PixChest.FileTypes.Base.Models.Operators.Intarfaces;
+using PixChest.FileTypes.Image.Models;
+using PixChest.FileTypes.Pdf.Models;
+using PixChest.FileTypes.Video.Models;
 using PixChest.Models.Files.Filter;
 using PixChest.Models.Files.Sort;
 using PixChest.Models.Repositories;
@@ -19,7 +22,7 @@ public abstract class FilesLoader(PixChestDbContext dbContext, SortSelector sort
 	private static IFileOperator[] _fileOperators;
 	private readonly RepositorySelector repositorySelector = repositorySelector;
 
-	public async Task<IEnumerable<FileModel>> Load() {
+	public async Task<IEnumerable<BaseFileModel>> Load() {
 		var files =
 			(await dbContext
 				.MediaFiles
@@ -43,7 +46,7 @@ public abstract class FilesLoader(PixChestDbContext dbContext, SortSelector sort
 							ModifiedTime = x.ModifiedTime,
 							LastAccessTime = x.LastAccessTime,
 							Tags = x.MediaFileTags.Select(mft => mft.Tag.TagName).ToList(),
-						} as FileModel,
+						} as BaseFileModel,
 						MediaType.Video => new VideoFileModel(x.MediaFileId, x.FilePath) {
 							ThumbnailFilePath = x.ThumbnailFileName,
 							Rate = x.Rate,

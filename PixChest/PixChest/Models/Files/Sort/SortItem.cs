@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 
 using PixChest.Composition.Bases;
-using PixChest.FileTypes.Models.Files;
+using PixChest.FileTypes.Base.Models;
 using PixChest.Utils.Enums;
 
 namespace PixChest.Models.Files.Sort;
@@ -37,9 +37,9 @@ public class SortItem<TKey> : ModelBase, ISortItem{
 	/// <summary>
 	/// ソートキー
 	/// </summary>
-	public Func<FileModel, TKey> KeySelector {
+	public Func<BaseFileModel, TKey> KeySelector {
 		get {
-			return this.GetValue<Func<FileModel, TKey>>()!;
+			return this.GetValue<Func<BaseFileModel, TKey>>()!;
 		}
 		set {
 			this.SetValue(value);
@@ -51,7 +51,7 @@ public class SortItem<TKey> : ModelBase, ISortItem{
 	/// </summary>
 	/// <param name="key">保存時のキー</param>
 	/// <param name="direction">ソート方向</param>
-	public SortItem(SortItemKeys key, Func<FileModel, TKey> keySelector, ListSortDirection direction = ListSortDirection.Ascending) {
+	public SortItem(SortItemKeys key, Func<BaseFileModel, TKey> keySelector, ListSortDirection direction = ListSortDirection.Ascending) {
 		this.Key = key;
 		this.KeySelector = keySelector;
 		this.Direction = direction;
@@ -63,7 +63,7 @@ public class SortItem<TKey> : ModelBase, ISortItem{
 	/// <param name="items">ソートを適用するアイテムリスト</param>
 	/// <param name="reverse">ソート方向の反転を行うか否か true:反転する false:反転しない</param>
 	/// <returns>整列されたアイテムリスト</returns>
-	public IOrderedEnumerable<FileModel> ApplySort(IEnumerable<FileModel> items, bool reverse) {
+	public IOrderedEnumerable<BaseFileModel> ApplySort(IEnumerable<BaseFileModel> items, bool reverse) {
 		if (this.Direction == ListSortDirection.Ascending ^ reverse) {
 			return items.OrderBy(this.KeySelector);
 		} else {
@@ -77,7 +77,7 @@ public class SortItem<TKey> : ModelBase, ISortItem{
 	/// <param name="items">ソートを適用するアイテムリスト</param>
 	/// <param name="reverse">ソート方向の反転を行うか否か true:反転する false:反転しない</param>
 	/// <returns>整列されたアイテムリスト</returns>
-	public IOrderedEnumerable<FileModel> ApplyThenBySort(IOrderedEnumerable<FileModel> items, bool reverse) {
+	public IOrderedEnumerable<BaseFileModel> ApplyThenBySort(IOrderedEnumerable<BaseFileModel> items, bool reverse) {
 		if (this.Direction == ListSortDirection.Ascending ^ reverse) {
 			return items.ThenBy(this.KeySelector);
 		} else {
@@ -112,12 +112,12 @@ public interface ISortItem {
 	/// </summary>
 	/// <param name="items">ソートを適用するアイテムリスト</param>
 	/// <returns>整列されたアイテムリスト</returns>
-	IOrderedEnumerable<FileModel> ApplySort(IEnumerable<FileModel> items, bool reverse);
+	IOrderedEnumerable<BaseFileModel> ApplySort(IEnumerable<BaseFileModel> items, bool reverse);
 
 	/// <summary>
 	/// ソートされたアイテムリストに対して、追加のソート条件適用
 	/// </summary>
 	/// <param name="items">ソートを適用するアイテムリスト</param>
 	/// <returns>整列されたアイテムリスト</returns>
-	IOrderedEnumerable<FileModel> ApplyThenBySort(IOrderedEnumerable<FileModel> items, bool reverse);
+	IOrderedEnumerable<BaseFileModel> ApplyThenBySort(IOrderedEnumerable<BaseFileModel> items, bool reverse);
 }

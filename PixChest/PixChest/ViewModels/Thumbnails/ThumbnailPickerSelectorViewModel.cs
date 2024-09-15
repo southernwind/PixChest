@@ -1,6 +1,8 @@
 using PixChest.Composition.Bases;
-using PixChest.FileTypes.ViewModels;
-using PixChest.FileTypes.ViewModels.Interfaces;
+using PixChest.FileTypes.Base.ViewModels.Interfaces;
+using PixChest.FileTypes.Image.ViewModels;
+using PixChest.FileTypes.Pdf.ViewModels;
+using PixChest.FileTypes.Video.ViewModels;
 using PixChest.Utils.Enums;
 using PixChest.ViewModels.Files;
 

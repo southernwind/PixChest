@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using PixChest.Composition.Bases;
 using PixChest.Models.Files.Filter.FilterItemObjects;
 using PixChest.Database.Tables;
-using PixChest.FileTypes.Models.Files;
+using PixChest.FileTypes.Base.Models;
 
 namespace PixChest.Models.Files.Filter;
 /// <summary>
@@ -90,7 +90,7 @@ public class FilteringCondition : ModelBase {
 	/// </summary>
 	/// <param name="files">絞り込みを適用するモデルシーケンス</param>
 	/// <returns>絞り込み後シーケンス</returns>
-	public IEnumerable<FileModel> SetFilterConditions(IEnumerable<FileModel> files) {
+	public IEnumerable<BaseFileModel> SetFilterConditions(IEnumerable<BaseFileModel> files) {
 		foreach (var filter in this._filterItems) {
 			files = files.Where(filter.ConditionForModel);
 		}

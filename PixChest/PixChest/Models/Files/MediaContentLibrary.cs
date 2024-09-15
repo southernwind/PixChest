@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 
 using PixChest.Composition.Bases;
-using PixChest.FileTypes.Models.Files;
+using PixChest.FileTypes.Base.Models;
 using PixChest.Models.Files.Loaders;
 
 namespace PixChest.Models.Files;
@@ -10,7 +10,7 @@ namespace PixChest.Models.Files;
 public class MediaContentLibrary(BasicFilesLoader filesLoader):ModelBase {
 	private readonly BasicFilesLoader _filesLoader = filesLoader;
 
-	public ObservableList<FileModel> Files {
+	public ObservableList<BaseFileModel> Files {
 		get;
 	} = [];
 	 
