@@ -1,7 +1,7 @@
 using PixChest.Composition.Bases;
 using PixChest.FileTypes.ViewModels;
 
-namespace PixChest.Views.Thumbnails.FileTypes.Video;
+namespace PixChest.FileTypes.Views.ThumbnailPickers;
 public sealed partial class VideoThumbnailPickerView : VideoThumbnailPickerViewUserControl {
 	public VideoThumbnailPickerView() {
 		this.InitializeComponent();
