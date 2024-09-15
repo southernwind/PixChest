@@ -1,5 +1,5 @@
 using PixChest.Composition.Bases;
-using PixChest.ViewModels.Thumbnails.FileTypes.Image;
+using PixChest.FileTypes.ViewModels;
 
 namespace PixChest.Views.Thumbnails.FileTypes.Image;
 public sealed partial class ImageThumbnailPickerView : ImageThumbnailPickerViewUserControl {

@@ -1,5 +1,5 @@
 using PixChest.Composition.Bases;
-using PixChest.ViewModels.Thumbnails.FileTypes.Pdf;
+using PixChest.FileTypes.ViewModels;
 
 namespace PixChest.Views.Thumbnails.FileTypes.Pdf;
 public sealed partial class PdfThumbnailPickerView : PdfThumbnailPickerViewUserControl {

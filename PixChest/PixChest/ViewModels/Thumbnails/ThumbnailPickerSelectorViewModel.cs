@@ -1,10 +1,8 @@
 using PixChest.Composition.Bases;
+using PixChest.FileTypes.ViewModels;
+using PixChest.FileTypes.ViewModels.Interfaces;
 using PixChest.Utils.Enums;
 using PixChest.ViewModels.Files;
-using PixChest.ViewModels.Thumbnails.FileTypes.Base;
-using PixChest.ViewModels.Thumbnails.FileTypes.Image;
-using PixChest.ViewModels.Thumbnails.FileTypes.Pdf;
-using PixChest.ViewModels.Thumbnails.FileTypes.Video;
 
 namespace PixChest.ViewModels.Thumbnails;
 [AddTransient]

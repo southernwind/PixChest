@@ -1,11 +1,11 @@
 using PixChest.FileTypes.Models.Operators;
+using PixChest.FileTypes.ViewModels.Base;
 using PixChest.Models.FileDetailManagers;
-using PixChest.ViewModels.Thumbnails.FileTypes.Base;
 
-namespace PixChest.ViewModels.Thumbnails.FileTypes.Pdf;
+namespace PixChest.FileTypes.ViewModels;
 
 [AddTransient]
-public class PdfThumbnailPickerViewModel: BaseThumbnailPickerViewModel {
+public class PdfThumbnailPickerViewModel : BaseThumbnailPickerViewModel {
 	public PdfThumbnailPickerViewModel(
 		ThumbnailsManager thumbnailsManager,
 		PdfFileOperator imageFileOperator) : base(thumbnailsManager) {

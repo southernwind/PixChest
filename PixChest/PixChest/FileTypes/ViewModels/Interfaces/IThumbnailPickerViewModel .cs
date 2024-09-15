@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 using PixChest.ViewModels.Files;
 
-namespace PixChest.ViewModels.Thumbnails.FileTypes.Base;
+namespace PixChest.FileTypes.ViewModels.Interfaces;
 
 public interface IThumbnailPickerViewModel {
 	public BindableReactiveProperty<byte[]?> OriginalThumbnail {

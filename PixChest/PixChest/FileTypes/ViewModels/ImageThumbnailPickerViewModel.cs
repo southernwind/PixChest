@@ -2,16 +2,16 @@ using System.IO;
 using System.Threading.Tasks;
 
 using PixChest.FileTypes.Models.Operators;
+using PixChest.FileTypes.ViewModels.Base;
 using PixChest.Models.FileDetailManagers;
-using PixChest.ViewModels.Thumbnails.FileTypes.Base;
 
-namespace PixChest.ViewModels.Thumbnails.FileTypes.Image;
+namespace PixChest.FileTypes.ViewModels;
 
 [AddTransient]
-public class ImageThumbnailPickerViewModel: BaseThumbnailPickerViewModel {
+public class ImageThumbnailPickerViewModel : BaseThumbnailPickerViewModel {
 	public ImageThumbnailPickerViewModel(
 		ThumbnailsManager thumbnailsManager,
-		ImageFileOperator imageFileOperator):base(thumbnailsManager){
+		ImageFileOperator imageFileOperator) : base(thumbnailsManager) {
 		this._imageFileOperator = imageFileOperator;
 	}
 	private readonly ImageFileOperator _imageFileOperator;

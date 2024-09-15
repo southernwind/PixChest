@@ -1,11 +1,12 @@
 using System.Threading.Tasks;
 
+using PixChest.FileTypes.ViewModels.Interfaces;
 using PixChest.Models.FileDetailManagers;
 using PixChest.ViewModels.Files;
 
-namespace PixChest.ViewModels.Thumbnails.FileTypes.Base;
+namespace PixChest.FileTypes.ViewModels.Base;
 
-public abstract class BaseThumbnailPickerViewModel: IThumbnailPickerViewModel {
+public abstract class BaseThumbnailPickerViewModel : IThumbnailPickerViewModel {
 	public BaseThumbnailPickerViewModel(ThumbnailsManager thumbnailsManager) {
 		this.RecreateThumbnailCommand.Subscribe(_ => this.RecreateThumbnail());
 		this.SaveCommand.Subscribe(async _ => await this.SaveAsync());

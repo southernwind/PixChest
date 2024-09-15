@@ -1,14 +1,14 @@
 using System.Threading.Tasks;
 
+using PixChest.FileTypes.ViewModels.Base;
 using PixChest.Models.FileDetailManagers;
 using PixChest.Models.Files.FileTypes.Video;
 using PixChest.ViewModels.Files;
-using PixChest.ViewModels.Thumbnails.FileTypes.Base;
 
-namespace PixChest.ViewModels.Thumbnails.FileTypes.Video;
+namespace PixChest.FileTypes.ViewModels;
 
 [AddTransient]
-public class VideoThumbnailPickerViewModel: BaseThumbnailPickerViewModel {
+public class VideoThumbnailPickerViewModel : BaseThumbnailPickerViewModel {
 	public VideoThumbnailPickerViewModel(
 		ThumbnailsManager thumbnailsManager,
 		VideoFileOperator imageFileOperator) : base(thumbnailsManager) {
