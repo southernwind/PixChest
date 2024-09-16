@@ -5,6 +5,7 @@ using PixChest.Models.Files.Metadata.Images.Formats;
 using ImageMagick;
 using PixChest.Utils.Enums;
 using PixChest.FileTypes.Base.Models;
+using PixChest.FileTypes.Base.Models.Interfaces;
 
 namespace PixChest.FileTypes.Image.Models;
 [AddTransient]
@@ -13,19 +14,19 @@ public class ImageFileOperator : BaseFileOperator {
 		get;
 	} = MediaType.Image;
 
-	public override void RegisterFile(string filepath) {
+	public override void RegisterFile(string filePath) {
 		using var transaction = this._db.Database.BeginTransaction();
-		var isExists = this._db.MediaFiles.Any(x => x.FilePath == filepath);
+		var isExists = this._db.MediaFiles.Any(x => x.FilePath == filePath);
 		if (isExists) {
 			return;
 		}
 		using var fileMs = new MemoryStream();
 
-		using (var fileFs = File.OpenRead(filepath)) {
+		using (var fileFs = File.OpenRead(filePath)) {
 			fileFs.CopyTo(fileMs);
 			fileMs.Position = 0;
 		}
-		var thumbPath = FilePathUtility.GetThumbnailRelativeFilePath(filepath);
+		var thumbPath = FilePathUtility.GetThumbnailRelativeFilePath(filePath);
 		try {
 			var image = this.CreateThumbnail(fileMs, 300, 300);
 			new FileInfo(thumbPath).Directory?.Create();
@@ -34,11 +35,11 @@ public class ImageFileOperator : BaseFileOperator {
 			thumbPath = null;
 		}
 
-		var fileInfo = new FileInfo(filepath);
+		var fileInfo = new FileInfo(filePath);
 
 		var mf = new MediaFile {
-			DirectoryPath = Path.GetDirectoryName(filepath)!,
-			FilePath = filepath,
+			DirectoryPath = Path.GetDirectoryName(filePath)!,
+			FilePath = filePath,
 			ThumbnailFileName = thumbPath,
 			Rate = -1,
 			Description = "",
@@ -83,7 +84,7 @@ public class ImageFileOperator : BaseFileOperator {
 		this._db.SaveChanges();
 		transaction.Commit();
 	}
-	public byte[] CreateThumbnail(BaseFileModel fileModel, int width, int height) {
+	public byte[] CreateThumbnail(IFileModel fileModel, int width, int height) {
 		using var fileFs = File.OpenRead(fileModel.FilePath);
 		using var ms = new MemoryStream();
 		using var mi = new MagickImage(fileFs);

@@ -3,7 +3,7 @@ using System.Reactive.Linq;
 
 using PixChest.Composition.Bases;
 using PixChest.Database.Tables;
-using PixChest.FileTypes.Base.Models;
+using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.Models.Preferences;
 
 namespace PixChest.Models.Files.Filter;
@@ -81,7 +81,7 @@ public class FilterSelector : ModelBase {
 	/// </summary>
 	/// <param name="query">絞り込みを適用するシーケンス</param>
 	/// <returns>フィルター適用後シーケンス</returns>
-	public IEnumerable<BaseFileModel> SetFilterConditions(IEnumerable<BaseFileModel> files) {
+	public IEnumerable<IFileModel> SetFilterConditions(IEnumerable<IFileModel> files) {
 		return this.CurrentFilteringCondition.Value?.SetFilterConditions(files) ?? files;
 	}
 }

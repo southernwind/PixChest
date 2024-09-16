@@ -1,11 +1,9 @@
-using System.Reflection;
-
 using CommunityToolkit.Mvvm.DependencyInjection;
 
 using Microsoft.Extensions.DependencyInjection;
 
 using PixChest.Database;
-using PixChest.FileTypes.Base.Models.Operators.Intarfaces;
+using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.Models.Preferences;
 
 namespace PixChest.Models.Files;

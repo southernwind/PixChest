@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 
 using PixChest.FileTypes.Base.ViewModels;
+using PixChest.FileTypes.Video.Models;
 using PixChest.Models.FileDetailManagers;
-using PixChest.Models.Files.FileTypes.Video;
 using PixChest.ViewModels.Files;
 
 namespace PixChest.FileTypes.Video.ViewModels;

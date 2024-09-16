@@ -1,8 +1,6 @@
 using PixChest.Composition.Bases;
 using PixChest.FileTypes.Base.ViewModels.Interfaces;
-using PixChest.FileTypes.Image.ViewModels;
-using PixChest.FileTypes.Pdf.ViewModels;
-using PixChest.FileTypes.Video.ViewModels;
+using PixChest.FileTypes.Base.Views;
 using PixChest.Utils.Enums;
 using PixChest.ViewModels.Files;
 
@@ -10,25 +8,17 @@ namespace PixChest.ViewModels.Thumbnails;
 [AddTransient]
 public class ThumbnailPickerSelectorViewModel: ViewModelBase {
 
-	public ThumbnailPickerSelectorViewModel(
-		ImageThumbnailPickerViewModel imageThumbnailPickerViewModel,
-		PdfThumbnailPickerViewModel pdfThumbnailPickerViewModel,
-		VideoThumbnailPickerViewModel videoThumbnailPickerViewModel) {
-		this.ImageThumbnailPickerViewModel = imageThumbnailPickerViewModel;
-		this.PdfThumbnailPickerViewModel = pdfThumbnailPickerViewModel;
-		this.VideoThumbnailPickerViewModel = videoThumbnailPickerViewModel;
+	public ThumbnailPickerSelectorViewModel() {
 
 		this.FileViewModel.Subscribe(async x => {
 			if(x == null) {
 				this.ThumbnailPickerViewModel.Value = null;
+				this.ThumbnailPickerView.Value = null;
 				return;
 			}
-			this.ThumbnailPickerViewModel.Value = x.MediaType switch {
-				MediaType.Video => this.VideoThumbnailPickerViewModel,
-				MediaType.Pdf => this.PdfThumbnailPickerViewModel,
-				_ => this.ImageThumbnailPickerViewModel
-			};
-
+			this.ThumbnailPickerViewModel.Value = FileTypeUtility.CreateThumbnailPickerViewModel(x);
+			this.ThumbnailPickerView.Value = FileTypeUtility.CreateThumbnailPickerView(x);
+			this.ThumbnailPickerView.Value.DataContext = this.ThumbnailPickerViewModel.Value;
 			await this.ThumbnailPickerViewModel.Value.LoadAsync(x);
 		});
 	}
@@ -36,18 +26,9 @@ public class ThumbnailPickerSelectorViewModel: ViewModelBase {
 	public BindableReactiveProperty<IThumbnailPickerViewModel?> ThumbnailPickerViewModel {
 		get;
 	} = new();
-
-	public ImageThumbnailPickerViewModel ImageThumbnailPickerViewModel {
+	public BindableReactiveProperty<IThumbnailPickerView?> ThumbnailPickerView {
 		get;
-	}
-
-	public PdfThumbnailPickerViewModel PdfThumbnailPickerViewModel {
-		get;
-	}
-
-	public VideoThumbnailPickerViewModel VideoThumbnailPickerViewModel {
-		get;
-	}
+	} = new();
 
 	public BindableReactiveProperty<FileViewModel> FileViewModel {
 		get;

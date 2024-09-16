@@ -1,6 +1,3 @@
-using System.IO;
-using System.Threading.Tasks;
-
 using PixChest.FileTypes.Base.ViewModels;
 using PixChest.FileTypes.Image.Models;
 using PixChest.Models.FileDetailManagers;

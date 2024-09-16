@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-using PixChest.FileTypes.Base.Models;
+using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.FileTypes.Image.Models;
 using PixChest.FileTypes.Pdf.Models;
 using PixChest.FileTypes.Video.Models;
@@ -13,13 +13,13 @@ namespace PixChest.ViewModels.Files;
 
 [AddTransient]
 public class FileViewModel {
-	public FileViewModel(BaseFileModel fileModel) {
+	public FileViewModel(IFileModel fileModel) {
 		this.FileModel= fileModel;
 		this.FilePath = fileModel.FilePath;
 		this.ThumbnailFilePath = fileModel.ThumbnailFilePath ?? FilePathConstants.NoThumbnailFilePath;
 		this.Properties = fileModel.Properties;
 	}
-	public BaseFileModel FileModel {
+	public IFileModel FileModel {
 		get;
 	}
 

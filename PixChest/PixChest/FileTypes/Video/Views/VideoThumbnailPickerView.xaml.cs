@@ -1,8 +1,9 @@
 using PixChest.Composition.Bases;
+using PixChest.FileTypes.Base.Views;
 using PixChest.FileTypes.Video.ViewModels;
 
 namespace PixChest.FileTypes.Video.Views;
-public sealed partial class VideoThumbnailPickerView : VideoThumbnailPickerViewUserControl {
+public sealed partial class VideoThumbnailPickerView : VideoThumbnailPickerViewUserControl, IThumbnailPickerView {
 	public VideoThumbnailPickerView() {
 		this.InitializeComponent();
 		this.MediaPlayerElement.Loaded += this.MediaPlayerElement_Loaded;

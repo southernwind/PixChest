@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 
 using PixChest.Composition.Bases;
-using PixChest.FileTypes.Base.Models;
+using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.Utils.Enums;
 
 namespace PixChest.Models.Files.Sort;
@@ -76,11 +76,11 @@ public class SortCondition : ModelBase {
 	/// <param name="items">ソートを適用するアイテムリスト</param>
 	/// <param name="reverse">ソート方向の反転を行うか否か true:反転する false:反転しない</param>
 	/// <returns>結果</returns>
-	public IOrderedEnumerable<BaseFileModel> ApplySort(IEnumerable<BaseFileModel> items, bool reverse) {
+	public IOrderedEnumerable<IFileModel> ApplySort(IEnumerable<IFileModel> items, bool reverse) {
 		if (this._sortItems.Count == 0) {
 			throw new InvalidOperationException();
 		}
-		IOrderedEnumerable<BaseFileModel>? sortedItems = null;
+		IOrderedEnumerable<IFileModel>? sortedItems = null;
 		foreach (var si in this._sortItems) {
 			if (sortedItems == null) {
 				sortedItems = si.ApplySort(items, reverse);

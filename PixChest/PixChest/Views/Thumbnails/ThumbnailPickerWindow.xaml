@@ -12,16 +12,6 @@
 	xmlns:controls="using:CommunityToolkit.WinUI.Controls"
 	mc:Ignorable="d"
     Title="Thumbnail Picker">
-	<controls:SwitchPresenter
-				Value="{x:Bind ViewModel.ThumbnailPickerViewModel.Value ,Mode=OneWay}">
-		<controls:Case Value="{x:Bind ViewModel.ImageThumbnailPickerViewModel, Mode=OneTime}">
-			<imageV:ImageThumbnailPickerView DataContext="{x:Bind ViewModel.ImageThumbnailPickerViewModel}"/>
-		</controls:Case>
-		<controls:Case Value="{x:Bind ViewModel.PdfThumbnailPickerViewModel, Mode=OneTime}">
-			<pdfV:PdfThumbnailPickerView DataContext="{x:Bind ViewModel.PdfThumbnailPickerViewModel}"/>
-		</controls:Case>
-		<controls:Case Value="{x:Bind ViewModel.VideoThumbnailPickerViewModel, Mode=OneTime}">
-			<videoV:VideoThumbnailPickerView DataContext="{x:Bind ViewModel.VideoThumbnailPickerViewModel}"/>
-		</controls:Case>
-	</controls:SwitchPresenter>
+	<ContentPresenter
+		Content="{x:Bind ViewModel.ThumbnailPickerView.Value, Mode=OneWay}"/>
 </Window>

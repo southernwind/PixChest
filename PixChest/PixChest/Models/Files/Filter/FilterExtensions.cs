@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 
 using PixChest.Database.Tables;
-using PixChest.FileTypes.Base.Models;
+using PixChest.FileTypes.Base.Models.Interfaces;
 
 namespace PixChest.Models.Files.Filter;
 public static class FilterExtensions {
@@ -21,7 +21,7 @@ public static class FilterExtensions {
 	/// <param name="files">絞り込みを適用するシーケンス</param>
 	/// <param name="filter">適用するフィルター</param>
 	/// <returns>フィルター適用後シーケンス</returns>
-	public static IEnumerable<BaseFileModel> Where(this IEnumerable<BaseFileModel> files, FilterSelector filter) {
+	public static IEnumerable<IFileModel> Where(this IEnumerable<IFileModel> files, FilterSelector filter) {
 		return filter.SetFilterConditions(files);
 	}
 }

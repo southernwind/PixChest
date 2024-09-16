@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 
 using PixChest.Composition.Bases;
 using PixChest.Database.Tables;
-using PixChest.FileTypes.Base.Models;
+using PixChest.FileTypes.Base.Models.Interfaces;
 
 namespace PixChest.Models.Files.Filter;
 /// <summary>
@@ -16,7 +16,7 @@ namespace PixChest.Models.Files.Filter;
 /// </remarks>
 /// <param name="condition">フィルタリング条件</param>
 /// <param name="conditionForModel">モデル用フィルタリング条件</param>
-public class FilterItem(Expression<Func<MediaFile, bool>> condition, Func<BaseFileModel, bool> conditionForModel, bool includeSql) : ModelBase {
+public class FilterItem(Expression<Func<MediaFile, bool>> condition, Func<IFileModel, bool> conditionForModel, bool includeSql) : ModelBase {
 	/// <summary>
 	/// フィルタリング条件
 	/// </summary>
@@ -27,7 +27,7 @@ public class FilterItem(Expression<Func<MediaFile, bool>> condition, Func<BaseFi
 	/// <summary>
 	/// モデル用フィルタリング条件
 	/// </summary>
-	public Func<BaseFileModel, bool> ConditionForModel {
+	public Func<IFileModel, bool> ConditionForModel {
 		get;
 	} = conditionForModel;
 

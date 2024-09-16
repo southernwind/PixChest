@@ -1,24 +1,18 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using PixChest.Composition.Bases;
-using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.Utils.Objects;
 
-namespace PixChest.FileTypes.Base.Models;
+namespace PixChest.FileTypes.Base.Models.Interfaces;
 
-public abstract class BaseFileModel(long id, string filePath, IFileOperator fileOperator) : ModelBase, IFileModel {
-	protected IFileOperator FileOperator {
-		get;
-	} = fileOperator;
-
+public interface IFileModel {
 	public long Id {
 		get;
-	} = id;
+	}
 
 	public string FilePath {
 		get;
-	} = filePath;
+	}
 
 	public string? ThumbnailFilePath {
 		get;
@@ -44,7 +38,7 @@ public abstract class BaseFileModel(long id, string filePath, IFileOperator file
 	public List<string> Tags {
 		get;
 		set;
-	} = [];
+	}
 
 	/// <summary>
 	/// 解像度
@@ -76,7 +70,7 @@ public abstract class BaseFileModel(long id, string filePath, IFileOperator file
 	public string Description {
 		get;
 		set;
-	} = "";
+	}
 
 	/// <summary>
 	/// 作成日時
@@ -114,30 +108,13 @@ public abstract class BaseFileModel(long id, string filePath, IFileOperator file
 	/// <summary>
 	/// プロパティ
 	/// </summary>
-	public virtual Attributes<string> Properties {
-		get {
-			return new Dictionary<string, string> {
-					{ "作成日時",$"{this.CreationTime}" },
-					{ "編集日時",$"{this.ModifiedTime}" },
-					{ "最終アクセス日時",$"{this.LastAccessTime}" },
-					{ "ファイルサイズ",$"{this.FileSize}" },
-					{ "解像度" , $"{this.Resolution?.ToString()}" }
-				}.ToAttributes();
-		}
+	public Attributes<string> Properties {
+		get;
 	}
 
-	public async Task UpdateRateAsync(int rate) {
-		await this.FileOperator.UpdateRateAsync(this.Id, rate);
-		this.Rate = rate;
-	}
+	public Task UpdateRateAsync(int rate);
 
-	public async Task IncrementUsageCountAsync() {
-		await this.FileOperator.IncrementUsageCountAsync(this.Id);
-		this.UsageCount++;
-	}
+	public Task IncrementUsageCountAsync();
 
-	public async Task UpdateDescriptionAsync(string description) {
-		await this.FileOperator.UpdateDescriptionAsync(this.Id, description);
-		this.Description = description;
-	}
+	public Task UpdateDescriptionAsync(string description);
 }

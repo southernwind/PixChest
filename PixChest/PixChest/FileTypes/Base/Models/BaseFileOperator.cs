@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.DependencyInjection;
 
 using PixChest.Database;
-using PixChest.FileTypes.Base.Models.Operators.Intarfaces;
+using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.Utils.Enums;
 
 namespace PixChest.FileTypes.Base.Models;

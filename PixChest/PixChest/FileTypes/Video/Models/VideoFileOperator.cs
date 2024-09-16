@@ -8,10 +8,11 @@ using PixChest.Utils.Enums;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using System.Drawing;
 using PixChest.FileTypes.Base.Models;
+using PixChest.FileTypes.Base.Models.Interfaces;
 
-namespace PixChest.Models.Files.FileTypes.Video;
+namespace PixChest.FileTypes.Video.Models;
 [AddTransient]
-public partial class VideoFileOperator: BaseFileOperator {
+public partial class VideoFileOperator : BaseFileOperator {
 	private readonly Config _config;
 
 	public override MediaType TargetMediaType {
@@ -22,32 +23,32 @@ public partial class VideoFileOperator: BaseFileOperator {
 		this._config = Ioc.Default.GetRequiredService<Config>();
 	}
 
-	public override void RegisterFile(string filepath) {
+	public override void RegisterFile(string filePath) {
 		using var transaction = this._db.Database.BeginTransaction();
-		var isExists = this._db.MediaFiles.Any(x => x.FilePath == filepath);
+		var isExists = this._db.MediaFiles.Any(x => x.FilePath == filePath);
 		if (isExists) {
 			return;
 		}
-		var metadata = FFProbe.Analyse(filepath);
+		var metadata = FFProbe.Analyse(filePath);
 
-		var thumbPath = FilePathUtility.GetThumbnailRelativeFilePath(filepath);
+		var thumbPath = FilePathUtility.GetThumbnailRelativeFilePath(filePath);
 		try {
-			if(metadata.PrimaryVideoStream is not { } videoStream) {
+			if (metadata.PrimaryVideoStream is not { } videoStream) {
 				throw new Exception("PrimaryVideoStream is null");
 			}
-			var image = this.CreateThumbnail(filepath, videoStream.Width, videoStream.Height, 300, 300, metadata.Duration / 5);
+			var image = this.CreateThumbnail(filePath, videoStream.Width, videoStream.Height, 300, 300, metadata.Duration / 5);
 			new FileInfo(thumbPath).Directory?.Create();
 			File.WriteAllBytes(thumbPath, image);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			thumbPath = null;
 		}
 
-		var fileInfo = new FileInfo(filepath);
+		var fileInfo = new FileInfo(filePath);
 		var location = GetLocation(metadata);
 
 		var mf = new MediaFile {
-			DirectoryPath = Path.GetDirectoryName(filepath)!,
-			FilePath = filepath,
+			DirectoryPath = Path.GetDirectoryName(filePath)!,
+			FilePath = filePath,
 			ThumbnailFileName = thumbPath,
 			Rate = -1,
 			Description = "",
@@ -80,7 +81,7 @@ public partial class VideoFileOperator: BaseFileOperator {
 	/// <param name="height">サムネイル高さ</param>
 	/// <param name="time">時間指定</param>
 	/// <returns>作成されたサムネイルファイル名</returns>
-	public byte[] CreateThumbnail(BaseFileModel fileModel, int width, int height, TimeSpan time) {
+	public byte[] CreateThumbnail(IFileModel fileModel, int width, int height, TimeSpan time) {
 
 
 		var metadata = FFProbe.Analyse(fileModel.FilePath);
@@ -110,7 +111,7 @@ public partial class VideoFileOperator: BaseFileOperator {
 		var uuid = Guid.NewGuid();
 		var temporaryThumbPath = Path.Combine(this._config.PathConfig.TemporaryFolderPath.Value, $"{uuid.ToString()}.png");
 		FFMpeg.Snapshot(filePath, temporaryThumbPath, new Size(width, height), time);
-		
+
 		var binary = File.ReadAllBytes(temporaryThumbPath);
 		File.Delete(temporaryThumbPath);
 		return binary;

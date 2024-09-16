@@ -10,7 +10,8 @@ using PixChest.Database;
 using System.IO;
 using PixChest.Models.Preferences;
 using FFMpegCore;
-using PixChest.FileTypes.Base.Models.Operators.Intarfaces;
+using PixChest.FileTypes.Base.Models.Interfaces;
+using PixChest.FileTypes.Base;
 namespace PixChest;
 
 public partial class App : Application {
@@ -33,7 +34,8 @@ public partial class App : Application {
 				x.GetCustomAttributes<AddTransientAttribute>(inherit: true).Any());
 
 		foreach (var targetType in targetTypes) {
-			serviceCollection.AddTransient(targetType);
+			var attribute = targetType.GetCustomAttribute(typeof(AddTransientAttribute)) as AddTransientAttribute;
+			serviceCollection.AddTransient(attribute?.ServiceType ?? targetType, targetType);
 		}
 
 		var singletonTargetTypes = Assembly
@@ -46,16 +48,16 @@ public partial class App : Application {
 			serviceCollection.AddSingleton(singletonTargetType);
 		}
 
-		var fileOperators =
+		var fileTypes =
 			Assembly
 				.GetExecutingAssembly()
 				.GetTypes()
 				.Where(x =>
 					x.GetInterfaces()
-					.Any(t => t == typeof(IFileOperator)))
+					.Any(t => t == typeof(IFileType)))
 				.Where(x => x.IsAbstract == false);
-		foreach (var fileOperatorType in fileOperators) {
-			serviceCollection.AddSingleton(typeof(IFileOperator), fileOperatorType);
+		foreach (var fileTypeType in fileTypes) {
+			serviceCollection.AddSingleton(typeof(IFileType), fileTypeType);
 		}
 
 		// DataBase

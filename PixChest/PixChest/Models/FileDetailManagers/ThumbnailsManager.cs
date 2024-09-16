@@ -1,11 +1,8 @@
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
 using PixChest.Database;
-using PixChest.FileTypes.Base.Models;
-using PixChest.Models.FileDetailManagers.Objects;
-using PixChest.ViewModels.Files;
+using PixChest.FileTypes.Base.Models.Interfaces;
 
 namespace PixChest.Models.FileDetailManagers;
 
@@ -13,7 +10,7 @@ namespace PixChest.Models.FileDetailManagers;
 public class ThumbnailsManager(PixChestDbContext dbContext) {
 	private readonly PixChestDbContext _db = dbContext;
 
-	public async Task UpdateThumbnail(BaseFileModel fileModel, byte[] thumbnail) {
+	public async Task UpdateThumbnail(IFileModel fileModel, byte[] thumbnail) {
 		var thumbPath = FilePathUtility.GetThumbnailRelativeFilePath(fileModel.FilePath);
 		await File.WriteAllBytesAsync(thumbPath, thumbnail);
 
@@ -29,7 +26,7 @@ public class ThumbnailsManager(PixChestDbContext dbContext) {
 		await this._db.SaveChangesAsync();
 	}
 
-	public async Task<byte[]?> LoadThumbnailAsync(BaseFileModel fileModel) {
+	public async Task<byte[]?> LoadThumbnailAsync(IFileModel fileModel) {
 		if (fileModel.ThumbnailFilePath is not { } path) {
 			return null;
 		}
