@@ -1,11 +1,11 @@
 using System.Windows.Controls;
 
-using PixChest.ViewModels.Files;
+using PixChest.FileTypes.Base.ViewModels;
 
 namespace PixChest.Views.Panes.ViewerPanes.Controls;
 
 public class FileThumbnailGrid: Grid {
-	public FileViewModel? FileViewModel {
+	public BaseFileViewModel? FileViewModel {
 		get;
 		set;
 	}

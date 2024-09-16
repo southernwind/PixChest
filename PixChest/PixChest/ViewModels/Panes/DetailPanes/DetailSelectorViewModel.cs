@@ -1,13 +1,10 @@
-using System.Collections.Generic;
 using System.Reactive.Linq;
 
-using CommunityToolkit.WinUI.Collections;
-
 using PixChest.Composition.Bases;
+using PixChest.FileTypes.Base.ViewModels.Interfaces;
 using PixChest.Models.FileDetailManagers;
 using PixChest.Models.FileDetailManagers.Objects;
 using PixChest.Utils.Objects;
-using PixChest.ViewModels.Files;
 using PixChest.ViewModels.Panes.ViewerPanes;
 
 namespace PixChest.ViewModels.Panes.DetailPanes;
@@ -90,14 +87,14 @@ public class DetailSelectorViewModel : ViewModelBase
 
 	private readonly ObservableList<ValueCountPair<string>> _tags = [];
 
-	public BindableReactiveProperty<FileViewModel[]> TargetFiles {
+	public BindableReactiveProperty<IFileViewModel[]> TargetFiles {
 		get;
 	} = new();
 
 	/// <summary>
 	/// 代表ファイル 複数選択時はnull
 	/// </summary>
-	public BindableReactiveProperty<FileViewModel?> RepresentativeFile {
+	public BindableReactiveProperty<IFileViewModel?> RepresentativeFile {
 		get;
 	} = new();
 

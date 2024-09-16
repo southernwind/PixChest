@@ -2,19 +2,16 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 
 using PixChest.FileTypes.Base.Models.Interfaces;
-using PixChest.FileTypes.Image.Models;
-using PixChest.FileTypes.Pdf.Models;
-using PixChest.FileTypes.Video.Models;
+using PixChest.FileTypes.Base.ViewModels.Interfaces;
 using PixChest.Utils.Constants;
 using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
 
-namespace PixChest.ViewModels.Files;
+namespace PixChest.FileTypes.Base.ViewModels;
 
-[AddTransient]
-public class FileViewModel {
-	public FileViewModel(IFileModel fileModel) {
-		this.FileModel= fileModel;
+public abstract class BaseFileViewModel: IFileViewModel {
+	public BaseFileViewModel(IFileModel fileModel) {
+		this.FileModel = fileModel;
 		this.FilePath = fileModel.FilePath;
 		this.ThumbnailFilePath = fileModel.ThumbnailFilePath ?? FilePathConstants.NoThumbnailFilePath;
 		this.Properties = fileModel.Properties;
@@ -38,21 +35,9 @@ public class FileViewModel {
 		get;
 	}
 
-	public MediaType MediaType {
-		get {
-			switch (this.FileModel) {
-				case ImageFileModel:
-					return MediaType.Image;
-				case VideoFileModel:
-					return MediaType.Video;
-					case PdfFileModel:
-					return MediaType.Pdf;
-				default:
-					throw new Exception();
-			}
-		}
+	public abstract MediaType MediaType {
+		get;
 	}
-
 
 	public virtual async Task ExecuteFileAsync() {
 		var psi = new ProcessStartInfo {

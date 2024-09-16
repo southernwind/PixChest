@@ -1,8 +1,6 @@
 using PixChest.Composition.Bases;
 using PixChest.FileTypes.Base.ViewModels.Interfaces;
 using PixChest.FileTypes.Base.Views;
-using PixChest.Utils.Enums;
-using PixChest.ViewModels.Files;
 
 namespace PixChest.ViewModels.Thumbnails;
 [AddTransient]
@@ -30,7 +28,7 @@ public class ThumbnailPickerSelectorViewModel: ViewModelBase {
 		get;
 	} = new();
 
-	public BindableReactiveProperty<FileViewModel> FileViewModel {
+	public BindableReactiveProperty<IFileViewModel> FileViewModel {
 		get;
 	} = new();
 }

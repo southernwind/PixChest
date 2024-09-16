@@ -5,9 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using PixChest.Database.Tables;
 using PixChest.FileTypes.Base;
 using PixChest.FileTypes.Base.Models.Interfaces;
+using PixChest.FileTypes.Base.ViewModels;
 using PixChest.FileTypes.Base.ViewModels.Interfaces;
 using PixChest.FileTypes.Base.Views;
-using PixChest.ViewModels.Files;
 
 namespace PixChest.Utils.Tools;
 public static class FileTypeUtility {
@@ -19,18 +19,25 @@ public static class FileTypeUtility {
 		return GetFileType(mediaFile).CreateFileModelFromRecord(mediaFile);
 	}
 
-	public static IThumbnailPickerViewModel CreateThumbnailPickerViewModel(FileViewModel fileViewModel) {
+	public static IFileViewModel CreateFileViewModel(IFileModel fileModel) {
+		return GetFileType(fileModel).CreateFileViewModel(fileModel);
+	}
+
+	public static IThumbnailPickerViewModel CreateThumbnailPickerViewModel(IFileViewModel fileViewModel) {
 		return GetFileType(fileViewModel).CreateThumbnailPickerViewModel();
 	}
 
-	public static IThumbnailPickerView CreateThumbnailPickerView(FileViewModel fileViewModel) {
+	public static IThumbnailPickerView CreateThumbnailPickerView(IFileViewModel fileViewModel) {
 		return GetFileType(fileViewModel).CreateThumbnailPickerView();
 	}
 
 	private static IFileType GetFileType(MediaFile mediaFile) {
 		return _fileTypes.First(x => x.MediaType == mediaFile.FilePath.GetMediaType());
 	}
-	private static IFileType GetFileType(FileViewModel fileViewModel) {
+	private static IFileType GetFileType(IFileModel fileModel) {
+		return _fileTypes.First(x => x.MediaType == fileModel.MediaType);
+	}
+	private static IFileType GetFileType(IFileViewModel fileViewModel) {
 		return _fileTypes.First(x => x.MediaType == fileViewModel.MediaType);
 	}
 

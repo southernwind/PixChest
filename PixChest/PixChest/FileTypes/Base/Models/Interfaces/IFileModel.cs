@@ -1,11 +1,16 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
 
 namespace PixChest.FileTypes.Base.Models.Interfaces;
 
 public interface IFileModel {
+	public MediaType MediaType {
+		get;
+	}
+
 	public long Id {
 		get;
 	}

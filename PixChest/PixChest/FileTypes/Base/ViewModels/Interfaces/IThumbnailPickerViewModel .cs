@@ -1,7 +1,5 @@
 using System.Threading.Tasks;
 
-using PixChest.ViewModels.Files;
-
 namespace PixChest.FileTypes.Base.ViewModels.Interfaces;
 
 public interface IThumbnailPickerViewModel {
@@ -25,5 +23,5 @@ public interface IThumbnailPickerViewModel {
 
 	public Task SaveAsync();
 
-	public Task LoadAsync(FileViewModel fileViewModel);
+	public Task LoadAsync(IFileViewModel fileViewModel);
 }

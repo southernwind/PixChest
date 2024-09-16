@@ -5,7 +5,8 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 
 using PixChest.Composition.Bases;
-using PixChest.ViewModels.Files;
+using PixChest.FileTypes.Base.ViewModels;
+using PixChest.FileTypes.Base.ViewModels.Interfaces;
 using PixChest.ViewModels.Panes.ViewerPanes;
 using PixChest.Views.Preferences;
 using PixChest.Views.Thumbnails;
@@ -18,9 +19,9 @@ public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
 			return;
 		}
 		if (sender is ListBox listBox) {
-			vm.MediaContentLibraryViewModel.SelectedFiles.Value = listBox.SelectedItems.Select(x => x as FileViewModel).Where(x => x is not null).ToArray()!;
+			vm.MediaContentLibraryViewModel.SelectedFiles.Value = listBox.SelectedItems.Select(x => x as IFileViewModel).Where(x => x is not null).ToArray()!;
 		} else if (sender is GridView gridView) {
-			vm.MediaContentLibraryViewModel.SelectedFiles.Value = gridView.SelectedItems.Select(x => x as FileViewModel).Where(x => x is not null).ToArray()!;
+			vm.MediaContentLibraryViewModel.SelectedFiles.Value = gridView.SelectedItems.Select(x => x as IFileViewModel).Where(x => x is not null).ToArray()!;
 		}
 	}
 
@@ -28,7 +29,7 @@ public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
 		if (sender is not Grid grid) {
 			return;
 		}
-		if (grid.DataContext is not FileViewModel fileViewModel) {
+		if (grid.DataContext is not IFileViewModel fileViewModel) {
 			return;
 		}
 		await fileViewModel.ExecuteFileAsync();
@@ -42,7 +43,7 @@ public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
 		if (sender is not MenuFlyoutItem selectedItem) {
 			return;
 		}
-		if (selectedItem.DataContext is not FileViewModel fvm) {
+		if (selectedItem.DataContext is not IFileViewModel fvm) {
 			return;
 		}
 		switch (selectedItem.Tag.ToString()) {

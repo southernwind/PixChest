@@ -6,12 +6,12 @@
     xmlns:local="using:PixChest.Views.Panes.ViewerPanes"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:filesVm="using:PixChest.ViewModels.Files"
 	xmlns:controls="using:CommunityToolkit.WinUI.Controls"
 	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
 	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
 	xmlns:viewerControls="using:PixChest.Views.Panes.ViewerPanes.Controls"
+	xmlns:vmIf="using:PixChest.FileTypes.Base.ViewModels.Interfaces"
 	mc:Ignorable="d">
 	<Grid>
 		<Grid.RowDefinitions>
@@ -46,7 +46,7 @@
 			ScrollViewer.VerticalScrollMode="Auto"
 			ScrollViewer.VerticalScrollBarVisibility="Auto">
 			<GridView.ItemTemplate>
-				<DataTemplate x:DataType="filesVm:FileViewModel">
+				<DataTemplate x:DataType="vmIf:IFileViewModel">
 					<Grid DoubleTapped="File_DoubleTapped">
 						<Image Stretch="Uniform" Height="{Binding DataContext.ItemSize.Value, Mode=OneWay, ElementName=List}" Source="{x:Bind ThumbnailFilePath}"/>
 						<Grid.ContextFlyout>

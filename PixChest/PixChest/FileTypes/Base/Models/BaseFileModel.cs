@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 using PixChest.Composition.Bases;
 using PixChest.FileTypes.Base.Models.Interfaces;
+using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
 
 namespace PixChest.FileTypes.Base.Models;
@@ -11,6 +12,10 @@ public abstract class BaseFileModel(long id, string filePath, IFileOperator file
 	protected IFileOperator FileOperator {
 		get;
 	} = fileOperator;
+
+	public abstract MediaType MediaType {
+		get;
+	}
 
 	public long Id {
 		get;

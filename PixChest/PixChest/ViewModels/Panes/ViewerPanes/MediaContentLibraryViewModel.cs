@@ -1,14 +1,15 @@
 using PixChest.Composition.Bases;
+using PixChest.FileTypes.Base.ViewModels;
+using PixChest.FileTypes.Base.ViewModels.Interfaces;
 using PixChest.Models.FileDetailManagers;
 using PixChest.Models.Files;
-using PixChest.ViewModels.Files;
 
 namespace PixChest.ViewModels.Panes.ViewerPanes;
 
 [AddSingleton]
 public class MediaContentLibraryViewModel : ViewModelBase {
 	public MediaContentLibraryViewModel(MediaContentLibrary mediaContentLibrary, TagsManager tagsManager) {
-		this.Files = mediaContentLibrary.Files.CreateView(x => new FileViewModel(x)).ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
+		this.Files = mediaContentLibrary.Files.CreateView(FileTypeUtility.CreateFileViewModel).ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 		this.ReloadCommand.Subscribe(async _ => {
 			await mediaContentLibrary.SearchAsync();
 		}).AddTo(this.CompositeDisposable);
@@ -17,7 +18,7 @@ public class MediaContentLibraryViewModel : ViewModelBase {
 		});
 	}
 
-	public INotifyCollectionChangedSynchronizedViewList<FileViewModel> Files {
+	public INotifyCollectionChangedSynchronizedViewList<IFileViewModel> Files {
 		get;
 	}
 
@@ -25,11 +26,11 @@ public class MediaContentLibraryViewModel : ViewModelBase {
 		get;
 	} = new();
 
-	public BindableReactiveProperty<FileViewModel> SelectedFile {
+	public BindableReactiveProperty<IFileViewModel> SelectedFile {
 		get;
 	} = new();
 
-	public BindableReactiveProperty<FileViewModel[]> SelectedFiles {
+	public BindableReactiveProperty<IFileViewModel[]> SelectedFiles {
 		get;
 	} = new();
 

@@ -9,7 +9,7 @@ using PixChest.Utils.Enums;
 
 namespace PixChest.FileTypes.Video;
 [AddTransient(typeof(IFileType))]
-public class VideoFileType: BaseFileType<VideoFileOperator, VideoFileModel, VideoThumbnailPickerViewModel, VideoThumbnailPickerView> {
+public class VideoFileType: BaseFileType<VideoFileOperator, VideoFileModel, VideoFileViewModel, VideoThumbnailPickerViewModel, VideoThumbnailPickerView> {
 	public override MediaType MediaType {
 		get;
 	} = MediaType.Video;
@@ -24,6 +24,9 @@ public class VideoFileType: BaseFileType<VideoFileOperator, VideoFileModel, Vide
 		return ifm;
 	}
 
+	public override VideoFileViewModel CreateFileViewModel(VideoFileModel fileModel) {
+		return new VideoFileViewModel(fileModel);
+	}
 
 	public override VideoThumbnailPickerViewModel CreateThumbnailPickerViewModel() {
 		return Ioc.Default.GetRequiredService<VideoThumbnailPickerViewModel>();

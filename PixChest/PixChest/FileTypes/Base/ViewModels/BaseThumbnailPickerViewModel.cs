@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 
 using PixChest.FileTypes.Base.ViewModels.Interfaces;
 using PixChest.Models.FileDetailManagers;
-using PixChest.ViewModels.Files;
 
 namespace PixChest.FileTypes.Base.ViewModels;
 
@@ -13,7 +12,7 @@ public abstract class BaseThumbnailPickerViewModel : IThumbnailPickerViewModel {
 		this.thumbnailsManager = thumbnailsManager;
 	}
 
-	protected FileViewModel? targetFileViewModel;
+	protected IFileViewModel? targetFileViewModel;
 	protected ThumbnailsManager thumbnailsManager;
 
 	public BindableReactiveProperty<byte[]?> OriginalThumbnail {
@@ -44,7 +43,7 @@ public abstract class BaseThumbnailPickerViewModel : IThumbnailPickerViewModel {
 		await this.thumbnailsManager.UpdateThumbnail(this.targetFileViewModel.FileModel, this.CandidateThumbnail.Value);
 	}
 
-	public virtual async Task LoadAsync(FileViewModel fileViewModel) {
+	public virtual async Task LoadAsync(IFileViewModel fileViewModel) {
 		this.targetFileViewModel = fileViewModel;
 		this.CandidateThumbnail.Value = null;
 		this.OriginalThumbnail.Value = await this.thumbnailsManager.LoadThumbnailAsync(fileViewModel.FileModel);

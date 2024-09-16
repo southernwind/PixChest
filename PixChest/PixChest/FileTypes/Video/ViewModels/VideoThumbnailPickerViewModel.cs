@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 
 using PixChest.FileTypes.Base.ViewModels;
+using PixChest.FileTypes.Base.ViewModels.Interfaces;
 using PixChest.FileTypes.Video.Models;
 using PixChest.Models.FileDetailManagers;
-using PixChest.ViewModels.Files;
 
 namespace PixChest.FileTypes.Video.ViewModels;
 
@@ -37,7 +37,7 @@ public class VideoThumbnailPickerViewModel : BaseThumbnailPickerViewModel {
 		}
 	}
 
-	public override async Task LoadAsync(FileViewModel fileViewModel) {
+	public override async Task LoadAsync(IFileViewModel fileViewModel) {
 		await base.LoadAsync(fileViewModel);
 		this.VideoFilePath.Value = fileViewModel.FilePath;
 	}
