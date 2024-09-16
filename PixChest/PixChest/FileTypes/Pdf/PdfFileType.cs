@@ -32,4 +32,8 @@ public class PdfFileType: BaseFileType<PdfFileOperator, PdfFileModel, PdfThumbna
 	public override PdfThumbnailPickerView CreateThumbnailPickerView() {
 		return new PdfThumbnailPickerView();
 	}
+	public override IQueryable<MediaFile> IncludeTables(IQueryable<MediaFile> mediaFiles) {
+		return mediaFiles
+			.Include(mf => mf.Container);
+	}
 }

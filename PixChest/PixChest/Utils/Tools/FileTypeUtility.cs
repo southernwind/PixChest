@@ -33,4 +33,12 @@ public static class FileTypeUtility {
 	private static IFileType GetFileType(FileViewModel fileViewModel) {
 		return _fileTypes.First(x => x.MediaType == fileViewModel.MediaType);
 	}
+
+	public static IQueryable<MediaFile> IncludeTables(this IQueryable<MediaFile> mediaFiles) {
+		var result = mediaFiles;
+		foreach (var fileType in _fileTypes) {
+			result = fileType.IncludeTables(result);
+		}
+		return result;
+	}
 }

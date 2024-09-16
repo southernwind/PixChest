@@ -31,4 +31,14 @@ public class ImageFileType: BaseFileType<ImageFileOperator, ImageFileModel, Imag
 	public override ImageThumbnailPickerView CreateThumbnailPickerView() {
 		return new ImageThumbnailPickerView();
 	}
+
+	public override IQueryable<MediaFile> IncludeTables(IQueryable<MediaFile> mediaFiles) {
+		return mediaFiles
+			.Include(mf => mf.ImageFile)
+			.Include(mf => mf.Jpeg)
+			.Include(mf => mf.Png)
+			.Include(mf => mf.Bmp)
+			.Include(mf => mf.Gif)
+			.Include(mf => mf.Heif);
+	}
 }

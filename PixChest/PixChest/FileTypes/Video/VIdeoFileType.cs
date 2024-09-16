@@ -32,4 +32,8 @@ public class VideoFileType: BaseFileType<VideoFileOperator, VideoFileModel, Vide
 	public override VideoThumbnailPickerView CreateThumbnailPickerView() {
 		return new VideoThumbnailPickerView();
 	}
+	public override IQueryable<MediaFile> IncludeTables(IQueryable<MediaFile> mediaFiles) {
+		return mediaFiles
+			.Include(mf => mf.VideoFile);
+	}
 }

@@ -25,4 +25,5 @@ public interface IFileType {
 	public IFileOperator CreateFileOperator();
 	public IThumbnailPickerViewModel CreateThumbnailPickerViewModel();
 	public IThumbnailPickerView CreateThumbnailPickerView();
+	public IQueryable<MediaFile> IncludeTables(IQueryable<MediaFile> mediaFiles);
 }

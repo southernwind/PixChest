@@ -18,6 +18,7 @@ public abstract class BaseFileType<TFileOperator, TFileModel, TThumbnailPickerVi
 	public abstract TFileOperator CreateFileOperator();
 	public abstract TThumbnailPickerViewModel CreateThumbnailPickerViewModel();
 	public abstract TThumbnailPickerView CreateThumbnailPickerView();
+	public abstract IQueryable<MediaFile> IncludeTables(IQueryable<MediaFile> mediaFiles);
 
 	protected void SetModelProperties(TFileModel fileModel, MediaFile mediaFile) {
 		fileModel.ThumbnailFilePath = mediaFile.ThumbnailFileName;
