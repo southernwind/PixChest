@@ -9,7 +9,8 @@ using PixChest.Utils.Enums;
 
 namespace PixChest.FileTypes.Image;
 [AddTransient(typeof(IFileType))]
-public class ImageFileType: BaseFileType<ImageFileOperator, ImageFileModel, ImageFileViewModel, ImageThumbnailPickerViewModel, ImageThumbnailPickerView> {
+public class ImageFileType : BaseFileType<ImageFileOperator, ImageFileModel, ImageFileViewModel, ImageDetailViewerPreviewControlView, ImageThumbnailPickerViewModel, ImageThumbnailPickerView> {
+	private ImageDetailViewerPreviewControlView? _imageDetailViewerPreviewControlView;
 	public override MediaType MediaType {
 		get;
 	} = MediaType.Image;
@@ -26,6 +27,9 @@ public class ImageFileType: BaseFileType<ImageFileOperator, ImageFileModel, Imag
 
 	public override ImageFileViewModel CreateFileViewModel(ImageFileModel fileModel) {
 		return new ImageFileViewModel(fileModel);
+	}
+	public override ImageDetailViewerPreviewControlView CreateDetailViewerPreviewControlView(ImageFileViewModel fileViewModel) {
+		return this._imageDetailViewerPreviewControlView ??= new ImageDetailViewerPreviewControlView();
 	}
 
 	public override ImageThumbnailPickerViewModel CreateThumbnailPickerViewModel() {

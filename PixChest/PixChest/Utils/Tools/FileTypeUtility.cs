@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using PixChest.Database.Tables;
 using PixChest.FileTypes.Base;
 using PixChest.FileTypes.Base.Models.Interfaces;
-using PixChest.FileTypes.Base.ViewModels;
 using PixChest.FileTypes.Base.ViewModels.Interfaces;
 using PixChest.FileTypes.Base.Views;
 
@@ -21,6 +20,10 @@ public static class FileTypeUtility {
 
 	public static IFileViewModel CreateFileViewModel(IFileModel fileModel) {
 		return GetFileType(fileModel).CreateFileViewModel(fileModel);
+	}
+
+	public static IDetailViewerPreviewControlView CreateDetailViewerPreviewControlView(IFileViewModel fileViewModel) {
+		return GetFileType(fileViewModel).CreateDetailViewerPreviewControlView(fileViewModel);
 	}
 
 	public static IThumbnailPickerViewModel CreateThumbnailPickerViewModel(IFileViewModel fileViewModel) {

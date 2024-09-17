@@ -16,6 +16,8 @@
     <Content Remove="Assets\ffprobe.exe" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="FileTypes\Image\Views\ImageDetailViewerPreviewControlView.xaml" />
+    <None Remove="FileTypes\Pdf\Views\PdfDetailViewerPreviewControlView.xaml" />
     <None Remove="Views\Filters\FilterManagerView.xaml" />
     <None Remove="Views\Filters\FilterManagerWindow.xaml" />
     <None Remove="Views\FolderManager\FolderManagerView.xaml" />
@@ -76,16 +78,18 @@
     <None Update="Assets\ffprobe.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="FileTypes\Image\Views\ImageDetailViewerPreviewControlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="FileTypes\Pdf\Views\PdfDetailViewerPreviewControlView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Thumbnails\ThumbnailPickerView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Thumbnails\ThumbnailPickerWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="FileTypes\Pdf\Views\" />
-    <Folder Include="FileTypes\Video\Views\" />
   </ItemGroup>
 </Project>

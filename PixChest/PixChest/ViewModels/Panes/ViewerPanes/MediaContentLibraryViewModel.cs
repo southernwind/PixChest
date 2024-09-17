@@ -1,5 +1,4 @@
 using PixChest.Composition.Bases;
-using PixChest.FileTypes.Base.ViewModels;
 using PixChest.FileTypes.Base.ViewModels.Interfaces;
 using PixChest.Models.FileDetailManagers;
 using PixChest.Models.Files;

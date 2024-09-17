@@ -9,7 +9,8 @@ using PixChest.Utils.Enums;
 
 namespace PixChest.FileTypes.Pdf;
 [AddTransient(typeof(IFileType))]
-public class PdfFileType: BaseFileType<PdfFileOperator, PdfFileModel, PdfFileViewModel, PdfThumbnailPickerViewModel, PdfThumbnailPickerView> {
+public class PdfFileType: BaseFileType<PdfFileOperator, PdfFileModel, PdfFileViewModel, PdfDetailViewerPreviewControlView, PdfThumbnailPickerViewModel, PdfThumbnailPickerView> {
+	private PdfDetailViewerPreviewControlView? _pdfDetailViewerPreviewControlView;
 	public override MediaType MediaType {
 		get;
 	} = MediaType.Pdf;
@@ -26,6 +27,9 @@ public class PdfFileType: BaseFileType<PdfFileOperator, PdfFileModel, PdfFileVie
 
 	public override PdfFileViewModel CreateFileViewModel(PdfFileModel fileModel) {
 		return new PdfFileViewModel(fileModel);
+	}
+	public override PdfDetailViewerPreviewControlView CreateDetailViewerPreviewControlView(PdfFileViewModel fileViewModel) {
+		return this._pdfDetailViewerPreviewControlView ??= new PdfDetailViewerPreviewControlView();
 	}
 
 	public override PdfThumbnailPickerViewModel CreateThumbnailPickerViewModel() {

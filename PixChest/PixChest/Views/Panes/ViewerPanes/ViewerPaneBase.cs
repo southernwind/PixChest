@@ -5,10 +5,8 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 
 using PixChest.Composition.Bases;
-using PixChest.FileTypes.Base.ViewModels;
 using PixChest.FileTypes.Base.ViewModels.Interfaces;
 using PixChest.ViewModels.Panes.ViewerPanes;
-using PixChest.Views.Preferences;
 using PixChest.Views.Thumbnails;
 
 namespace PixChest.Views.Panes.ViewerPanes;

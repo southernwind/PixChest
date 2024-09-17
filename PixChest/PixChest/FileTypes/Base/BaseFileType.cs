@@ -5,10 +5,11 @@ using PixChest.FileTypes.Base.Views;
 using PixChest.Utils.Enums;
 
 namespace PixChest.FileTypes.Base;
-public abstract class BaseFileType<TFileOperator, TFileModel, TFileViewModel, TThumbnailPickerViewModel, TThumbnailPickerView> : IFileType<TFileOperator, TFileModel, TFileViewModel, TThumbnailPickerViewModel, TThumbnailPickerView>
+public abstract class BaseFileType<TFileOperator, TFileModel, TFileViewModel, TDetailViewerPreviewControlView, TThumbnailPickerViewModel, TThumbnailPickerView> : IFileType<TFileOperator, TFileModel, TFileViewModel, TDetailViewerPreviewControlView, TThumbnailPickerViewModel, TThumbnailPickerView>
 	where TFileOperator : IFileOperator
 	where TFileModel : IFileModel
 	where TFileViewModel : IFileViewModel
+	where TDetailViewerPreviewControlView: IDetailViewerPreviewControlView
 	where TThumbnailPickerViewModel : IThumbnailPickerViewModel
 	where TThumbnailPickerView : IThumbnailPickerView {
 	public abstract MediaType MediaType {
@@ -18,6 +19,7 @@ public abstract class BaseFileType<TFileOperator, TFileModel, TFileViewModel, TT
 	public abstract TFileOperator CreateFileOperator();
 	public abstract TFileModel CreateFileModelFromRecord(MediaFile mediaFile);
 	public abstract TFileViewModel CreateFileViewModel(TFileModel fileModel);
+	public abstract TDetailViewerPreviewControlView CreateDetailViewerPreviewControlView(TFileViewModel fileViewModel);
 	public abstract TThumbnailPickerViewModel CreateThumbnailPickerViewModel();
 	public abstract TThumbnailPickerView CreateThumbnailPickerView();
 	public abstract IQueryable<MediaFile> IncludeTables(IQueryable<MediaFile> mediaFiles);
@@ -44,6 +46,10 @@ public abstract class BaseFileType<TFileOperator, TFileModel, TFileViewModel, TT
 
 	IFileViewModel IFileType.CreateFileViewModel(IFileModel fileModel) {
 		return this.CreateFileViewModel((TFileModel)fileModel);
+	}
+
+	IDetailViewerPreviewControlView IFileType.CreateDetailViewerPreviewControlView(IFileViewModel fileViewModel) {
+		return this.CreateDetailViewerPreviewControlView((TFileViewModel)fileViewModel);
 	}
 
 	IThumbnailPickerViewModel IFileType.CreateThumbnailPickerViewModel() {
