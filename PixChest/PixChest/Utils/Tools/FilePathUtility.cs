@@ -27,7 +27,7 @@ internal static class FilePathUtility {
 	/// <param name="path">ファイルパス</param>
 	/// <returns>管理対象か否か</returns>
 	public static bool IsTargetFile(this string path) {
-		return _config.ScanConfig.TargetExtensions.Select(x => x.Extension.Value.ToLower()).Contains(Path.GetExtension(path).ToLower());
+		return _config.ScanConfig.TargetExtensions.Select(x => x.Extension.Value.Equals(Path.GetExtension(path), StringComparison.CurrentCultureIgnoreCase)).Any();
 	}
 
 	/// <summary>
@@ -36,7 +36,7 @@ internal static class FilePathUtility {
 	/// <param name="path">ファイルパス</param>
 	/// <returns>動画ファイルか否か</returns>
 	public static bool IsVideoFile(this string path) {
-		return _config.ScanConfig.TargetExtensions.Where(x => x.MediaType.Value == MediaType.Video).Select(x => x.Extension.Value.ToLower()).Contains(Path.GetExtension(path).ToLower());
+		return _config.ScanConfig.TargetExtensions.Where(x => x.MediaType.Value == MediaType.Video).Select(x => x.Extension.Value.Equals(Path.GetExtension(path),StringComparison.CurrentCultureIgnoreCase)).Any();
 	}
 
 	/// <summary>
@@ -45,6 +45,6 @@ internal static class FilePathUtility {
 	/// <param name="path">ファイルパス</param>
 	/// <returns>メディアタイプ</returns>
 	public static MediaType? GetMediaType(this string path) {
-		return _config.ScanConfig.TargetExtensions.Where(x => x.Extension.Value.ToLower() == Path.GetExtension(path).ToLower()).Select(x => x.MediaType.Value as MediaType?).FirstOrDefault();
+		return _config.ScanConfig.TargetExtensions.Where(x => x.Extension.Value.Equals(Path.GetExtension(path), StringComparison.CurrentCultureIgnoreCase)).Select(x => x.MediaType.Value as MediaType?).FirstOrDefault();
 	}
 }
