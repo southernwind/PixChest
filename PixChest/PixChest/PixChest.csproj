@@ -12,31 +12,6 @@
     <SupportedOSPlatformVersion>10.0.22621.0</SupportedOSPlatformVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Content Remove="Assets\ffmpeg.exe" />
-    <Content Remove="Assets\ffprobe.exe" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="FileTypes\Image\Views\ImageDetailViewerPreviewControlView.xaml" />
-    <None Remove="FileTypes\Pdf\Views\PdfDetailViewerPreviewControlView.xaml" />
-    <None Remove="Views\Filters\FilterManagerView.xaml" />
-    <None Remove="Views\Filters\FilterManagerWindow.xaml" />
-    <None Remove="Views\FolderManager\FolderManagerView.xaml" />
-    <None Remove="Views\Panes\DetailPanes\DetailSelector.xaml" />
-    <None Remove="Views\Panes\DetailPanes\PropertiesDetail.xaml" />
-    <None Remove="Views\Panes\FilterPanes\FilterSelector.xaml" />
-    <None Remove="Views\Panes\RepositoryPanes\RepositorySelector.xaml" />
-    <None Remove="Views\Panes\ViewerPanes\DetailViewer.xaml" />
-    <None Remove="Views\Panes\ViewerPanes\ListViewer.xaml" />
-    <None Remove="Views\Resources\Resoures.xaml" />
-    <None Remove="Views\Sort\SortManagerView.xaml" />
-    <None Remove="Views\Sort\SortManagerWindow.xaml" />
-    <None Remove="Views\Tags\TagManagerView.xaml" />
-    <None Remove="Views\Tags\TagManagerWindow.xaml" />
-    <None Remove="Views\Thumbnails\ThumbnailPickerView.xaml" />
-    <None Remove="Views\Thumbnails\ThumbnailPickerWindow.xaml" />
-  </ItemGroup>
-  
-  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" />
     <PackageReference Include="CommunityToolkit.WinUI.Behaviors" />
     <PackageReference Include="CommunityToolkit.WinUI.Collections" />
@@ -66,30 +41,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Assets\thumbnail_creation_failed.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
+    <None Update="Assets\thumbnail_creation_failed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\ffmpeg.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\ffprobe.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Page Update="FileTypes\Image\Views\ImageDetailViewerPreviewControlView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="FileTypes\Pdf\Views\PdfDetailViewerPreviewControlView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\Thumbnails\ThumbnailPickerView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Thumbnails\ThumbnailPickerWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 </Project>
