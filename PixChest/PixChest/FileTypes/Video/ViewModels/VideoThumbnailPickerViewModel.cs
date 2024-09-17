@@ -11,11 +11,11 @@ namespace PixChest.FileTypes.Video.ViewModels;
 public class VideoThumbnailPickerViewModel : BaseThumbnailPickerViewModel {
 	public VideoThumbnailPickerViewModel(
 		ThumbnailsManager thumbnailsManager,
-		VideoFileOperator imageFileOperator) : base(thumbnailsManager) {
-		this._pdfFileOperator = imageFileOperator;
+		VideoFileOperator videoFileOperator) : base(thumbnailsManager) {
+		this._videoFileOperator = videoFileOperator;
 		this._updateTimeSubject.ObserveOnCurrentSynchronizationContext().Subscribe(x => this.Time.Value = x);
 	}
-	private readonly VideoFileOperator _pdfFileOperator;
+	private readonly VideoFileOperator _videoFileOperator;
 
 	private readonly Subject<TimeSpan> _updateTimeSubject = new();
 	public BindableReactiveProperty<TimeSpan> Time {
@@ -31,7 +31,7 @@ public class VideoThumbnailPickerViewModel : BaseThumbnailPickerViewModel {
 			return;
 		}
 		try {
-			this.CandidateThumbnail.Value = this._pdfFileOperator.CreateThumbnail(this.targetFileViewModel.FileModel, 300, 300, this.Time.Value);
+			this.CandidateThumbnail.Value = this._videoFileOperator.CreateThumbnail(this.targetFileViewModel.FileModel, 300, 300, this.Time.Value);
 		} catch (Exception) {
 			this.CandidateThumbnail.Value = null;
 		}

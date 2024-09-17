@@ -23,7 +23,7 @@ public class FileRegistrar {
 	}
 
 	static FileRegistrar() {
-		_fileOperators = Ioc.Default.GetServices<IFileOperator>().ToArray();
+		_fileOperators = FileTypeUtility.CreateFileOperators();
 	}
 
 	public FileRegistrar(Config config) {

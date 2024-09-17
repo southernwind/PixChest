@@ -34,6 +34,10 @@ public static class FileTypeUtility {
 		return GetFileType(fileViewModel).CreateThumbnailPickerView();
 	}
 
+	public static IFileOperator[] CreateFileOperators() {
+		return _fileTypes.Select(x => x.CreateFileOperator()).ToArray();
+	}
+
 	private static IFileType GetFileType(MediaFile mediaFile) {
 		return _fileTypes.First(x => x.MediaType == mediaFile.FilePath.GetMediaType());
 	}
