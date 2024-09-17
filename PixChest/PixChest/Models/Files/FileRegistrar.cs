@@ -10,7 +10,6 @@ namespace PixChest.Models.Files;
 
 [AddSingleton]
 public class FileRegistrar {
-	private readonly PixChestDbContext _db;
 	private static readonly IFileOperator[] _fileOperators;
 	public ObservableQueue<string> RegistrationQueue {
 		get;
@@ -28,8 +27,7 @@ public class FileRegistrar {
 		_fileOperators = Ioc.Default.GetServices<IFileOperator>().ToArray();
 	}
 
-	public FileRegistrar(PixChestDbContext dbContext, Config config) {
-		this._db = dbContext;
+	public FileRegistrar(Config config) {
 		this.Config = config;
 		this.RegistrationQueue
 			.ObserveAdd()
@@ -44,11 +42,11 @@ public class FileRegistrar {
 	}
 
 	public void RegisterFiles() {
-		while (this.RegistrationQueue.TryDequeue(out var filepath)) {
+		while (this.RegistrationQueue.TryDequeue(out var filePath)) {
 			try {
-				var type = filepath.GetMediaType();
+				var type = filePath.GetMediaType();
 				var fileOperator = _fileOperators.First(x => x.TargetMediaType == type);
-				fileOperator.RegisterFile(filepath);
+				fileOperator.RegisterFile(filePath);
 			} catch (Exception e) {
 				Console.WriteLine(e);
 			}

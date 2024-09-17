@@ -56,5 +56,5 @@ public abstract class BaseFileOperator : IFileOperator {
 		get;
 	}
 
-	public abstract void RegisterFile(string filepath);
+	public abstract void RegisterFile(string filePath);
 }
