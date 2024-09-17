@@ -2,7 +2,7 @@ using Microsoft.UI.Xaml.Controls;
 
 using PixChest.Utils.Enums;
 using PixChest.ViewModels.Preferences;
-using PixChest.ViewModels.Preferences.CustomConfig;
+using PixChest.ViewModels.Preferences.CustomConfigs;
 
 namespace PixChest.Views.Preferences.CustomConfig;
 public sealed partial class ScanConfigPage : Page {

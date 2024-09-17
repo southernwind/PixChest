@@ -2,7 +2,6 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 
 using Microsoft.Extensions.DependencyInjection;
 
-using PixChest.Database;
 using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.Models.Preferences;
 

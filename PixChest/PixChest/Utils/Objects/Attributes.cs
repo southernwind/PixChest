@@ -7,7 +7,7 @@ namespace PixChest.Utils.Objects;
 /// </summary>
 /// <typeparam name="T">属性値の型</typeparam>
 public class Attributes<T> : IEnumerable<TitleValuePair<T>> {
-	private readonly List<TitleValuePair<T>> _list = new List<TitleValuePair<T>>();
+	private readonly List<TitleValuePair<T>> _list = [];
 
 	/// <summary>
 	/// コンストラクタ
@@ -64,16 +64,12 @@ public class Attributes<T> : IEnumerable<TitleValuePair<T>> {
 /// <summary>
 /// タイトルと値のペア
 /// </summary>
-public struct TitleValuePair<T> {
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>
-	/// <param name="title">タイトル</param>
-	/// <param name="value">値</param>
-	public TitleValuePair(string title, T value) {
-		this.Title = title;
-		this.Value = value;
-	}
+/// <remarks>
+/// コンストラクタ
+/// </remarks>
+/// <param name="title">タイトル</param>
+/// <param name="value">値</param>
+public struct TitleValuePair<T>(string title, T value) {
 
 	/// <summary>
 	/// タイトル
@@ -81,7 +77,7 @@ public struct TitleValuePair<T> {
 	public string Title {
 		get;
 		set;
-	}
+	} = title;
 
 	/// <summary>
 	/// 値
@@ -89,7 +85,7 @@ public struct TitleValuePair<T> {
 	public T Value {
 		get;
 		set;
-	}
+	} = value;
 }
 
 /// <summary>

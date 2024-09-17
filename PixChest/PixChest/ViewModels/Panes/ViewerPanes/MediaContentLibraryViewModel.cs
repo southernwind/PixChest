@@ -1,13 +1,12 @@
 using PixChest.Composition.Bases;
 using PixChest.FileTypes.Base.ViewModels.Interfaces;
-using PixChest.Models.FileDetailManagers;
 using PixChest.Models.Files;
 
 namespace PixChest.ViewModels.Panes.ViewerPanes;
 
 [AddSingleton]
 public class MediaContentLibraryViewModel : ViewModelBase {
-	public MediaContentLibraryViewModel(MediaContentLibrary mediaContentLibrary, TagsManager tagsManager) {
+	public MediaContentLibraryViewModel(MediaContentLibrary mediaContentLibrary) {
 		this.Files = mediaContentLibrary.Files.CreateView(FileTypeUtility.CreateFileViewModel).ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 		this.ReloadCommand.Subscribe(async _ => {
 			await mediaContentLibrary.SearchAsync();

@@ -38,7 +38,7 @@ public static class ImageMetadataFactory {
 			FileType.Tga => throw new NotImplementedException(),
 			FileType.Mp3 => throw new NotImplementedException(),
 			FileType.Mp4 => throw new NotImplementedException(),
-			_ => throw new ArgumentOutOfRangeException(nameof(FileType), "Unsupported file format.")
+			_ => throw new ArgumentOutOfRangeException(nameof(stream), "Unsupported file format.")
 		};
 	}
 }

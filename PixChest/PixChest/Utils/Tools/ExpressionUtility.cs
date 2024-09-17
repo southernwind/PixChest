@@ -6,11 +6,15 @@ namespace PixChest.Utils.Tools;
 /// <summary>
 /// パラメータ上書きクラス
 /// </summary>
-public class ParameterVisitor : ExpressionVisitor {
+/// <remarks>
+/// コンストラクタ
+/// </remarks>
+/// <param name="parameters">上書きするパラメータ</param>
+public class ParameterVisitor(IEnumerable<ParameterExpression> parameters) : ExpressionVisitor {
 	/// <summary>
 	/// パラメータ保持
 	/// </summary>
-	private readonly IDictionary<(Type, string?), ParameterExpression> _parameters;
+	private readonly IDictionary<(Type, string?), ParameterExpression> _parameters = parameters.ToDictionary(p => (p.Type, p.Name));
 
 	/// <summary>
 	/// パラメータ
@@ -19,14 +23,6 @@ public class ParameterVisitor : ExpressionVisitor {
 		get {
 			return this._parameters.Values;
 		}
-	}
-
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>
-	/// <param name="parameters">上書きするパラメータ</param>
-	public ParameterVisitor(IEnumerable<ParameterExpression> parameters) {
-		this._parameters = parameters.ToDictionary(p => (p.Type, p.Name));
 	}
 
 	/// <summary>
@@ -39,8 +35,6 @@ public class ParameterVisitor : ExpressionVisitor {
 	/// <returns>上書きするパラメータ</returns>
 	protected override Expression VisitParameter(ParameterExpression node) {
 		var key = (node.Type, node.Name);
-		return this._parameters.ContainsKey(key)
-			? this._parameters[key]
-			: node;
+		return this._parameters.TryGetValue(key, out ParameterExpression? value) ? value : node;
 	}
 }

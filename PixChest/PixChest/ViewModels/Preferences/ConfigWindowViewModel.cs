@@ -1,6 +1,5 @@
 using PixChest.Composition.Bases;
 using PixChest.Models.Preferences;
-using PixChest.ViewModels.Preferences.CustomConfig;
 using PixChest.ViewModels.Preferences.CustomConfigs;
 
 namespace PixChest.ViewModels.Preferences;
@@ -11,7 +10,7 @@ public class ConfigWindowViewModel : ViewModelBase {
 		this.ScanConfigPageViewModel = scanConfigPageViewModel;
 
 		this.SaveCommand.Subscribe(_ => {
-			foreach (var vm in this._configPageViewModels) {
+			foreach (var vm in this.ConfigPageViewModels) {
 				vm.Save();
 			}
 			config.Save();
@@ -19,12 +18,12 @@ public class ConfigWindowViewModel : ViewModelBase {
 
 		this.LoadCommand.Subscribe(_ => {
 			config.Load();
-			foreach (var vm in this._configPageViewModels) {
+			foreach (var vm in this.ConfigPageViewModels) {
 				vm.Load();
 			}
 		});
 	}
-	private IConfigPageViewModel[] _configPageViewModels {
+	private IConfigPageViewModel[] ConfigPageViewModels {
 		get {
 			return [
 				this.ScanConfigPageViewModel

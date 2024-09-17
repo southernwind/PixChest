@@ -1,4 +1,4 @@
-﻿namespace PixChest.Utils.Objects;
+namespace PixChest.Utils.Objects;
 
 /// <summary>
 /// 比較可能なサイズ構造体
@@ -108,11 +108,11 @@ public struct ComparableSize : IComparable<ComparableSize>, IComparable {
 	}
 
 	public override bool Equals(object? obj) {
-		if (!(obj is ComparableSize)) {
+		if (obj is not ComparableSize cs) {
 			return false;
 		}
 
-		var size = (ComparableSize)obj;
+		var size = cs;
 		return this.Width == size.Width &&
 			   this.Height == size.Height;
 	}

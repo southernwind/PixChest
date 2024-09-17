@@ -85,5 +85,6 @@ public class SettingsItemWithKey<TKey, T> : ISettingsItem<ConcurrentDictionary<T
 	}
 
 	public void Dispose() {
+		GC.SuppressFinalize(this);
 	}
 }

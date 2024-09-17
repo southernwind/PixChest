@@ -10,7 +10,6 @@ using PixChest.Database;
 using System.IO;
 using PixChest.Models.Preferences;
 using FFMpegCore;
-using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.FileTypes.Base;
 namespace PixChest;
 
@@ -34,7 +33,7 @@ public partial class App : Application {
 				x.GetCustomAttributes<AddTransientAttribute>(inherit: true).Any());
 
 		foreach (var targetType in targetTypes) {
-			var attribute = targetType.GetCustomAttribute(typeof(AddTransientAttribute)) as AddTransientAttribute;
+			var attribute = targetType.GetCustomAttribute<AddTransientAttribute>();
 			serviceCollection.AddTransient(attribute?.ServiceType ?? targetType, targetType);
 		}
 

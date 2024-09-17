@@ -6,7 +6,6 @@
     xmlns:local="using:PixChest.Views.Panes.ViewerPanes"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:filesVm ="using:PixChest.ViewModels.Files"
 	xmlns:viewerpanesVm="using:PixChest.ViewModels.Panes.ViewerPanes"
 	xmlns:controls="using:CommunityToolkit.WinUI.Controls"
 	mc:Ignorable="d">

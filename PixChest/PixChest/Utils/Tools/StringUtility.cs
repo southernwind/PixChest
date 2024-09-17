@@ -6,7 +6,6 @@ namespace PixChest.Utils.Tools;
 public static class StringUtility {
 	private static readonly int offset = beginKatakana - beginHiragana;
 	private const char beginHiragana = 'ぁ';
-	private const char endHiragana = 'ゖ';
 	private const char beginKatakana = 'ァ';
 	private const char endKatakana = 'ヶ';
 	private static readonly Dictionary<string, string> char1 = new(){

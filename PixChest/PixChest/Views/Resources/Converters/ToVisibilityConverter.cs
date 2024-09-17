@@ -10,7 +10,7 @@ namespace PixChest.Views.Resources.Converters;
 /// 任意の値をVisibilityに変換する
 /// </remarks>
 public class ToVisibilityConverter : IValueConverter {
-	private static readonly object _defaultValue = new object();
+	private static readonly object _defaultValue = new();
 	/// <summary>
 	/// Visibleの場合の値
 	/// </summary>

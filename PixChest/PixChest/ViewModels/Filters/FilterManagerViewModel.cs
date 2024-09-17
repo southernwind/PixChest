@@ -10,8 +10,6 @@ namespace PixChest.ViewModels.Filters;
 
 [AddTransient]
 public class FilterManagerViewModel : ViewModelBase {
-
-	private readonly States _states;
 	private readonly FilterManager _filterManager;
 
 	/// <summary>
@@ -74,8 +72,7 @@ public class FilterManagerViewModel : ViewModelBase {
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	public FilterManagerViewModel(FilterManager filterManager, States states) {
-		this._states = states;
+	public FilterManagerViewModel(FilterManager filterManager) {
 		this._filterManager = filterManager;
 
 		this.AddFilteringConditionCommand.Subscribe(_ => {

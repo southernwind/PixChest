@@ -9,31 +9,25 @@ using PixChest.Utils.Objects;
 
 namespace PixChest.FileTypes.Base.ViewModels;
 
-public abstract class BaseFileViewModel: IFileViewModel {
-	public BaseFileViewModel(IFileModel fileModel) {
-		this.FileModel = fileModel;
-		this.FilePath = fileModel.FilePath;
-		this.ThumbnailFilePath = fileModel.ThumbnailFilePath ?? FilePathConstants.NoThumbnailFilePath;
-		this.Properties = fileModel.Properties;
-	}
+public abstract class BaseFileViewModel(IFileModel fileModel) : IFileViewModel {
 	public IFileModel FileModel {
 		get;
-	}
+	} = fileModel;
 
 	public string FilePath {
 		get;
-	}
+	} = fileModel.FilePath;
 
 	public string ThumbnailFilePath {
 		get;
-	}
+	} = fileModel.ThumbnailFilePath ?? FilePathConstants.NoThumbnailFilePath;
 
 	/// <summary>
 	/// プロパティ
 	/// </summary>
 	public Attributes<string> Properties {
 		get;
-	}
+	} = fileModel.Properties;
 
 	public abstract MediaType MediaType {
 		get;

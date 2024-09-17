@@ -55,8 +55,8 @@ public class ImageFileOperator : BaseFileOperator {
 		using var meta = ImageMetadataFactory.Create(fileMs);
 
 		if (meta.Latitude != null && meta.Longitude != null && meta.LatitudeRef != null && meta.LongitudeRef != null) {
-			var latitude = (meta.Latitude[0].ToDouble() + meta.Latitude[1].ToDouble() / 60 + meta.Latitude[2].ToDouble() / 3600) * (meta.LatitudeRef == "S" ? -1 : 1);
-			var longitude = (meta.Longitude[0].ToDouble() + meta.Longitude[1].ToDouble() / 60 + meta.Longitude[2].ToDouble() / 3600) * (meta.LongitudeRef == "W" ? -1 : 1);
+			var latitude = (meta.Latitude[0].ToDouble() + (meta.Latitude[1].ToDouble() / 60) + (meta.Latitude[2].ToDouble() / 3600)) * (meta.LatitudeRef == "S" ? -1 : 1);
+			var longitude = (meta.Longitude[0].ToDouble() + (meta.Longitude[1].ToDouble() / 60) + (meta.Longitude[2].ToDouble() / 3600)) * (meta.LongitudeRef == "W" ? -1 : 1);
 			mf.Altitude = meta.Altitude?.ToDouble() * (meta.AltitudeRef == 1 ? -1 : 1);
 			mf.Latitude = latitude;
 			mf.Longitude = longitude;

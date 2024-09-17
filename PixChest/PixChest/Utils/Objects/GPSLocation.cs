@@ -2,39 +2,33 @@ namespace PixChest.Utils.Objects;
 /// <summary>
 /// 場所、座標クラス
 /// </summary>
-public class GpsLocation : IComparable<GpsLocation>, IComparable {
+/// <remarks>
+/// コンストラクタ
+/// </remarks>
+/// <param name="latitude">緯度</param>
+/// <param name="longitude">経度</param>
+/// <param name="altitude">高度</param>
+public class GpsLocation(double latitude, double longitude, double? altitude = null) : IComparable<GpsLocation>, IComparable {
 	/// <summary>
 	/// 緯度
 	/// </summary>
 	public double Latitude {
 		get;
-	}
+	} = latitude;
 
 	/// <summary>
 	/// 経度
 	/// </summary>
 	public double Longitude {
 		get;
-	}
+	} = longitude;
 
 	/// <summary>
 	/// 高度
 	/// </summary>
 	public double? Altitude {
 		get;
-	}
-
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>
-	/// <param name="latitude">緯度</param>
-	/// <param name="longitude">経度</param>
-	/// <param name="altitude">高度</param>
-	public GpsLocation(double latitude, double longitude, double? altitude = null) {
-		this.Latitude = latitude;
-		this.Longitude = longitude;
-		this.Altitude = altitude;
-	}
+	} = altitude;
 
 	public int CompareTo(GpsLocation? other) {
 		if (other is null) {
@@ -124,7 +118,7 @@ public class GpsLocation : IComparable<GpsLocation>, IComparable {
 	}
 
 	public override bool Equals(object? obj) {
-		if (!(obj is GpsLocation loc)) {
+		if (obj is not GpsLocation loc) {
 			return false;
 		}
 		return this.Latitude == loc.Latitude &&

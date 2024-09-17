@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace PixChest.Views.Resources.Converters; 
 
 public class SortKeyToDisplayNameConverter : IValueConverter {
-	private static readonly Dictionary<SortItemKeys, string> _names = new Dictionary<SortItemKeys, string>() {
+	private static readonly Dictionary<SortItemKeys, string> _names = new() {
 		{SortItemKeys.FileName,"File Name" },
 		{SortItemKeys.FilePath,"File Path" },
 		{SortItemKeys.CreationTime,"Creation Time" },

@@ -40,8 +40,11 @@ public class FilePathFilterItemObject : IFilterItemObject {
 	/// <param name="text">パスに含まれる文字列</param>
 	/// <param name="searchType">検索タイプ</param>
 	public FilePathFilterItemObject(string text, SearchTypeInclude searchType) {
-		if (text == null || !Enum.IsDefined(typeof(SearchTypeInclude), searchType)) {
-			throw new ArgumentException();
+		if (text is null) {
+			throw new ArgumentException("parameter is null", nameof(text));
+		}
+		if (Enum.IsDefined(searchType)) {
+			throw new ArgumentException("parameter is undefined",nameof(searchType));
 		}
 		this.Text = text;
 		this.SearchType = searchType;

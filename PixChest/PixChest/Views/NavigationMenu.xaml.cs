@@ -4,7 +4,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 using PixChest.Composition.Bases;
-using PixChest.ViewModels.Panes.ViewerPanes;
+using PixChest.ViewModels;
 using PixChest.Views.FolderManager;
 using PixChest.Views.Preferences;
 

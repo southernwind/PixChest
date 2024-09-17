@@ -36,7 +36,7 @@ public class DetailSelectorViewModel : ViewModelBase
 				this.Rate.Value = this.TargetFiles.Value.Average(x => x.FileModel.Rate);
 				this.UsageCount.Value = this.TargetFiles.Value.Average(x => x.FileModel.UsageCount);
 			}
-			if (this.TargetFiles.Value.Count() == 1) {
+			if (this.TargetFiles.Value.Length == 1) {
 				this.RepresentativeFile.Value = this.TargetFiles.Value.First();
 				this.Description.Value = this.RepresentativeFile.Value.FileModel.Description;
 			} else {

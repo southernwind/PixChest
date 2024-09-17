@@ -26,7 +26,7 @@ public partial class PdfFileOperator : BaseFileOperator {
 			var image = this.CreateThumbnail(filePath, 300, 300, 1);
 			new FileInfo(thumbPath).Directory?.Create();
 			File.WriteAllBytes(thumbPath, image);
-		} catch (Exception e) {
+		} catch (Exception) {
 			thumbPath = null;
 		}
 

@@ -16,8 +16,6 @@ public class FilterSelector : ModelBase {
 	/// コンストラクタ
 	/// </summary>
 	public FilterSelector(States states) {
-		this._states = states;
-
 		this.FilteringConditions =
 			Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(
 				states.SearchStates.FilteringConditions,
@@ -52,7 +50,6 @@ public class FilterSelector : ModelBase {
 		}
 	}
 
-	private readonly States _states;
 	/// <summary>
 	/// カレント条件
 	/// </summary>

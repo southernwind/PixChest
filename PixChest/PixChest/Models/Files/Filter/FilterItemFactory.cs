@@ -30,7 +30,7 @@ public static class FilterItemFactory {
 				var tfIc = Ioc.Default.GetRequiredService<TagFilterItemCreator>();
 				return tfIc.Create(tf);
 			default:
-				throw new ArgumentException();
+				throw new ArgumentException("undefined filter", nameof(filterItemObject));
 		}
 
 	}

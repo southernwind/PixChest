@@ -1,6 +1,6 @@
 using PixChest.Composition.Bases;
 
-namespace PixChest.ViewModels.Panes.ViewerPanes;
+namespace PixChest.ViewModels;
 
 [AddTransient]
 public class NavigationMenuViewModel : ViewModelBase {

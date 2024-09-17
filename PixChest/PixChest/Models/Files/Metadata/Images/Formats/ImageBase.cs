@@ -230,5 +230,6 @@ public abstract class ImageBase : IImage {
 	/// </summary>
 	public void Dispose() {
 		this.Dispose(true);
+		GC.SuppressFinalize(this);
 	}
 }

@@ -19,6 +19,11 @@ public partial class VideoFileOperator : BaseFileOperator {
 		get;
 	} = MediaType.Video;
 
+	private static readonly string[] locationTagNames = [
+			"TAG:location",
+			"TAG:com.apple.quicktime.location.ISO6709"
+		];
+
 	public VideoFileOperator() {
 		this._config = Ioc.Default.GetRequiredService<Config>();
 	}
@@ -39,7 +44,7 @@ public partial class VideoFileOperator : BaseFileOperator {
 			var image = this.CreateThumbnail(filePath, videoStream.Width, videoStream.Height, 300, 300, metadata.Duration / 5);
 			new FileInfo(thumbPath).Directory?.Create();
 			File.WriteAllBytes(thumbPath, image);
-		} catch (Exception e) {
+		} catch (Exception) {
 			thumbPath = null;
 		}
 
@@ -109,7 +114,7 @@ public partial class VideoFileOperator : BaseFileOperator {
 		}
 
 		var uuid = Guid.NewGuid();
-		var temporaryThumbPath = Path.Combine(this._config.PathConfig.TemporaryFolderPath.Value, $"{uuid.ToString()}.png");
+		var temporaryThumbPath = Path.Combine(this._config.PathConfig.TemporaryFolderPath.Value, $"{uuid}.png");
 		FFMpeg.Snapshot(filePath, temporaryThumbPath, new Size(width, height), time);
 
 		var binary = File.ReadAllBytes(temporaryThumbPath);
@@ -124,10 +129,7 @@ public partial class VideoFileOperator : BaseFileOperator {
 	/// <returns>位置情報</returns>
 	private static (double Latitude, double Longitude, double? Altitude)? GetLocation(IMediaAnalysis mediaAnalysis) {
 
-		var locationTag = mediaAnalysis.PrimaryVideoStream?.Tags?.FirstOrDefault(x => new[] {
-			"TAG:location",
-			"TAG:com.apple.quicktime.location.ISO6709"
-		}.Contains(x.Key)).Value;
+		var locationTag = mediaAnalysis.PrimaryVideoStream?.Tags?.FirstOrDefault(x => locationTagNames.Contains(x.Key)).Value;
 
 		if (locationTag is null) {
 			return null;

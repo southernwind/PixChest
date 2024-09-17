@@ -1,12 +1,11 @@
 using PixChest.Composition.Bases;
 using PixChest.Models.Preferences.CustomConfigs;
 using PixChest.Models.Preferences.CustomConfigs.Objects;
-using PixChest.ViewModels.Preferences.CustomConfigs;
 
-namespace PixChest.ViewModels.Preferences.CustomConfig;
+namespace PixChest.ViewModels.Preferences.CustomConfigs;
 
 [AddTransient]
-public class ScanConfigPageViewModel:ViewModelBase, IConfigPageViewModel {
+public class ScanConfigPageViewModel : ViewModelBase, IConfigPageViewModel {
 	private readonly ScanConfig _scanConfig;
 	private readonly ObservableList<ExtensionConfig> _targetExtensions = [];
 	public ScanConfigPageViewModel(ScanConfig scanConfig) {

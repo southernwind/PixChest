@@ -5,13 +5,8 @@ using PixChest.Models.FileDetailManagers;
 namespace PixChest.FileTypes.Image.ViewModels;
 
 [AddTransient]
-public class ImageThumbnailPickerViewModel : BaseThumbnailPickerViewModel {
-	public ImageThumbnailPickerViewModel(
-		ThumbnailsManager thumbnailsManager,
-		ImageFileOperator imageFileOperator) : base(thumbnailsManager) {
-		this._imageFileOperator = imageFileOperator;
-	}
-	private readonly ImageFileOperator _imageFileOperator;
+public class ImageThumbnailPickerViewModel(ThumbnailsManager thumbnailsManager, ImageFileOperator imageFileOperator) : BaseThumbnailPickerViewModel(thumbnailsManager) {
+	private readonly ImageFileOperator _imageFileOperator = imageFileOperator;
 
 	public override void RecreateThumbnail() {
 		if (this.targetFileViewModel is null) {

@@ -6,8 +6,7 @@ namespace PixChest.ViewModels.Sort;
 
 [AddTransient]
 public class SortManagerViewModel : ViewModelBase {
-	public SortManagerViewModel(SortManager sortManager, States states) {
-		this._states = states;
+	public SortManagerViewModel(SortManager sortManager) {
 		this._sortManager = sortManager;
 
 		this.AddSortConditionCommand.Subscribe(_ => {
@@ -27,8 +26,6 @@ public class SortManagerViewModel : ViewModelBase {
 
 	}
 
-
-	private readonly States _states;
 	private readonly SortManager _sortManager;
 
 	/// <summary>

@@ -51,7 +51,7 @@ public class FilteringCondition : ModelBase {
 	/// <summary>
 	/// フィルター条件変更通知Subject
 	/// </summary>
-	private readonly Subject<Unit> _onUpdateFilteringConditions = new Subject<Unit>();
+	private readonly Subject<Unit> _onUpdateFilteringConditions = new();
 
 	/// <summary>
 	/// フィルター条件変更通知

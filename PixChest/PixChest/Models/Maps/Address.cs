@@ -62,6 +62,8 @@ public class Address {
 		get;
 	}
 
+	private static readonly string[] sourceArray = ["postcode", "country_code"];
+
 	[Obsolete("for serialize")]
 	public Address() {
 		this.Children = null!;
@@ -97,10 +99,10 @@ public class Address {
 					.Skip(1);
 				}
 				var pos = q
-					.FirstOrDefault(pa => !new[] { "postcode", "country_code" }.Contains(pa.Type));
+					.FirstOrDefault(pa => !sourceArray.Contains(pa.Type));
 				return (pos?.Type, pos?.Name);
 			}).Where(x => x.Key.Type != null)
-			.Select(x => new Address(this, x.Key.Type, x.Key.Name, x.ToArray()));
+			.Select(x => new Address(this, x.Key.Type, x.Key.Name, [.. x]));
 
 		if (positionsArray.Any(x => x.Addresses.Count == 0 && !x.IsAcquired)) {
 			children = children.Union([new Address(this, true, false, "未取得", positionsArray.Where(x => x.Addresses.Count == 0 && !x.IsAcquired).ToArray())]);
@@ -126,11 +128,11 @@ public class Address {
 		this.IsYet = isYet;
 		this.IsFailure = isFailure;
 		// 未取得、取得不可の座標一覧を出力する。
-		if (name == "未取得" || name == "取得不可") {
+		if (name is "未取得" or "取得不可") {
 			this.Children =
 				positions
 					.GroupBy(x => (x.Latitude, x.Longitude))
-					.Select(x => new Address(this, isYet, isFailure, $"{x.Key.Latitude} {x.Key.Longitude}", x.ToArray()))
+					.Select(x => new Address(this, isYet, isFailure, $"{x.Key.Latitude} {x.Key.Longitude}", [.. x]))
 					.ToArray();
 		} else {
 			this.Children = [];

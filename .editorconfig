@@ -15,10 +15,10 @@ tab_width= 4
 dotnet_style_coalesce_expression = true:warning
 dotnet_style_null_propagation = true:warning
 dotnet_style_prefer_is_null_check_over_reference_equality_method = true:suggestion
-dotnet_style_parentheses_in_arithmetic_binary_operators = always_for_clarity:warning
+dotnet_style_parentheses_in_arithmetic_binary_operators = always_for_clarity:suggestion
 dotnet_style_prefer_auto_properties = true:suggestion
 dotnet_style_object_initializer = true:suggestion
-dotnet_style_parentheses_in_relational_binary_operators = never_if_unnecessary:silent
+dotnet_style_parentheses_in_relational_binary_operators = always_for_clarity:suggestion
 dotnet_style_collection_initializer = true:suggestion
 dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
 dotnet_style_prefer_conditional_expression_over_assignment = true:silent
@@ -36,15 +36,16 @@ dotnet_style_predefined_type_for_locals_parameters_members = true:warning
 dotnet_style_predefined_type_for_member_access = true:warning
 dotnet_style_require_accessibility_modifiers = always:warning
 dotnet_code_quality_unused_parameters = all:suggestion
-dotnet_style_readonly_field = true:warning
-dotnet_style_parentheses_in_other_operators = always_for_clarity:warning
-dotnet_style_parentheses_in_other_binary_operators = always_for_clarity:warning
-dotnet_style_qualification_for_event = true:warning
-dotnet_style_qualification_for_property = true:warning
-dotnet_style_qualification_for_method = true:warning
-dotnet_style_qualification_for_field = true:warning
+dotnet_style_readonly_field = true:suggestion
+dotnet_style_parentheses_in_other_operators = never_if_unnecessary:suggestion
+dotnet_style_parentheses_in_other_binary_operators = always_for_clarity:suggestion
+dotnet_style_qualification_for_event = false:silent
+dotnet_style_qualification_for_property = false:silent
+dotnet_style_qualification_for_method = false:silent
+dotnet_style_qualification_for_field = false:silent
 dotnet_style_operator_placement_when_wrapping = beginning_of_line
 dotnet_diagnostic.CA1416.severity = silent
+dotnet_diagnostic.CA1822.severity = silent
 
 [*.cs]
 
@@ -80,9 +81,9 @@ dotnet_style_coalesce_expression=true:warning
 dotnet_style_null_propagation=true:warning
 # C# コード スタイルの設定
 # 暗黙的な型と明示的な型
-csharp_style_var_for_built_in_types= true:warning
-csharp_style_var_when_type_is_apparent= true:warning
-csharp_style_var_elsewhere= true:warning
+csharp_style_var_for_built_in_types= false:silent
+csharp_style_var_when_type_is_apparent= false:silent
+csharp_style_var_elsewhere= false:silent
 # 式形式のメンバー
 csharp_style_expression_bodied_methods= false:warning
 csharp_style_expression_bodied_constructors= false:warning
@@ -91,8 +92,8 @@ csharp_style_expression_bodied_properties= false:warning
 csharp_style_expression_bodied_indexers= false:warning
 csharp_style_expression_bodied_accessors= false:warning
 # パターン マッチング
-csharp_style_pattern_matching_over_is_with_cast_check= true:warning
-csharp_style_pattern_matching_over_as_with_null_check= true:warning
+csharp_style_pattern_matching_over_is_with_cast_check= true:suggestion
+csharp_style_pattern_matching_over_as_with_null_check= true:suggestion
 # インライン変数宣言
 csharp_style_inlined_variable_declaration= true:warning
 # 式レベル基本設定
@@ -103,7 +104,7 @@ csharp_style_pattern_local_over_anonymous_function=true:silent
 csharp_style_throw_expression= true:warning
 csharp_style_conditional_delegate_call= true:suggestion
 # コード ブロック基本設定
-csharp_prefer_braces= true:error
+csharp_prefer_braces= true:silent
 
 # usingの整理
 dotnet_sort_system_directives_first=true
@@ -118,7 +119,7 @@ csharp_new_line_between_query_expression_clauses=false
 # インデント オプション
 csharp_indent_case_contents=true
 csharp_indent_switch_labels=true
-csharp_indent_labels= flush_left
+csharp_indent_labels= one_less_than_current
 # スペース オプション
 csharp_space_after_cast=false
 csharp_space_after_keywords_in_control_flow_statements=true
@@ -158,10 +159,10 @@ csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimenta
 csharp_style_prefer_extended_property_pattern = true:suggestion
 csharp_style_prefer_not_pattern = true:suggestion
 csharp_style_prefer_switch_expression = true:suggestion
-csharp_style_prefer_pattern_matching = true:suggestion
+csharp_style_prefer_pattern_matching = true:silent
 csharp_style_prefer_top_level_statements = true:silent
 csharp_style_prefer_primary_constructors = true:suggestion
-csharp_style_namespace_declarations = file_scoped:warning
+csharp_style_namespace_declarations = block_scoped:silent
 csharp_prefer_simple_using_statement = true:suggestion
 [*.cs]
 #### 命名スタイル ####
@@ -211,6 +212,7 @@ dotnet_naming_style.pascal_case.required_suffix =
 dotnet_naming_style.pascal_case.word_separator = 
 dotnet_naming_style.pascal_case.capitalization = pascal_case
 csharp_prefer_static_anonymous_function = true:suggestion
+csharp_prefer_system_threading_lock = true:suggestion
 
 [*.vb]
 #### 命名スタイル ####
