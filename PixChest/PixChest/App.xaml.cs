@@ -98,6 +98,7 @@ public partial class App : Application {
 		this._window.Closed += (_, _) => {
 			this._states.Save();
 			this._config.Save();
+			Current.Exit();
 		};
 		this._window.Activate();
 	}
