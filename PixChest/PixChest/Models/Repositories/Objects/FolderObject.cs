@@ -52,7 +52,11 @@ public partial class FolderObject {
 		if (parent == null) {
 			this.FolderName = "PC";
 		} else {
-			this.FolderName = this.FolderPath.Replace($"{parent.FolderPath}{Path.DirectorySeparatorChar}", "");
+			if (string.IsNullOrWhiteSpace(parent.FolderPath)) {
+				this.FolderName = this.FolderPath;
+			} else {
+				this.FolderName = this.FolderPath.Replace($"{parent.FolderPath}{Path.DirectorySeparatorChar}", "");
+			}
 		}
 		this.FileCount = directories.Sum(x => x.Count);
 	}
