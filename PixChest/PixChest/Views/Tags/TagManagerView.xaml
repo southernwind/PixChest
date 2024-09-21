@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:sortVm="using:PixChest.ViewModels.Sort"
-	xmlns:tables="using:PixChest.Database.Tables" xmlns:tags="using:PixChest.ViewModels.Tags"
+	xmlns:tags="using:PixChest.ViewModels.Tags"
 	mc:Ignorable="d">
 
 	<Grid x:Name="Root">
@@ -61,11 +61,11 @@
 			<TextBox Grid.Row="0" Text="{x:Bind ViewModel.SelectedTagCategory.Value.SelectedTag.Value.TagName.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 			<ComboBox
 				Grid.Row="1"
-				ItemsSource="{x:Bind ViewModel.SelectedTagCategory.Value.SelectedTag.Value.TagCategoryCandidates, Mode=OneWay}"
+				ItemsSource="{x:Bind ViewModel.TagCategories, Mode=OneWay}"
 				SelectedItem="{x:Bind ViewModel.SelectedTagCategory.Value.SelectedTag.Value.TagCategory.Value, Mode=TwoWay}">
 				<ComboBox.ItemTemplate>
-					<DataTemplate x:DataType="tables:TagCategory">
-						<TextBlock Text="{x:Bind TagCategoryName}" />
+					<DataTemplate x:DataType="tags:TagCategoryViewModel">
+						<TextBlock Text="{x:Bind TagCategoryName.Value}" />
 					</DataTemplate>
 				</ComboBox.ItemTemplate>
 			</ComboBox>

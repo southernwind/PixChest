@@ -5,14 +5,12 @@ using PixChest.Models.FileDetailManagers;
 namespace PixChest.ViewModels.Tags;
 [AddTransient]
 public class TagViewModel : ViewModelBase {
-	public TagViewModel(Tag tag, TagsManager tagsManager) {
+	public TagViewModel(TagCategoryViewModel parent,Tag tag, TagsManager tagsManager) {
 		this.TagName.Value = tag.TagName;
 		this.Detail.Value = tag.Detail;
 		this._tagAliases.AddRange(tag.TagAliases.Select(x => new TagAliasViewModel(x, this)));
 		this.TagAliases = this._tagAliases.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
-		this._tagCategoryCandidates.AddRange(tagsManager.TagCategories);
-		this.TagCategoryCandidates = this._tagCategoryCandidates.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
-		this.TagCategory.Value = this.TagCategoryCandidates.First(x => x.TagCategoryId == tag.TagCategoryId);
+		this.TagCategory.Value = parent;
 		this.UpdateTagCommand = this.TagName.CombineLatest(this.Detail, (x,y) => !string.IsNullOrWhiteSpace(x) && !string.IsNullOrWhiteSpace(y)).ToReactiveCommand();
 		this.UpdateTagCommand.Subscribe(async _ => {
 			if (!this._editedFlag) {
@@ -50,7 +48,6 @@ public class TagViewModel : ViewModelBase {
 
 	private bool _editedFlag = false;
 	private readonly ObservableList<TagAliasViewModel> _tagAliases = [];
-	private readonly ObservableList<TagCategory> _tagCategoryCandidates = [];
 	public BindableReactiveProperty<string> TagName {
 		get;
 	} = new();
@@ -59,13 +56,9 @@ public class TagViewModel : ViewModelBase {
 		get;
 	} = new();
 
-	public BindableReactiveProperty<TagCategory> TagCategory {
+	public BindableReactiveProperty<TagCategoryViewModel> TagCategory {
 		get;
 	} = new();
-
-	public INotifyCollectionChangedSynchronizedViewList<TagCategory> TagCategoryCandidates {
-		get;
-	}
 
 	public INotifyCollectionChangedSynchronizedViewList<TagAliasViewModel> TagAliases {
 		get;
