@@ -10,7 +10,8 @@ public class TagViewModel : ViewModelBase {
 		this.Detail.Value = tag.Detail;
 		this._tagAliases.AddRange(tag.TagAliases.Select(x => new TagAliasViewModel(x, this)));
 		this.TagAliases = this._tagAliases.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
-		this.TagCategoryCandidates = tagsManager.TagCategories.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
+		this._tagCategoryCandidates.AddRange(tagsManager.TagCategories);
+		this.TagCategoryCandidates = this._tagCategoryCandidates.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 		this.TagCategory.Value = this.TagCategoryCandidates.First(x => x.TagCategoryId == tag.TagCategoryId);
 		this.UpdateTagCommand = this.TagName.CombineLatest(this.Detail, (x,y) => !string.IsNullOrWhiteSpace(x) && !string.IsNullOrWhiteSpace(y)).ToReactiveCommand();
 		this.UpdateTagCommand.Subscribe(async _ => {
@@ -49,6 +50,7 @@ public class TagViewModel : ViewModelBase {
 
 	private bool _editedFlag = false;
 	private readonly ObservableList<TagAliasViewModel> _tagAliases = [];
+	private readonly ObservableList<TagCategory> _tagCategoryCandidates = [];
 	public BindableReactiveProperty<string> TagName {
 		get;
 	} = new();
