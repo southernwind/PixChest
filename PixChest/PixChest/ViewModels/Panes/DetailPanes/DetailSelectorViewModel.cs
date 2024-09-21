@@ -183,9 +183,9 @@ public class DetailSelectorViewModel : ViewModelBase
 					.TagAliases
 					.FirstOrDefault(
 						x =>
-							x.Alias.Contains(text) ||
+							x.Alias.Contains(text, StringComparison.CurrentCultureIgnoreCase) ||
 							(x.Ruby?.Contains(text) ?? false) ||
-							(x.Romaji?.Contains(text) ?? false)
+							(x.Romaji?.Contains(text, StringComparison.CurrentCultureIgnoreCase) ?? false)
 					);
 			tag.RepresentativeText.Value = result?.Alias;
 			return result != null;
