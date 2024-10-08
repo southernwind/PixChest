@@ -84,7 +84,7 @@ public class ImageFileOperator : BaseFileOperator {
 		this._db.SaveChanges();
 		transaction.Commit();
 	}
-	public byte[] CreateThumbnail(IFileModel fileModel, int width, int height) {
+	public byte[] CreateThumbnail(IFileModel fileModel, uint width, uint height) {
 		using var fileFs = File.OpenRead(fileModel.FilePath);
 		using var ms = new MemoryStream();
 		using var mi = new MagickImage(fileFs);
@@ -95,7 +95,7 @@ public class ImageFileOperator : BaseFileOperator {
 		return ms.ToArray();
 	}
 
-	public byte[] CreateThumbnail(Stream fileStream, int width, int height) {
+	public byte[] CreateThumbnail(Stream fileStream, uint width, uint height) {
 		using var ms = new MemoryStream();
 		using var mi = new MagickImage(fileStream);
 		mi.AutoOrient();
