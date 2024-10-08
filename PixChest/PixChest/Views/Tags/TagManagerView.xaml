@@ -37,17 +37,34 @@
 			<TextBox Grid.Row="2" Text="{x:Bind ViewModel.SelectedTagCategory.Value.TagCategoryName.Value,Mode=TwoWay}"/>
 			<TextBox Grid.Row="3" Text="{x:Bind ViewModel.SelectedTagCategory.Value.Detail.Value,Mode=TwoWay}"/>
 		</Grid>
-		<Border Grid.Column="1">
+		<Grid Grid.Column="1">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<TextBox Grid.Row="0" Text="{x:Bind ViewModel.SelectedTagCategory.Value.FilterText.Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 			<ListBox
-				ItemsSource="{x:Bind ViewModel.SelectedTagCategory.Value.Tags,Mode=OneWay}"
+				Grid.Row="1"
+				ItemsSource="{x:Bind ViewModel.SelectedTagCategory.Value.FilteredTags,Mode=OneWay}"
 				SelectedItem="{x:Bind ViewModel.SelectedTagCategory.Value.SelectedTag.Value,Mode=TwoWay}">
 				<ItemsControl.ItemTemplate>
 					<DataTemplate x:DataType="tags:TagViewModel">
-						<TextBlock Text="{x:Bind TagName.Value}" />
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+							</Grid.RowDefinitions>
+							<TextBlock Grid.Row="0" Text="{x:Bind TagName.Value}"/>
+							<TextBlock
+								Visibility="{x:Bind RepresentativeTextForSearch.Value, Mode=OneWay,Converter={StaticResource NullToCollapseConverter}}"
+								Grid.Row="1"
+								Text="{x:Bind RepresentativeTextForSearch.Value, Mode=OneWay}"
+								FontSize="10"/>
+						</Grid>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ListBox>
-		</Border>
+		</Grid>
 		<Grid
 			Grid.Column="2"
 			Visibility="{x:Bind ViewModel.SelectedTagCategory.Value.SelectedTag.Value, Mode=OneWay, Converter={StaticResource NullToCollapseConverter}}">

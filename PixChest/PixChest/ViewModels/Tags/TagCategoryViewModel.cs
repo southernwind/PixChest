@@ -8,7 +8,9 @@ public class TagCategoryViewModel {
 		this.TagCategoryId = tagCategory.TagCategoryId;
 		this.TagCategoryName.Value = tagCategory.TagCategoryName;
 		this.Detail.Value = tagCategory.Detail;
-		this.Tags = this._tags.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
+		this.Tags = this._tags.CreateView(x => x);
+		this.FilteredTags = this.Tags.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
+		
 		this._tags.AddRange(tagCategory.Tags.Select(x => new TagViewModel(this, x, tagsManager)));
 		this.UpdateTagCategoryCommand = this.TagCategoryName.CombineLatest(this.Detail, (x, y) => !string.IsNullOrWhiteSpace(x) && !string.IsNullOrWhiteSpace(y)).ToReactiveCommand();
 		this.UpdateTagCategoryCommand.Subscribe(async _ => {
@@ -22,6 +24,10 @@ public class TagCategoryViewModel {
 				tag.UpdateTagCommand.Execute(Unit.Default);
 			}
 		});
+
+		this.FilterText.ThrottleLast(TimeSpan.FromMilliseconds(300)).Subscribe(_ => {
+			this.RefreshTagCandidateFilter();
+		});
 	}
 
 	private readonly ObservableList<TagViewModel> _tags = [];
@@ -30,7 +36,11 @@ public class TagCategoryViewModel {
 		get;
 	}
 
-	public INotifyCollectionChangedSynchronizedViewList<TagViewModel> Tags {
+	public ISynchronizedView<TagViewModel, TagViewModel> Tags {
+		get;
+	}
+
+	public INotifyCollectionChangedSynchronizedViewList<TagViewModel> FilteredTags {
 		get;
 	}
 
@@ -46,7 +56,36 @@ public class TagCategoryViewModel {
 		get;
 	} = new();
 
+	public BindableReactiveProperty<string> FilterText {
+		get;
+	} = new();
+
 	public ReactiveCommand<Unit> UpdateTagCategoryCommand {
 		get;
 	} = new();
+
+	private void RefreshTagCandidateFilter() {
+		this.Tags.AttachFilter(tag => {
+			var text = this.FilterText.Value ?? "";
+			if (text.Length == 0) {
+				return true;
+			}
+			if (tag.TagName.Value.Contains(text) ||
+				(tag.TagName.Value.KatakanaToHiragana().HiraganaToRomaji()?.Contains(text, StringComparison.CurrentCultureIgnoreCase) ?? false)){
+				tag.RepresentativeTextForSearch.Value = null;
+				return true;
+			}
+			var result =
+				tag
+					.TagAliases
+					.FirstOrDefault(
+						x =>
+							x.Alias.Value.Contains(text, StringComparison.CurrentCultureIgnoreCase) ||
+							(x.Ruby.Value?.Contains(text) ?? false) ||
+							((x.Ruby.Value ?? x.Alias.Value.KatakanaToHiragana()).HiraganaToRomaji()?.Contains(text, StringComparison.CurrentCultureIgnoreCase) ?? false)
+					);
+			tag.RepresentativeTextForSearch.Value = result?.Alias.Value;
+			return result != null;
+		});
+	}
 }

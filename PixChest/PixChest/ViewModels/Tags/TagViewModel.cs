@@ -76,6 +76,10 @@ public class TagViewModel : ViewModelBase {
 		get;
 	} = new();
 
+	public ReactiveProperty<string?> RepresentativeTextForSearch {
+		get;
+	} = new();
+
 	public void MarkAsEdited() {
 		this._editedFlag = true;
 	}
