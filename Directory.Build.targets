@@ -1,19 +1,19 @@
 <Project>
   <ItemGroup>
-    <PackageReference Update="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Update="CommunityToolkit.WinUI.Behaviors" Version="8.0.240109"/>
-    <PackageReference Update="CommunityToolkit.WinUI.Collections" Version="8.0.240109" />
-    <PackageReference Update="CommunityToolkit.WinUI.Controls.Primitives" Version="8.0.240109" />
-    <PackageReference Update="CommunityToolkit.WinUI.Controls.Segmented" Version="8.0.240109" />
-    <PackageReference Update="CommunityToolkit.WinUI.Controls.TokenizingTextBox" Version="8.0.240109" />
-    <PackageReference Update="CommunityToolkit.WinUI.Converters" Version="8.0.240109" />
+    <PackageReference Update="CommunityToolkit.Mvvm" Version="8.3.2" />
+    <PackageReference Update="CommunityToolkit.WinUI.Behaviors" Version="8.1.240916"/>
+    <PackageReference Update="CommunityToolkit.WinUI.Collections" Version="8.1.240916" />
+    <PackageReference Update="CommunityToolkit.WinUI.Controls.Primitives" Version="8.1.240916" />
+    <PackageReference Update="CommunityToolkit.WinUI.Controls.Segmented" Version="8.1.240916" />
+    <PackageReference Update="CommunityToolkit.WinUI.Controls.TokenizingTextBox" Version="8.1.240916" />
+    <PackageReference Update="CommunityToolkit.WinUI.Converters" Version="8.1.240916" />
     <PackageReference Update="FFMpegCore" Version="5.1.0" />
     <PackageReference Update="Magick.NET-Q16-AnyCPU" Version="14.0.0" />
     <PackageReference Update="MetadataExtractor" Version="2.8.1" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.8" />
-    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-    <PackageReference Update="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
-    <PackageReference Update="Microsoft.WindowsAppSDK" Version="1.5.240802000" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.10" />
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+    <PackageReference Update="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
+    <PackageReference Update="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
     <PackageReference Update="ObservableCollections" Version="3.0.5" />
     <PackageReference Update="ObservableCollections.R3" Version="3.0.5" />
     <PackageReference Update="Pdfium.Net.SDK" Version="4.93.2704" />
