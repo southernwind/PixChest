@@ -13,10 +13,6 @@
 	mc:Ignorable="d">
 
 	<StackPanel x:Name="ControlRoot">
-		<Button
-			Content="Open Tag Manager"
-			Click="OpenTagManagerButton_Click"
-		/>
 		<Grid>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>

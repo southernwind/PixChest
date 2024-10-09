@@ -12,6 +12,7 @@
 		<MenuBar
 			Grid.Row="0">
 			<MenuBarItem Title="Tools">
+				<MenuFlyoutItem Text="Tag Manager" Click="MenuFlyoutItem_Click" Tag="TagManager"/>
 				<MenuFlyoutItem Text="Folder Manager" Click="MenuFlyoutItem_Click" Tag="FolderManager"/>
 				<MenuFlyoutSeparator/>
 				<MenuFlyoutItem Text="Config" Click="MenuFlyoutItem_Click" Tag="Config"/>

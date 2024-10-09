@@ -12,11 +12,6 @@ public sealed partial class TagsDetail : DetailPaneBase {
 		this.InitializeComponent();
 	}
 
-	private void OpenTagManagerButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
-		var window = Ioc.Default.GetRequiredService<TagManagerWindow>();
-		window.Activate();
-	}
-
 	private void AutoSuggestBox_PreviewKeyDown(object sender, KeyRoutedEventArgs e) {
 		if (e.Key == Windows.System.VirtualKey.Enter) {
 			this.ViewModel?.AddTagCommand.Execute(Unit.Default);
