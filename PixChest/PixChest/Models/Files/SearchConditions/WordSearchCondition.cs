@@ -1,6 +1,8 @@
 
 using System.Linq.Expressions;
 
+using Microsoft.EntityFrameworkCore;
+
 using PixChest.Database.Tables;
 using PixChest.FileTypes.Base.Models.Interfaces;
 
@@ -24,11 +26,8 @@ public class WordSearchCondition: ISearchCondition {
 		get {
 			Expression<Func<MediaFile, bool>> exp1 =
 			mediaFile =>
-				this.Word == null ||
-				mediaFile.FilePath.Contains(this.Word) ||
-				mediaFile.Position!.DisplayName!.Contains(this.Word) ||
-				mediaFile.MediaFileTags.Any(x => x.Tag.TagName.Contains(this.Word))
-				;
+				EF.Functions.Like(mediaFile.FilePath, $"%{this.Word}%") ||
+				EF.Functions.Like(mediaFile.Position!.DisplayName!, $"%{this.Word}%");
 			var exp = exp1.Body;
 			var visitor = new ParameterVisitor(exp1.Parameters);
 

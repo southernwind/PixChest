@@ -259,4 +259,9 @@ public class PixChestDbContext(DbContextOptions dbContextOptions) : DbContext(db
 			.WithOne(m => m.Container)
 			.OnDelete(DeleteBehavior.Cascade);
 	}
+
+	protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder) {
+		configurationBuilder.Properties<string>().UseCollation("NOCASE");
+		base.ConfigureConventions(configurationBuilder);
+	}
 }
