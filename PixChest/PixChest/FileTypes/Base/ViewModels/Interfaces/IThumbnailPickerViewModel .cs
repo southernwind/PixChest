@@ -11,11 +11,11 @@ public interface IThumbnailPickerViewModel {
 		get;
 	}
 
-	public ReactiveCommand<Unit> RecreateThumbnailCommand {
+	public ReactiveCommand RecreateThumbnailCommand {
 		get;
 	}
 
-	public ReactiveCommand<Unit> SaveCommand {
+	public ReactiveCommand SaveCommand {
 		get;
 	}
 

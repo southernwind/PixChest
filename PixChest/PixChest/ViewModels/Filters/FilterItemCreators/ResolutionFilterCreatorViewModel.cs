@@ -26,7 +26,7 @@ public class ResolutionFilterCreatorViewModel : ViewModelBase, IFilterCreatorVie
 	/// <summary>
 	/// フィルター追加コマンド
 	/// </summary>
-	public ReactiveCommand<Unit> AddFilterCommand {
+	public ReactiveCommand AddFilterCommand {
 		get;
 	}
 
@@ -77,7 +77,7 @@ public class ResolutionFilterCreatorViewModel : ViewModelBase, IFilterCreatorVie
 				this.ResolutionWidthText.ErrorsChangedAsObservable().Select(_ => this.ResolutionWidthText.HasErrors).ToObservable(),
 				this.ResolutionHeightText.ErrorsChangedAsObservable().Select(_ => this.ResolutionHeightText.HasErrors).ToObservable(),
 				(x, x2, x3, x4) => !x && !x2 && !x3 && !x4
-				).ToReactiveCommand<Unit>();
+				).ToReactiveCommand();
 
 		this.AddFilterCommand
 			.Subscribe(vm => {

@@ -13,7 +13,7 @@ public interface IFilterCreatorViewModel {
 	/// <summary>
 	/// 追加コマンド
 	/// </summary>
-	ReactiveCommand<Unit> AddFilterCommand {
+	ReactiveCommand AddFilterCommand {
 		get;
 	}
 }

@@ -111,11 +111,11 @@ public class DetailSelectorViewModel : ViewModelBase
 		get;
 	}
 
-	public ReactiveCommand<Unit> RefreshFilteredTagCandidatesCommand {
+	public ReactiveCommand RefreshFilteredTagCandidatesCommand {
 		get;
 	} = new();
 
-	public ReactiveCommand<Unit> LoadTagCandidatesCommand {
+	public ReactiveCommand LoadTagCandidatesCommand {
 		get;
 	} = new();
 
@@ -146,7 +146,7 @@ public class DetailSelectorViewModel : ViewModelBase
 		get;
 	} = new();
 
-	public ReactiveCommand<Unit> UpdateDescriptionCommand {
+	public ReactiveCommand UpdateDescriptionCommand {
 		get;
 	} = new();
 
@@ -154,7 +154,7 @@ public class DetailSelectorViewModel : ViewModelBase
 		get;
 	} = new();
 
-	public ReactiveCommand<Unit> AddTagCommand {
+	public ReactiveCommand AddTagCommand {
 		get;
 	} = new();
 

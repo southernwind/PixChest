@@ -23,11 +23,11 @@ public abstract class BaseThumbnailPickerViewModel : IThumbnailPickerViewModel {
 		get;
 	} = new();
 
-	public ReactiveCommand<Unit> RecreateThumbnailCommand {
+	public ReactiveCommand RecreateThumbnailCommand {
 		get;
 	} = new();
 
-	public ReactiveCommand<Unit> SaveCommand {
+	public ReactiveCommand SaveCommand {
 		get;
 	} = new();
 

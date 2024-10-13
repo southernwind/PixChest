@@ -29,7 +29,7 @@ public class FilterManagerViewModel : ViewModelBase {
 	/// <summary>
 	/// フィルタリング条件追加コマンド
 	/// </summary>
-	public ReactiveCommand<Unit> AddFilteringConditionCommand {
+	public ReactiveCommand AddFilteringConditionCommand {
 		get;
 	} = new();
 
@@ -43,14 +43,14 @@ public class FilterManagerViewModel : ViewModelBase {
 	/// <summary>
 	/// 保存コマンド
 	/// </summary>
-	public ReactiveCommand<Unit> SaveCommand {
+	public ReactiveCommand SaveCommand {
 		get;
 	} = new();
 
 	/// <summary>
 	/// 読み込みコマンド
 	/// </summary>
-	public ReactiveCommand<Unit> LoadCommand {
+	public ReactiveCommand LoadCommand {
 		get;
 	} = new();
 

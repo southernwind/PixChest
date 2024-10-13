@@ -35,14 +35,14 @@ public class TagManagerViewModel : ViewModelBase {
 		get;
 	} = new();
 
-	public ReactiveCommand<Unit> LoadCommand {
+	public ReactiveCommand LoadCommand {
 		get;
 	} = new();
 
-	public ReactiveCommand<Unit> SaveCommand {
+	public ReactiveCommand SaveCommand {
 		get;
 	} = new();
-	public ReactiveCommand<Unit> AddTagCategoryCommand {
+	public ReactiveCommand AddTagCategoryCommand {
 		get;
 	} = new();
 }

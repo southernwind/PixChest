@@ -23,7 +23,7 @@ public class ScanConfigPageViewModel : ViewModelBase, IConfigPageViewModel {
 		get;
 	}
 
-	public ReactiveCommand<Unit> AddExtensionCommand {
+	public ReactiveCommand AddExtensionCommand {
 		get;
 	} = new();
 

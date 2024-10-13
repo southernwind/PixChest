@@ -54,7 +54,7 @@ public class RateFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel
 	/// <summary>
 	/// フィルター追加コマンド
 	/// </summary>
-	public ReactiveCommand<Unit> AddFilterCommand {
+	public ReactiveCommand AddFilterCommand {
 		get;
 	}
 
@@ -64,7 +64,7 @@ public class RateFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel
 		this.AddFilterCommand =
 			this.RateText.Select(string.IsNullOrEmpty)
 				.CombineLatest(this.RateText.ErrorsChangedAsObservable().Select(_ => this.RateText.HasErrors).ToObservable(), (x, x2) => !x && !x2)
-				.ToReactiveCommand<Unit>();
+				.ToReactiveCommand();
 
 		this.AddFilterCommand
 			.Subscribe(vm => {

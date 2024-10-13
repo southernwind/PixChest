@@ -64,11 +64,11 @@ public class TagViewModel : ViewModelBase {
 		get;
 	}
 
-	public ReactiveCommand<Unit> UpdateTagCommand {
+	public ReactiveCommand UpdateTagCommand {
 		get;
 	} = new();
 
-	public ReactiveCommand<Unit> AddTagAliasCommand {
+	public ReactiveCommand AddTagAliasCommand {
 		get;
 	} = new();
 

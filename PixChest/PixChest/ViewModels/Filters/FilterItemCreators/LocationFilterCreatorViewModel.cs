@@ -21,7 +21,7 @@ public class LocationFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewM
 	/// <summary>
 	/// フィルター追加コマンド
 	/// </summary>
-	public ReactiveCommand<Unit> AddFilterCommand {
+	public ReactiveCommand AddFilterCommand {
 		get;
 	} = new();
 

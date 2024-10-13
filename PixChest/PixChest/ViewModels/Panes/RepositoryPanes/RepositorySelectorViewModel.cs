@@ -21,7 +21,7 @@ public class RepositorySelectorViewModel: ViewModelBase {
 		});
 	}
 
-	public ReactiveCommand<Unit> LoadCommand {
+	public ReactiveCommand LoadCommand {
 		get;
 	} = new();
 

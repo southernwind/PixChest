@@ -19,7 +19,7 @@ public class FolderManagerViewModel: ViewModelBase {
 		get;
 	} = new();
 
-	public ReactiveCommand<Unit> ScanCommand {
+	public ReactiveCommand ScanCommand {
 		get;
 	} = new();
 

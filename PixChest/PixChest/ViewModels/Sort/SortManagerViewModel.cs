@@ -45,7 +45,7 @@ public class SortManagerViewModel : ViewModelBase {
 	/// <summary>
 	/// ソート条件追加コマンド
 	/// </summary>
-	public ReactiveCommand<Unit> AddSortConditionCommand {
+	public ReactiveCommand AddSortConditionCommand {
 		get;
 	} = new();
 
@@ -59,14 +59,14 @@ public class SortManagerViewModel : ViewModelBase {
 	/// <summary>
 	/// 保存コマンド
 	/// </summary>
-	public ReactiveCommand<Unit> SaveCommand {
+	public ReactiveCommand SaveCommand {
 		get;
 	} = new();
 
 	/// <summary>
 	/// 読み込みコマンド
 	/// </summary>
-	public ReactiveCommand<Unit> LoadCommand {
+	public ReactiveCommand LoadCommand {
 		get;
 	} = new();
 

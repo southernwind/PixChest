@@ -31,11 +31,11 @@ public class ConfigWindowViewModel : ViewModelBase {
 		}
 	}
 
-	public ReactiveCommand<Unit> SaveCommand {
+	public ReactiveCommand SaveCommand {
 		get;
 	} = new();
 
-	public ReactiveCommand<Unit> LoadCommand {
+	public ReactiveCommand LoadCommand {
 		get;
 	} = new();
 

@@ -60,7 +60,7 @@ public class TagCategoryViewModel {
 		get;
 	} = new();
 
-	public ReactiveCommand<Unit> UpdateTagCategoryCommand {
+	public ReactiveCommand UpdateTagCategoryCommand {
 		get;
 	} = new();
 

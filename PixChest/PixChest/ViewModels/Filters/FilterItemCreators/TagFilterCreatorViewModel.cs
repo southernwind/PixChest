@@ -46,13 +46,13 @@ public class TagFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel 
 	/// <summary>
 	/// フィルター追加コマンド
 	/// </summary>
-	public ReactiveCommand<Unit> AddFilterCommand {
+	public ReactiveCommand AddFilterCommand {
 		get;
 	}
 
 	public TagFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target) {
 		this.SearchType.Value = this.SearchTypeList.First();
-		this.AddFilterCommand = this.TagName.Select(x => !string.IsNullOrEmpty(x)).ToReactiveCommand<Unit>();
+		this.AddFilterCommand = this.TagName.Select(x => !string.IsNullOrEmpty(x)).ToReactiveCommand();
 		this.AddFilterCommand.Subscribe(_ => {
 			var filter = new TagFilterItemObject(this.TagName.Value, this.SearchType.Value.Value);
 			target.Value?.AddFilter(filter);

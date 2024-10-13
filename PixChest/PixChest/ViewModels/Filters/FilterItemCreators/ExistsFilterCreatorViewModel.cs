@@ -38,7 +38,7 @@ public class ExistsFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewMod
 	/// <summary>
 	/// フィルター追加コマンド
 	/// </summary>
-	public ReactiveCommand<Unit> AddFilterCommand {
+	public ReactiveCommand AddFilterCommand {
 		get;
 	} = new();
 

@@ -47,13 +47,13 @@ public class FilePathFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewM
 	/// <summary>
 	/// フィルター追加コマンド
 	/// </summary>
-	public ReactiveCommand<Unit> AddFilterCommand {
+	public ReactiveCommand AddFilterCommand {
 		get;
 	}
 
 	public FilePathFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target) {
 		this.SearchType.Value = this.SearchTypeList.First();
-		this.AddFilterCommand = this.FilePath.Select(x => !string.IsNullOrEmpty(x)).ToReactiveCommand<Unit>();
+		this.AddFilterCommand = this.FilePath.Select(x => !string.IsNullOrEmpty(x)).ToReactiveCommand();
 		this.AddFilterCommand.Subscribe(vm => {
 			var filter = new FilePathFilterItemObject(this.FilePath.Value, this.SearchType.Value.Value);
 			target.Value?.AddFilter(filter);
