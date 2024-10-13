@@ -48,7 +48,7 @@ public class DetailSelectorViewModel : ViewModelBase
 			this._isTargetChanging = false;
 		});
 
-		this.UpdateDescriptionCommnd.Subscribe(async _ => {
+		this.UpdateDescriptionCommand.Subscribe(async _ => {
 			await this.TargetFiles.Value.First().FileModel.UpdateDescriptionAsync(this.Description.Value);
 		});
 
@@ -146,7 +146,7 @@ public class DetailSelectorViewModel : ViewModelBase
 		get;
 	} = new();
 
-	public ReactiveCommand<Unit> UpdateDescriptionCommnd {
+	public ReactiveCommand<Unit> UpdateDescriptionCommand {
 		get;
 	} = new();
 
