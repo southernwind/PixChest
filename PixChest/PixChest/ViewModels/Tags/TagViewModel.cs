@@ -16,7 +16,7 @@ public class TagViewModel : ViewModelBase {
 			if (!this._editedFlag) {
 				return;
 			}
-			await tagsManager.UpdateTag(
+			await tagsManager.UpdateTagAsync(
 				tag.TagId,
 				this.TagCategory.Value.TagCategoryId,
 				this.TagName.Value,

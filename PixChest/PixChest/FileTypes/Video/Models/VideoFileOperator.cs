@@ -9,6 +9,8 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using System.Drawing;
 using PixChest.FileTypes.Base.Models;
 using PixChest.FileTypes.Base.Models.Interfaces;
+using System.Threading.Tasks;
+using PixChest.Utils.Constants;
 
 namespace PixChest.FileTypes.Video.Models;
 [AddTransient]
@@ -28,9 +30,10 @@ public partial class VideoFileOperator : BaseFileOperator {
 		this._config = Ioc.Default.GetRequiredService<Config>();
 	}
 
-	public override void RegisterFile(string filePath) {
-		using var transaction = this._db.Database.BeginTransaction();
-		var isExists = this._db.MediaFiles.Any(x => x.FilePath == filePath);
+	public override async Task RegisterFileAsync(string filePath) {
+		using var lockObject = await LockObjectConstants.DbLock.LockAsync();
+		using var transaction = await this._db.Database.BeginTransactionAsync();
+		var isExists = await this._db.MediaFiles.AnyAsync(x => x.FilePath == filePath);
 		if (isExists) {
 			return;
 		}
@@ -74,9 +77,9 @@ public partial class VideoFileOperator : BaseFileOperator {
 			}
 		};
 
-		this._db.MediaFiles.Add(mf);
-		this._db.SaveChanges();
-		transaction.Commit();
+		await this._db.MediaFiles.AddAsync(mf);
+		await this._db.SaveChangesAsync();
+		await transaction.CommitAsync();
 	}
 	/// <summary>
 	/// サムネイル作成

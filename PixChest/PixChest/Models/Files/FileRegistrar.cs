@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 using CommunityToolkit.Mvvm.DependencyInjection;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -31,8 +33,8 @@ public class FileRegistrar {
 		this.RegistrationQueue
 			.ObserveAdd()
 			.Synchronize()
-			.Subscribe(_ => {
-				this.RegisterFiles();
+			.Subscribe(async _ => {
+				await this.RegisterFilesAsync();
 			});
 
 		this.RegistrationQueue.ObserveCountChanged(true).ThrottleLast(TimeSpan.FromSeconds(0.1)).Subscribe(x => {
@@ -40,12 +42,12 @@ public class FileRegistrar {
 		});
 	}
 
-	public void RegisterFiles() {
+	public async Task RegisterFilesAsync() {
 		while (this.RegistrationQueue.TryDequeue(out var filePath)) {
 			try {
 				var type = filePath.GetMediaType();
 				var fileOperator = _fileOperators.First(x => x.TargetMediaType == type);
-				fileOperator.RegisterFile(filePath);
+				await fileOperator.RegisterFileAsync(filePath);
 			} catch (Exception e) {
 				Console.WriteLine(e);
 			}

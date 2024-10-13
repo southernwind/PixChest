@@ -5,6 +5,8 @@ using Patagames.Pdf.Net;
 using Patagames.Pdf.Enums;
 using System.Drawing.Imaging;
 using PixChest.FileTypes.Base.Models;
+using System.Threading.Tasks;
+using PixChest.Utils.Constants;
 
 namespace PixChest.FileTypes.Pdf.Models;
 [AddTransient]
@@ -14,9 +16,10 @@ public partial class PdfFileOperator : BaseFileOperator {
 		get;
 	} = MediaType.Pdf;
 
-	public override void RegisterFile(string filePath) {
-		using var transaction = this._db.Database.BeginTransaction();
-		var isExists = this._db.MediaFiles.Any(x => x.FilePath == filePath);
+	public override async Task RegisterFileAsync(string filePath) {
+		using var lockObject = await LockObjectConstants.DbLock.LockAsync();
+		using var transaction = await this._db.Database.BeginTransactionAsync();
+		var isExists = await this._db.MediaFiles.AnyAsync(x => x.FilePath == filePath);
 		if (isExists) {
 			return;
 		}
@@ -51,9 +54,9 @@ public partial class PdfFileOperator : BaseFileOperator {
 			}
 		};
 
-		this._db.MediaFiles.Add(mf);
-		this._db.SaveChanges();
-		transaction.Commit();
+		await this._db.MediaFiles.AddAsync(mf);
+		await this._db.SaveChangesAsync();
+		await transaction.CommitAsync();
 	}
 
 	/// <summary>

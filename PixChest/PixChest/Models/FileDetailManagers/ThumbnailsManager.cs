@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 using PixChest.Database;
 using PixChest.FileTypes.Base.Models.Interfaces;
+using PixChest.Utils.Constants;
 
 namespace PixChest.Models.FileDetailManagers;
 
@@ -10,15 +11,16 @@ namespace PixChest.Models.FileDetailManagers;
 public class ThumbnailsManager(PixChestDbContext dbContext) {
 	private readonly PixChestDbContext _db = dbContext;
 
-	public async Task UpdateThumbnail(IFileModel fileModel, byte[] thumbnail) {
+	public async Task UpdateThumbnailAsync(IFileModel fileModel, byte[] thumbnail) {
 		var thumbPath = FilePathUtility.GetThumbnailRelativeFilePath(fileModel.FilePath);
 		await File.WriteAllBytesAsync(thumbPath, thumbnail);
 
 		if (fileModel.ThumbnailFilePath == thumbPath) {
 			return;
 		}
-		using var transaction = this._db.Database.BeginTransaction();
-		var mf = this._db.MediaFiles.First(x => x.MediaFileId== fileModel.Id);
+		using var lockObject = await LockObjectConstants.DbLock.LockAsync();
+		using var transaction = await this._db.Database.BeginTransactionAsync();
+		var mf = await this._db.MediaFiles.FirstAsync(x => x.MediaFileId== fileModel.Id);
 		mf.ThumbnailFileName = thumbPath;
 		this._db.MediaFiles.Update(mf);
 

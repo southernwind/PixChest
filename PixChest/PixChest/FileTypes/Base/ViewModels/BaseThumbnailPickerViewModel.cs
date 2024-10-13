@@ -40,7 +40,7 @@ public abstract class BaseThumbnailPickerViewModel : IThumbnailPickerViewModel {
 		if (this.CandidateThumbnail.Value is null) {
 			return;
 		}
-		await this.thumbnailsManager.UpdateThumbnail(this.targetFileViewModel.FileModel, this.CandidateThumbnail.Value);
+		await this.thumbnailsManager.UpdateThumbnailAsync(this.targetFileViewModel.FileModel, this.CandidateThumbnail.Value);
 	}
 
 	public virtual async Task LoadAsync(IFileViewModel fileViewModel) {

@@ -8,7 +8,7 @@ public interface IFileOperator {
 		get;
 	}
 
-	public void RegisterFile(string filePath);
+	public Task RegisterFileAsync(string filePath);
 
 	public Task UpdateRateAsync(long mediaFileId, int rate);
 

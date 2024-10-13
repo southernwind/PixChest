@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-
 using PixChest.Database;
 using PixChest.Database.Tables;
 

@@ -6,6 +6,7 @@ using PixChest.Database.Tables;
 using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.Models.FileDetailManagers.Objects;
 using PixChest.Models.Files;
+using PixChest.Utils.Constants;
 
 namespace PixChest.Models.FileDetailManagers;
 
@@ -21,9 +22,10 @@ public class TagsManager(PixChestDbContext dbContext) {
 		get;
 	} = [];
 
-	public async Task AddTag(IFileModel[] fileModels, string tagName, string detail = "") {
+	public async Task AddTagAsync(IFileModel[] fileModels, string tagName, string detail = "") {
 		var target = fileModels.Where(x => !x.Tags.Any(t => t.TagName == tagName)).ToArray();
-		using var transaction = this._db.Database.BeginTransaction();
+		using var lockObject = await LockObjectConstants.DbLock.LockAsync();
+		using var transaction = await this._db.Database.BeginTransactionAsync();
 		var tag = await this._db.Tags.FirstOrDefaultAsync(x => x.TagName == tagName);
 		if(tag == null) {
 			var targetCategory = this.TagCategories.MinBy(x => x.TagCategoryId)!;
@@ -48,9 +50,10 @@ public class TagsManager(PixChestDbContext dbContext) {
 		await transaction.CommitAsync();
 	}
 
-	public async Task RemoveTag(IFileModel[] fileModels, int tagId) {
+	public async Task RemoveTagAsync(IFileModel[] fileModels, int tagId) {
 		var ids = fileModels.Select(x => x.Id);
-		using var transaction = this._db.Database.BeginTransaction();
+		using var lockObject = await LockObjectConstants.DbLock.LockAsync();
+		using var transaction = await this._db.Database.BeginTransactionAsync();
 		var rel =
 			await
 			this._db
@@ -67,8 +70,9 @@ public class TagsManager(PixChestDbContext dbContext) {
 		}
 	}
 
-	public async Task UpdateTag(int tagId, int tagCategoryId, string tagName, string detail, IEnumerable<TagAlias> aliases) {
-		using var transaction = this._db.Database.BeginTransaction();
+	public async Task UpdateTagAsync(int tagId, int tagCategoryId, string tagName, string detail, IEnumerable<TagAlias> aliases) {
+		using var lockObject = await LockObjectConstants.DbLock.LockAsync();
+		using var transaction = await this._db.Database.BeginTransactionAsync();
 		var tag = this._db.Tags.First(x => x.TagId == tagId);
 		tag.TagCategoryId = tagCategoryId;
 		tag.TagName = tagName;
@@ -76,7 +80,7 @@ public class TagsManager(PixChestDbContext dbContext) {
 		this._db.Tags.Update(tag);
 
 		this._db.TagAliases.RemoveRange(this._db.TagAliases.Where(x => x.TagId == tagId));
-		this._db.TagAliases.AddRange(aliases.Select((x,i) => new TagAlias {
+		await this._db.TagAliases.AddRangeAsync(aliases.Select((x,i) => new TagAlias {
 			TagId = tagId,
 			TagAliasId = i,
 			Alias = x.Alias,
@@ -88,8 +92,9 @@ public class TagsManager(PixChestDbContext dbContext) {
 	}
 
 	public async Task UpdateTagCategoryAsync(int tagCategoryId, string tagCategoryName, string detail) {
-		using var transaction = this._db.Database.BeginTransaction();
-		var tagCategory = this._db.TagCategories.FirstOrDefault(x => x.TagCategoryId == tagCategoryId);
+		using var lockObject = await LockObjectConstants.DbLock.LockAsync();
+		using var transaction = await this._db.Database.BeginTransactionAsync();
+		var tagCategory = await this._db.TagCategories.FirstOrDefaultAsync(x => x.TagCategoryId == tagCategoryId);
 		if (tagCategory != null) {
 			tagCategory.TagCategoryName = tagCategoryName;
 			tagCategory.Detail = detail;
@@ -101,7 +106,7 @@ public class TagsManager(PixChestDbContext dbContext) {
 				Detail = detail,
 				Tags = []
 			};
-			this._db.TagCategories.Add(tagCategory);
+			await this._db.TagCategories.AddAsync(tagCategory);
 		}
 		await transaction.CommitAsync();
 		await this._db.SaveChangesAsync();

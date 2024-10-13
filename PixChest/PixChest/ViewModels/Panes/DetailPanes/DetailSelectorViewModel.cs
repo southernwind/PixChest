@@ -53,7 +53,7 @@ public class DetailSelectorViewModel : ViewModelBase
 		});
 
 		this.RemoveTagCommand.Subscribe(async x => {
-			await tagsManager.RemoveTag(this.TargetFiles.Value.Select(x => x.FileModel).ToArray(), x.Value.TagId);
+			await tagsManager.RemoveTagAsync(this.TargetFiles.Value.Select(x => x.FileModel).ToArray(), x.Value.TagId);
 			this.UpdateTags();
 		});
 
@@ -61,7 +61,7 @@ public class DetailSelectorViewModel : ViewModelBase
 			if (string.IsNullOrEmpty(this.Text.Value)) {
 				return;
 			}
-			await tagsManager.AddTag(this.TargetFiles.Value.Select(x => x.FileModel).ToArray(), this.Text.Value);
+			await tagsManager.AddTagAsync(this.TargetFiles.Value.Select(x => x.FileModel).ToArray(), this.Text.Value);
 			this.Text.Value = "";
 			this.UpdateTags();
 		});

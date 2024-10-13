@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 
 using PixChest.Database;
 using PixChest.FileTypes.Base.Models.Interfaces;
+using PixChest.Utils.Constants;
 using PixChest.Utils.Enums;
 
 namespace PixChest.FileTypes.Base.Models;
@@ -16,6 +17,7 @@ public abstract class BaseFileOperator : IFileOperator {
 	}
 
 	public virtual async Task UpdateRateAsync(long mediaFileId, int rate) {
+		using var lockObject = await LockObjectConstants.DbLock.LockAsync();
 		using var transaction = await this._db.Database.BeginTransactionAsync();
 		var file = await this._db.MediaFiles.FirstOrDefaultAsync(x => x.MediaFileId == mediaFileId);
 		if (file is not { } mediaFile) {
@@ -28,6 +30,7 @@ public abstract class BaseFileOperator : IFileOperator {
 	}
 
 	public virtual async Task IncrementUsageCountAsync(long mediaFileId) {
+		using var lockObject = await LockObjectConstants.DbLock.LockAsync();
 		using var transaction = await this._db.Database.BeginTransactionAsync();
 		var file = await this._db.MediaFiles.FirstOrDefaultAsync(x => x.MediaFileId == mediaFileId);
 		if (file is not { } mediaFile) {
@@ -40,6 +43,7 @@ public abstract class BaseFileOperator : IFileOperator {
 	}
 
 	public virtual async Task UpdateDescriptionAsync(long mediaFileId, string description) {
+		using var lockObject = await LockObjectConstants.DbLock.LockAsync();
 		using var transaction = await this._db.Database.BeginTransactionAsync();
 		var file = await this._db.MediaFiles.FirstOrDefaultAsync(x => x.MediaFileId == mediaFileId);
 		if (file is not { } mediaFile) {
@@ -56,5 +60,5 @@ public abstract class BaseFileOperator : IFileOperator {
 		get;
 	}
 
-	public abstract void RegisterFile(string filePath);
+	public abstract Task RegisterFileAsync(string filePath);
 }
