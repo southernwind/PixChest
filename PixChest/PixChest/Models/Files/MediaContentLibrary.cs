@@ -1,14 +1,20 @@
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 
 using PixChest.Composition.Bases;
 using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.Models.Files.Loaders;
+using PixChest.Models.Files.SearchConditions;
 
 namespace PixChest.Models.Files;
 
 [AddSingleton]
-public class MediaContentLibrary(BasicFilesLoader filesLoader):ModelBase {
-	private readonly BasicFilesLoader _filesLoader = filesLoader;
+public class MediaContentLibrary: ModelBase {
+	public MediaContentLibrary(FilesLoader filesLoader) {
+		this._filesLoader = filesLoader;
+		this.SearchConditions.ObserveCountChanged().ThrottleLast(TimeSpan.FromMilliseconds(100)).Subscribe(async _ => await this.SearchAsync());
+	}
+	private readonly FilesLoader _filesLoader;
 
 	public ObservableList<IFileModel> Files {
 		get;
@@ -19,11 +25,13 @@ public class MediaContentLibrary(BasicFilesLoader filesLoader):ModelBase {
 		set;
 	}
 
+	public ObservableList<ISearchCondition> SearchConditions {
+		get;
+	} = [];
+
 	public async Task SearchAsync() {
-		this._filesLoader.Word = this.Word;
-		var files = await this._filesLoader.Load();
+		var files = await this._filesLoader.Load(this.SearchConditions);
 		this.Files.Clear();
 		this.Files.AddRange(files);
 	}
-
 }

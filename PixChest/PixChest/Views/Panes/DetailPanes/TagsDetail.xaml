@@ -58,7 +58,7 @@
 							<ColumnDefinition Width="Auto"/>
 						</Grid.ColumnDefinitions>
 						<TextBlock Grid.Column="0">
-							<Run Text="{Binding Value}"/>
+							<Run Text="{Binding Value.TagName}"/>
 							<Run Text=" ("/>
 							<Run Text="{Binding Count}"/>
 							<Run Text=")"/>

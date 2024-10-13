@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using PixChest.Models.Files;
 using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
 
@@ -40,7 +41,7 @@ public interface IFileModel {
 	/// <summary>
 	/// タグリスト
 	/// </summary>
-	public List<string> Tags {
+	public List<TagModel> Tags {
 		get;
 		set;
 	}

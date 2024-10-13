@@ -25,13 +25,6 @@ public class SearchStates : SettingsBase {
 	} = new SettingsCollection<FilterObject>([]) { MaybeEditMember = true };
 
 	/// <summary>
-	/// カレントリポジトリ条件
-	/// </summary>
-	public SettingsItem<RepositoryConditionObject?> CurrentRepositoryCondition {
-		get;
-	} = new (null);
-
-	/// <summary>
 	/// カレントソート条件
 	/// </summary>
 	public SettingsItem<SortObject?> CurrentSortCondition {

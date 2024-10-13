@@ -1,28 +1,32 @@
 using PixChest.Composition.Bases;
 using PixChest.FileTypes.Base.ViewModels.Interfaces;
 using PixChest.Models.Files;
+using PixChest.Models.Files.SearchConditions;
 
 namespace PixChest.ViewModels.Panes.ViewerPanes;
 
 [AddSingleton]
 public class MediaContentLibraryViewModel : ViewModelBase {
 	public MediaContentLibraryViewModel(MediaContentLibrary mediaContentLibrary) {
+		this._mediaContentLibrary = mediaContentLibrary;
 		this.Files = mediaContentLibrary.Files.CreateView(FileTypeUtility.CreateFileViewModel).ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
-		this.ReloadCommand.Subscribe(async _ => {
-			await mediaContentLibrary.SearchAsync();
-		}).AddTo(this.CompositeDisposable);
-		this.SearchWord.Subscribe(x => {
-			mediaContentLibrary.Word = x;
-		});
+		this.SearchConditions =
+			mediaContentLibrary
+				.SearchConditions
+				.ToNotifyCollectionChanged(x =>
+					new SearchConditionViewModel(x),
+					SynchronizationContextCollectionEventDispatcher.Current);
 	}
+
+	private readonly MediaContentLibrary _mediaContentLibrary;
 
 	public INotifyCollectionChangedSynchronizedViewList<IFileViewModel> Files {
 		get;
 	}
 
-	public BindableReactiveProperty<string> SearchWord {
+	public INotifyCollectionChangedSynchronizedViewList<SearchConditionViewModel> SearchConditions {
 		get;
-	} = new();
+	}
 
 	public BindableReactiveProperty<IFileViewModel> SelectedFile {
 		get;
@@ -32,7 +36,11 @@ public class MediaContentLibraryViewModel : ViewModelBase {
 		get;
 	} = new();
 
-	public ReactiveCommand<Unit> ReloadCommand {
-		get;
-	} = new();
+	public void AddWordSearchCondition(string word) {
+		this._mediaContentLibrary.SearchConditions.Add(new WordSearchCondition(word));
+	}
+
+	public void RemoveSearchCondition(SearchConditionViewModel searchCondition) {
+		this._mediaContentLibrary.SearchConditions.Remove(searchCondition.SearchCondition);
+	}
 }

@@ -51,5 +51,18 @@ public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
 				window?.Activate();
 				break;
 		}
-	}	
+	}
+
+	protected void TokenizingTextBox_TokenItemAdding(CommunityToolkit.WinUI.Controls.TokenizingTextBox sender, CommunityToolkit.WinUI.Controls.TokenItemAddingEventArgs args) {
+		args.Cancel = true;
+		this.ViewModel?.MediaContentLibraryViewModel.AddWordSearchCondition(args.TokenText);
+	}
+
+	protected void TokenizingTextBox_TokenItemRemoving(CommunityToolkit.WinUI.Controls.TokenizingTextBox sender, CommunityToolkit.WinUI.Controls.TokenItemRemovingEventArgs args) {
+		args.Cancel = true;
+		if (args.Item is not SearchConditionViewModel { } condition) {
+			return;
+		}
+		this.ViewModel?.MediaContentLibraryViewModel.RemoveSearchCondition(condition);
+	}
 }

@@ -2,6 +2,7 @@ using PixChest.Database.Tables;
 using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.FileTypes.Base.ViewModels.Interfaces;
 using PixChest.FileTypes.Base.Views;
+using PixChest.Models.Files;
 using PixChest.Utils.Enums;
 
 namespace PixChest.FileTypes.Base;
@@ -33,7 +34,7 @@ public abstract class BaseFileType<TFileOperator, TFileModel, TFileViewModel, TD
 		fileModel.CreationTime = mediaFile.CreationTime;
 		fileModel.ModifiedTime = mediaFile.ModifiedTime;
 		fileModel.LastAccessTime = mediaFile.LastAccessTime;
-		fileModel.Tags = mediaFile.MediaFileTags.Select(mft => mft.Tag.TagName).ToList();
+		fileModel.Tags = mediaFile.MediaFileTags.Select(mft => new TagModel(mft.Tag)).ToList();
 	}
 
 	IFileOperator IFileType.CreateFileOperator() {

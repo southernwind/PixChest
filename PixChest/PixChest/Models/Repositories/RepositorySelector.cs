@@ -1,5 +1,4 @@
 using PixChest.Models.Preferences;
-using PixChest.Models.Repositories.Objects;
 
 namespace PixChest.Models.Repositories;
 [AddSingleton]
@@ -10,7 +9,6 @@ public class RepositorySelector {
 			folderRepository
 		];
 		this.SelectedRepository.Value = folderRepository;
-		this.CurrentRepositoryCondition = states.SearchStates.CurrentRepositoryCondition.ToReadOnlyReactiveProperty();
 	}
 	public RepositoryBase[] Repositories {
 		get;
@@ -19,11 +17,4 @@ public class RepositorySelector {
 	public ReactiveProperty<RepositoryBase> SelectedRepository {
 		get;
 	} = new();
-
-	/// <summary>
-	/// カレントリポジトリ条件
-	/// </summary>
-	public ReadOnlyReactiveProperty<RepositoryConditionObject?> CurrentRepositoryCondition {
-		get;
-	}
 }

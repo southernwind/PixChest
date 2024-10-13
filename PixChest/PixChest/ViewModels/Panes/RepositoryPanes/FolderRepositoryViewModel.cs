@@ -1,4 +1,3 @@
-using PixChest.Models.Files;
 using PixChest.Models.Repositories;
 using PixChest.Models.Repositories.Objects;
 
@@ -6,14 +5,13 @@ namespace PixChest.ViewModels.Panes.RepositoryPanes;
 
 [AddTransient]
 public class FolderRepositoryViewModel : RepositoryViewModelBase {
-	public FolderRepositoryViewModel(FolderRepository folderRepository, MediaContentLibrary mediaContentLibrary) : base(folderRepository) {
+	public FolderRepositoryViewModel(FolderRepository folderRepository) : base(folderRepository) {
 		this.RootFolder = folderRepository.RootFolder.ToBindableReactiveProperty(null!);
-		this.SetRepositoryConditionCommand.Subscribe(async _ => {
+		this.SetRepositoryConditionCommand.Merge(this.IncludeSubDirectories.ToUnit()).Subscribe(_ => {
 			if(this.SelectedFolder.Value is not { } folder) {
 				return;
 			}
 			folderRepository.SetRepositoryCandidate(folder, this.IncludeSubDirectories.Value);
-			await mediaContentLibrary.SearchAsync();
 		});
 	}
 	public BindableReactiveProperty<FolderObject> RootFolder {
@@ -24,7 +22,7 @@ public class FolderRepositoryViewModel : RepositoryViewModelBase {
 		get;
 	} = new();
 
-	public ReactiveCommand<Unit> SetRepositoryConditionCommand {
+	public ReactiveCommand SetRepositoryConditionCommand {
 		get;
 	} = new();
 

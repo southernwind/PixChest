@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 using PixChest.Composition.Bases;
 using PixChest.FileTypes.Base.Models.Interfaces;
+using PixChest.Models.Files;
 using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
 
@@ -46,7 +47,7 @@ public abstract class BaseFileModel(long id, string filePath, IFileOperator file
 	/// <summary>
 	/// タグリスト
 	/// </summary>
-	public List<string> Tags {
+	public List<TagModel> Tags {
 		get;
 		set;
 	} = [];

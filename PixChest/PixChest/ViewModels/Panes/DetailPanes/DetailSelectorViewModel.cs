@@ -4,6 +4,8 @@ using PixChest.Composition.Bases;
 using PixChest.FileTypes.Base.ViewModels.Interfaces;
 using PixChest.Models.FileDetailManagers;
 using PixChest.Models.FileDetailManagers.Objects;
+using PixChest.Models.Files;
+using PixChest.Models.Files.SearchConditions;
 using PixChest.Utils.Objects;
 using PixChest.ViewModels.Panes.ViewerPanes;
 
@@ -13,7 +15,7 @@ namespace PixChest.ViewModels.Panes.DetailPanes;
 public class DetailSelectorViewModel : ViewModelBase
 {
 	private bool _isTargetChanging = false;
-	public DetailSelectorViewModel(TagsManager tagsManager, MediaContentLibraryViewModel mediaContentLibraryViewModel)
+	public DetailSelectorViewModel(TagsManager tagsManager, MediaContentLibraryViewModel mediaContentLibraryViewModel,MediaContentLibrary mediaContentLibrary)
     {
 		this.TagCandidates = tagsManager.TagsWithKanaRomajiAliases.CreateView(x => x);
 		this.LoadTagCandidatesCommand.Subscribe(async _ => await tagsManager.Load());
@@ -51,7 +53,7 @@ public class DetailSelectorViewModel : ViewModelBase
 		});
 
 		this.RemoveTagCommand.Subscribe(async x => {
-			await tagsManager.RemoveTag(this.TargetFiles.Value.Select(x => x.FileModel).ToArray(), x.Value);
+			await tagsManager.RemoveTag(this.TargetFiles.Value.Select(x => x.FileModel).ToArray(), x.Value.TagId);
 			this.UpdateTags();
 		});
 
@@ -64,8 +66,7 @@ public class DetailSelectorViewModel : ViewModelBase
 			this.UpdateTags();
 		});
 		this.SearchTaggedFilesCommand.Subscribe(x => {
-			mediaContentLibraryViewModel.SearchWord.Value = x.Value;
-			mediaContentLibraryViewModel.ReloadCommand.Execute(Unit.Default);
+			mediaContentLibrary.SearchConditions.Add(new TagSearchCondition(x.Value));
 		});
 		this.Rate.Subscribe(async x => {
 			if(this._isTargetChanging) {
@@ -85,7 +86,7 @@ public class DetailSelectorViewModel : ViewModelBase
 		this.Tags = this._tags.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 	}
 
-	private readonly ObservableList<ValueCountPair<string>> _tags = [];
+	private readonly ObservableList<ValueCountPair<TagModel>> _tags = [];
 
 	public BindableReactiveProperty<IFileViewModel[]> TargetFiles {
 		get;
@@ -118,11 +119,11 @@ public class DetailSelectorViewModel : ViewModelBase
 		get;
 	} = new();
 
-	public INotifyCollectionChangedSynchronizedViewList<ValueCountPair<string>> Tags {
+	public INotifyCollectionChangedSynchronizedViewList<ValueCountPair<TagModel>> Tags {
 		get;
 	}
 
-	public ReactiveCommand<ValueCountPair<string>> SearchTaggedFilesCommand {
+	public ReactiveCommand<ValueCountPair<TagModel>> SearchTaggedFilesCommand {
 		get;
 	} = new();
 
@@ -149,7 +150,7 @@ public class DetailSelectorViewModel : ViewModelBase
 		get;
 	} = new();
 
-	public ReactiveCommand<ValueCountPair<string>> RemoveTagCommand {
+	public ReactiveCommand<ValueCountPair<TagModel>> RemoveTagCommand {
 		get;
 	} = new();
 
@@ -163,8 +164,8 @@ public class DetailSelectorViewModel : ViewModelBase
 			this.TargetFiles
 				.Value
 				.SelectMany(x => x.FileModel.Tags)
-				.GroupBy(x => x)
-				.Select(x => new ValueCountPair<string>(x.Key, x.Count()))
+				.GroupBy(x => x.TagId)
+				.Select(x => new ValueCountPair<TagModel>(x.First(), x.Count()))
 		);
 	}
 

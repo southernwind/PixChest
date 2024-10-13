@@ -1,10 +1,8 @@
-using CommunityToolkit.Mvvm.DependencyInjection;
-
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 
+using PixChest.Models.Files;
 using PixChest.Utils.Objects;
-using PixChest.Views.Tags;
 
 namespace PixChest.Views.Panes.DetailPanes;
 public sealed partial class TagsDetail : DetailPaneBase {
@@ -25,7 +23,7 @@ public sealed partial class TagsDetail : DetailPaneBase {
 	}
 
 	private void TagGrid_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e) {
-		if (this.TagListBox.SelectedItem is not ValueCountPair<string> tag) {
+		if (this.TagListBox.SelectedItem is not ValueCountPair<TagModel> tag) {
 			return;
 		}
 		this.ViewModel?.SearchTaggedFilesCommand.Execute(tag);

@@ -5,6 +5,7 @@ using PixChest.Database;
 using PixChest.Database.Tables;
 using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.Models.FileDetailManagers.Objects;
+using PixChest.Models.Files;
 
 namespace PixChest.Models.FileDetailManagers;
 
@@ -21,7 +22,7 @@ public class TagsManager(PixChestDbContext dbContext) {
 	} = [];
 
 	public async Task AddTag(IFileModel[] fileModels, string tagName, string detail = "") {
-		var target = fileModels.Where(x => !x.Tags.Any(t => t == tagName)).ToArray();
+		var target = fileModels.Where(x => !x.Tags.Any(t => t.TagName == tagName)).ToArray();
 		using var transaction = this._db.Database.BeginTransaction();
 		var tag = await this._db.Tags.FirstOrDefaultAsync(x => x.TagName == tagName);
 		if(tag == null) {
@@ -42,25 +43,25 @@ public class TagsManager(PixChestDbContext dbContext) {
 		}));
 		await this._db.SaveChangesAsync();
 		foreach(var file in target) {
-			file.Tags.Add(tagName);
+			file.Tags.Add(new TagModel(tag));
 		}
 		await transaction.CommitAsync();
 	}
 
-	public async Task RemoveTag(IFileModel[] fileModels, string tagName) {
+	public async Task RemoveTag(IFileModel[] fileModels, int tagId) {
 		var ids = fileModels.Select(x => x.Id);
 		using var transaction = this._db.Database.BeginTransaction();
 		var rel =
 			await
 			this._db
 				.MediaFileTags
-				.Where(x => ids.Contains(x.MediaFileId) && x.Tag.TagName == tagName)
+				.Where(x => ids.Contains(x.MediaFileId) && x.Tag.TagId == tagId)
 				.ToArrayAsync();
 		if (!rel.IsEmpty()) {
 			this._db.MediaFileTags.RemoveRange(rel);
 			await this._db.SaveChangesAsync();
 			foreach (var file in fileModels) {
-				file.Tags.Remove(tagName);
+				file.Tags.RemoveAll(x => x.TagId== tagId);
 			}
 			await transaction.CommitAsync();
 		}

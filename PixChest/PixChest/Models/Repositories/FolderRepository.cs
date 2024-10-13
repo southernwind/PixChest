@@ -2,17 +2,17 @@ using System.IO;
 using System.Threading.Tasks;
 
 using PixChest.Database;
-using PixChest.Models.Preferences;
+using PixChest.Models.Files;
+using PixChest.Models.Files.SearchConditions;
 using PixChest.Models.Repositories.Objects;
 using PixChest.Utils.Objects;
 
 namespace PixChest.Models.Repositories;
 
 [AddTransient]
-public class FolderRepository(PixChestDbContext dbContext,States states): RepositoryBase {
+public class FolderRepository(PixChestDbContext dbContext,MediaContentLibrary mediaContentLibrary): RepositoryBase {
 	private readonly PixChestDbContext _db = dbContext;
-	private readonly States _states = states;
-
+	private readonly MediaContentLibrary _mediaContentLibrary = mediaContentLibrary;
 	public ReactiveProperty<FolderObject> RootFolder {
 		get;
 	} = new();
@@ -52,10 +52,9 @@ public class FolderRepository(PixChestDbContext dbContext,States states): Reposi
 	}
 
 	public void SetRepositoryCandidate(FolderObject folderObject,bool includeSubDirectory) {
-		var rco = new FolderRepositoryConditionObject() {
-			DirectoryPath = folderObject.FolderPath,
+		this._mediaContentLibrary.SearchConditions.RemoveRange(this._mediaContentLibrary.SearchConditions.Where(x => x is FolderSearchCondition));
+		this._mediaContentLibrary.SearchConditions.Add(new FolderSearchCondition(folderObject) {
 			IncludeSubDirectories = includeSubDirectory
-		};
-		this._states.SearchStates.CurrentRepositoryCondition.Value = rco;
+		});
 	}
 }

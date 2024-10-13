@@ -14,7 +14,7 @@ public class TagFilterItemCreator : IFilterItemCreator<TagFilterItemObject> {
 	public FilterItem Create(TagFilterItemObject filterItemObject) {
 		return new FilterItem(
 			x => x.MediaFileTags.Select(mft => mft.Tag.TagName).Contains(filterItemObject.TagName) == (filterItemObject.SearchType == SearchTypeInclude.Include),
-			x => x.Tags.Contains(filterItemObject.TagName) == (filterItemObject.SearchType == SearchTypeInclude.Include),
+			x => x.Tags.Any(x => x.TagName == filterItemObject.TagName) == (filterItemObject.SearchType == SearchTypeInclude.Include),
 			false);
 	}
 }
