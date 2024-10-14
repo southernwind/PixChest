@@ -15,8 +15,7 @@ namespace PixChest.ViewModels.Panes.DetailPanes;
 public class DetailSelectorViewModel : ViewModelBase
 {
 	private bool _isTargetChanging = false;
-	public DetailSelectorViewModel(TagsManager tagsManager, MediaContentLibraryViewModel mediaContentLibraryViewModel,MediaContentLibrary mediaContentLibrary)
-    {
+	public DetailSelectorViewModel(TagsManager tagsManager, MediaContentLibrary mediaContentLibrary) {
 		this.TagCandidates = tagsManager.TagsWithKanaRomajiAliases.CreateView(x => x);
 		this.LoadTagCandidatesCommand.Subscribe(async _ => await tagsManager.Load());
 		this.FilteredTagCandidates = this.TagCandidates.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);

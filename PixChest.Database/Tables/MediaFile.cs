@@ -144,6 +144,14 @@ public class MediaFile {
 	}
 
 	/// <summary>
+	/// ファイルが存在するか否か
+	/// </summary>
+	public bool IsExists {
+		get;
+		set;
+	}
+
+	/// <summary>
 	/// 不正ファイルか否か
 	/// </summary>
 	public bool IsInvalid {

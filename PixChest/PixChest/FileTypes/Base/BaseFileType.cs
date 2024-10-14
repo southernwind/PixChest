@@ -30,6 +30,7 @@ public abstract class BaseFileType<TFileOperator, TFileModel, TFileViewModel, TD
 		fileModel.Rate = mediaFile.Rate;
 		fileModel.Description = mediaFile.Description;
 		fileModel.UsageCount = mediaFile.UsageCount;
+		fileModel.Exists = mediaFile.IsExists;
 		fileModel.FileSize = mediaFile.FileSize;
 		fileModel.CreationTime = mediaFile.CreationTime;
 		fileModel.ModifiedTime = mediaFile.ModifiedTime;

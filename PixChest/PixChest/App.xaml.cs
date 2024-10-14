@@ -11,6 +11,7 @@ using System.IO;
 using PixChest.Models.Preferences;
 using FFMpegCore;
 using PixChest.FileTypes.Base;
+using PixChest.Models.Tools;
 namespace PixChest;
 
 public partial class App : Application {
@@ -93,7 +94,10 @@ public partial class App : Application {
 	/// Invoked when the application is launched.
 	/// </summary>
 	/// <param name="args">Details about the launch request and process.</param>
-	protected override void OnLaunched(LaunchActivatedEventArgs args) {
+	protected override async void OnLaunched(LaunchActivatedEventArgs args) {
+		var fileStatusUpdater = Ioc.Default.GetRequiredService<FileStatusUpdater>();
+		await fileStatusUpdater.UpdateFileInfo();
+
 		this._window = Ioc.Default.GetRequiredService<MainWindow>();
 		this._window.Closed += (_, _) => {
 			this._states.Save();

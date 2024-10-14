@@ -19,6 +19,10 @@ public interface IFileViewModel {
 		get;
 	}
 
+	public bool Exists {
+		get;
+	}
+
 	/// <summary>
 	/// プロパティ
 	/// </summary>

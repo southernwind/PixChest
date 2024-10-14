@@ -54,6 +54,7 @@
 				<DataTemplate x:DataType="vmIf:IFileViewModel">
 					<Grid DoubleTapped="File_DoubleTapped">
 						<Image Stretch="Uniform" Height="{Binding DataContext.ItemSize.Value, Mode=OneWay, ElementName=List}" Source="{x:Bind ThumbnailFilePath}"/>
+						<Grid Opacity="0.7" Background="DarkGray" Visibility="{x:Bind Exists, Converter={StaticResource InvertBoolToVisibilityConverter}}"/>
 					</Grid>
 				</DataTemplate>
 			</ListView.ItemTemplate>

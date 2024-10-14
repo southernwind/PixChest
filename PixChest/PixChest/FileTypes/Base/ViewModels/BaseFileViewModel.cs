@@ -22,6 +22,10 @@ public abstract class BaseFileViewModel(IFileModel fileModel) : IFileViewModel {
 		get;
 	} = fileModel.ThumbnailFilePath ?? FilePathConstants.NoThumbnailFilePath;
 
+	public bool Exists {
+		get;
+	} = fileModel.Exists;
+
 	/// <summary>
 	/// プロパティ
 	/// </summary>
