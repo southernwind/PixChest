@@ -62,7 +62,7 @@ public class SortCondition : ModelBase {
 		this._sortItems = this.SortItemCreators.CreateView(x => x.Create());
 
 		this.SortItemCreators
-			.ObserveCountChanged()
+			.ObserveChanged()
 			.Subscribe(_ => {
 				this._onUpdateSortConditions.OnNext(Unit.Default);
 			}).AddTo(this.CompositeDisposable);

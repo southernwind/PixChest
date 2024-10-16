@@ -20,7 +20,7 @@ public class MediaContentLibraryViewModel : ViewModelBase {
 
 	private readonly MediaContentLibrary _mediaContentLibrary;
 
-	public INotifyCollectionChangedSynchronizedViewList<IFileViewModel> Files {
+	public NotifyCollectionChangedSynchronizedViewList<IFileViewModel> Files {
 		get;
 	}
 

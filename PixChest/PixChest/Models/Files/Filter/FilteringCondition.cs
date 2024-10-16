@@ -24,7 +24,7 @@ public class FilteringCondition : ModelBase {
 
 		this._filterItems = this.FilterItemObjects.CreateView(FilterItemFactory.Create);
 
-		this.FilterItemObjects.ObserveCountChanged().Subscribe(_ => {
+		this.FilterItemObjects.ObserveChanged().Subscribe(_ => {
 			this._onUpdateFilteringConditions.OnNext(Unit.Default);
 		}).AddTo(this.CompositeDisposable);
 	}

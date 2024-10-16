@@ -12,7 +12,7 @@ namespace PixChest.Models.Files;
 public class MediaContentLibrary: ModelBase {
 	public MediaContentLibrary(FilesLoader filesLoader) {
 		this._filesLoader = filesLoader;
-		this.SearchConditions.ObserveCountChanged().ThrottleLast(TimeSpan.FromMilliseconds(100)).Subscribe(async _ => await this.SearchAsync());
+		this.SearchConditions.ObserveChanged().ThrottleLast(TimeSpan.FromMilliseconds(100)).Subscribe(async _ => await this.SearchAsync());
 	}
 	private readonly FilesLoader _filesLoader;
 
