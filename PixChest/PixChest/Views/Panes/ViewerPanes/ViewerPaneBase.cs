@@ -34,7 +34,7 @@ public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
 	}
 
 
-	protected void MenuFlyoutItem_Click(object sender, RoutedEventArgs e) {
+	protected async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e) {
 		if (this.ViewModel is null) {
 			return;
 		}
@@ -49,6 +49,15 @@ public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
 				var window = Ioc.Default.GetRequiredService<ThumbnailPickerWindow>();
 				window.ViewModel.FileViewModel.Value = fvm;
 				window?.Activate();
+				break;
+			case "RemoveFile":
+				await DialogUtility.ConfirmDialogAndAction(
+					this.XamlRoot,
+					async () => await this.ViewModel.SelectedViewerPane.Value.RemoveFileAsync(fvm),
+					"Remove file from PixChest database?",
+					_ => "File removed from PixChest database"
+					);
+
 				break;
 		}
 	}

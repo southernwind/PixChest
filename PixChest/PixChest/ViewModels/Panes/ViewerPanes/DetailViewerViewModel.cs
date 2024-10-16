@@ -1,10 +1,11 @@
 using PixChest.FileTypes.Base.Views;
+using PixChest.Models.FileDetailManagers;
 
 namespace PixChest.ViewModels.Panes.ViewerPanes;
 
 [AddTransient]
 public class DetailViewerViewModel : ViewerPaneViewModelBase {
-	public DetailViewerViewModel(MediaContentLibraryViewModel mediaContentLibraryViewModel) : base ("Detail"){
+	public DetailViewerViewModel(MediaContentLibraryViewModel mediaContentLibraryViewModel, FilesManager filesManager) : base ("Detail", filesManager){
 		this.MediaContentLibraryViewModel = mediaContentLibraryViewModel;
 		mediaContentLibraryViewModel.SelectedFile.Subscribe(x => {
 			if (x is not {} vm) {

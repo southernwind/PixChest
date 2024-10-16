@@ -49,6 +49,7 @@
 						<Grid.ContextFlyout>
 							<MenuFlyout>
 								<MenuFlyoutItem Text="Recreate Thumbnail" Click="MenuFlyoutItem_Click" Tag="RecreateThumbnail" />
+								<MenuFlyoutItem Text="Remove File" Click="MenuFlyoutItem_Click" Tag="RemoveFile" />
 							</MenuFlyout>
 						</Grid.ContextFlyout>
 					</Grid>
