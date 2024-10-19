@@ -8,6 +8,7 @@ using PixChest.ViewModels;
 using PixChest.Views.FolderManager;
 using PixChest.Views.Preferences;
 using PixChest.Views.Tags;
+using PixChest.Views.Tools;
 
 namespace PixChest.Views;
 public sealed partial class NavigationMenu : NavigationMenuUserControl {
@@ -29,6 +30,9 @@ public sealed partial class NavigationMenu : NavigationMenuUserControl {
 				break;
 			case "Config":
 				window = Ioc.Default.GetRequiredService<ConfigWindow>();
+				break;
+			case "BackgroundTasks":
+				window = Ioc.Default.GetRequiredService<BackgroundTasksWindow>();
 				break;
 		}
 		window?.Activate();

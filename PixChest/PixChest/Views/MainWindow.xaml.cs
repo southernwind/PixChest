@@ -11,4 +11,8 @@ public sealed partial class MainWindow : Window {
 		this.ViewModel = viewModel;
 		this.InitializeComponent();
 	}
+
+	private void Window_Loaded(object sender, RoutedEventArgs e) {
+		this.ViewModel.WindowActivatedCommand.Execute(Unit.Default);
+	}
 }

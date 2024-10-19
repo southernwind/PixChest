@@ -64,9 +64,9 @@ public partial class App : Application {
 		var sb = new SqliteConnectionStringBuilder {
 			DataSource = Path.Combine(AppDomain.CurrentDomain.BaseDirectory!, "pix.db")
 		};
-		serviceCollection.AddDbContext<PixChestDbContext>(x => {
+		serviceCollection.AddDbContextFactory<PixChestDbContext>(x => {
 			x.UseSqlite(sb.ConnectionString);
-		});
+		}, ServiceLifetime.Transient);
 		Ioc.Default.ConfigureServices(
 			serviceCollection.BuildServiceProvider()
 		);
@@ -94,10 +94,7 @@ public partial class App : Application {
 	/// Invoked when the application is launched.
 	/// </summary>
 	/// <param name="args">Details about the launch request and process.</param>
-	protected override async void OnLaunched(LaunchActivatedEventArgs args) {
-		var fileStatusUpdater = Ioc.Default.GetRequiredService<FileStatusUpdater>();
-		await fileStatusUpdater.UpdateFileInfo();
-
+	protected override void OnLaunched(LaunchActivatedEventArgs args) {
 		this._window = Ioc.Default.GetRequiredService<MainWindow>();
 		this._window.Closed += (_, _) => {
 			this._states.Save();

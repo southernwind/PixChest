@@ -16,6 +16,8 @@
 				<MenuFlyoutItem Text="Folder Manager" Click="MenuFlyoutItem_Click" Tag="FolderManager"/>
 				<MenuFlyoutSeparator/>
 				<MenuFlyoutItem Text="Config" Click="MenuFlyoutItem_Click" Tag="Config"/>
+				<MenuFlyoutSeparator/>
+				<MenuFlyoutItem Text="Background Tasks" Click="MenuFlyoutItem_Click" Tag="BackgroundTasks"/>
 			</MenuBarItem>
 		</MenuBar>
     </Grid>

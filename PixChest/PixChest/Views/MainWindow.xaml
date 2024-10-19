@@ -14,7 +14,7 @@
 	xmlns:repositoryPanes="using:PixChest.Views.Panes.RepositoryPanes"
 	mc:Ignorable="d"
 	Title="PixChest">
-	<Grid>
+	<Grid Loaded="Window_Loaded">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="auto"/>
 			<RowDefinition Height="*"/>

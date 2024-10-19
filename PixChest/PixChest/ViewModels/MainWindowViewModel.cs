@@ -3,6 +3,7 @@ using PixChest.ViewModels.Panes.DetailPanes;
 using PixChest.ViewModels.Panes.FilterPanes;
 using PixChest.ViewModels.Panes.RepositoryPanes;
 using PixChest.ViewModels.Panes.ViewerPanes;
+using PixChest.ViewModels.Tools;
 
 namespace PixChest.ViewModels;
 
@@ -13,7 +14,8 @@ public class MainWindowViewModel : ViewModelBase {
 		NavigationMenuViewModel navigationMenuViewModel,
 		FilterSelectorViewModel filterSelectorViewModel,
 		DetailSelectorViewModel detailSelectorViewModel,
-		RepositorySelectorViewModel repositorySelectorViewModel) {
+		RepositorySelectorViewModel repositorySelectorViewModel,
+		BackgroundTasksViewModel backgroundTasksViewModel) {
 		this.ViewerSelectorViewModel = viewerSelectorViewModel;
 		this.NavigationMenuViewModel = navigationMenuViewModel;
 		this.FilterSelectorViewModel = filterSelectorViewModel;
@@ -21,6 +23,9 @@ public class MainWindowViewModel : ViewModelBase {
 		this.RepositorySelectorViewModel = repositorySelectorViewModel;
 		this.ViewerSelectorViewModel.MediaContentLibraryViewModel.SelectedFiles.Subscribe(x => {
 			this.DetailSelectorViewModel.TargetFiles.Value = x;
+		});
+		this.WindowActivatedCommand.Subscribe(_ => {
+			backgroundTasksViewModel.Start();
 		});
 	}
 
@@ -41,4 +46,8 @@ public class MainWindowViewModel : ViewModelBase {
 	public RepositorySelectorViewModel RepositorySelectorViewModel {
 		get;
 	}
+
+	public ReactiveCommand WindowActivatedCommand {
+		get;
+	} = new();
 }

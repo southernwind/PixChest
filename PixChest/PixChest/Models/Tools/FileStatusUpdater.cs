@@ -14,11 +14,23 @@ public class FileStatusUpdater {
 	}
 	private readonly PixChestDbContext _db;
 
+	public ReactiveProperty<long> TargetCount {
+		get;
+	} = new();
+
+	public ReactiveProperty<long> CompletedCount {
+		get;
+	} = new();
+
 	public async Task UpdateFileInfo() {
 		using var lockObject = await LockObjectConstants.DbLock.LockAsync();
 		using var transaction = await this._db.Database.BeginTransactionAsync();
 		var updateList = new List<MediaFile>();
-		foreach (var file in await this._db.MediaFiles.ToListAsync()) {
+		var targetFiles = await this._db.MediaFiles.ToListAsync();
+		this.TargetCount.Value = targetFiles.Count;
+		this.CompletedCount.Value = 0;
+		foreach (var file in targetFiles) {
+			this.CompletedCount.Value++;
 			var fileInfo = new FileInfo(file.FilePath);
 			if (fileInfo == null) {
 				continue;
