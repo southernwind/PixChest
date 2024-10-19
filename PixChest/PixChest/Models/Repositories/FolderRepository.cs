@@ -1,21 +1,34 @@
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 using PixChest.Database;
 using PixChest.Models.Files;
 using PixChest.Models.Files.SearchConditions;
 using PixChest.Models.Repositories.Objects;
+using PixChest.Utils.Notifications;
 using PixChest.Utils.Objects;
 
 namespace PixChest.Models.Repositories;
 
 [AddTransient]
-public class FolderRepository(PixChestDbContext dbContext,MediaContentLibrary mediaContentLibrary): RepositoryBase {
-	private readonly PixChestDbContext _db = dbContext;
-	private readonly MediaContentLibrary _mediaContentLibrary = mediaContentLibrary;
+public class FolderRepository : RepositoryBase {
+	public FolderRepository(PixChestDbContext dbContext, MediaContentLibrary mediaContentLibrary) {
+		this._db = dbContext;
+		this._mediaContentLibrary = mediaContentLibrary;
+		FileNotifications
+			.FileRegistered
+			.ThrottleLast(TimeSpan.FromSeconds(10))
+			.Subscribe(async _ => await this.Load());
+	}
+
+	private readonly PixChestDbContext _db;
+	private readonly MediaContentLibrary _mediaContentLibrary;
 	public ReactiveProperty<FolderObject> RootFolder {
 		get;
 	} = new();
+
+	public string[] _currentDirectoryPathList = [];
 
 	public override async Task Load() {
 		var list = (await this._db
@@ -25,6 +38,12 @@ public class FolderRepository(PixChestDbContext dbContext,MediaContentLibrary me
 			.ToListAsync())
 			.OrderBy(x => x.Value)
 			.ToList();
+
+		var directoryList = list.Select(x => x.Value).ToArray();
+		if (directoryList.SequenceEqual(this._currentDirectoryPathList)) {
+			return;
+		}
+		this._currentDirectoryPathList = directoryList;
 
 		var all = list.Select(x => (x.Value, x.Count, Split: x.Value.Split(Path.DirectorySeparatorChar))).ToArray();
 		var maxPathDepth = all.Length == 0 ? 0 : all.Max(x => x.Split.Length);

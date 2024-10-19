@@ -6,7 +6,7 @@ namespace PixChest.ViewModels.Panes.RepositoryPanes;
 [AddTransient]
 public class FolderRepositoryViewModel : RepositoryViewModelBase {
 	public FolderRepositoryViewModel(FolderRepository folderRepository) : base(folderRepository) {
-		this.RootFolder = folderRepository.RootFolder.ToBindableReactiveProperty(null!);
+		this.RootFolder = folderRepository.RootFolder.ObserveOnCurrentSynchronizationContext().ToBindableReactiveProperty(null!);
 		this.SetRepositoryConditionCommand.Merge(this.IncludeSubDirectories.ToUnit()).Subscribe(_ => {
 			if(this.SelectedFolder.Value is not { } folder) {
 				return;

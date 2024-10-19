@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.Models.Preferences;
+using PixChest.Utils.Notifications;
 
 namespace PixChest.Models.Files;
 
@@ -47,7 +48,10 @@ public class FileRegistrar {
 			try {
 				var type = filePath.GetMediaType();
 				var fileOperator = _fileOperators.First(x => x.TargetMediaType == type);
-				await fileOperator.RegisterFileAsync(filePath);
+				var mf = await fileOperator.RegisterFileAsync(filePath);
+				if (mf is { } mf2) {
+					FileNotifications.FileRegistered.OnNext(mf2);
+				}
 			} catch (Exception e) {
 				Console.WriteLine(e);
 			}

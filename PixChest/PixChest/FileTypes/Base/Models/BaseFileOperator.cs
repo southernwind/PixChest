@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.DependencyInjection;
 
 using PixChest.Database;
+using PixChest.Database.Tables;
 using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.Utils.Constants;
 using PixChest.Utils.Enums;
@@ -16,43 +17,46 @@ public abstract class BaseFileOperator : IFileOperator {
 		this._db = Ioc.Default.GetRequiredService<PixChestDbContext>();
 	}
 
-	public virtual async Task UpdateRateAsync(long mediaFileId, int rate) {
+	public virtual async Task<MediaFile?> UpdateRateAsync(long mediaFileId, int rate) {
 		using var lockObject = await LockObjectConstants.DbLock.LockAsync();
 		using var transaction = await this._db.Database.BeginTransactionAsync();
 		var file = await this._db.MediaFiles.FirstOrDefaultAsync(x => x.MediaFileId == mediaFileId);
 		if (file is not { } mediaFile) {
-			return;
+			return null;
 		}
 		mediaFile.Rate = rate;
 		this._db.Update(mediaFile);
 		await transaction.CommitAsync();
 		await this._db.SaveChangesAsync();
+		return mediaFile;
 	}
 
-	public virtual async Task IncrementUsageCountAsync(long mediaFileId) {
+	public virtual async Task<MediaFile?> IncrementUsageCountAsync(long mediaFileId) {
 		using var lockObject = await LockObjectConstants.DbLock.LockAsync();
 		using var transaction = await this._db.Database.BeginTransactionAsync();
 		var file = await this._db.MediaFiles.FirstOrDefaultAsync(x => x.MediaFileId == mediaFileId);
 		if (file is not { } mediaFile) {
-			return;
+			return null;
 		}
 		mediaFile.UsageCount++;
 		this._db.Update(mediaFile);
 		await transaction.CommitAsync();
 		await this._db.SaveChangesAsync();
+		return mediaFile;
 	}
 
-	public virtual async Task UpdateDescriptionAsync(long mediaFileId, string description) {
+	public virtual async Task<MediaFile?> UpdateDescriptionAsync(long mediaFileId, string description) {
 		using var lockObject = await LockObjectConstants.DbLock.LockAsync();
 		using var transaction = await this._db.Database.BeginTransactionAsync();
 		var file = await this._db.MediaFiles.FirstOrDefaultAsync(x => x.MediaFileId == mediaFileId);
 		if (file is not { } mediaFile) {
-			return;
+			return null;
 		}
 		mediaFile.Description = description;
 		this._db.Update(mediaFile);
 		await transaction.CommitAsync();
 		await this._db.SaveChangesAsync();
+		return mediaFile;
 	}
 
 
@@ -60,5 +64,5 @@ public abstract class BaseFileOperator : IFileOperator {
 		get;
 	}
 
-	public abstract Task RegisterFileAsync(string filePath);
+	public abstract Task<MediaFile?> RegisterFileAsync(string filePath);
 }

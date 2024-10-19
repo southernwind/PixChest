@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 
+using PixChest.Database.Tables;
 using PixChest.Utils.Enums;
 
 namespace PixChest.FileTypes.Base.Models.Interfaces;
@@ -8,11 +9,11 @@ public interface IFileOperator {
 		get;
 	}
 
-	public Task RegisterFileAsync(string filePath);
+	public Task<MediaFile?> RegisterFileAsync(string filePath);
 
-	public Task UpdateRateAsync(long mediaFileId, int rate);
+	public Task<MediaFile?> UpdateRateAsync(long mediaFileId, int rate);
 
-	public Task IncrementUsageCountAsync(long mediaFileId);
+	public Task<MediaFile?> IncrementUsageCountAsync(long mediaFileId);
 
-	public Task UpdateDescriptionAsync(long mediaFileId, string description);
+	public Task<MediaFile?> UpdateDescriptionAsync(long mediaFileId, string description);
 }
