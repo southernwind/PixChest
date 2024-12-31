@@ -14,7 +14,8 @@ public class SortSelector {
 	public SortSelector(States states) {
 		this._states = states;
 		// 設定値初回値読み込み
-		this.SortConditions = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(this._states.SearchStates.SortConditions, x => new SortCondition(x));
+		this.SortConditions.AddRange(this._states.SearchStates.SortConditions.Select(x => new SortCondition(x)));
+		this.CurrentSortCondition.Value = this.SortConditions.FirstOrDefault(x => x.SortObject == states.SearchStates.CurrentSortCondition.Value);
 
 		// 更新
 		this.CurrentSortCondition.Select(_ => Unit.Default)
@@ -33,6 +34,12 @@ public class SortSelector {
 		this.CurrentSortCondition.Subscribe(x => {
 			this._states.SearchStates.CurrentSortCondition.Value = x?.SortObject;
 		});
+
+		this._states.SearchStates.SortConditions.ObserveChanged().Subscribe(x => {
+			this.SortConditions.Clear();
+			this.SortConditions.AddRange(this._states.SearchStates.SortConditions.Select(x => new SortCondition(x)));
+			this.CurrentSortCondition.Value = this.SortConditions.FirstOrDefault(x => x.DisplayName == this.CurrentSortCondition.Value?.DisplayName);
+		});
 	}
 
 	private readonly States _states;
@@ -46,9 +53,9 @@ public class SortSelector {
 	/// <summary>
 	/// ソート条件リスト
 	/// </summary>
-	public Reactive.Bindings.ReadOnlyReactiveCollection<SortCondition> SortConditions {
+	public ObservableList<SortCondition> SortConditions {
 		get;
-	}
+	} = [];
 
 	/// <summary>
 	/// ソート方向

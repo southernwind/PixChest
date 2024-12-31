@@ -16,10 +16,7 @@ public class FilterSelector : ModelBase {
 	/// コンストラクタ
 	/// </summary>
 	public FilterSelector(States states) {
-		this.FilteringConditions =
-			Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(
-				states.SearchStates.FilteringConditions,
-				x => new FilteringCondition(x));
+		this.FilteringConditions.AddRange(states.SearchStates.FilteringConditions.Select(x => new FilteringCondition(x)));
 
 		this.CurrentFilteringCondition.Value = this.FilteringConditions.FirstOrDefault(x => x.FilterObject == states.SearchStates.CurrentFilteringCondition.Value);
 
@@ -34,6 +31,12 @@ public class FilterSelector : ModelBase {
 				states.SearchStates.CurrentFilteringCondition.Value = x?.FilterObject;
 			})
 			.AddTo(this.CompositeDisposable);
+
+		states.SearchStates.FilteringConditions.ObserveChanged().Subscribe(x => {
+			this.FilteringConditions.Clear();
+			this.FilteringConditions.AddRange(states.SearchStates.FilteringConditions.Select(x => new FilteringCondition(x)));
+			this.CurrentFilteringCondition.Value = this.FilteringConditions.FirstOrDefault(x => x.DisplayName == this.CurrentFilteringCondition.Value?.DisplayName);
+		});
 	}
 
 	/// <summary>
@@ -60,9 +63,9 @@ public class FilterSelector : ModelBase {
 	/// <summary>
 	/// フィルター条件リスト
 	/// </summary>
-	public Reactive.Bindings.ReadOnlyReactiveCollection<FilteringCondition> FilteringConditions {
+	public ObservableList<FilteringCondition> FilteringConditions {
 		get;
-	}
+	} = [];
 
 	/// <summary>
 	/// フィルターマネージャーで選択したフィルターを引数に渡されたクエリに適用して返却する。

@@ -1,6 +1,5 @@
 using System.IO;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 
 using PixChest.Database;
 using PixChest.Models.Files;

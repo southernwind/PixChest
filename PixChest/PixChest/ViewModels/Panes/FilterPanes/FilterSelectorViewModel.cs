@@ -15,7 +15,7 @@ public class FilterSelectorViewModel :ViewModelBase {
 	/// </summary>
 	public FilterSelectorViewModel(FilterSelector model, States states,MediaContentLibrary mediaContentLibrary) {
 		this._states = states;
-		this.FilteringConditions = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(model.FilteringConditions, x => new FilteringConditionViewModel(x));
+		this.FilteringConditions = model.FilteringConditions.CreateView(x => new FilteringConditionViewModel(x)).ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 		this.CurrentCondition = model.CurrentFilteringCondition.Select(x => this.FilteringConditions.FirstOrDefault(c => c.Model == x)).ToBindableReactiveProperty();
 		this.ChangeFilteringConditionSelectionCommand.Subscribe(async x => {
 			model.CurrentFilteringCondition.Value = x?.Model;
@@ -34,7 +34,7 @@ public class FilterSelectorViewModel :ViewModelBase {
 	/// <summary>
 	/// フィルタリング条件
 	/// </summary>
-	public Reactive.Bindings.ReadOnlyReactiveCollection<FilteringConditionViewModel> FilteringConditions {
+	public INotifyCollectionChangedSynchronizedViewList<FilteringConditionViewModel> FilteringConditions {
 		get;
 	}
 

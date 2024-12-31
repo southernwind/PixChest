@@ -17,7 +17,7 @@ public class SortSelectorViewModel : ViewModelBase {
 	/// </summary>
 	public SortSelectorViewModel(SortSelector model, States states, MediaContentLibrary mediaContentLibrary) {
 		this._states = states;
-		this.SortConditions = Reactive.Bindings.ReadOnlyReactiveCollection.ToReadOnlyReactiveCollection(model.SortConditions, x => new SortConditionViewModel(x));
+		this.SortConditions = model.SortConditions.CreateView(x => new SortConditionViewModel(x)).ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 		this.CurrentCondition.Value = this.SortConditions.FirstOrDefault(c => c.Model == model.CurrentSortCondition.Value);
 		this.CurrentCondition.Subscribe(async x => {
 			model.CurrentSortCondition.Value = x?.Model;
@@ -41,7 +41,7 @@ public class SortSelectorViewModel : ViewModelBase {
 	/// <summary>
 	/// ソート条件
 	/// </summary>
-	public Reactive.Bindings.ReadOnlyReactiveCollection<SortConditionViewModel> SortConditions {
+	public INotifyCollectionChangedSynchronizedViewList<SortConditionViewModel> SortConditions {
 		get;
 	}
 

@@ -5,7 +5,7 @@ namespace PixChest.Models.Preferences;
 /// コレクションの設定値アイテム
 /// </summary>
 /// <typeparam name="T">型</typeparam>
-public class SettingsCollection<T> : Reactive.Bindings.ReactiveCollection<T>, ISettingsItem<IEnumerable<T>> {
+public class SettingsCollection<T> : ObservableList<T>, ISettingsItem<IEnumerable<T>> {
 	/// <summary>
 	/// デフォルト値生成関数
 	/// </summary>
@@ -81,5 +81,8 @@ public class SettingsCollection<T> : Reactive.Bindings.ReactiveCollection<T>, IS
 		foreach (var item in value) {
 			this.Add(item);
 		}
+	}
+
+	public void Dispose() {
 	}
 }

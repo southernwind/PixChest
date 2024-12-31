@@ -1,5 +1,3 @@
-using System.Reactive.Linq;
-
 using PixChest.Composition.Bases;
 using PixChest.FileTypes.Base.ViewModels.Interfaces;
 using PixChest.Models.FileDetailManagers;
@@ -7,7 +5,6 @@ using PixChest.Models.FileDetailManagers.Objects;
 using PixChest.Models.Files;
 using PixChest.Models.Files.SearchConditions;
 using PixChest.Utils.Objects;
-using PixChest.ViewModels.Panes.ViewerPanes;
 
 namespace PixChest.ViewModels.Panes.DetailPanes;
 
