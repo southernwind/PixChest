@@ -13,9 +13,9 @@ public class SortItem<TKey> : ModelBase, ISortItem{
 	/// <summary>
 	/// 保存時のキー値
 	/// </summary>
-	public SortItemKeys Key {
+	public SortItemKey Key {
 		get {
-			return this.GetValue<SortItemKeys>();
+			return this.GetValue<SortItemKey>();
 		}
 		set {
 			this.SetValue(value);
@@ -51,7 +51,7 @@ public class SortItem<TKey> : ModelBase, ISortItem{
 	/// </summary>
 	/// <param name="key">保存時のキー</param>
 	/// <param name="direction">ソート方向</param>
-	public SortItem(SortItemKeys key, Func<IFileModel, TKey> keySelector, ListSortDirection direction = ListSortDirection.Ascending) {
+	public SortItem(SortItemKey key, Func<IFileModel, TKey> keySelector, ListSortDirection direction = ListSortDirection.Ascending) {
 		this.Key = key;
 		this.KeySelector = keySelector;
 		this.Direction = direction;
@@ -94,7 +94,7 @@ public interface ISortItem {
 	/// <summary>
 	/// 保存時のキー値
 	/// </summary>
-	SortItemKeys Key {
+	SortItemKey Key {
 		get;
 		set;
 	}

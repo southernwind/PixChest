@@ -10,7 +10,7 @@ public class SortItemCreator {
 		/// <summary>
 		/// ソートキー
 		/// </summary>
-		public SortItemKeys SortItemKey {
+		public SortItemKey SortItemKey {
 			get;
 			set;
 		}
@@ -33,21 +33,22 @@ public class SortItemCreator {
 		/// </summary>
 		/// <param name="sortItemKey">ソートキー</param>
 		/// <param name="direction">ソート方向</param>
-		public SortItemCreator(SortItemKeys sortItemKey, ListSortDirection direction = ListSortDirection.Ascending) {
+		public SortItemCreator(SortItemKey sortItemKey, ListSortDirection direction = ListSortDirection.Ascending) {
 			this.SortItemKey = sortItemKey;
 			this.Direction = direction;
 		}
 
 		public ISortItem Create() {
 			return this.SortItemKey switch {
-				SortItemKeys.FilePath => new SortItem<string>(this.SortItemKey, x => x.FilePath, this.Direction),
-				SortItemKeys.CreationTime => new SortItem<DateTime>(this.SortItemKey, x => x.CreationTime, this.Direction),
-				SortItemKeys.ModifiedTime => new SortItem<DateTime>(this.SortItemKey, x => x.ModifiedTime, this.Direction),
-				SortItemKeys.LastAccessTime => new SortItem<DateTime>(this.SortItemKey, x => x.LastAccessTime, this.Direction),
-				SortItemKeys.FileSize => new SortItem<long>(this.SortItemKey, x => x.FileSize, this.Direction),
-				SortItemKeys.Rate => new SortItem<double>(this.SortItemKey, x => x.Rate, this.Direction),
-				SortItemKeys.Location => new SortItem<GpsLocation?>(this.SortItemKey, x => x.Location, this.Direction),
-				SortItemKeys.Resolution => new SortItem<ComparableSize?>(this.SortItemKey, x => x.Resolution, this.Direction),
+				SortItemKey.FilePath => new SortItem<string>(this.SortItemKey, x => x.FilePath, this.Direction),
+				SortItemKey.CreationTime => new SortItem<DateTime>(this.SortItemKey, x => x.CreationTime, this.Direction),
+				SortItemKey.ModifiedTime => new SortItem<DateTime>(this.SortItemKey, x => x.ModifiedTime, this.Direction),
+				SortItemKey.LastAccessTime => new SortItem<DateTime>(this.SortItemKey, x => x.LastAccessTime, this.Direction),
+				SortItemKey.FileSize => new SortItem<long>(this.SortItemKey, x => x.FileSize, this.Direction),
+				SortItemKey.Rate => new SortItem<double>(this.SortItemKey, x => x.Rate, this.Direction),
+				SortItemKey.Location => new SortItem<GpsLocation?>(this.SortItemKey, x => x.Location, this.Direction),
+				SortItemKey.Resolution => new SortItem<ComparableSize?>(this.SortItemKey, x => x.Resolution, this.Direction),
+				SortItemKey.UsageCount => new SortItem<int>(this.SortItemKey, x => x.UsageCount, this.Direction),
 				_ => throw new ArgumentException(),
 			};
 		}

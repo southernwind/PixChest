@@ -10,7 +10,7 @@
 	xmlns:sortM="using:PixChest.Models.Files.Sort"
 	mc:Ignorable="d">
 
-	<Grid x:Name="Root">
+	<Grid x:Name="Root" DataContext="{x:Bind ViewModel}">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="200" />
 			<ColumnDefinition Width="Auto" />
@@ -73,7 +73,7 @@
 									<TextBlock Grid.Column="2" Text="{x:Bind SortItemKey, Converter={StaticResource SortKeyToDisplayNameConverter}}" />
 									<Button
 										Grid.Column="4"
-										Command="{Binding CurrentCondition.Value.RemoveSortItemCommand, ElementName=Root}"
+										Command="{Binding DataContext.CurrentCondition.Value.RemoveSortItemCommand, ElementName=Root}"
 										CommandParameter="{x:Bind }">
 										<FontIcon Glyph="&#xF78A;" />
 									</Button>
@@ -88,15 +88,20 @@
 						<RowDefinition Height="5" />
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
-					<ListBox ItemsSource="{x:Bind ViewModel.CurrentCondition.Value.SortItemCreators,Mode=OneWay}" SelectedItem="{Binding SelectedSortItemCreator.Value,Mode=TwoWay}">
+					<ListBox ItemsSource="{x:Bind ViewModel.CurrentCondition.Value.SortItemCreators,Mode=OneWay}">
 						<ItemsControl.ItemTemplate>
 							<DataTemplate x:DataType="sortM:SortItemCreator">
-								<TextBlock Text="{x:Bind SortItemKey, Converter={StaticResource SortKeyToDisplayNameConverter}}" />
+								<StackPanel Orientation="Horizontal">
+									<FontIcon Glyph="{x:Bind Direction, Mode=OneWay, Converter={StaticResource ListSortDirectionToIconGlyphConverter}}" />
+									<TextBlock Text="{x:Bind SortItemKey, Converter={StaticResource SortKeyToDisplayNameConverter}}" />
+								</StackPanel>
 							</DataTemplate>
 						</ItemsControl.ItemTemplate>
 					</ListBox>
 					<Grid Grid.Row="2">
 						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="5" />
 							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition Width="5" />
 							<ColumnDefinition Width="*" />
@@ -106,9 +111,16 @@
 							IsChecked="{x:Bind ViewModel.CurrentCondition.Value.Direction.Value, Mode=TwoWay, Converter={StaticResource ListSortDirectionToBooleanConverter}}">
 							<FontIcon Glyph="{x:Bind ViewModel.CurrentCondition.Value.Direction.Value, Mode=OneWay, Converter={StaticResource ListSortDirectionToIconGlyphConverter}}"/>
 						</ToggleButton>
-						<Button
+						<ComboBox
+							x:Name="SortItemKeyComboBox"
 							Grid.Column="2"
-							Command="{x:Bind ViewModel.CurrentCondition.Value.AddSortItemCommand}"
+							ItemsSource="{x:Bind ViewModel.CurrentCondition.Value.CandidateSortItemKeys.Value, Mode=OneWay}">
+							<TextBlock Text="{x:Bind Mode=OneWay, Converter={StaticResource SortKeyToDisplayNameConverter}}" />
+						</ComboBox>
+						<Button
+							Grid.Column="4"
+							Command="{x:Bind ViewModel.CurrentCondition.Value.AddSortItemCommand, Mode=OneWay}"
+							CommandParameter="{x:Bind SortItemKeyComboBox.SelectedValue,Mode=OneWay}"
 							Content="Add"/>
 					</Grid>
 				</Grid>

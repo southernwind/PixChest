@@ -16,6 +16,7 @@ public class SortSelector {
 		// 設定値初回値読み込み
 		this.SortConditions.AddRange(this._states.SearchStates.SortConditions.Select(x => new SortCondition(x)));
 		this.CurrentSortCondition.Value = this.SortConditions.FirstOrDefault(x => x.SortObject == states.SearchStates.CurrentSortCondition.Value);
+		this.Direction.Value = this._states.SearchStates.SortDirection.Value;
 
 		// 更新
 		this.CurrentSortCondition.Select(_ => Unit.Default)
@@ -39,6 +40,10 @@ public class SortSelector {
 			this.SortConditions.Clear();
 			this.SortConditions.AddRange(this._states.SearchStates.SortConditions.Select(x => new SortCondition(x)));
 			this.CurrentSortCondition.Value = this.SortConditions.FirstOrDefault(x => x.DisplayName == this.CurrentSortCondition.Value?.DisplayName);
+		});
+
+		this.Direction.Subscribe(x => {
+			this._states.SearchStates.SortDirection.Value = x;
 		});
 	}
 

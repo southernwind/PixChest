@@ -2,6 +2,7 @@ using System.ComponentModel;
 
 using PixChest.Composition.Bases;
 using PixChest.Models.Files.Sort;
+using PixChest.Utils.Enums;
 
 namespace PixChest.ViewModels.Sort;
 
@@ -15,8 +16,14 @@ public class SortConditionEditorViewModel : ViewModelBase {
 
 		this.SortItemCreators = this.Model.SortItemCreators.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 
-		this.AddSortItemCommand.Subscribe(this.Model.AddSortItem).AddTo(this.CompositeDisposable);
+		this.AddSortItemCommand.Subscribe(x => {
+			if (x is not { } sortItemKey) {
+				return;
+			}
+			this.Model.AddSortItem(new SortItemCreator(sortItemKey!, this.Direction.Value));
+		}).AddTo(this.CompositeDisposable);
 		this.RemoveSortItemCommand.Subscribe(this.Model.RemoveSortItem).AddTo(this.CompositeDisposable);
+		this.CandidateSortItemKeys.Value = Enum.GetValues<SortItemKey>();
 	}
 
 	/// <summary>
@@ -43,14 +50,7 @@ public class SortConditionEditorViewModel : ViewModelBase {
 	/// <summary>
 	///　設定用ソート項目リスト
 	/// </summary>
-	public ReactiveProperty<SortItemCreator[]> CandidateSortItemCreators {
-		get;
-	} = new ();
-
-	/// <summary>
-	/// 設定用選択中ソート項目
-	/// </summary>
-	public ReactiveProperty<SortItemCreator> SelectedSortItemCreator {
+	public ReactiveProperty<SortItemKey[]> CandidateSortItemKeys {
 		get;
 	} = new ();
 
@@ -66,12 +66,12 @@ public class SortConditionEditorViewModel : ViewModelBase {
 	/// </summary>
 	public ReactiveCommand<SortItemCreator> RemoveSortItemCommand {
 		get;
-	} = new ReactiveCommand<SortItemCreator>();
+	} = new ();
 
 	/// <summary>
-	/// ソート条件削除コマンド
+	/// ソート条件追加コマンド
 	/// </summary>
-	public ReactiveCommand<SortItemCreator> AddSortItemCommand {
+	public ReactiveCommand<SortItemKey?> AddSortItemCommand {
 		get;
-	} = new ReactiveCommand<SortItemCreator>();
+	} = new ();
 }

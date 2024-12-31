@@ -59,6 +59,7 @@ public class SortConditionEditor : ModelBase {
 	/// <param name="sortItem"></param>
 	public void AddSortItem(SortItemCreator sortItem) {
 		this.SortObject.SortItemCreators.Add(sortItem);
+		this.Load();
 	}
 
 	/// <summary>
@@ -67,5 +68,6 @@ public class SortConditionEditor : ModelBase {
 	/// <param name="sortItem"></param>
 	public void RemoveSortItem(SortItemCreator sortItem) {
 		this.SortObject.SortItemCreators.Remove(sortItem);
+		this.Load();
 	}
 }

@@ -1,6 +1,5 @@
 using PixChest.Composition.Bases;
 using PixChest.Models.Files.Sort;
-using PixChest.Models.Preferences;
 
 namespace PixChest.ViewModels.Sort;
 

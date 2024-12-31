@@ -1,6 +1,5 @@
 namespace PixChest.Utils.Enums;
-public enum SortItemKeys {
-	FileName,
+public enum SortItemKey {
 	FilePath,
 	CreationTime,
 	ModifiedTime,
@@ -8,5 +7,6 @@ public enum SortItemKeys {
 	FileSize,
 	Location,
 	Rate,
-	Resolution
+	Resolution,
+	UsageCount
 }

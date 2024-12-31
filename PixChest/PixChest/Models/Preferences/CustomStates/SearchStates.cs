@@ -1,6 +1,7 @@
+using System.ComponentModel;
+
 using PixChest.Models.Files.Filter;
 using PixChest.Models.Files.Sort;
-using PixChest.Models.Repositories.Objects;
 using PixChest.Utils.Enums;
 
 namespace PixChest.Models.Preferences.CustomStates;
@@ -37,9 +38,16 @@ public class SearchStates : SettingsBase {
 	public SettingsCollection<SortObject> SortConditions {
 		get;
 	} = new (
-		new SortObject("File Path", [new (SortItemKeys.FilePath)]),
-		new SortObject("Modified Time", [new (SortItemKeys.ModifiedTime)]),
-		new SortObject("Rate", [new (SortItemKeys.Rate)]),
-		new SortObject("File Size", [new (SortItemKeys.FileSize)]));
+		new SortObject("File Path", [new (SortItemKey.FilePath)]),
+		new SortObject("Modified Time", [new (SortItemKey.ModifiedTime)]),
+		new SortObject("Rate", [new(SortItemKey.Rate)]),
+		new SortObject("Usage Count", [new(SortItemKey.UsageCount)]),
+		new SortObject("File Size", [new(SortItemKey.FileSize)]));
 
+	/// <summary>
+	/// 全体ソート方向
+	/// </summary>
+	public SettingsItem<ListSortDirection> SortDirection {
+		get;
+	} = new(ListSortDirection.Ascending);
 }

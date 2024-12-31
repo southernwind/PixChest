@@ -6,20 +6,20 @@ using System.Collections.Generic;
 namespace PixChest.Views.Resources.Converters; 
 
 public class SortKeyToDisplayNameConverter : IValueConverter {
-	private static readonly Dictionary<SortItemKeys, string> _names = new() {
-		{SortItemKeys.FileName,"File Name" },
-		{SortItemKeys.FilePath,"File Path" },
-		{SortItemKeys.CreationTime,"Creation Time" },
-		{SortItemKeys.ModifiedTime,"Modified Time" },
-		{SortItemKeys.LastAccessTime,"Last Access Time" },
-		{SortItemKeys.FileSize,"File Size" },
-		{SortItemKeys.Location,"Location" },
-		{SortItemKeys.Rate,"Rate" },
-		{SortItemKeys.Resolution,"Resolution" },
+	private static readonly Dictionary<SortItemKey, string> _names = new() {
+		{SortItemKey.FilePath,"File Path" },
+		{SortItemKey.CreationTime,"Creation Time" },
+		{SortItemKey.ModifiedTime,"Modified Time" },
+		{SortItemKey.LastAccessTime,"Last Access Time" },
+		{SortItemKey.FileSize,"File Size" },
+		{SortItemKey.Location,"Location" },
+		{SortItemKey.Rate,"Rate" },
+		{SortItemKey.Resolution,"Resolution" },
+		{SortItemKey.UsageCount,"Usage Count" },
 	};
 
 	public object? Convert(object value, Type targetType, object parameter, string language) {
-		if (value is SortItemKeys sik) {
+		if (value is SortItemKey sik) {
 			return _names[sik];
 		}
 

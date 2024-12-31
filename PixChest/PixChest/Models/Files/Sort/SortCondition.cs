@@ -67,7 +67,7 @@ public class SortCondition : ModelBase {
 				this._onUpdateSortConditions.OnNext(Unit.Default);
 			}).AddTo(this.CompositeDisposable);
 
-		this.CandidateSortItemCreators.AddRange(Enum.GetValues<SortItemKeys>().Select(x => new SortItemCreator(x)));
+		this.CandidateSortItemCreators.AddRange(Enum.GetValues<SortItemKey>().Select(x => new SortItemCreator(x)));
 	}
 
 	/// <summary>
