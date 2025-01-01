@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
 using PixChest.Database;
 using PixChest.Models.Files;
 using PixChest.Models.Files.SearchConditions;
+using PixChest.Models.NotificationDispatcher;
 using PixChest.Models.Repositories.Objects;
 using PixChest.Utils.Notifications;
 using PixChest.Utils.Objects;
@@ -12,9 +14,9 @@ namespace PixChest.Models.Repositories;
 
 [AddTransient]
 public class FolderRepository : RepositoryBase {
-	public FolderRepository(PixChestDbContext dbContext, MediaContentLibrary mediaContentLibrary) {
+	public FolderRepository(PixChestDbContext dbContext, SearchConditionNotificationDispatcher searchConditionNotificationDispatcher) {
 		this._db = dbContext;
-		this._mediaContentLibrary = mediaContentLibrary;
+		this._searchConditionNotificationDispatcher = searchConditionNotificationDispatcher;
 		FileNotifications
 			.FileRegistered
 			.ThrottleLast(TimeSpan.FromSeconds(10))
@@ -22,7 +24,7 @@ public class FolderRepository : RepositoryBase {
 	}
 
 	private readonly PixChestDbContext _db;
-	private readonly MediaContentLibrary _mediaContentLibrary;
+	private readonly SearchConditionNotificationDispatcher _searchConditionNotificationDispatcher;
 	public ReactiveProperty<FolderObject> RootFolder {
 		get;
 	} = new();
@@ -70,9 +72,17 @@ public class FolderRepository : RepositoryBase {
 	}
 
 	public void SetRepositoryCandidate(FolderObject folderObject,bool includeSubDirectory) {
-		this._mediaContentLibrary.SearchConditions.RemoveRange(this._mediaContentLibrary.SearchConditions.Where(x => x is FolderSearchCondition));
-		this._mediaContentLibrary.SearchConditions.Add(new FolderSearchCondition(folderObject) {
-			IncludeSubDirectories = includeSubDirectory
+		this._searchConditionNotificationDispatcher.UpdateRequest.OnNext(x => {
+			x.RemoveRange(x.Where(x => x is FolderSearchCondition));
+			x.Add(new FolderSearchCondition(folderObject) {
+				 IncludeSubDirectories = includeSubDirectory
+			 });
 		});
+	}
+
+	public IEnumerable<FolderObject> GetAllFolders() {
+		this.Load().Wait();
+		IEnumerable<FolderObject> func(FolderObject fo) => fo.ChildFolders.SelectMany(x => func(x)).Concat([fo]).OrderBy(x => x.FolderPath);
+		return func(this.RootFolder.Value);
 	}
 }

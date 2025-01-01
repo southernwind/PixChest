@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using PixChest.Database;
 using PixChest.Database.Tables;
 using PixChest.FileTypes.Base.Models.Interfaces;
-using PixChest.Models.FileDetailManagers.Objects;
 using PixChest.Models.Files;
 using PixChest.Utils.Constants;
 
@@ -18,7 +17,7 @@ public class TagsManager(PixChestDbContext dbContext) {
 		get;
 	} = [];
 
-	public ObservableList<TagWithRomaji> TagsWithKanaRomajiAliases {
+	public ObservableList<TagModel> Tags {
 		get;
 	} = [];
 
@@ -114,7 +113,7 @@ public class TagsManager(PixChestDbContext dbContext) {
 
 	public async Task Load() {
 		this.TagCategories.Clear();
-		this.TagsWithKanaRomajiAliases.Clear();
+		this.Tags.Clear();
 		var tagCategories =
 			await
 				this._db.TagCategories
@@ -124,18 +123,8 @@ public class TagsManager(PixChestDbContext dbContext) {
 					.ThenInclude(x => x.MediaFileTags)
 					.ToArrayAsync();
 		foreach (var tag in tagCategories.SelectMany(x => x.Tags).OrderByDescending(x => x.MediaFileTags.Count)) {
-			var aliases = tag.TagAliases.Select(x => (x.Alias, x.Ruby)).Concat([(Alias: tag.TagName, Ruby: null)]);
-			var newTag = new TagWithRomaji() {
-				TagCategory = tag.TagCategory,
-				TagName = tag.TagName,
-				Detail = tag.Detail,
-				TagAliases = aliases.Select(x => new TagAliasWithRomaji() {
-					Alias = x.Alias,
-					Ruby = x.Ruby,
-					Romaji = (x.Ruby ?? x.Alias.KatakanaToHiragana()).HiraganaToRomaji()
-				}).ToList()
-			};
-			this.TagsWithKanaRomajiAliases.Add(newTag);
+			var newTag = new TagModel(tag);
+			this.Tags.Add(newTag);
 		}
 		this.TagCategories.AddRange(tagCategories);
 	}

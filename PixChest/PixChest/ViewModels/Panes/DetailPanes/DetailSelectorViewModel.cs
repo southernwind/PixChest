@@ -4,6 +4,7 @@ using PixChest.Models.FileDetailManagers;
 using PixChest.Models.FileDetailManagers.Objects;
 using PixChest.Models.Files;
 using PixChest.Models.Files.SearchConditions;
+using PixChest.Models.NotificationDispatcher;
 using PixChest.Utils.Objects;
 
 namespace PixChest.ViewModels.Panes.DetailPanes;
@@ -12,8 +13,8 @@ namespace PixChest.ViewModels.Panes.DetailPanes;
 public class DetailSelectorViewModel : ViewModelBase
 {
 	private bool _isTargetChanging = false;
-	public DetailSelectorViewModel(TagsManager tagsManager, MediaContentLibrary mediaContentLibrary) {
-		this.TagCandidates = tagsManager.TagsWithKanaRomajiAliases.CreateView(x => x);
+	public DetailSelectorViewModel(TagsManager tagsManager, SearchConditionNotificationDispatcher searchConditionNotificationDispatcher) {
+		this.TagCandidates = tagsManager.Tags.CreateView(x => x);
 		this.LoadTagCandidatesCommand.Subscribe(async _ => await tagsManager.Load());
 		this.FilteredTagCandidates = this.TagCandidates.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 		this.RefreshFilteredTagCandidatesCommand.Subscribe(x => {
@@ -62,7 +63,7 @@ public class DetailSelectorViewModel : ViewModelBase
 			this.UpdateTags();
 		});
 		this.SearchTaggedFilesCommand.Subscribe(x => {
-			mediaContentLibrary.SearchConditions.Add(new TagSearchCondition(x.Value));
+			searchConditionNotificationDispatcher.AddRequest.OnNext(new TagSearchCondition(x.Value));
 		});
 		this.Rate.Subscribe(async x => {
 			if(this._isTargetChanging) {
@@ -99,11 +100,11 @@ public class DetailSelectorViewModel : ViewModelBase
 		get;
 	} = new();
 
-	public ISynchronizedView<TagWithRomaji, TagWithRomaji> TagCandidates {
+	public ISynchronizedView<TagModel, TagModel> TagCandidates {
 		get;
 	}
 
-	public INotifyCollectionChangedSynchronizedViewList<TagWithRomaji> FilteredTagCandidates {
+	public INotifyCollectionChangedSynchronizedViewList<TagModel> FilteredTagCandidates {
 		get;
 	}
 

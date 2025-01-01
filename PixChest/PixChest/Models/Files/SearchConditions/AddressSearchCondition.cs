@@ -1,10 +1,8 @@
-using System.IO;
 using System.Linq.Expressions;
 
 using PixChest.Database.Tables;
 using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.Models.Maps;
-using PixChest.Models.Repositories.Objects;
 
 namespace PixChest.Models.Files.SearchConditions;
 public class AddressSearchCondition: ISearchCondition {
@@ -56,4 +54,8 @@ public class AddressSearchCondition: ISearchCondition {
 	public Func<IFileModel, bool>? Filter {
 		get;
 	} = null;
+
+	public bool IsMatchForSuggest(string searchWord) {
+		return this.Address.Name?.Contains(searchWord) ?? false;
+	}
 }

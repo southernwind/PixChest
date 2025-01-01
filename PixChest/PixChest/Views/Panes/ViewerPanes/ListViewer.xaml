@@ -23,6 +23,8 @@
 			Grid.Row="0"
 			RelativePanel.AlignVerticalCenterWithPanel="True"
 			ItemsSource="{x:Bind ViewModel.MediaContentLibraryViewModel.SearchConditions ,Mode=OneWay}"
+			SuggestedItemsSource="{x:Bind ViewModel.MediaContentLibraryViewModel.FilteredSearchConditionCandidates,Mode=OneWay}"
+			TextChanged="TokenizingTextBox_TextChanged"
 			TokenItemAdding="TokenizingTextBox_TokenItemAdding"
 			TokenItemRemoving="TokenizingTextBox_TokenItemRemoving">
 			<controls:TokenizingTextBox.TokenItemTemplate>
@@ -30,6 +32,11 @@
 					<TextBlock Text="{x:Bind DisplayText}"/>
 				</DataTemplate>
 			</controls:TokenizingTextBox.TokenItemTemplate>
+			<controls:TokenizingTextBox.SuggestedItemTemplate>
+				<DataTemplate x:DataType="viewerpanes:SearchConditionViewModel">
+					<TextBlock Text="{x:Bind DisplayText}"/>
+				</DataTemplate>
+			</controls:TokenizingTextBox.SuggestedItemTemplate>
 		</controls:TokenizingTextBox>
 		<ListBox
 			x:Name="List"
@@ -48,7 +55,10 @@
 			<ListBox.ItemTemplate>
 				<DataTemplate x:DataType="vmIf:IFileViewModel">
 					<Grid DoubleTapped="File_DoubleTapped">
-						<Image Stretch="Uniform" Height="{Binding DataContext.ItemSize.Value, Mode=OneWay, ElementName=List}" Source="{x:Bind ThumbnailFilePath}"/>
+						<StackPanel Orientation="Horizontal">
+							<Image Stretch="Uniform" Height="{Binding DataContext.ItemSize.Value, Mode=OneWay, ElementName=List}" Source="{x:Bind ThumbnailFilePath}"/>
+							<TextBlock Text="{x:Bind FilePath}"/>
+						</StackPanel>
 						<Grid Opacity="0.7" Background="DarkGray" Visibility="{x:Bind Exists, Converter={StaticResource InvertBoolToVisibilityConverter}}"/>
 					</Grid>
 				</DataTemplate>

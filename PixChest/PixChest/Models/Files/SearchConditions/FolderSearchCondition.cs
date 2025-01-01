@@ -40,4 +40,8 @@ public class FolderSearchCondition: ISearchCondition {
 	public Func<IFileModel, bool>? Filter {
 		get;
 	} = null;
+
+	public bool IsMatchForSuggest(string searchWord) {
+		return this.FolderObject.FolderPath.Contains(searchWord, StringComparison.CurrentCultureIgnoreCase);
+	}
 }

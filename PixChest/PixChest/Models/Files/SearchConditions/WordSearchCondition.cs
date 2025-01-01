@@ -1,8 +1,6 @@
 
 using System.Linq.Expressions;
 
-using Microsoft.EntityFrameworkCore;
-
 using PixChest.Database.Tables;
 using PixChest.FileTypes.Base.Models.Interfaces;
 
@@ -40,4 +38,8 @@ public class WordSearchCondition: ISearchCondition {
 	public Func<IFileModel, bool>? Filter {
 		get;
 	} = null;
+
+	public bool IsMatchForSuggest(string searchWord) {
+		return this.Word.Contains(searchWord);
+	}
 }

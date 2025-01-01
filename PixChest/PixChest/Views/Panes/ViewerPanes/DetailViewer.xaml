@@ -23,6 +23,8 @@
 			Grid.Row="0"
 			RelativePanel.AlignVerticalCenterWithPanel="True"
 			ItemsSource="{x:Bind ViewModel.MediaContentLibraryViewModel.SearchConditions ,Mode=OneWay}"
+			SuggestedItemsSource="{x:Bind ViewModel.MediaContentLibraryViewModel.FilteredSearchConditionCandidates,Mode=OneWay}"
+			TextChanged="TokenizingTextBox_TextChanged"
 			TokenItemAdding="TokenizingTextBox_TokenItemAdding"
 			TokenItemRemoving="TokenizingTextBox_TokenItemRemoving">
 			<controls:TokenizingTextBox.TokenItemTemplate>
@@ -30,6 +32,11 @@
 					<TextBlock Text="{x:Bind DisplayText}"/>
 				</DataTemplate>
 			</controls:TokenizingTextBox.TokenItemTemplate>
+			<controls:TokenizingTextBox.SuggestedItemTemplate>
+				<DataTemplate x:DataType="viewerpanes:SearchConditionViewModel">
+					<TextBlock Text="{x:Bind DisplayText}"/>
+				</DataTemplate>
+			</controls:TokenizingTextBox.SuggestedItemTemplate>
 		</controls:TokenizingTextBox>
 		<Viewbox
 			Grid.Row="1">

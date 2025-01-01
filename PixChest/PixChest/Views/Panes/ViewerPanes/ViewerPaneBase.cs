@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.WinUI.Controls;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -6,6 +7,7 @@ using Microsoft.UI.Xaml.Input;
 
 using PixChest.Composition.Bases;
 using PixChest.FileTypes.Base.ViewModels.Interfaces;
+using PixChest.Models.Files.SearchConditions;
 using PixChest.ViewModels.Panes.ViewerPanes;
 using PixChest.Views.Thumbnails;
 
@@ -62,16 +64,21 @@ public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
 		}
 	}
 
-	protected void TokenizingTextBox_TokenItemAdding(CommunityToolkit.WinUI.Controls.TokenizingTextBox sender, CommunityToolkit.WinUI.Controls.TokenItemAddingEventArgs args) {
+	protected void TokenizingTextBox_TokenItemAdding(TokenizingTextBox sender, TokenItemAddingEventArgs args) {
 		args.Cancel = true;
-		this.ViewModel?.MediaContentLibraryViewModel.AddWordSearchCondition(args.TokenText);
+		this.ViewModel?.MediaContentLibraryViewModel.SearchConditionNotificationDispatcher.AddRequest.OnNext(new WordSearchCondition(args.TokenText));
 	}
 
-	protected void TokenizingTextBox_TokenItemRemoving(CommunityToolkit.WinUI.Controls.TokenizingTextBox sender, CommunityToolkit.WinUI.Controls.TokenItemRemovingEventArgs args) {
+	protected void TokenizingTextBox_TokenItemRemoving(TokenizingTextBox sender, TokenItemRemovingEventArgs args) {
 		args.Cancel = true;
 		if (args.Item is not SearchConditionViewModel { } condition) {
 			return;
 		}
-		this.ViewModel?.MediaContentLibraryViewModel.RemoveSearchCondition(condition);
+		this.ViewModel?.MediaContentLibraryViewModel.SearchConditionNotificationDispatcher.RemoveRequest.OnNext(condition.SearchCondition);
+	}
+	protected void TokenizingTextBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args) {
+		if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput) {
+			this.ViewModel?.MediaContentLibraryViewModel.RefreshSearchTokenCandidates(sender.Text);
+		}
 	}
 }

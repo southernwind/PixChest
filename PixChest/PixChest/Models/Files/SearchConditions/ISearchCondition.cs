@@ -16,4 +16,6 @@ public interface ISearchCondition {
 	public Func<IFileModel, bool>? Filter {
 		get;
 	}
+
+	public bool IsMatchForSuggest(string searchWord);
 }
