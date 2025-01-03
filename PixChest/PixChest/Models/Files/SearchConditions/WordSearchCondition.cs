@@ -6,6 +6,10 @@ using PixChest.FileTypes.Base.Models.Interfaces;
 
 namespace PixChest.Models.Files.SearchConditions;
 public class WordSearchCondition: ISearchCondition {
+	[Obsolete("for serialize")]
+	public WordSearchCondition() {
+		this.Word = null!;
+	}
 	public WordSearchCondition(string word) {
 		this.Word = word;
 	}

@@ -8,27 +8,41 @@ namespace PixChest.Models.Repositories.Objects;
 public partial class FolderObject {
 	public string FolderPath {
 		get;
+		set;
 	}
 
 	public FolderObject? Parent {
 		get;
+		set;
 	}
 
 	public FolderObject[] ChildFolders {
 		get;
+		set;
 	}
 
 	public string FolderName {
 		get;
+		set;
 	}
 
 	public long FileCount {
 		get;
+		set;
 	}
 
 	public bool IsExpanded {
 		get;
+		set;
 	} = false;
+
+	[Obsolete("for serialize")]
+	public FolderObject() {
+		this.Parent = null!;
+		this.ChildFolders = null!;
+		this.FolderPath = null!;
+		this.FolderName = null!;
+	}
 
 	public FolderObject(FolderObject? parent, string currentPath, ValueCountPair<string>[] directories) {
 		this.Parent = parent;

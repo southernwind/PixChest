@@ -7,6 +7,10 @@ using PixChest.Models.Repositories.Objects;
 
 namespace PixChest.Models.Files.SearchConditions;
 public class FolderSearchCondition: ISearchCondition {
+	[Obsolete("for serialize")]
+	public FolderSearchCondition() {
+		this.FolderObject = null!;
+	}
 	public FolderSearchCondition(FolderObject folderObject) {
 		this.FolderObject = folderObject;
 	}

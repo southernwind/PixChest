@@ -5,12 +5,17 @@ using PixChest.FileTypes.Base.Models.Interfaces;
 
 namespace PixChest.Models.Files.SearchConditions;
 public class TagSearchCondition: ISearchCondition {
+	[Obsolete("for serialize")]
+	public TagSearchCondition() {
+		this.TargetTag = null!;
+	}
 	public TagSearchCondition(TagModel targetTag) {
 		this.TargetTag = targetTag;
 	}
 
 	public TagModel TargetTag {
 		get;
+		set;
 	}
 
 	public string DisplayText {

@@ -7,6 +7,7 @@ using PixChest.Models.Files;
 using PixChest.Models.Files.SearchConditions;
 using PixChest.Models.NotificationDispatcher;
 using PixChest.Models.Repositories.Objects;
+using PixChest.Utils.Constants;
 using PixChest.Utils.Notifications;
 using PixChest.Utils.Objects;
 
@@ -32,6 +33,7 @@ public class FolderRepository : RepositoryBase {
 	public string[] _currentDirectoryPathList = [];
 
 	public override async Task Load() {
+		using var lockObject = await LockObjectConstants.DbLock.LockAsync();
 		var list = (await this._db
 			.MediaFiles
 			.GroupBy(x => x.DirectoryPath)
