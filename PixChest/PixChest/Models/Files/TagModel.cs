@@ -4,6 +4,14 @@ using PixChest.Database.Tables;
 
 namespace PixChest.Models.Files; 
 public class TagModel {
+	[Obsolete("for serialize")]
+	public TagModel() {
+		this.TagCategory = null!;
+		this.TagName = null!;
+		this.Detail = null!;
+		this.Romaji = null!;
+		this.TagAliases = null!;
+	}
 	public TagModel(Tag tag) {
 		this.TagId = tag.TagId;
 		this.TagCategoryId = tag.TagCategoryId;
@@ -19,6 +27,7 @@ public class TagModel {
 	/// </summary>
 	public int TagId {
 		get;
+		set;
 	}
 
 	/// <summary>
@@ -26,10 +35,12 @@ public class TagModel {
 	/// </summary>
 	public int TagCategoryId {
 		get;
+		set;
 	}
 
 	public TagCategoryModel TagCategory {
 		get;
+		set;
 	}
 
 	/// <summary>
@@ -37,6 +48,7 @@ public class TagModel {
 	/// </summary>
 	public string TagName {
 		get;
+		set;
 	}
 
 	/// <summary>
@@ -44,22 +56,31 @@ public class TagModel {
 	/// </summary>
 	public string Detail {
 		get;
+		set;
 	}
 
 	public string Romaji {
 		get;
+		set;
 	}
 
 	public List<TagAliasModel> TagAliases {
 		get;
+		set;
 	}
 
 	public BindableReactiveProperty<string?> RepresentativeText {
 		get;
+		set;
 	} = new();
 }
 
 public class TagCategoryModel {
+	[Obsolete("for serialize")]
+	public TagCategoryModel() {
+		this.TagCategoryName = null!;
+		this.Detail = null!;
+	}
 	public TagCategoryModel(TagCategory tagCategory) {
 		this.TagCategoryId = tagCategory.TagCategoryId;
 		this.TagCategoryName = tagCategory.TagCategoryName;
@@ -71,6 +92,7 @@ public class TagCategoryModel {
 	/// </summary>
 	public int TagCategoryId {
 		get;
+		set;
 	}
 
 	/// <summary>
@@ -78,6 +100,7 @@ public class TagCategoryModel {
 	/// </summary>
 	public string TagCategoryName {
 		get;
+		set;
 	}
 
 	/// <summary>
@@ -85,10 +108,15 @@ public class TagCategoryModel {
 	/// </summary>
 	public string Detail {
 		get;
+		set;
 	}
 }
 
 public class TagAliasModel {
+	[Obsolete("for serialize")]
+	public TagAliasModel() {
+		this.Alias = null!;
+	}
 	public TagAliasModel(TagAlias tagAlias) {
 		this.TagAliasId = tagAlias.TagAliasId;
 		this.TagId = tagAlias.TagId;
@@ -101,6 +129,7 @@ public class TagAliasModel {
 	/// </summary>
 	public int TagAliasId {
 		get;
+		set;
 	}
 
 	/// <summary>
@@ -108,6 +137,7 @@ public class TagAliasModel {
 	/// </summary>
 	public int TagId {
 		get;
+		set;
 	}
 
 	/// <summary>
@@ -115,6 +145,7 @@ public class TagAliasModel {
 	/// </summary>
 	public string Alias {
 		get;
+		set;
 	}
 
 	/// <summary>
@@ -122,9 +153,11 @@ public class TagAliasModel {
 	/// </summary>
 	public string? Ruby {
 		get;
+		set;
 	}
 
 	public string? Romaji {
 		get;
+		set;
 	}
 }

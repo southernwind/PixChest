@@ -1,6 +1,7 @@
 using System.ComponentModel;
 
 using PixChest.Models.Files.Filter;
+using PixChest.Models.Files.SearchConditions;
 using PixChest.Models.Files.Sort;
 using PixChest.Utils.Enums;
 
@@ -11,6 +12,13 @@ namespace PixChest.Models.Preferences.CustomStates;
 
 [AddSingleton]
 public class SearchStates : SettingsBase {
+	/// <summary>
+	/// カレント検索条件
+	/// </summary>
+	public SettingsCollection<ISearchCondition> SearchCondition {
+		get;
+	} = new SettingsCollection<ISearchCondition>([]);
+
 	/// <summary>
 	/// カレントフィルター条件
 	/// </summary>

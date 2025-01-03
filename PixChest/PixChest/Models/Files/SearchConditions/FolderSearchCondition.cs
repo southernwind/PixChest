@@ -7,12 +7,17 @@ using PixChest.Models.Repositories.Objects;
 
 namespace PixChest.Models.Files.SearchConditions;
 public class FolderSearchCondition: ISearchCondition {
+	[Obsolete("for serialize")]
+	public FolderSearchCondition() {
+		this.FolderPath = null!;
+	}
 	public FolderSearchCondition(FolderObject folderObject) {
-		this.FolderObject = folderObject;
+		this.FolderPath = folderObject.FolderPath;
 	}
 
-	public FolderObject FolderObject{
+	public string FolderPath{
 		get;
+		set;
 	}
 
 	public bool IncludeSubDirectories {
@@ -22,7 +27,7 @@ public class FolderSearchCondition: ISearchCondition {
 
 	public string DisplayText {
 		get {
-			return $"Folder={this.FolderObject.FolderPath}{(this.IncludeSubDirectories ? "&IncludeSubDirectories" : "")}";
+			return $"Folder={this.FolderPath}{(this.IncludeSubDirectories ? "&IncludeSubDirectories" : "")}";
 		}
 	}
 
@@ -30,10 +35,10 @@ public class FolderSearchCondition: ISearchCondition {
 		get {
 			if (this.IncludeSubDirectories) {
 				return mediaFile =>
-					mediaFile.DirectoryPath == this.FolderObject.FolderPath || mediaFile.DirectoryPath.StartsWith($"{this.FolderObject.FolderPath}{Path.DirectorySeparatorChar}");
+					mediaFile.DirectoryPath == this.FolderPath || mediaFile.DirectoryPath.StartsWith($"{this.FolderPath}{Path.DirectorySeparatorChar}");
 			} else {
 				return mediaFile =>
-					mediaFile.DirectoryPath == this.FolderObject.FolderPath;
+					mediaFile.DirectoryPath == this.FolderPath;
 			}
 		}
 	}
@@ -42,6 +47,6 @@ public class FolderSearchCondition: ISearchCondition {
 	} = null;
 
 	public bool IsMatchForSuggest(string searchWord) {
-		return this.FolderObject.FolderPath.Contains(searchWord, StringComparison.CurrentCultureIgnoreCase);
+		return this.FolderPath.Contains(searchWord, StringComparison.CurrentCultureIgnoreCase);
 	}
 }

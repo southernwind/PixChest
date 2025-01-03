@@ -112,6 +112,7 @@ public class TagsManager(PixChestDbContext dbContext) {
 	}
 
 	public async Task Load() {
+		using var lockObject = await LockObjectConstants.DbLock.LockAsync();
 		this.TagCategories.Clear();
 		this.Tags.Clear();
 		var tagCategories =

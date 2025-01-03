@@ -6,12 +6,17 @@ using PixChest.Models.Maps;
 
 namespace PixChest.Models.Files.SearchConditions;
 public class AddressSearchCondition: ISearchCondition {
+	[Obsolete("for serialize")]
+	public AddressSearchCondition() {
+		this.Address = null!;
+	}
 	public AddressSearchCondition(Address address) {
 		this.Address = address;
 	}
 
 	public Address Address {
 		get;
+		set;
 	}
 
 	public bool IncludeSubDirectories {

@@ -6,6 +6,7 @@ using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.Models.Files.Filter;
 using PixChest.Models.Files.SearchConditions;
 using PixChest.Models.Files.Sort;
+using PixChest.Utils.Constants;
 
 namespace PixChest.Models.Files.Loaders;
 
@@ -15,6 +16,7 @@ public class FilesLoader(PixChestDbContext dbContext, SortSelector sortSelector,
 	protected SortSelector SortSelector = sortSelector;
 
 	public async Task<IEnumerable<IFileModel>> Load(IEnumerable<ISearchCondition> searchConditions) {
+		using var lockObject = await LockObjectConstants.DbLock.LockAsync();
 		var files =
 			(await dbContext
 				.MediaFiles
