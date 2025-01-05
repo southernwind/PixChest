@@ -126,7 +126,7 @@ public abstract class BaseFileModel(long id, string filePath, IFileOperator file
 					{ "作成日時",$"{this.CreationTime}" },
 					{ "編集日時",$"{this.ModifiedTime}" },
 					{ "最終アクセス日時",$"{this.LastAccessTime}" },
-					{ "ファイルサイズ",$"{this.FileSize}" },
+					{ "ファイルサイズ",$"{StringUtility.LongToFileSize(this.FileSize)}" },
 					{ "解像度" , $"{this.Resolution?.ToString()}" }
 				}.ToAttributes();
 		}

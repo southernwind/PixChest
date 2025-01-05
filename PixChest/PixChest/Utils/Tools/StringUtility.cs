@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace PixChest.Utils.Tools;
@@ -335,5 +334,25 @@ public static class StringUtility {
 			result = result.Replace(c1.Key, c1.Value);
 		}
 		return result;
+	}
+
+	public static string LongToFileSize(long value) {
+		var _suffix = new string[] { "", "K", "M", "G", "T" };
+		var _unit = 1024d;
+		var size = (double)value;
+		var i = 0;
+		for (; i < _suffix.Length - 1; i++) {
+			if (size < _unit) {
+				break;
+			}
+			size /= _unit;
+		}
+
+		if (i == 0) {
+			// SI接頭辞が付かない場合は小数点を表示しない。
+			return $"{size:0} B";
+		}
+
+		return $"{size:0.00} {_suffix[i]}B";
 	}
 }
