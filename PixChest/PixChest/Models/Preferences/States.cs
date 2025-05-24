@@ -11,7 +11,7 @@ namespace PixChest.Models.Preferences;
 [AddSingleton]
 public class States {
 	private string? _statesFilePath;
-
+	private readonly SettingsBase[] _states;
 
 	/// <summary>
 	/// 検索の状態
@@ -21,16 +21,27 @@ public class States {
 		set;
 	}
 
+	/// <summary>
+	/// フォルダ管理状態
+	/// </summary>
+	public FolderManagerStates FolderManagerStates {
+		get;
+		set;
+	}
+
 	[Obsolete("for serialize")]
 	public States() {
 		this.SearchStates = null!;
+		this.FolderManagerStates = null!;
 	}
 
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	public States(SearchStates searchStates) {
+	public States(SearchStates searchStates,FolderManagerStates folderManagerStates) {
 		this.SearchStates = searchStates;
+		this.FolderManagerStates = folderManagerStates;
+		this._states = [this.SearchStates,this.FolderManagerStates];
 	}
 
 	/// <summary>
@@ -49,9 +60,7 @@ public class States {
 			throw new InvalidOperationException();
 		}
 		using var ms = new MemoryStream();
-		var d = new SettingsBase[] {
-			this.SearchStates
-		}.ToDictionary(x => x.GetType(), x => x.Export());
+		var d = this._states.ToDictionary(x => x.GetType(), x => x.Export());
 		XamlServices.Save(ms, d);
 		using var fs = File.Create(this._statesFilePath);
 		ms.WriteTo(fs);
@@ -69,8 +78,12 @@ public class States {
 		if (XamlServices.Load(this._statesFilePath) is not Dictionary<Type, Dictionary<string, dynamic>> states) {
 			return;
 		}
-		foreach (var s in new SettingsBase[] { this.SearchStates }) {
-			s.Import(states[s.GetType()]);
+		foreach (var s in this._states) {
+			try {
+				s.Import(states[s.GetType()]);
+			} catch (Exception) {
+				s.LoadDefault();
+			}
 		}
 	}
 
@@ -78,6 +91,8 @@ public class States {
 	/// デフォルトロード
 	/// </summary>
 	private void LoadDefault() {
-		this.SearchStates.LoadDefault();
+		foreach (var s in this._states) {
+			s.LoadDefault();
+		}
 	}
 }
