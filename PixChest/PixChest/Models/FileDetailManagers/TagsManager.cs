@@ -86,8 +86,8 @@ public class TagsManager(PixChestDbContext dbContext) {
 			Ruby = x.Ruby
 		}));
 
-		await transaction.CommitAsync();
 		await this._db.SaveChangesAsync();
+		await transaction.CommitAsync();
 	}
 
 	public async Task UpdateTagCategoryAsync(int tagCategoryId, string tagCategoryName, string detail) {
@@ -107,8 +107,8 @@ public class TagsManager(PixChestDbContext dbContext) {
 			};
 			await this._db.TagCategories.AddAsync(tagCategory);
 		}
-		await transaction.CommitAsync();
 		await this._db.SaveChangesAsync();
+		await transaction.CommitAsync();
 	}
 
 	public async Task Load() {

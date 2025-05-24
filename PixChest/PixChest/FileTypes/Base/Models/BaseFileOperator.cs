@@ -26,8 +26,8 @@ public abstract class BaseFileOperator : IFileOperator {
 		}
 		mediaFile.Rate = rate;
 		this._db.Update(mediaFile);
-		await transaction.CommitAsync();
 		await this._db.SaveChangesAsync();
+		await transaction.CommitAsync();
 		return mediaFile;
 	}
 
@@ -40,8 +40,8 @@ public abstract class BaseFileOperator : IFileOperator {
 		}
 		mediaFile.UsageCount++;
 		this._db.Update(mediaFile);
-		await transaction.CommitAsync();
 		await this._db.SaveChangesAsync();
+		await transaction.CommitAsync();
 		return mediaFile;
 	}
 
@@ -54,8 +54,8 @@ public abstract class BaseFileOperator : IFileOperator {
 		}
 		mediaFile.Description = description;
 		this._db.Update(mediaFile);
-		await transaction.CommitAsync();
 		await this._db.SaveChangesAsync();
+		await transaction.CommitAsync();
 		return mediaFile;
 	}
 

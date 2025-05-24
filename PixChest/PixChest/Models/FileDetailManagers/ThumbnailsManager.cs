@@ -24,8 +24,8 @@ public class ThumbnailsManager(PixChestDbContext dbContext) {
 		mf.ThumbnailFileName = thumbPath;
 		this._db.MediaFiles.Update(mf);
 
-		await transaction.CommitAsync();
 		await this._db.SaveChangesAsync();
+		await transaction.CommitAsync();
 	}
 
 	public async Task<byte[]?> LoadThumbnailAsync(IFileModel fileModel) {

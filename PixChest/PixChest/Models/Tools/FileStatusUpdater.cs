@@ -60,7 +60,7 @@ public class FileStatusUpdater {
 		}
 
 		this._db.UpdateRange(updateList);
-		await transaction.CommitAsync();
 		await this._db.SaveChangesAsync();
+		await transaction.CommitAsync();
 	}
 }
