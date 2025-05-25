@@ -23,10 +23,11 @@ public class FileStatusUpdater {
 	} = new();
 
 	public async Task UpdateFileInfo() {
-		using var lockObject = await LockObjectConstants.DbLock.LockAsync();
-		using var transaction = await this._db.Database.BeginTransactionAsync();
 		var updateList = new List<MediaFile>();
-		var targetFiles = await this._db.MediaFiles.ToListAsync();
+		var targetFiles = new List<MediaFile>();
+		using (await LockObjectConstants.DbLock.LockAsync()) {
+			targetFiles = await this._db.MediaFiles.ToListAsync();
+		}
 		this.TargetCount.Value = targetFiles.Count;
 		this.CompletedCount.Value = 0;
 		foreach (var file in targetFiles) {
@@ -59,6 +60,8 @@ public class FileStatusUpdater {
 			updateList.Add(file);
 		}
 
+		using var lockObject = await LockObjectConstants.DbLock.LockAsync();
+		using var transaction = await this._db.Database.BeginTransactionAsync();
 		this._db.UpdateRange(updateList);
 		await this._db.SaveChangesAsync();
 		await transaction.CommitAsync();
