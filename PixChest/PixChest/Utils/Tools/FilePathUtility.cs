@@ -40,6 +40,15 @@ internal static class FilePathUtility {
 	}
 
 	/// <summary>
+	/// 指定したファイルパスのファイルが画像拡張子を持っているかどうかを調べる
+	/// </summary>
+	/// <param name="path">ファイルパス</param>
+	/// <returns>画像ファイルか否か</returns>
+	public static bool IsImageFile(this string path) {
+		return _config.ScanConfig.TargetExtensions.Where(x => x.MediaType.Value == MediaType.Image).Select(x => x.Extension.Value.Equals(Path.GetExtension(path), StringComparison.CurrentCultureIgnoreCase)).Any();
+	}
+
+	/// <summary>
 	/// 指定したファイルパスのメディアタイプを取得する
 	/// </summary>
 	/// <param name="path">ファイルパス</param>

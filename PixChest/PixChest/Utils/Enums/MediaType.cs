@@ -19,5 +19,10 @@ public enum MediaType {
 	/// PDF
 	/// </summary>
 	[Description("Pdf")]
-	Pdf
+	Pdf,
+	/// <summary>
+	/// Archive
+	/// </summary>
+	[Description("Archive")]
+	Archive
 }

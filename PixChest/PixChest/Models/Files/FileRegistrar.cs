@@ -33,6 +33,7 @@ public class FileRegistrar {
 		this.Config = config;
 		this.RegistrationQueue
 			.ObserveAdd()
+			.ThrottleFirst(TimeSpan.FromSeconds(0.1))
 			.Synchronize()
 			.Subscribe(async _ => {
 				await this.RegisterFilesAsync();
