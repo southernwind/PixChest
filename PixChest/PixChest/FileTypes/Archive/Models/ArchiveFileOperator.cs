@@ -57,14 +57,19 @@ public partial class ArchiveFileOperator : BaseFileOperator {
 			}
 		};
 
-		if(first != null) {
-			using var stream = first!.Open();
-			using var ms = new MemoryStream();
-			stream.CopyTo(ms);
-			ms.Seek(0, SeekOrigin.Begin);
-			using var meta = ImageMetadataFactory.Create(ms);
-			mf.Width = meta.Width;
-			mf.Height = meta.Height;
+		if (first != null) {
+			try {
+				using var stream = first!.Open();
+				using var ms = new MemoryStream();
+				stream.CopyTo(ms);
+				ms.Seek(0, SeekOrigin.Begin);
+				using var meta = ImageMetadataFactory.Create(ms);
+				mf.Width = meta.Width;
+				mf.Height = meta.Height;
+			} catch (Exception) {
+				mf.Width = 0;
+				mf.Height = 0;
+			}
 		}
 
 		await this._db.MediaFiles.AddAsync(mf);
