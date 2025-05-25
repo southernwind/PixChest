@@ -1,15 +1,21 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
-
+using CommunityToolkit.Mvvm.DependencyInjection;
 using PixChest.Composition.Bases;
 using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.Models.Files;
+using PixChest.Models.Preferences.CustomConfigs;
 using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
 
 namespace PixChest.FileTypes.Base.Models;
 
 public abstract class BaseFileModel(long id, string filePath, IFileOperator fileOperator) : ModelBase, IFileModel {
+	private static readonly ExecutionConfig executionConfig;
+	static BaseFileModel() {
+		executionConfig = Ioc.Default.GetRequiredService<ExecutionConfig>();
+	}
 	protected IFileOperator FileOperator {
 		get;
 	} = fileOperator;
@@ -145,5 +151,25 @@ public abstract class BaseFileModel(long id, string filePath, IFileOperator file
 	public async Task UpdateDescriptionAsync(string description) {
 		await this.FileOperator.UpdateDescriptionAsync(this.Id, description);
 		this.Description = description;
+	}
+
+	public async Task ExecuteFileAsync() {
+		var epo = executionConfig.ExecutionProgramObjects.FirstOrDefault(x => x.MediaType.Value == this.MediaType);
+		if (epo is null) {
+			var psi = new ProcessStartInfo {
+				FileName = this.FilePath,
+				UseShellExecute = true
+			};
+			_ = Process.Start(psi);
+		} else {
+			var psi = new ProcessStartInfo {
+				FileName = epo.Path.Value,
+				Arguments = string.Format(epo.Args.Value, this.FilePath),
+				UseShellExecute = true
+			};
+			_ = Process.Start(psi);
+		}
+
+		await this.IncrementUsageCountAsync();
 	}
 }

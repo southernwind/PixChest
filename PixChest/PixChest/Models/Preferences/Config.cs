@@ -9,8 +9,10 @@ namespace PixChest.Models.Preferences;
 [AddSingleton]
 public class Config {
 	private string? _configFilePath;
+	private readonly SettingsBase[] _configs;
+
 	/// <summary>
-	/// 一般設定
+	/// パス設定
 	/// </summary>
 	public PathConfig PathConfig {
 		get;
@@ -25,18 +27,34 @@ public class Config {
 		set;
 	}
 
+	/// <summary>
+	/// 実行設定
+	/// </summary>
+	public ExecutionConfig ExecutionConfig {
+		get;
+		set;
+	}
+
 	[Obsolete("for serialize")]
 	public Config() {
 		this.ScanConfig = null!;
 		this.PathConfig = null!;
+		this.ExecutionConfig = null!;
+		this._configs = null!;
 	}
 
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	public Config(PathConfig pathConfig,ScanConfig scanConfig) {
+	public Config(PathConfig pathConfig,ScanConfig scanConfig, ExecutionConfig executionConfig) {
 		this.ScanConfig = scanConfig;
 		this.PathConfig = pathConfig;
+		this.ExecutionConfig = executionConfig;
+		this._configs = [
+			scanConfig,
+			pathConfig,
+			executionConfig
+		];
 	}
 
 	/// <summary>
@@ -55,10 +73,7 @@ public class Config {
 			throw new InvalidOperationException();
 		}
 		using var ms = new MemoryStream();
-		var d = new SettingsBase[] {
-			this.ScanConfig,
-			this.PathConfig
-		}.ToDictionary(x => x.GetType(), x => x.Export());
+		var d = this._configs.ToDictionary(x => x.GetType(), x => x.Export());
 		XamlServices.Save(ms, d);
 		using var fs = File.Create(this._configFilePath);
 		ms.WriteTo(fs);
@@ -80,7 +95,7 @@ public class Config {
 			return;
 		}
 
-		foreach (var s in new SettingsBase[] { this.ScanConfig }) {
+		foreach (var s in this._configs) {
 			if (config.TryGetValue(s.GetType(), out var d)) {
 				s.Import(d);
 			}
@@ -91,15 +106,17 @@ public class Config {
 	/// デフォルト設定ロード
 	/// </summary>
 	private void LoadDefault() {
-		this.PathConfig.LoadDefault();
-		this.ScanConfig.LoadDefault();
+		foreach (var c in this._configs) {
+			c.LoadDefault();
+		}
 	}
 
 	/// <summary>
 	/// 破棄
 	/// </summary>
 	public void Dispose() {
-		this.PathConfig.Dispose();
-		this.ScanConfig.Dispose();
+		foreach (var c in this._configs) {
+			c.Dispose();
+		}
 	}
 }

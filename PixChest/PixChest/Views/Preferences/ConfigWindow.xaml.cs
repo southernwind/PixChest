@@ -29,6 +29,9 @@ public sealed partial class ConfigWindow : Window {
 			case "ScanConfig":
 				this.ContentFrame.Navigate(typeof(ScanConfigPage));
 				break;
+			case "ExecutionConfig":
+				this.ContentFrame.Navigate(typeof(ExecutionConfigPage));
+				break;
 		}
 	}
 }

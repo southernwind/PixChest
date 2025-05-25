@@ -38,11 +38,6 @@ public abstract class BaseFileViewModel(IFileModel fileModel) : IFileViewModel {
 	}
 
 	public virtual async Task ExecuteFileAsync() {
-		var psi = new ProcessStartInfo {
-			FileName = this.FilePath,
-			UseShellExecute = true
-		};
-		_ = Process.Start(psi);
-		await this.FileModel.IncrementUsageCountAsync();
+		await this.FileModel.ExecuteFileAsync();
 	}
 }

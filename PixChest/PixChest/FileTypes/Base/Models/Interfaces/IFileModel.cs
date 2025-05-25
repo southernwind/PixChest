@@ -123,4 +123,6 @@ public interface IFileModel {
 	public Task IncrementUsageCountAsync();
 
 	public Task UpdateDescriptionAsync(string description);
+
+	public Task ExecuteFileAsync();
 }

@@ -11,7 +11,7 @@ public class ScanConfigPageViewModel : ViewModelBase, IConfigPageViewModel {
 	public ScanConfigPageViewModel(ScanConfig scanConfig) {
 		this._scanConfig = scanConfig;
 		this.AddExtensionCommand.Subscribe(_ => {
-			scanConfig.TargetExtensions.Add(new ExtensionConfig());
+			this._targetExtensions.Add(new ExtensionConfig());
 		});
 		this.TargetExtensions = this._targetExtensions.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 	}
@@ -29,7 +29,9 @@ public class ScanConfigPageViewModel : ViewModelBase, IConfigPageViewModel {
 
 	public void Save() {
 		this._scanConfig.TargetExtensions.Clear();
-		this._scanConfig.TargetExtensions.AddRange(this.TargetExtensions);
+		foreach (var te in this.TargetExtensions) {
+			this._scanConfig.TargetExtensions.Add(te);
+		}
 	}
 
 	public void Load() {

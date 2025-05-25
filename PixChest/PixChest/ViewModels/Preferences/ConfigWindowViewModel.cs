@@ -6,9 +6,9 @@ namespace PixChest.ViewModels.Preferences;
 
 [AddTransient]
 public class ConfigWindowViewModel : ViewModelBase {
-	public ConfigWindowViewModel(Config config,ScanConfigPageViewModel scanConfigPageViewModel) {
+	public ConfigWindowViewModel(Config config,ScanConfigPageViewModel scanConfigPageViewModel,ExecutionConfigPageViewModel executionConfigPageViewModel) {
 		this.ScanConfigPageViewModel = scanConfigPageViewModel;
-
+		this.ExecutionConfigPageViewModel = executionConfigPageViewModel;
 		this.SaveCommand.Subscribe(_ => {
 			foreach (var vm in this.ConfigPageViewModels) {
 				vm.Save();
@@ -26,7 +26,8 @@ public class ConfigWindowViewModel : ViewModelBase {
 	private IConfigPageViewModel[] ConfigPageViewModels {
 		get {
 			return [
-				this.ScanConfigPageViewModel
+				this.ScanConfigPageViewModel,
+				this.ExecutionConfigPageViewModel
 			];
 		}
 	}
@@ -40,6 +41,9 @@ public class ConfigWindowViewModel : ViewModelBase {
 	} = new();
 
 	public ScanConfigPageViewModel ScanConfigPageViewModel {
+		get;
+	}
+	public ExecutionConfigPageViewModel ExecutionConfigPageViewModel {
 		get;
 	}
 }

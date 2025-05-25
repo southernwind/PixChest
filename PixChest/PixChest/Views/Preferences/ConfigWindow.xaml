@@ -18,6 +18,7 @@
 		<NavigationView Grid.Row="0" SelectionChanged="NavigationView_SelectionChanged">
 			<NavigationView.MenuItems>
 				<NavigationViewItem	Icon="Scan" Content="Scan" Tag="ScanConfig"/>
+				<NavigationViewItem	Icon="Play" Content="Execution" Tag="ExecutionConfig"/>
 			</NavigationView.MenuItems>
 			<Frame x:Name="ContentFrame" DataContext="{x:Bind ViewModel}"/>
 		</NavigationView>

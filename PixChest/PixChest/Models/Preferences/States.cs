@@ -33,6 +33,7 @@ public class States {
 	public States() {
 		this.SearchStates = null!;
 		this.FolderManagerStates = null!;
+		this._states = null!;
 	}
 
 	/// <summary>
