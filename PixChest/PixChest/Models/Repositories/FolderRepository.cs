@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-
+using System.Windows;
 using PixChest.Database;
 using PixChest.Models.Files;
 using PixChest.Models.Files.SearchConditions;
 using PixChest.Models.NotificationDispatcher;
+using PixChest.Models.Preferences;
 using PixChest.Models.Repositories.Objects;
 using PixChest.Utils.Constants;
 using PixChest.Utils.Notifications;
@@ -15,9 +16,11 @@ namespace PixChest.Models.Repositories;
 
 [AddTransient]
 public class FolderRepository : RepositoryBase {
-	public FolderRepository(PixChestDbContext dbContext, SearchConditionNotificationDispatcher searchConditionNotificationDispatcher) {
+	private readonly States _states;
+	public FolderRepository(PixChestDbContext dbContext, SearchConditionNotificationDispatcher searchConditionNotificationDispatcher,States states) {
 		this._db = dbContext;
 		this._searchConditionNotificationDispatcher = searchConditionNotificationDispatcher;
+		this._states = states;
 		FileNotifications
 			.FileRegistered
 			.ThrottleLast(TimeSpan.FromSeconds(10))
@@ -72,6 +75,8 @@ public class FolderRepository : RepositoryBase {
 		}
 
 		this.RootFolder.Value = new FolderObject(null, "", [.. list.OrderBy(x => x.Value)]);
+
+		this.Restore();
 	}
 
 	public void SetRepositoryCandidate(FolderObject folderObject,bool includeSubDirectory) {
@@ -87,5 +92,26 @@ public class FolderRepository : RepositoryBase {
 		this.Load().Wait();
 		IEnumerable<FolderObject> func(FolderObject fo) => fo.ChildFolders.SelectMany(x => func(x)).Concat([fo]).OrderBy(x => x.FolderPath);
 		return func(this.RootFolder.Value);
+	}
+
+	private void Restore() {
+		var condition = this._states.SearchStates.SearchCondition.FirstOrDefault(x => x is FolderSearchCondition) as FolderSearchCondition;
+		if(condition == null) {
+			return;
+		}
+		var parent = this.RootFolder.Value;
+		while (true) {
+			var previousParent = parent;
+			foreach (var child in parent.ChildFolders) {
+				if (condition.FolderPath.StartsWith(child.FolderPath)) {
+					child.IsExpanded = true;
+					parent = child;
+					break;
+				}
+			}
+			if (previousParent == parent) {
+				break;
+			}
+		}
 	}
 }
