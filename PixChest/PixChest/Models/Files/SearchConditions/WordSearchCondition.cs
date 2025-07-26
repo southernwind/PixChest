@@ -16,6 +16,7 @@ public class WordSearchCondition: ISearchCondition {
 
 	public string Word {
 		get;
+		set;
 	}
 
 	public string DisplayText {
