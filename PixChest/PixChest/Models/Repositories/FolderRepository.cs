@@ -44,6 +44,7 @@ public class FolderRepository : RepositoryBase {
 
 		var directoryList = list.Select(x => x.Value).ToArray();
 		if (directoryList.SequenceEqual(this._currentDirectoryPathList)) {
+			this.RootFolder.Value ??= new FolderObject(null, "", []);
 			return;
 		}
 		this._currentDirectoryPathList = directoryList;
