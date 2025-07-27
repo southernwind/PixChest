@@ -28,5 +28,5 @@ public class FolderRepositoryViewModel : RepositoryViewModelBase {
 
 	public BindableReactiveProperty<bool> IncludeSubDirectories {
 		get;
-	} = new();
+	} = new(true);
 }
