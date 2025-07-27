@@ -12,7 +12,8 @@ public class ThumbnailsManager(PixChestDbContext dbContext) {
 	private readonly PixChestDbContext _db = dbContext;
 
 	public async Task UpdateThumbnailAsync(IFileModel fileModel, byte[] thumbnail) {
-		var thumbPath = FilePathUtility.GetThumbnailRelativeFilePath(fileModel.FilePath);
+		var thumbRelativePath = FilePathUtility.GetThumbnailRelativeFilePath(fileModel.FilePath);
+		var thumbPath = FilePathUtility.GetThumbnailAbsoluteFilePath(thumbRelativePath);
 		await File.WriteAllBytesAsync(thumbPath, thumbnail);
 
 		if (fileModel.ThumbnailFilePath == thumbPath) {
