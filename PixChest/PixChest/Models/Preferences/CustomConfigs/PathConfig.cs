@@ -1,4 +1,5 @@
 using System.IO;
+using PixChest.Utils.Constants;
 
 namespace PixChest.Models.Preferences.CustomConfigs;
 
@@ -10,7 +11,7 @@ public class PathConfig : SettingsBase {
 
 	public SettingsItem<string> ThumbnailFolderPath {
 		get;
-	} = new(Path.Combine(AppDomain.CurrentDomain.BaseDirectory!, "thumbs"));
+	} = new(Path.Combine(FilePathConstants.BaseDirectory, "thumbs"));
 
 	/// <summary>
 	/// 一時フォルダパス
@@ -18,7 +19,7 @@ public class PathConfig : SettingsBase {
 
 	public SettingsItem<string> TemporaryFolderPath {
 		get;
-	} = new(Path.Combine(AppDomain.CurrentDomain.BaseDirectory!, "temp"));
+	} = new(Path.Combine(FilePathConstants.BaseDirectory, "temp"));
 
 	/// <summary>
 	/// FFMpegフォルダパス

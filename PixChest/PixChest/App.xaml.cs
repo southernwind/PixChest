@@ -11,7 +11,8 @@ using System.IO;
 using PixChest.Models.Preferences;
 using FFMpegCore;
 using PixChest.FileTypes.Base;
-using PixChest.Models.Tools;
+using PixChest.Utils.Constants;
+using System.Diagnostics;
 namespace PixChest;
 
 public partial class App : Application {
@@ -22,9 +23,11 @@ public partial class App : Application {
 	private readonly States _states;
 
 	public App() {
-		var baseDirectory = AppDomain.CurrentDomain.BaseDirectory ?? string.Empty;
-		this._stateFilePath = Path.Combine(baseDirectory, "PixChest.states");
-		this._configFilePath = Path.Combine(baseDirectory, "PixChest.config");
+		if (!Directory.Exists(FilePathConstants.BaseDirectory)) {
+			Directory.CreateDirectory(FilePathConstants.BaseDirectory);
+		}
+		this._stateFilePath = Path.Combine(FilePathConstants.BaseDirectory, "PixChest.states");
+		this._configFilePath = Path.Combine(FilePathConstants.BaseDirectory, "PixChest.config");
 		var serviceCollection = new ServiceCollection();
 
 		var targetTypes = Assembly 
@@ -62,7 +65,7 @@ public partial class App : Application {
 
 		// DataBase
 		var sb = new SqliteConnectionStringBuilder {
-			DataSource = Path.Combine(AppDomain.CurrentDomain.BaseDirectory!, "pix.db")
+			DataSource = Path.Combine(FilePathConstants.BaseDirectory, "pix.db")
 		};
 		serviceCollection.AddDbContextFactory<PixChestDbContext>(x => {
 			x.UseSqlite(sb.ConnectionString);

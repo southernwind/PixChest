@@ -1,8 +1,12 @@
+using System.IO;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using PixChest.Database.Tables;
 using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.FileTypes.Base.ViewModels.Interfaces;
 using PixChest.FileTypes.Base.Views;
 using PixChest.Models.Files;
+using PixChest.Models.Preferences;
+using PixChest.Utils.Constants;
 using PixChest.Utils.Enums;
 
 namespace PixChest.FileTypes.Base;
@@ -26,7 +30,9 @@ public abstract class BaseFileType<TFileOperator, TFileModel, TFileViewModel, TD
 	public abstract IQueryable<MediaFile> IncludeTables(IQueryable<MediaFile> mediaFiles);
 
 	protected void SetModelProperties(TFileModel fileModel, MediaFile mediaFile) {
-		fileModel.ThumbnailFilePath = mediaFile.ThumbnailFileName;
+		if (mediaFile.ThumbnailFileName != null) {
+			fileModel.ThumbnailFilePath = Path.Combine(Ioc.Default.GetRequiredService<Config>().PathConfig.ThumbnailFolderPath.Value, mediaFile.ThumbnailFileName);
+		}
 		fileModel.Rate = mediaFile.Rate;
 		fileModel.Description = mediaFile.Description;
 		fileModel.UsageCount = mediaFile.UsageCount;

@@ -17,8 +17,16 @@ internal static class FilePathUtility {
     /// <param name="filePath">生成元ファイルパス</param>
     /// <returns>サムネイル相対ファイルパス</returns>
     public static string GetThumbnailRelativeFilePath(string filePath) {
-		var thumbDir = _config.PathConfig.ThumbnailFolderPath.Value;
-		return $"{Path.Combine(thumbDir, $"{string.Join("", SHA512.HashData(Encoding.UTF8.GetBytes(filePath)).Select(b => $"{b:X2}"))}".Insert(2, @"\"))}.jpg";
+		return $"{string.Join("", SHA512.HashData(Encoding.UTF8.GetBytes(filePath)).Select(b => $"{b:X2}")).Insert(2, @"\")}.jpg";
+	}
+
+	/// <summary>
+	/// サムネイル絶対ファイルパス取得
+	/// </summary>
+	/// <param name="filePath">サムネイル相対ファイルパス</param>
+	/// <returns>サムネイル絶対ファイルパス</returns>
+	public static string GetThumbnailAbsoluteFilePath(string thumbRelativePath) {
+		return Path.Combine(_config.PathConfig.ThumbnailFolderPath.Value, thumbRelativePath);
 	}
 
 	/// <summary>
