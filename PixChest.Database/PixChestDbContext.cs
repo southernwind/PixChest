@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-
 using PixChest.Database.Tables;
 using PixChest.Database.Tables.Metadata;
 
@@ -263,5 +262,10 @@ public class PixChestDbContext(DbContextOptions dbContextOptions) : DbContext(db
 	protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder) {
 		configurationBuilder.Properties<string>().UseCollation("NOCASE");
 		base.ConfigureConventions(configurationBuilder);
+	}
+
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+		base.OnConfiguring(optionsBuilder);
+//		optionsBuilder.LogTo(x => Debug.WriteLine(x), LogLevel.Information,DbContextLoggerOptions.SingleLine);
 	}
 }

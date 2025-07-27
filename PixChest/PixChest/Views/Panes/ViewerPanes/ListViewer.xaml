@@ -56,7 +56,7 @@
 				<DataTemplate x:DataType="vmIf:IFileViewModel">
 					<Grid DoubleTapped="File_DoubleTapped">
 						<StackPanel Orientation="Horizontal">
-							<Image Stretch="Uniform" Height="{Binding DataContext.ItemSize.Value, Mode=OneWay, ElementName=List}" Source="{x:Bind ThumbnailFilePath}"/>
+							<Image Stretch="Uniform" Height="{Binding DataContext.ItemSize.Value, Mode=OneWay, ElementName=List}" Source="{x:Bind ThumbnailFilePath.Value, Mode=OneWay}"/>
 							<TextBlock Text="{x:Bind FilePath}"/>
 						</StackPanel>
 						<Grid Opacity="0.7" Background="DarkGray" Visibility="{x:Bind Exists, Converter={StaticResource InvertBoolToVisibilityConverter}}"/>

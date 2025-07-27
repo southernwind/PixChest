@@ -15,7 +15,7 @@ public interface IFileViewModel {
 		get;
 	}
 
-	public string ThumbnailFilePath {
+	public BindableReactiveProperty<string> ThumbnailFilePath {
 		get;
 	}
 
@@ -36,4 +36,6 @@ public interface IFileViewModel {
 
 
 	public Task ExecuteFileAsync();
+
+	public void RefreshThumbnail();
 }
