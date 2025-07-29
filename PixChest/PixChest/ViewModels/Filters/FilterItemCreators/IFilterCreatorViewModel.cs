@@ -1,19 +1,21 @@
+using System.ComponentModel;
+
 namespace PixChest.ViewModels.Filters.FilterItemCreators;
 /// <summary>
 /// フィルター作成VM
 /// </summary>
-public interface IFilterCreatorViewModel {
+public interface IFilterCreatorViewModel: INotifyPropertyChanged {
 	/// <summary>
 	/// 表示名
 	/// </summary>
-	string Title {
+	public string Title {
 		get;
 	}
 
 	/// <summary>
 	/// 追加コマンド
 	/// </summary>
-	ReactiveCommand AddFilterCommand {
+	public ReactiveCommand AddFilterCommand {
 		get;
 	}
 }
