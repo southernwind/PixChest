@@ -8,35 +8,27 @@ using PixChest.Utils.Objects;
 
 namespace PixChest.FileTypes.Base.ViewModels;
 
-public abstract class BaseFileViewModel(IFileModel fileModel) : IFileViewModel {
+public abstract class BaseFileViewModel : IFileViewModel {
+	protected BaseFileViewModel(IFileModel fileModel) {
+		this.FileModel = fileModel;
+		this.FilePath = fileModel.FilePath;
+		this.ThumbnailFilePath = new($"file:///{fileModel.ThumbnailFilePath ?? FilePathConstants.NoThumbnailFilePath}");
+		this.Exists = fileModel.Exists;
+		this.Properties = fileModel.Properties;
+	}
+
 	private long _thumbnailRefreshTicks = 0;
 
-	public IFileModel FileModel {
-		get;
-	} = fileModel;
-
-	public string FilePath {
-		get;
-	} = fileModel.FilePath;
-
-	public BindableReactiveProperty<string> ThumbnailFilePath {
-		get;
-	} = new($"file:///{fileModel.ThumbnailFilePath ?? FilePathConstants.NoThumbnailFilePath}");
-
-	public bool Exists {
-		get;
-	} = fileModel.Exists;
-
+	public IFileModel FileModel { get; }
+	public string FilePath { get; }
+	public BindableReactiveProperty<string> ThumbnailFilePath { get; }
+	public bool Exists { get; }
 	/// <summary>
 	/// プロパティ
 	/// </summary>
-	public Attributes<string> Properties {
-		get;
-	} = fileModel.Properties;
+	public Attributes<string> Properties { get; }
+	public abstract MediaType MediaType { get; }
 
-	public abstract MediaType MediaType {
-		get;
-	}
 
 	public virtual async Task ExecuteFileAsync() {
 		await this.FileModel.ExecuteFileAsync();
@@ -44,6 +36,6 @@ public abstract class BaseFileViewModel(IFileModel fileModel) : IFileViewModel {
 
 	public void RefreshThumbnail() {
 		this._thumbnailRefreshTicks = DateTime.Now.Ticks;
-		this.ThumbnailFilePath.Value = $"file:///{fileModel.ThumbnailFilePath ?? FilePathConstants.NoThumbnailFilePath}?refresh={this._thumbnailRefreshTicks}";
+		this.ThumbnailFilePath.Value = $"file:///{this.FileModel.ThumbnailFilePath ?? FilePathConstants.NoThumbnailFilePath}?refresh={this._thumbnailRefreshTicks}";
 	}
 }
