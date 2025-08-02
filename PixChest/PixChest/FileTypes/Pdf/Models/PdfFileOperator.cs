@@ -48,6 +48,7 @@ public partial class PdfFileOperator : BaseFileOperator {
 			CreationTime = fileInfo.Exists ? fileInfo.CreationTime : DateTime.MinValue,
 			ModifiedTime = fileInfo.Exists ? fileInfo.LastWriteTime : DateTime.MinValue,
 			LastAccessTime = fileInfo.Exists ? fileInfo.LastAccessTime : DateTime.MinValue,
+			RegisteredTime = DateTime.Now,
 			IsExists = fileInfo.Exists,
 			Width = (int)pdfDocument.Pages[0].Width,
 			Height = (int)pdfDocument.Pages[1].Height,

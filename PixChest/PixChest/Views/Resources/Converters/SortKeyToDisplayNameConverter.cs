@@ -11,6 +11,7 @@ public class SortKeyToDisplayNameConverter : IValueConverter {
 		{SortItemKey.CreationTime,"Creation Time" },
 		{SortItemKey.ModifiedTime,"Modified Time" },
 		{SortItemKey.LastAccessTime,"Last Access Time" },
+		{SortItemKey.RegisteredTime,"Registered Time" },
 		{SortItemKey.FileSize,"File Size" },
 		{SortItemKey.Location,"Location" },
 		{SortItemKey.Rate,"Rate" },

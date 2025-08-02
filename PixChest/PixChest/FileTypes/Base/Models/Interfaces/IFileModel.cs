@@ -102,6 +102,14 @@ public interface IFileModel {
 		set;
 	}
 
+	/// <summary>
+	/// 登録日時
+	/// </summary>
+	public DateTime RegisteredTime {
+		get;
+		set;
+	}
+
 
 	/// <summary>
 	/// ファイルサイズ

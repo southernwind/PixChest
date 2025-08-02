@@ -66,6 +66,7 @@ public partial class VideoFileOperator : BaseFileOperator {
 			CreationTime = fileInfo.Exists ? fileInfo.CreationTime : DateTime.MinValue,
 			ModifiedTime = fileInfo.Exists ? fileInfo.LastWriteTime : DateTime.MinValue,
 			LastAccessTime = fileInfo.Exists ? fileInfo.LastAccessTime : DateTime.MinValue,
+			RegisteredTime = DateTime.Now,
 			IsExists = fileInfo.Exists,
 			Latitude = location?.Latitude,
 			Longitude = location?.Longitude,

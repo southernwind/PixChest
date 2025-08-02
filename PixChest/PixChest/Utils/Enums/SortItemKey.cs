@@ -4,6 +4,7 @@ public enum SortItemKey {
 	CreationTime,
 	ModifiedTime,
 	LastAccessTime,
+	RegisteredTime,
 	FileSize,
 	Location,
 	Rate,

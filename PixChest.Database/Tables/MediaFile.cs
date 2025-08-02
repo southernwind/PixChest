@@ -144,6 +144,14 @@ public class MediaFile {
 	}
 
 	/// <summary>
+	/// 登録日時
+	/// </summary>
+	public DateTime RegisteredTime {
+		get;
+		set;
+	}
+
+	/// <summary>
 	/// ファイルが存在するか否か
 	/// </summary>
 	public bool IsExists {

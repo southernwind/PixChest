@@ -41,6 +41,7 @@ public abstract class BaseFileType<TFileOperator, TFileModel, TFileViewModel, TD
 		fileModel.CreationTime = mediaFile.CreationTime;
 		fileModel.ModifiedTime = mediaFile.ModifiedTime;
 		fileModel.LastAccessTime = mediaFile.LastAccessTime;
+		fileModel.RegisteredTime = mediaFile.RegisteredTime;
 		fileModel.Tags = mediaFile.MediaFileTags.Select(mft => new TagModel(mft.Tag)).ToList();
 	}
 

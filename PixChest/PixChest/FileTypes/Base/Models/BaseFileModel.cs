@@ -116,6 +116,14 @@ public abstract class BaseFileModel(long id, string filePath, IFileOperator file
 
 
 	/// <summary>
+	/// 登録日時
+	/// </summary>
+	public DateTime RegisteredTime {
+		get;
+		set;
+	}
+
+	/// <summary>
 	/// ファイルサイズ
 	/// </summary>
 	public long FileSize {
@@ -132,6 +140,7 @@ public abstract class BaseFileModel(long id, string filePath, IFileOperator file
 					{ "作成日時",$"{this.CreationTime}" },
 					{ "編集日時",$"{this.ModifiedTime}" },
 					{ "最終アクセス日時",$"{this.LastAccessTime}" },
+					{ "登録日時",$"{this.RegisteredTime}" },
 					{ "ファイルサイズ",$"{StringUtility.LongToFileSize(this.FileSize)}" },
 					{ "解像度" , $"{this.Resolution?.ToString()}" }
 				}.ToAttributes();
