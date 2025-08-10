@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-
+using MapControl;
 using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.Utils.Enums;
 using PixChest.Utils.Objects;
@@ -34,6 +34,9 @@ public interface IFileViewModel {
 		get;
 	}
 
+	public Location? Location {
+		get;
+	}
 
 	public Task ExecuteFileAsync();
 

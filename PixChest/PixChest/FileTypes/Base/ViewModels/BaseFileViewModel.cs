@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using PixChest.Composition.Bases;
+using MapControl;
 using PixChest.FileTypes.Base.Models.Interfaces;
 using PixChest.FileTypes.Base.ViewModels.Interfaces;
 using PixChest.Utils.Constants;
@@ -15,6 +15,7 @@ public abstract class BaseFileViewModel : IFileViewModel {
 		this.ThumbnailFilePath = new($"file:///{fileModel.ThumbnailFilePath ?? FilePathConstants.NoThumbnailFilePath}");
 		this.Exists = fileModel.Exists;
 		this.Properties = fileModel.Properties;
+		this.Location = fileModel.Location;
 	}
 
 	private long _thumbnailRefreshTicks = 0;
@@ -29,6 +30,9 @@ public abstract class BaseFileViewModel : IFileViewModel {
 	public Attributes<string> Properties { get; }
 	public abstract MediaType MediaType { get; }
 
+	public Location? Location {
+		get;
+	}
 
 	public virtual async Task ExecuteFileAsync() {
 		await this.FileModel.ExecuteFileAsync();

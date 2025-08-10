@@ -6,7 +6,6 @@ using PixChest.FileTypes.Base.ViewModels.Interfaces;
 using PixChest.FileTypes.Base.Views;
 using PixChest.Models.Files;
 using PixChest.Models.Preferences;
-using PixChest.Utils.Constants;
 using PixChest.Utils.Enums;
 
 namespace PixChest.FileTypes.Base;
@@ -42,6 +41,9 @@ public abstract class BaseFileType<TFileOperator, TFileModel, TFileViewModel, TD
 		fileModel.ModifiedTime = mediaFile.ModifiedTime;
 		fileModel.LastAccessTime = mediaFile.LastAccessTime;
 		fileModel.RegisteredTime = mediaFile.RegisteredTime;
+		if (mediaFile.Latitude is { } lat && mediaFile.Longitude is { } lon ) {
+			fileModel.Location = new Utils.Objects.GpsLocation(lat, lon, mediaFile.Altitude);
+		}
 		fileModel.Tags = mediaFile.MediaFileTags.Select(mft => new TagModel(mft.Tag)).ToList();
 	}
 

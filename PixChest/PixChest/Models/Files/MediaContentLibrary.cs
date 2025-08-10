@@ -35,11 +35,6 @@ public class MediaContentLibrary: ModelBase {
 	public ObservableList<IFileModel> Files {
 		get;
 	} = [];
-	 
-	public string? Word {
-		get;
-		set;
-	}
 
 	public ObservableList<ISearchCondition> SearchConditions {
 		get;

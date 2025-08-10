@@ -22,5 +22,6 @@
     <PackageReference Update="ReactiveProperty" Version="9.7.0" />
     <PackageReference Update="System.Interactive" Version="6.0.3" />
     <PackageReference Update="System.Reactive" Version="6.0.1" />
+    <PackageReference Update="XAML.MapControl.WinUI" Version="13.5.0" />
   </ItemGroup>
 </Project>

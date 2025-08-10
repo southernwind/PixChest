@@ -1,3 +1,5 @@
+using MapControl;
+
 namespace PixChest.Utils.Objects;
 /// <summary>
 /// 場所、座標クラス
@@ -8,21 +10,7 @@ namespace PixChest.Utils.Objects;
 /// <param name="latitude">緯度</param>
 /// <param name="longitude">経度</param>
 /// <param name="altitude">高度</param>
-public class GpsLocation(double latitude, double longitude, double? altitude = null) : IComparable<GpsLocation>, IComparable {
-	/// <summary>
-	/// 緯度
-	/// </summary>
-	public double Latitude {
-		get;
-	} = latitude;
-
-	/// <summary>
-	/// 経度
-	/// </summary>
-	public double Longitude {
-		get;
-	} = longitude;
-
+public class GpsLocation(double latitude, double longitude, double? altitude = null) : Location(latitude, longitude), IComparable<GpsLocation>, IComparable {
 	/// <summary>
 	/// 高度
 	/// </summary>
@@ -121,8 +109,7 @@ public class GpsLocation(double latitude, double longitude, double? altitude = n
 		if (obj is not GpsLocation loc) {
 			return false;
 		}
-		return this.Latitude == loc.Latitude &&
-			this.Longitude == loc.Longitude &&
+		return base.Equals(obj) &&
 			this.Altitude == loc.Altitude;
 	}
 
