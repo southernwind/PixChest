@@ -532,5 +532,9 @@ public class MediaItemTypeServiceTest {
 		public Task<MediaItem?> UpdateDescriptionAsync(long MediaItemId, string description) {
 			return Task.FromResult<MediaItem?>(null);
 		}
+
+		public Task UpdateMetadata(MediaItem mediaItem) {
+			return Task.CompletedTask;
+		}
 	}
 }
