@@ -1,4 +1,5 @@
 using MediaDeck.Common.Base;
+using MediaDeck.Core.Models.Tools;
 
 namespace MediaDeck.ViewModels.Tools;
 
@@ -9,15 +10,19 @@ public class BackgroundTaskStatusItemViewModel : ViewModelBase {
 	/// <summary>
 	/// バックグラウンドタスク項目を初期化する。
 	/// </summary>
-	/// <param name="displayName">表示名</param>
-	/// <param name="completedCount">完了件数</param>
-	/// <param name="targetCount">対象件数</param>
-	/// <param name="reRun">再実行処理</param>
-	/// <param name="cancel">キャンセル処理</param>
-	public BackgroundTaskStatusItemViewModel(string displayName, BindableReactiveProperty<long> completedCount, BindableReactiveProperty<long> targetCount, Action reRun, Action? cancel = null) {
-		this.DisplayName = displayName;
-		this.CompletedCount = completedCount;
-		this.TargetCount = targetCount;
+	/// <param name="model">モデル</param>
+	public BackgroundTaskStatusItemViewModel(BackgroundTaskStatusItemModel model) {
+		this.DisplayName = model.DisplayName;
+		this.CompletedCount = model.CompletedCount
+			.ThrottleLast(TimeSpan.FromMilliseconds(100))
+			.ObserveOnCurrentSynchronizationContext()
+			.ToBindableReactiveProperty()
+			.AddTo(this.CompositeDisposable);
+		this.TargetCount = model.TargetCount
+			.ThrottleLast(TimeSpan.FromMilliseconds(100))
+			.ObserveOnCurrentSynchronizationContext()
+			.ToBindableReactiveProperty()
+			.AddTo(this.CompositeDisposable);
 		this.IsRunning = this.CompletedCount
 			.CombineLatest(this.TargetCount, (completed, target) => target > 0 && completed < target)
 			.ToBindableReactiveProperty()
@@ -42,12 +47,12 @@ public class BackgroundTaskStatusItemViewModel : ViewModelBase {
 			.Select(x => !x)
 			.ToReactiveCommand()
 			.AddTo(this.CompositeDisposable);
-		this.ReRunCommand.Subscribe(_ => reRun()).AddTo(this.CompositeDisposable);
+		this.ReRunCommand.Subscribe(_ => model.ReRun()).AddTo(this.CompositeDisposable);
 		this.CancelCommand = this.IsRunning
 			.ToReactiveCommand()
 			.AddTo(this.CompositeDisposable);
-		if (cancel != null) {
-			this.CancelCommand.Subscribe(_ => cancel()).AddTo(this.CompositeDisposable);
+		if (model.Cancel != null) {
+			this.CancelCommand.Subscribe(_ => model.Cancel()).AddTo(this.CompositeDisposable);
 		}
 	}
 

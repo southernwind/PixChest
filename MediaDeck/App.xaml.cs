@@ -1,28 +1,23 @@
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-
 using CommunityToolkit.Mvvm.DependencyInjection;
-
 using FFMpegCore;
-
 using MediaDeck.Composition.Constants;
 using MediaDeck.Composition.Database;
 using MediaDeck.Composition.Interfaces.Tags;
 using MediaDeck.Composition.Stores.State.Model;
+using MediaDeck.Core.Models.Tools;
 using MediaDeck.Core.Stores.Config;
 using MediaDeck.Core.Stores.State;
 using MediaDeck.Services;
 using MediaDeck.ViewModels;
-using MediaDeck.ViewModels.Tools;
-
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
-
 using Serilog;
 using Serilog.Events;
 
@@ -64,9 +59,7 @@ public partial class App {
 		var splashScreen = new Views.SplashScreenWindow(this._stateStore);
 		splashScreen.Activate();
 
-		await Task.Run(async () => {
-			await this.InitializeAsync(splashScreen.ViewModel);
-		});
+		await this.InitializeAsync(splashScreen.ViewModel);
 
 		var windowManager = Ioc.Default.GetRequiredService<WindowManager>();
 		windowManager.RestoreWindows();
@@ -139,50 +132,53 @@ public partial class App {
 	}
 
 	private async Task InitializeAsync(SplashScreenViewModel? splashViewModel = null) {
-		splashViewModel?.UpdateStatus("データベースを準備しています...");
 
-		var dbFactory = Ioc.Default.GetRequiredService<IDbContextFactory<MediaDeckDbContext>>();
-		await using (var db = await dbFactory.CreateDbContextAsync()) {
-			await db.Database.EnsureCreatedAsync();
+		await Task.Run(async () => {
+			splashViewModel?.UpdateStatus("データベースを準備しています...");
+
+			var dbFactory = Ioc.Default.GetRequiredService<IDbContextFactory<MediaDeckDbContext>>();
+			await using (var db = await dbFactory.CreateDbContextAsync()) {
+				await db.Database.EnsureCreatedAsync();
 
 
-			var dbVersion = db.DbVersions.AsNoTracking().FirstOrDefault(x => x.Id == 1);
-			if (dbVersion == null) {
-				db.DbVersions.Add(new() {
-					Id = 1,
-					Version = 1,
-				});
-				await db.SaveChangesAsync();
+				var dbVersion = db.DbVersions.AsNoTracking().FirstOrDefault(x => x.Id == 1);
+				if (dbVersion == null) {
+					db.DbVersions.Add(new() {
+						Id = 1,
+						Version = 1,
+					});
+					await db.SaveChangesAsync();
+				}
 			}
-		}
 
-		splashViewModel?.UpdateStatus("構成設定を読み込んでいます...");
-		Directory.CreateDirectory(this._configStore.Config.PathConfig.TemporaryFolderPath.Value);
+			splashViewModel?.UpdateStatus("構成設定を読み込んでいます...");
+			Directory.CreateDirectory(this._configStore.Config.PathConfig.TemporaryFolderPath.Value);
 
-		GlobalFFOptions.Configure(options => {
-			options.BinaryFolder = Path.Combine(this._configStore.Config.PathConfig.FFMpegFolderPath.Value);
-		});
+			GlobalFFOptions.Configure(options => {
+				options.BinaryFolder = Path.Combine(this._configStore.Config.PathConfig.FFMpegFolderPath.Value);
+			});
 
-		splashViewModel?.UpdateStatus("タグ情報を初期化しています...");
-		var tagsManager = Ioc.Default.GetRequiredService<ITagsManager>();
-		await tagsManager.InitializeAsync();
+			splashViewModel?.UpdateStatus("タグ情報を初期化しています...");
+			var tagsManager = Ioc.Default.GetRequiredService<ITagsManager>();
+			await tagsManager.InitializeAsync();
 
-		splashViewModel?.UpdateStatus("バックグラウンドタスクを準備しています...");
-		var backgroundTasksViewModel = Ioc.Default.GetRequiredService<BackgroundTasksViewModel>();
-		backgroundTasksViewModel.Start();
+			splashViewModel?.UpdateStatus("バックグラウンドタスクを準備しています...");
+			var backgroundTasksModel = Ioc.Default.GetRequiredService<BackgroundTasksModel>();
+			backgroundTasksModel.Start();
 
-		var _ = this._stateStore.RootState.AppState.DefaultTabState.SearchState.CurrentSortCondition.Subscribe(x => Debug.WriteLine($"CurrentSortCondition {x}"));
-		_ = this._stateStore.RootState.AppState.DefaultTabState.SearchState.SortDirection.Subscribe(x => Debug.WriteLine($"SortDirection {x}"));
+			var _ = this._stateStore.RootState.AppState.DefaultTabState.SearchState.CurrentSortCondition.Subscribe(x => Debug.WriteLine($"CurrentSortCondition {x}"));
+			_ = this._stateStore.RootState.AppState.DefaultTabState.SearchState.SortDirection.Subscribe(x => Debug.WriteLine($"SortDirection {x}"));
 
-		splashViewModel?.UpdateStatus("メディアエンジンを起動しています...");
-		FlyleafLib.Engine.Start(new FlyleafLib.EngineConfig() {
+			splashViewModel?.UpdateStatus("メディアエンジンを起動しています...");
+			FlyleafLib.Engine.Start(new FlyleafLib.EngineConfig() {
 #if DEBUG
-			LogOutput = ":debug",
-			LogLevel = FlyleafLib.LogLevel.Debug,
-			FFmpegLogLevel = Flyleaf.FFmpeg.LogLevel.Warn,
+				LogOutput = ":debug",
+				LogLevel = FlyleafLib.LogLevel.Debug,
+				FFmpegLogLevel = Flyleaf.FFmpeg.LogLevel.Warn,
 #endif
-			UIRefresh = false,
-			FFmpegPath = this._configStore.Config.PathConfig.FFMpegFolderPath.Value,
+				UIRefresh = false,
+				FFmpegPath = this._configStore.Config.PathConfig.FFMpegFolderPath.Value,
+			});
 		});
 	}
 }
