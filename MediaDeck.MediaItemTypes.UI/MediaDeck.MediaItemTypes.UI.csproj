@@ -7,6 +7,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" />
+    <PackageReference Include="CommunityToolkit.WinUI.Converters" />
     <PackageReference Include="Flyleaf.FFmpeg.Bindings" />
     <PackageReference Include="FlyleafLib.Controls.WinUI" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" />

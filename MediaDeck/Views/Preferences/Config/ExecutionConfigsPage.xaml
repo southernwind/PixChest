@@ -8,106 +8,110 @@
 	Background="Transparent"
 	x:Name="PageRoot" >
 
-	<ScrollViewer VerticalScrollBarVisibility="Auto" >
-		<StackPanel Spacing="4"
-			Padding="36,24,36,36"
-			MaxWidth="800" >
+	<Grid MaxWidth="800" Margin="36,24,36,36">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
 
-			<!-- セクションヘッダー -->
-			<StackPanel Spacing="4"
-				Margin="0,0,0,16" >
-				<TextBlock Text="外部プログラム"
-					Style="{StaticResource BodyStrongTextBlockStyle}"
-					Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
-				<TextBlock Text="メディアアイテムを開く外部プログラムとその起動引数を設定します。"
-					Style="{StaticResource CaptionTextBlockStyle}"
-					Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+		<ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Margin="0,0,0,8">
+			<StackPanel Spacing="4">
+				<!-- セクションヘッダー -->
+				<StackPanel Spacing="4"
+					Margin="0,0,0,16" >
+					<TextBlock Text="外部プログラム"
+						Style="{StaticResource BodyStrongTextBlockStyle}"
+						Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
+					<TextBlock Text="メディアアイテムを開く外部プログラムとその起動引数を設定します。"
+						Style="{StaticResource CaptionTextBlockStyle}"
+						Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+				</StackPanel>
+
+				<!-- プログラムリスト -->
+				<ItemsControl ItemsSource="{x:Bind ViewModel.ExecutionPrograms}" >
+					<ItemsControl.ItemTemplate>
+						<DataTemplate x:DataType="config:IExecutionProgramConfigViewModel" >
+							<Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+								BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+								BorderThickness="1"
+								CornerRadius="4"
+								Padding="16,12"
+								Margin="0,0,0,2" >
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition Height="Auto" />
+										<RowDefinition Height="Auto" />
+									</Grid.RowDefinitions>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="Auto" />
+									</Grid.ColumnDefinitions>
+									<!-- 上段: メディアタイプ選択 -->
+									<StackPanel Grid.Row="0"
+										Grid.Column="0"
+										Orientation="Horizontal"
+										Spacing="12"
+										VerticalAlignment="Center" >
+										<FontIcon Glyph="&#xE756;"
+											FontSize="16"
+											Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+											VerticalAlignment="Center" />
+										<TextBlock Text="{x:Bind MediaType}" />
+									</StackPanel>
+
+									<!-- 削除ボタン -->
+									<Button Grid.Row="0"
+										Grid.Column="1"
+										VerticalAlignment="Center"
+										Command="{x:Bind RemoveCommand}"
+										Style="{StaticResource SubtleButtonStyle}"
+										ToolTipService.ToolTip="このプログラムを削除"
+										Padding="6"
+										BorderThickness="0" >
+										<FontIcon Glyph="&#xE74D;"
+											FontSize="14"
+											Foreground="{ThemeResource SystemFillColorCriticalBrush}" />
+									</Button>
+
+									<!-- 下段: 動的な設定UI -->
+									<ContentControl Grid.Row="1"
+										Grid.Column="0"
+										Grid.ColumnSpan="2"
+										Content="{x:Bind}"
+										ContentTemplateSelector="{StaticResource MediaItemExecutionConfigTplSel}" />
+								</Grid>
+							</Border>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
 			</StackPanel>
+		</ScrollViewer>
 
-			<!-- プログラムリスト -->
-			<ItemsControl ItemsSource="{x:Bind ViewModel.ExecutionPrograms}" >
-				<ItemsControl.ItemTemplate>
-					<DataTemplate x:DataType="config:IExecutionProgramConfigViewModel" >
-						<Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-							BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-							BorderThickness="1"
-							CornerRadius="4"
-							Padding="16,12"
-							Margin="0,0,0,2" >
-							<Grid>
-								<Grid.RowDefinitions>
-									<RowDefinition Height="Auto" />
-									<RowDefinition Height="Auto" />
-								</Grid.RowDefinitions>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="*" />
-									<ColumnDefinition Width="Auto" />
-								</Grid.ColumnDefinitions>
-								<!-- 上段: メディアタイプ選択 -->
-								<StackPanel Grid.Row="0"
-									Grid.Column="0"
-									Orientation="Horizontal"
-									Spacing="12"
-									VerticalAlignment="Center" >
-									<FontIcon Glyph="&#xE756;"
-										FontSize="16"
-										Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-										VerticalAlignment="Center" />
-									<TextBlock Text="{x:Bind MediaType}" />
-								</StackPanel>
-
-								<!-- 削除ボタン -->
-								<Button Grid.Row="0"
-									Grid.Column="1"
-									VerticalAlignment="Center"
-									Command="{x:Bind RemoveCommand}"
-									Style="{StaticResource SubtleButtonStyle}"
-									ToolTipService.ToolTip="このプログラムを削除"
-									Padding="6"
-									BorderThickness="0" >
-									<FontIcon Glyph="&#xE74D;"
-										FontSize="14"
-										Foreground="{ThemeResource SystemFillColorCriticalBrush}" />
-								</Button>
-
-								<!-- 下段: 動的な設定UI -->
-								<ContentControl Grid.Row="1"
-									Grid.Column="0"
-									Grid.ColumnSpan="2"
-									Content="{x:Bind}"
-									ContentTemplateSelector="{StaticResource MediaItemExecutionConfigTplSel}" />
-							</Grid>
-						</Border>
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-			</ItemsControl>
-
-			<!-- 追加セクション -->
-			<Grid
-				Margin="0,8,0,0"
-				ColumnSpacing="8"
-				VerticalAlignment="Bottom" >
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="Auto" />
-				</Grid.ColumnDefinitions>
-				<ComboBox Grid.Column="0"
-					HorizontalAlignment="Stretch"
-					Header="追加するメディアタイプ"
-					ItemsSource="{x:Bind ViewModel.AvailableMediaTypes}"
-					SelectedItem="{x:Bind ViewModel.SelectedMediaType.Value, Mode=TwoWay}" />
-				<Button Grid.Column="1"
-					VerticalAlignment="Bottom"
-					Command="{x:Bind ViewModel.AddExecutionProgramCommand}">
-					<StackPanel Orientation="Horizontal"
-						Spacing="8" >
-						<FontIcon Glyph="&#xE710;"
-							FontSize="14" />
-						<TextBlock Text="プログラムを追加"
-							FontWeight="SemiBold" />
-					</StackPanel>
-				</Button>
-			</Grid>
-		</StackPanel>
-	</ScrollViewer>
+		<!-- 追加セクション -->
+		<Grid Grid.Row="1"
+			Margin="0,8,0,0"
+			ColumnSpacing="8"
+			VerticalAlignment="Bottom" >
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<ComboBox Grid.Column="0"
+				HorizontalAlignment="Stretch"
+				Header="追加するメディアタイプ"
+				ItemsSource="{x:Bind ViewModel.AvailableMediaTypes}"
+				SelectedItem="{x:Bind ViewModel.SelectedMediaType.Value, Mode=TwoWay}" />
+			<Button Grid.Column="1"
+				VerticalAlignment="Bottom"
+				Command="{x:Bind ViewModel.AddExecutionProgramCommand}">
+				<StackPanel Orientation="Horizontal"
+					Spacing="8" >
+					<FontIcon Glyph="&#xE710;"
+						FontSize="14" />
+					<TextBlock Text="プログラムを追加"
+						FontWeight="SemiBold" />
+				</StackPanel>
+			</Button>
+		</Grid>
+	</Grid>
 </Page>

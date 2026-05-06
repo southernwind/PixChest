@@ -20,6 +20,16 @@ public class FolderGroupExecutionProgramConfigViewModel : DefaultExecutionProgra
 		private set;
 	} = null!;
 
+	public BindableReactiveProperty<bool> IsExternal {
+		get;
+		private set;
+	} = null!;
+
+	public BindableReactiveProperty<bool> IsInternal {
+		get;
+		private set;
+	} = null!;
+
 	public FolderGroupExecutionProgramConfigViewModel(ExecutionConfigModel executionConfig)
 		: base(executionConfig) {
 	}
@@ -27,5 +37,7 @@ public class FolderGroupExecutionProgramConfigViewModel : DefaultExecutionProgra
 	public void Initialize(FolderGroupExecutionProgramObjectModel model) {
 		base.Initialize(model);
 		this.ExecutionType = model.ExecutionType.ToTwoWayBindableReactiveProperty(Composition.Enum.ExecutionType.External, this.CompositeDisposable).AddTo(this.CompositeDisposable);
+		this.IsExternal = this.ExecutionType.Select(x => x == Composition.Enum.ExecutionType.External).ToBindableReactiveProperty(this.ExecutionType.Value == Composition.Enum.ExecutionType.External).AddTo(this.CompositeDisposable);
+		this.IsInternal = this.ExecutionType.Select(x => x == Composition.Enum.ExecutionType.Internal).ToBindableReactiveProperty(this.ExecutionType.Value == Composition.Enum.ExecutionType.Internal).AddTo(this.CompositeDisposable);
 	}
 }
