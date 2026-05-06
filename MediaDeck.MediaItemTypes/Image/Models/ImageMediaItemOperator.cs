@@ -7,10 +7,8 @@ using MediaDeck.Composition.Database;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.Models;
 using MediaDeck.Composition.Tables;
-using MediaDeck.Composition.Tables.Metadata;
 using MediaDeck.MediaItemTypes.Base.Models;
 using MediaDeck.MediaItemTypes.Image.Utils;
-using MediaDeck.MediaItemTypes.Image.Utils.Formats;
 
 namespace MediaDeck.MediaItemTypes.Image.Models;
 
@@ -97,6 +95,20 @@ public class ImageMediaItemOperator : BaseMediaItemOperator {
 		this._updateFileHashBackgroundService.EnqueueHashUpdate(mf.MediaItemId);
 
 		return mf;
+	}
+
+	public override async Task UpdateMetadata(MediaItem mediaItem) {
+
+		using var fileMs = new MemoryStream();
+
+		try {
+			using (var fileFs = File.OpenRead(mediaItem.FilePath)) {
+				using var meta = ImageMetadataFactory.Create(fileFs);
+				mediaItem.Metadata = meta.CreateMetadata();
+			}
+		} catch (FileNotFoundException) {
+			// TODO: notify
+		}
 	}
 
 	public byte[] CreateThumbnail(IMediaItemModel fileModel, uint width, uint height) {

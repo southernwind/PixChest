@@ -1,5 +1,4 @@
 using MediaDeck.Composition.Tables;
-using MediaDeck.Composition.Tables.Metadata;
 
 using Microsoft.EntityFrameworkCore;
 

@@ -2,7 +2,9 @@ using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
 using FFMpegCore;
+
 using MediaDeck.Composition.Database;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.Models;
@@ -10,6 +12,7 @@ using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Composition.Tables;
 using MediaDeck.Composition.Tables.Metadata;
 using MediaDeck.MediaItemTypes.Base.Models;
+
 using Microsoft.Extensions.Logging;
 
 namespace MediaDeck.MediaItemTypes.Video.Models;
@@ -88,7 +91,7 @@ public partial class VideoMediaItemOperator : BaseMediaItemOperator {
 			IsUnderFolderGroup = isUnderFolderGroup,
 			VideoFile = new() { Duration = metadata.PrimaryVideoStream?.Duration.TotalSeconds, Rotation = metadata.PrimaryVideoStream?.Rotation },
 			Metadata = new() {
-				Entries = metadata.PrimaryVideoStream?.Tags?.Select(x => new Composition.Tables.Metadata.MediaMetadataEntry() { Key = x.Key, Value = x.Value }).ToList() ?? []
+				Entries = metadata.PrimaryVideoStream?.Tags?.Select(x => new MediaMetadataEntry() { Key = x.Key, Value = x.Value }).ToList() ?? []
 			}
 		};
 
@@ -99,6 +102,19 @@ public partial class VideoMediaItemOperator : BaseMediaItemOperator {
 		this._updateFileHashBackgroundService.EnqueueHashUpdate(mf.MediaItemId);
 
 		return mf;
+	}
+
+	public override async Task UpdateMetadata(MediaItem mediaItem) {
+		using var fileMs = new MemoryStream();
+		try {
+			var metadata = FFProbe.Analyse(mediaItem.FilePath);
+
+			mediaItem.Metadata = new() {
+				Entries = metadata.PrimaryVideoStream?.Tags?.Select(x => new MediaMetadataEntry() { Key = x.Key, Value = x.Value }).ToList() ?? []
+			};
+		} catch (FileNotFoundException) {
+			// TODO: notify
+		}
 	}
 
 	/// <summary>

@@ -1,5 +1,6 @@
 using MediaDeck.Common.Base;
 using MediaDeck.Core.Services.FileStatusUpdator;
+using MediaDeck.Core.Services.MediaItemMetadataUpdator;
 
 namespace MediaDeck.Core.Models.Tools;
 
@@ -10,7 +11,9 @@ namespace MediaDeck.Core.Models.Tools;
 public class BackgroundTasksModel : ModelBase {
 	private readonly FileStatusUpdatorService _fileStatusUpdater;
 	private readonly IFileHashUpdatorService _updateFileHashBackgroundService;
+	private readonly MediaItemMetadataUpdatorService _metadataUpdator;
 	private CancellationTokenSource _fileStatusUpdaterCts = new();
+	private CancellationTokenSource _metadataUpdatorCts = new();
 
 	/// <summary>
 	/// バックグラウンド実行キュー
@@ -31,9 +34,10 @@ public class BackgroundTasksModel : ModelBase {
 	/// </summary>
 	/// <param name="fileStatusUpdater">ファイル状態更新サービス</param>
 	/// <param name="updateFileHashBackgroundService">ファイルハッシュ更新サービス</param>
-	public BackgroundTasksModel(FileStatusUpdatorService fileStatusUpdater, IFileHashUpdatorService updateFileHashBackgroundService) {
+	public BackgroundTasksModel(FileStatusUpdatorService fileStatusUpdater, IFileHashUpdatorService updateFileHashBackgroundService, MediaItemMetadataUpdatorService metadataUpdator) {
 		this._fileStatusUpdater = fileStatusUpdater;
 		this._updateFileHashBackgroundService = updateFileHashBackgroundService;
+		this._metadataUpdator = metadataUpdator;
 
 		this.TaskItems = [
 			new BackgroundTaskStatusItemModel(
@@ -63,6 +67,21 @@ public class BackgroundTasksModel : ModelBase {
 				this._updateFileHashBackgroundService.FullHashTargetCount,
 				() => this.Actions.OnNext(() => this._updateFileHashBackgroundService.CheckAndEnqueueFullHashUpdatesAsync()),
 				() => this._updateFileHashBackgroundService.CancelFullHashUpdate()),
+			new BackgroundTaskStatusItemModel(
+				"Update metadata",
+				this._metadataUpdator.CompletedCount,
+				this._metadataUpdator.TargetCount,
+				() => {
+					this._metadataUpdatorCts.Cancel();
+					this._metadataUpdatorCts.Dispose();
+					this._metadataUpdatorCts = new();
+					this.Actions.OnNext(() => this._metadataUpdator.UpdateMetadataAsync(this._metadataUpdatorCts.Token));
+				},
+				() => {
+					this._metadataUpdatorCts.Cancel();
+					this._metadataUpdator.TargetCount.Value = 0;
+					this._metadataUpdator.CompletedCount.Value = 0;
+				}),
 		];
 
 		this.Actions.Synchronize()
@@ -89,6 +108,8 @@ public class BackgroundTasksModel : ModelBase {
 		if (disposing) {
 			this._fileStatusUpdaterCts.Cancel();
 			this._fileStatusUpdaterCts.Dispose();
+			this._metadataUpdatorCts.Cancel();
+			this._metadataUpdatorCts.Dispose();
 		}
 		base.Dispose(disposing);
 	}

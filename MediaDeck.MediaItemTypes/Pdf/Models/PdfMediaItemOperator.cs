@@ -1,9 +1,11 @@
 using System.IO;
 using System.Threading.Tasks;
+
 using MediaDeck.Composition.Database;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Tables;
 using MediaDeck.MediaItemTypes.Base.Models;
+
 using Microsoft.Extensions.Logging;
 
 namespace MediaDeck.MediaItemTypes.Pdf.Models;
@@ -78,5 +80,19 @@ public partial class PdfMediaItemOperator : BaseMediaItemOperator {
 		this._updateFileHashBackgroundService.EnqueueHashUpdate(mf.MediaItemId);
 
 		return mf;
+	}
+
+	public override async Task UpdateMetadata(MediaItem mediaItem) {
+		using var fileMs = new MemoryStream();
+		try {
+			using var fileFs = File.OpenRead(mediaItem.FilePath);
+			var pdfDocument = this._pdfDocumentOperator.GetPdfProperties(mediaItem.FilePath);
+
+			mediaItem.Metadata = new() {
+				Entries = [new() { Key = "PageCount", Value = pdfDocument.PageCount.ToString() }]
+			};
+		} catch (FileNotFoundException) {
+			// TODO: notify
+		}
 	}
 }

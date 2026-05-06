@@ -3,7 +3,6 @@ using System.IO;
 using MediaDeck.Composition.Tables.Metadata;
 
 using MetadataExtractor;
-using MetadataExtractor.Formats.Ico;
 using MetadataExtractor.Formats.Netpbm;
 
 namespace MediaDeck.MediaItemTypes.Image.Utils.Formats;

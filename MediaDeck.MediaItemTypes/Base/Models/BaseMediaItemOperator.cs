@@ -62,6 +62,9 @@ public abstract class BaseMediaItemOperator : IMediaItemOperator {
 		return MediaItem;
 	}
 
+	public virtual Task UpdateMetadata(MediaItem mediaItem) {
+		return Task.CompletedTask;
+	}
 
 	public MediaType TargetMediaType {
 		get;

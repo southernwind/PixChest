@@ -15,4 +15,6 @@ public interface IMediaItemOperator {
 	public Task<MediaItem?> IncrementUsageCountAsync(long MediaItemId);
 
 	public Task<MediaItem?> UpdateDescriptionAsync(long MediaItemId, string description);
+
+	public Task UpdateMetadata(MediaItem mediaItem);
 }

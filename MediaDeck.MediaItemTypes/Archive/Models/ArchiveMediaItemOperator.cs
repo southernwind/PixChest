@@ -1,13 +1,16 @@
 using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
+
 using ImageMagick;
+
 using MediaDeck.Composition.Database;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes;
 using MediaDeck.Composition.Tables;
 using MediaDeck.MediaItemTypes.Base.Models;
 using MediaDeck.MediaItemTypes.Image.Utils;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -105,6 +108,20 @@ public partial class ArchiveMediaItemOperator : BaseMediaItemOperator {
 		this._updateFileHashBackgroundService.EnqueueHashUpdate(mf.MediaItemId);
 
 		return mf;
+	}
+
+	public override async Task UpdateMetadata(MediaItem mediaItem) {
+		using var fileMs = new MemoryStream();
+		try {
+			using var fileFs = File.OpenRead(mediaItem.FilePath);
+			using var archiveFile = ZipFile.Open(mediaItem.FilePath, ZipArchiveMode.Read);
+
+			mediaItem.Metadata = new() {
+				Entries = [new() { Key = "PageCount", Value = archiveFile.Entries.Count(x => this._mediaItemTypeService.IsTargetPath(x.Name, MediaType.Image)).ToString() }]
+			};
+		} catch (FileNotFoundException) {
+			// TODO: notify
+		}
 	}
 
 	/// <summary>
