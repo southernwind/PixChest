@@ -68,4 +68,9 @@ public interface IImage : IDisposable {
 	public int? Orientation {
 		get;
 	}
+
+	/// <summary>
+	/// メタデータ生成
+	/// </summary>
+	public abstract Composition.Tables.Metadata.MediaMetadata CreateMetadata();
 }

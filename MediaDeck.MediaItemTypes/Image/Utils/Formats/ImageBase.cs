@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 
 using MetadataExtractor;
@@ -192,6 +193,24 @@ public abstract class ImageBase : IImage {
 		}
 
 		return default;
+	}
+	public abstract Composition.Tables.Metadata.MediaMetadata CreateMetadata();
+	public Composition.Tables.Metadata.MediaMetadata CreateMetadata(IReadOnlyList<MetadataExtractor.Directory> reader) {
+		var metadata = new Composition.Tables.Metadata.MediaMetadata();
+
+		foreach (var directory in reader) {
+			foreach (var tag in directory.Tags) {
+				var value = tag.Description;
+				if (value != null) {
+					metadata.Entries.Add(new() {
+						Key = $"{directory.Name}/{tag.Name}",
+						Value = value
+					});
+				}
+			}
+		}
+
+		return metadata;
 	}
 
 	/// <summary>

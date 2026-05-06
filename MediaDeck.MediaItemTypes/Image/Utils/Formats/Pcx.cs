@@ -1,5 +1,7 @@
 using System.IO;
 
+using MediaDeck.Composition.Tables.Metadata;
+
 using MetadataExtractor;
 using MetadataExtractor.Formats.Pcx;
 
@@ -21,5 +23,9 @@ public class Pcx : ImageBase {
 		var yEnd = d.GetUInt16(PcxDirectory.TagYMax);
 		this.Width = xEnd - xStart + 1;
 		this.Height = yEnd - yStart + 1;
+	}
+
+	public override MediaMetadata CreateMetadata() {
+		return null;
 	}
 }

@@ -23,18 +23,7 @@ public class Bmp : ImageBase {
 		this.Height = d.GetUInt16(BmpHeaderDirectory.TagImageHeight);
 	}
 
-	public Composition.Tables.Metadata.MediaMetadata CreateMetadataRecord() {
-		var metadata = new Composition.Tables.Metadata.MediaMetadata();
-
-		foreach (var directory in this._reader) {
-			foreach (var tag in directory.Tags) {
-				var value = tag.Description;
-				if (value != null) {
-					metadata.Entries.Add(new() { Key = $"{directory.Name}/{tag.Name}", Value = value });
-				}
-			}
-		}
-
-		return metadata;
+	public override Composition.Tables.Metadata.MediaMetadata CreateMetadata() {
+		return base.CreateMetadata(this._reader);
 	}
 }

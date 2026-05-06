@@ -1,6 +1,9 @@
 using System.IO;
 
+using MediaDeck.Composition.Tables.Metadata;
+
 using MetadataExtractor;
+using MetadataExtractor.Formats.Ico;
 using MetadataExtractor.Formats.Netpbm;
 
 namespace MediaDeck.MediaItemTypes.Image.Utils.Formats;
@@ -17,5 +20,9 @@ public class Netpbm : ImageBase {
 		var d = NetpbmMetadataReader.ReadMetadata(stream);
 		this.Width = d.GetUInt16(NetpbmHeaderDirectory.TagWidth);
 		this.Height = d.GetUInt16(NetpbmHeaderDirectory.TagHeight);
+	}
+
+	public override MediaMetadata CreateMetadata() {
+		return null;
 	}
 }

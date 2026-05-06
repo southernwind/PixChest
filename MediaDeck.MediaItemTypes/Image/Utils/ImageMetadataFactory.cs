@@ -32,7 +32,7 @@ public static class ImageMetadataFactory {
 			FileType.Unknown => throw new NotImplementedException(),
 			FileType.Wav => throw new NotImplementedException(),
 			FileType.Avi => throw new NotImplementedException(),
-			FileType.WebP => throw new NotImplementedException(),
+			FileType.WebP => new WebP(stream),
 			FileType.Crw => throw new NotImplementedException(),
 			FileType.Crx => throw new NotImplementedException(),
 			FileType.Eps => throw new NotImplementedException(),

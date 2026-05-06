@@ -1,10 +1,13 @@
 using System.IO;
 using System.Threading.Tasks;
+
 using ImageMagick;
+
 using MediaDeck.Composition.Database;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.Models;
 using MediaDeck.Composition.Tables;
+using MediaDeck.Composition.Tables.Metadata;
 using MediaDeck.MediaItemTypes.Base.Models;
 using MediaDeck.MediaItemTypes.Image.Utils;
 using MediaDeck.MediaItemTypes.Image.Utils.Formats;
@@ -85,18 +88,7 @@ public class ImageMediaItemOperator : BaseMediaItemOperator {
 
 		mf.Height = meta.Height;
 		mf.Width = meta.Width;
-
-		if (meta is Jpeg jpeg) {
-			mf.Metadata = jpeg.CreateMetadataRecord();
-		} else if (meta is Png png) {
-			mf.Metadata = png.CreateMetadataRecord();
-		} else if (meta is Bmp bmp) {
-			mf.Metadata = bmp.CreateMetadataRecord();
-		} else if (meta is Gif gif) {
-			mf.Metadata = gif.CreateMetadataRecord();
-		} else if (meta is Heif heif) {
-			mf.Metadata = heif.CreateMetadataRecord();
-		}
+		mf.Metadata = meta.CreateMetadata();
 
 		await db.MediaItems.AddAsync(mf);
 		await db.SaveChangesAsync();

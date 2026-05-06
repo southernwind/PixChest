@@ -2,25 +2,25 @@ using System.Collections.Generic;
 using System.IO;
 
 using MetadataExtractor;
-using MetadataExtractor.Formats.Ico;
+using MetadataExtractor.Formats.WebP;
 
 namespace MediaDeck.MediaItemTypes.Image.Utils.Formats;
 
 /// <summary>
-/// Icoメタデータ取得クラス
+/// WebPメタデータ取得クラス
 /// </summary>
-public class Ico : ImageBase {
+public class WebP : ImageBase {
 	private readonly IReadOnlyList<MetadataExtractor.Directory> _reader;
 
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="stream">画像ファイルストリーム</param>
-	public Ico(Stream stream) : base(stream) {
-		this._reader = IcoMetadataReader.ReadMetadata(stream);
-		var d = this._reader.First(x => x is IcoDirectory);
-		this.Width = d.GetUInt16(IcoDirectory.TagImageWidth);
-		this.Height = d.GetUInt16(IcoDirectory.TagImageHeight);
+	public WebP(Stream stream) : base(stream) {
+		this._reader = WebPMetadataReader.ReadMetadata(stream);
+		var d = this._reader.First(x => x is WebPDirectory);
+		this.Width = d.GetUInt16(WebPDirectory.TagImageWidth);
+		this.Height = d.GetUInt16(WebPDirectory.TagImageHeight);
 	}
 
 	public override Composition.Tables.Metadata.MediaMetadata CreateMetadata() {

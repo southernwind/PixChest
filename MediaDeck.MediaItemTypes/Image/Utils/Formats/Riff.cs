@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 
 using MetadataExtractor;
@@ -9,14 +10,20 @@ namespace MediaDeck.MediaItemTypes.Image.Utils.Formats;
 /// Riffメタデータ取得クラス
 /// </summary>
 public class Riff : ImageBase {
+	private readonly IReadOnlyList<MetadataExtractor.Directory> _reader;
+
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="stream">画像ファイルストリーム</param>
 	public Riff(Stream stream) : base(stream) {
-		var reader = WebPMetadataReader.ReadMetadata(stream);
-		var d = reader.First(x => x is WebPDirectory);
+		this._reader = WebPMetadataReader.ReadMetadata(stream);
+		var d = this._reader.First(x => x is WebPDirectory);
 		this.Width = d.GetUInt16(WebPDirectory.TagImageWidth);
 		this.Height = d.GetUInt16(WebPDirectory.TagImageHeight);
+	}
+
+	public override Composition.Tables.Metadata.MediaMetadata CreateMetadata() {
+		return base.CreateMetadata(this._reader);
 	}
 }
