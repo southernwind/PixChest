@@ -55,7 +55,7 @@ public sealed partial class SplashScreenWindow : Window {
 			var centeredPosition = appWindow.Position;
 			centeredPosition.X = (displayArea.WorkArea.Width - appWindow.Size.Width) / 2;
 			centeredPosition.Y = (displayArea.WorkArea.Height - appWindow.Size.Height) / 2;
-			
+
 			// タスクバーなどを考慮したWorkAreaの開始位置を加算
 			centeredPosition.X += displayArea.WorkArea.X;
 			centeredPosition.Y += displayArea.WorkArea.Y;

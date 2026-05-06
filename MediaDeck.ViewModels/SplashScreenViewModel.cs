@@ -1,5 +1,4 @@
 using MediaDeck.Common.Base;
-using R3;
 
 namespace MediaDeck.ViewModels;
 
@@ -10,12 +9,16 @@ public class SplashScreenViewModel : ViewModelBase {
 	/// <summary>
 	/// 現在の状態メッセージ。
 	/// </summary>
-	public BindableReactiveProperty<string> StatusMessage { get; }
+	public BindableReactiveProperty<string> StatusMessage {
+		get;
+	}
 
 	/// <summary>
 	/// アプリケーションのバージョン。
 	/// </summary>
-	public string AppVersion { get; }
+	public string AppVersion {
+		get;
+	}
 
 	private readonly ReactiveProperty<string> _statusMessage = new("起動しています...");
 
