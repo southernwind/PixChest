@@ -109,6 +109,7 @@ public class TabContext : ViewModelBase {
 		this.TabState.ViewerState.ListFileSizeColumnVisible.Skip(1).Subscribe(v => defaultViewer.ListFileSizeColumnVisible.Value = v).AddTo(this.CompositeDisposable);
 		this.TabState.ViewerState.ListCreationTimeColumnVisible.Skip(1).Subscribe(v => defaultViewer.ListCreationTimeColumnVisible.Value = v).AddTo(this.CompositeDisposable);
 		this.TabState.ViewerState.ListRateColumnVisible.Skip(1).Subscribe(v => defaultViewer.ListRateColumnVisible.Value = v).AddTo(this.CompositeDisposable);
+		this.TabState.ActiveRepository.Skip(1).Subscribe(v => appState.DefaultTabState.ActiveRepository.Value = v).AddTo(this.CompositeDisposable);
 	}
 
 

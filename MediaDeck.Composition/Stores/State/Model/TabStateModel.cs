@@ -37,4 +37,12 @@ public class TabStateModel(IServiceProvider serviceProvider, SearchStateModel se
 		get;
 		set;
 	} = viewerState;
+
+	/// <summary>
+	/// 現在選択されているリポジトリの種類
+	/// </summary>
+	public ReactiveProperty<RepositoryType> ActiveRepository {
+		get;
+		set;
+	} = new(RepositoryType.Folder);
 }

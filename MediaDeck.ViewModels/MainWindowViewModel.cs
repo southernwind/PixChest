@@ -123,6 +123,7 @@ public class MainWindowViewModel : ViewModelBase {
 		tabState.ViewerState.ActiveViewer.Value = defaultViewer.ActiveViewer.Value;
 		tabState.ViewerState.ShowOverlay.Value = defaultViewer.ShowOverlay.Value;
 		tabState.ViewerState.ShowInfo.Value = defaultViewer.ShowInfo.Value;
+		tabState.ActiveRepository.Value = stateStore.RootState.AppState.DefaultTabState.ActiveRepository.Value;
 
 		// ListViewer 列設定
 		tabState.ViewerState.ListFileNameColumnWidth.Value = defaultViewer.ListFileNameColumnWidth.Value;
