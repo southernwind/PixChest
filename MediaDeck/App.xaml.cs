@@ -13,6 +13,7 @@ using MediaDeck.Composition.Stores.State.Model;
 using MediaDeck.Core.Stores.Config;
 using MediaDeck.Core.Stores.State;
 using MediaDeck.Services;
+using MediaDeck.ViewModels;
 using MediaDeck.ViewModels.Tools;
 
 using Microsoft.Data.Sqlite;
@@ -59,7 +60,13 @@ public partial class App {
 	protected override async void OnLaunched(LaunchActivatedEventArgs args) {
 		this._dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
-		await this.InitializeAsync();
+		// スプラッシュ画面を表示
+		var splashScreen = new Views.SplashScreenWindow(this._stateStore);
+		splashScreen.Activate();
+
+		await Task.Run(async () => {
+			await this.InitializeAsync(splashScreen.ViewModel);
+		});
 
 		var windowManager = Ioc.Default.GetRequiredService<WindowManager>();
 		windowManager.RestoreWindows();
@@ -68,6 +75,9 @@ public partial class App {
 		AppDomain.CurrentDomain.UnhandledException += (_, e) => {
 			logger.LogError(e.ExceptionObject as Exception, "UnhandledException");
 		};
+
+		// メインウィンドウが表示されたらスプラッシュ画面を閉じる
+		splashScreen.Close();
 	}
 
 	/// <summary>
@@ -128,11 +138,12 @@ public partial class App {
 		Ioc.Default.ConfigureServices(serviceCollection.BuildServiceProvider());
 	}
 
-	private async Task InitializeAsync() {
+	private async Task InitializeAsync(SplashScreenViewModel? splashViewModel = null) {
+		splashViewModel?.UpdateStatus("データベースを準備しています...");
 
 		var dbFactory = Ioc.Default.GetRequiredService<IDbContextFactory<MediaDeckDbContext>>();
-		using (var db = dbFactory.CreateDbContext()) {
-			db.Database.EnsureCreated();
+		await using (var db = await dbFactory.CreateDbContextAsync()) {
+			await db.Database.EnsureCreatedAsync();
 
 
 			var dbVersion = db.DbVersions.AsNoTracking().FirstOrDefault(x => x.Id == 1);
@@ -141,25 +152,29 @@ public partial class App {
 					Id = 1,
 					Version = 1,
 				});
-				db.SaveChanges();
+				await db.SaveChangesAsync();
 			}
 		}
 
+		splashViewModel?.UpdateStatus("構成設定を読み込んでいます...");
 		Directory.CreateDirectory(this._configStore.Config.PathConfig.TemporaryFolderPath.Value);
 
 		GlobalFFOptions.Configure(options => {
 			options.BinaryFolder = Path.Combine(this._configStore.Config.PathConfig.FFMpegFolderPath.Value);
 		});
 
+		splashViewModel?.UpdateStatus("タグ情報を初期化しています...");
 		var tagsManager = Ioc.Default.GetRequiredService<ITagsManager>();
 		await tagsManager.InitializeAsync();
 
+		splashViewModel?.UpdateStatus("バックグラウンドタスクを準備しています...");
 		var backgroundTasksViewModel = Ioc.Default.GetRequiredService<BackgroundTasksViewModel>();
 		backgroundTasksViewModel.Start();
 
 		var _ = this._stateStore.RootState.AppState.DefaultTabState.SearchState.CurrentSortCondition.Subscribe(x => Debug.WriteLine($"CurrentSortCondition {x}"));
 		_ = this._stateStore.RootState.AppState.DefaultTabState.SearchState.SortDirection.Subscribe(x => Debug.WriteLine($"SortDirection {x}"));
 
+		splashViewModel?.UpdateStatus("メディアエンジンを起動しています...");
 		FlyleafLib.Engine.Start(new FlyleafLib.EngineConfig() {
 #if DEBUG
 			LogOutput = ":debug",
