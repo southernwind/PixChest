@@ -60,8 +60,7 @@ public partial class FolderGroupMediaItemOperator : BaseMediaItemOperator {
 			LastAccessTime = directoryInfo.Exists ? directoryInfo.LastAccessTime : DateTime.MinValue,
 			RegisteredTime = DateTime.Now,
 			IsExists = directoryInfo.Exists,
-			IsUnderFolderGroup = isUnderFolderGroup,
-			FolderGroupMetadata = new FolderGroupMetadata()
+			IsUnderFolderGroup = isUnderFolderGroup
 		};
 
 		await db.MediaItems.AddAsync(mediaItem);

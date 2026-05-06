@@ -257,57 +257,9 @@ public class MediaItem {
 	}
 
 	/// <summary>
-	/// Jpegメタデータ
+	/// メタデータ（JSONカラム）
 	/// </summary>
-	public virtual Jpeg? Jpeg {
-		get;
-		set;
-	}
-
-	/// <summary>
-	/// Pngメタデータ
-	/// </summary>
-	public virtual Png? Png {
-		get;
-		set;
-	}
-
-	/// <summary>
-	/// Bmpメタデータ
-	/// </summary>
-	public virtual Bmp? Bmp {
-		get;
-		set;
-	}
-
-	/// <summary>
-	/// Gifメタデータ
-	/// </summary>
-	public virtual Gif? Gif {
-		get;
-		set;
-	}
-
-	/// <summary>
-	/// Heif メタデータ
-	/// </summary>
-	public virtual Heif? Heif {
-		get;
-		set;
-	}
-
-	/// <summary>
-	/// Container メタデータ
-	/// </summary>
-	public virtual Container? Container {
-		get;
-		set;
-	}
-
-	/// <summary>
-	/// フォルダグループメタデータ
-	/// </summary>
-	public virtual FolderGroupMetadata? FolderGroupMetadata {
+	public MediaMetadata? Metadata {
 		get;
 		set;
 	}

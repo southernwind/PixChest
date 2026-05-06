@@ -23,17 +23,17 @@ public class Gif : ImageBase {
 		this.Height = d.GetUInt16(GifHeaderDirectory.TagImageHeight);
 	}
 
-	public Composition.Tables.Metadata.Gif CreateMetadataRecord() {
-		var metadata = new Composition.Tables.Metadata.Gif();
+	public Composition.Tables.Metadata.MediaMetadata CreateMetadataRecord() {
+		var metadata = new Composition.Tables.Metadata.MediaMetadata();
 
-		var h = this._reader.FirstOrDefault(x => x is GifHeaderDirectory);
-
-		metadata.ColorTableSize = this.GetInt(h, GifHeaderDirectory.TagColorTableSize);
-		metadata.IsColorTableSorted = this.GetInt(h, GifHeaderDirectory.TagIsColorTableSorted);
-		metadata.BitsPerPixel = this.GetInt(h, GifHeaderDirectory.TagBitsPerPixel);
-		metadata.HasGlobalColorTable = this.GetInt(h, GifHeaderDirectory.TagHasGlobalColorTable);
-		metadata.BackgroundColorIndex = this.GetInt(h, GifHeaderDirectory.TagBackgroundColorIndex);
-		metadata.PixelAspectRatio = this.GetInt(h, GifHeaderDirectory.TagPixelAspectRatio);
+		foreach (var directory in this._reader) {
+			foreach (var tag in directory.Tags) {
+				var value = tag.Description;
+				if (value != null) {
+					metadata.Entries.Add(new() { Key = $"{directory.Name}/{tag.Name}", Value = value });
+				}
+			}
+		}
 
 		return metadata;
 	}

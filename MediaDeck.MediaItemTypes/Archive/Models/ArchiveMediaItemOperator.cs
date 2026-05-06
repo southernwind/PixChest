@@ -79,7 +79,7 @@ public partial class ArchiveMediaItemOperator : BaseMediaItemOperator {
 			RegisteredTime = DateTime.Now,
 			IsExists = fileInfo.Exists,
 			IsUnderFolderGroup = isUnderFolderGroup,
-			Container = new() { PageCount = archiveFile.Entries.Count(x => this._mediaItemTypeService.IsTargetPath(x.Name, MediaType.Image)), }
+			Metadata = new() { Entries = [new() { Key = "PageCount", Value = archiveFile.Entries.Count(x => this._mediaItemTypeService.IsTargetPath(x.Name, MediaType.Image)).ToString() }] }
 		};
 
 		if (first != null) {

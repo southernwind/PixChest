@@ -35,14 +35,6 @@ public class MediaDeckDbContext(DbContextOptions dbContextOptions) : DbContext(d
 	} = null!;
 
 	/// <summary>
-	/// 動画メタデータテーブル
-	/// </summary>
-	public DbSet<VideoMetadataValue> VideoMetadataValues {
-		get;
-		set;
-	} = null!;
-
-	/// <summary>
 	/// 位置情報テーブル
 	/// </summary>
 	public DbSet<Position> Positions {
@@ -115,65 +107,9 @@ public class MediaDeckDbContext(DbContextOptions dbContextOptions) : DbContext(d
 	} = null!;
 
 	/// <summary>
-	/// フォルダグループメタデータテーブル
-	/// </summary>
-	public DbSet<FolderGroupMetadata> FolderGroupMetadatas {
-		get;
-		set;
-	} = null!;
-
-	/// <summary>
 	/// データベースバージョン
 	/// </summary>
 	public DbSet<DbVersion> DbVersions {
-		get;
-		set;
-	} = null!;
-
-	/// <summary>
-	/// Jpegメタデータテーブル
-	/// </summary>
-	public DbSet<Jpeg> Jpegs {
-		get;
-		set;
-	} = null!;
-
-	/// <summary>
-	/// Pngメタデータテーブル
-	/// </summary>
-	public DbSet<Png> Pngs {
-		get;
-		set;
-	} = null!;
-
-	/// <summary>
-	/// Bmpメタデータテーブル
-	/// </summary>
-	public DbSet<Bmp> Bmps {
-		get;
-		set;
-	} = null!;
-
-	/// <summary>
-	/// Gifメタデータテーブル
-	/// </summary>
-	public DbSet<Gif> Gifs {
-		get;
-		set;
-	} = null!;
-
-	/// <summary>
-	/// Heifメタデータテーブル
-	/// </summary>
-	public DbSet<Heif> Heifs {
-		get;
-		set;
-	} = null!;
-
-	/// <summary>
-	/// Containerメタデータテーブル
-	/// </summary>
-	public DbSet<Container> Containers {
 		get;
 		set;
 	} = null!;
@@ -187,7 +123,6 @@ public class MediaDeckDbContext(DbContextOptions dbContextOptions) : DbContext(d
 		modelBuilder.Entity<MediaItem>().HasKey(mf => mf.MediaItemId);
 		modelBuilder.Entity<ImageFile>().HasKey(i => i.MediaItemId);
 		modelBuilder.Entity<VideoFile>().HasKey(v => v.MediaItemId);
-		modelBuilder.Entity<VideoMetadataValue>().HasKey(v => new { v.MediaItemId, v.Key });
 		modelBuilder.Entity<Position>().HasKey(p => new { p.Latitude, p.Longitude });
 		modelBuilder.Entity<PositionAddress>().HasKey(pa => new { pa.Latitude, pa.Longitude, pa.Type });
 		modelBuilder.Entity<PositionNameDetail>().HasKey(pnd => new { pnd.Latitude, pnd.Longitude, pnd.Desc });
@@ -197,13 +132,6 @@ public class MediaDeckDbContext(DbContextOptions dbContextOptions) : DbContext(d
 		modelBuilder.Entity<TagCategory>().HasKey(tc => tc.TagCategoryId);
 		modelBuilder.Entity<Album>().HasKey(a => a.AlbumId);
 		modelBuilder.Entity<MediaItemAlbum>().HasKey(mia => new { mia.MediaItemId, mia.AlbumId });
-		modelBuilder.Entity<Jpeg>().HasKey(j => j.MediaItemId);
-		modelBuilder.Entity<Png>().HasKey(p => p.MediaItemId);
-		modelBuilder.Entity<Bmp>().HasKey(b => b.MediaItemId);
-		modelBuilder.Entity<Gif>().HasKey(b => b.MediaItemId);
-		modelBuilder.Entity<Heif>().HasKey(b => b.MediaItemId);
-		modelBuilder.Entity<Container>().HasKey(b => b.MediaItemId);
-		modelBuilder.Entity<FolderGroupMetadata>().HasKey(f => f.MediaItemId);
 		modelBuilder.Entity<DbVersion>().HasKey(x => x.Id);
 
 		// Index
@@ -223,11 +151,6 @@ public class MediaDeckDbContext(DbContextOptions dbContextOptions) : DbContext(d
 		modelBuilder.Entity<VideoFile>()
 			.HasOne(v => v.MediaItem)
 			.WithOne(m => m.VideoFile)
-			.OnDelete(DeleteBehavior.Cascade);
-
-		modelBuilder.Entity<VideoMetadataValue>()
-			.HasOne(v => v.VideoFile)
-			.WithMany(v => v.VideoMetadataValues)
 			.OnDelete(DeleteBehavior.Cascade);
 
 		modelBuilder.Entity<Position>()
@@ -270,40 +193,11 @@ public class MediaDeckDbContext(DbContextOptions dbContextOptions) : DbContext(d
 			.IsRequired(false)
 			.OnDelete(DeleteBehavior.SetNull);
 
-		modelBuilder.Entity<Jpeg>()
-			.HasOne(j => j.MediaItem)
-			.WithOne(m => m.Jpeg)
-			.OnDelete(DeleteBehavior.Cascade);
-
-		modelBuilder.Entity<Png>()
-			.HasOne(p => p.MediaItem)
-			.WithOne(m => m.Png)
-			.OnDelete(DeleteBehavior.Cascade);
-
-		modelBuilder.Entity<Bmp>()
-			.HasOne(b => b.MediaItem)
-			.WithOne(m => m.Bmp)
-			.OnDelete(DeleteBehavior.Cascade);
-
-		modelBuilder.Entity<Gif>()
-			.HasOne(g => g.MediaItem)
-			.WithOne(m => m.Gif)
-			.OnDelete(DeleteBehavior.Cascade);
-
-		modelBuilder.Entity<Heif>()
-			.HasOne(g => g.MediaItem)
-			.WithOne(m => m.Heif)
-			.OnDelete(DeleteBehavior.Cascade);
-
-		modelBuilder.Entity<Container>()
-			.HasOne(g => g.MediaItem)
-			.WithOne(m => m.Container)
-			.OnDelete(DeleteBehavior.Cascade);
-
-		modelBuilder.Entity<FolderGroupMetadata>()
-			.HasOne(f => f.MediaItem)
-			.WithOne(m => m.FolderGroupMetadata)
-			.OnDelete(DeleteBehavior.Cascade);
+		modelBuilder.Entity<MediaItem>()
+			.OwnsOne(m => m.Metadata, b => {
+				b.ToJson();
+				b.OwnsMany(m => m.Entries);
+			});
 
 		modelBuilder.Entity<Album>()
 			.HasIndex(a => a.Path)

@@ -23,17 +23,18 @@ public class Bmp : ImageBase {
 		this.Height = d.GetUInt16(BmpHeaderDirectory.TagImageHeight);
 	}
 
-	public Composition.Tables.Metadata.Bmp CreateMetadataRecord() {
-		var metadata = new Composition.Tables.Metadata.Bmp();
+	public Composition.Tables.Metadata.MediaMetadata CreateMetadataRecord() {
+		var metadata = new Composition.Tables.Metadata.MediaMetadata();
 
-		var b = this._reader.FirstOrDefault(x => x is BmpHeaderDirectory);
+		foreach (var directory in this._reader) {
+			foreach (var tag in directory.Tags) {
+				var value = tag.Description;
+				if (value != null) {
+					metadata.Entries.Add(new() { Key = $"{directory.Name}/{tag.Name}", Value = value });
+				}
+			}
+		}
 
-		metadata.BitsPerPixel = this.GetInt(b, BmpHeaderDirectory.TagBitsPerPixel);
-		metadata.Compression = this.GetInt(b, BmpHeaderDirectory.TagCompression);
-		metadata.XPixelsPerMeter = this.GetInt(b, BmpHeaderDirectory.TagXPixelsPerMeter);
-		metadata.YPixelsPerMeter = this.GetInt(b, BmpHeaderDirectory.TagYPixelsPerMeter);
-		metadata.PaletteColorCount = this.GetInt(b, BmpHeaderDirectory.TagPaletteColourCount);
-		metadata.ImportantColorCount = this.GetInt(b, BmpHeaderDirectory.TagImportantColourCount);
 		return metadata;
 	}
 }

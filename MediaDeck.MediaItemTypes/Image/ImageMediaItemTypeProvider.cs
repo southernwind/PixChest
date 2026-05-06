@@ -16,10 +16,6 @@ public class ImageMediaItemTypeProvider : BaseMediaItemTypeProvider {
 	public override IQueryable<MediaItem> IncludeTables(IQueryable<MediaItem> MediaItems) {
 		return MediaItems
 			.Include(mf => mf.ImageFile)
-			.Include(mf => mf.Jpeg)
-			.Include(mf => mf.Png)
-			.Include(mf => mf.Bmp)
-			.Include(mf => mf.Gif)
-			.Include(mf => mf.Heif);
+			.Include(mf => mf.Metadata);
 	}
 }

@@ -135,19 +135,24 @@ public partial class App {
 
 		await Task.Run(async () => {
 			splashViewModel?.UpdateStatus("データベースを準備しています...");
+			var dbPath = Path.Combine(FilePathConstants.BaseDirectory, "pix.db");
+			if (!File.Exists(dbPath)) {
+				{
+					// 事前に接続を開いて0バイトファイルを作らないとEnsureCreatedAsyncで死ぬ
+					using var __ = File.Create(dbPath);
+				}
+				var dbFactory = Ioc.Default.GetRequiredService<IDbContextFactory<MediaDeckDbContext>>();
+				await using (var db = await dbFactory.CreateDbContextAsync()) {
+					await db.Database.EnsureCreatedAsync();
 
-			var dbFactory = Ioc.Default.GetRequiredService<IDbContextFactory<MediaDeckDbContext>>();
-			await using (var db = await dbFactory.CreateDbContextAsync()) {
-				await db.Database.EnsureCreatedAsync();
-
-
-				var dbVersion = db.DbVersions.AsNoTracking().FirstOrDefault(x => x.Id == 1);
-				if (dbVersion == null) {
-					db.DbVersions.Add(new() {
-						Id = 1,
-						Version = 1,
-					});
-					await db.SaveChangesAsync();
+					var dbVersion = db.DbVersions.AsNoTracking().FirstOrDefault(x => x.Id == 1);
+					if (dbVersion == null) {
+						db.DbVersions.Add(new() {
+							Id = 1,
+							Version = 1,
+						});
+						await db.SaveChangesAsync();
+					}
 				}
 			}
 

@@ -41,7 +41,7 @@ public class PdfMediaItemFactory :
 		var ifm = this._serviceProvider.GetRequiredService<PdfMediaItemModel>();
 		ifm.Initialize(MediaItem.MediaItemId, MediaItem.FilePath);
 		this.SetModelProperties(ifm, MediaItem);
-		ifm.FileCount = MediaItem.Container?.PageCount;
+		ifm.FileCount = int.TryParse(MediaItem.Metadata?.Entries.FirstOrDefault(e => e.Key == "PageCount")?.Value, out var pc) ? pc : null;
 		return ifm;
 	}
 

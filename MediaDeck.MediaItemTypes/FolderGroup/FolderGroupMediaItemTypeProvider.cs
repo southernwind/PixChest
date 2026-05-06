@@ -70,6 +70,6 @@ public class FolderGroupMediaItemTypeProvider : BaseMediaItemTypeProvider {
 	}
 
 	public override IQueryable<MediaItem> IncludeTables(IQueryable<MediaItem> MediaItems) {
-		return MediaItems.Include(mf => mf.FolderGroupMetadata);
+		return MediaItems;
 	}
 }

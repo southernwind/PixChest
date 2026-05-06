@@ -87,15 +87,15 @@ public class ImageMediaItemOperator : BaseMediaItemOperator {
 		mf.Width = meta.Width;
 
 		if (meta is Jpeg jpeg) {
-			mf.Jpeg = jpeg.CreateMetadataRecord();
+			mf.Metadata = jpeg.CreateMetadataRecord();
 		} else if (meta is Png png) {
-			mf.Png = png.CreateMetadataRecord();
+			mf.Metadata = png.CreateMetadataRecord();
 		} else if (meta is Bmp bmp) {
-			mf.Bmp = bmp.CreateMetadataRecord();
+			mf.Metadata = bmp.CreateMetadataRecord();
 		} else if (meta is Gif gif) {
-			mf.Gif = gif.CreateMetadataRecord();
+			mf.Metadata = gif.CreateMetadataRecord();
 		} else if (meta is Heif heif) {
-			mf.Heif = heif.CreateMetadataRecord();
+			mf.Metadata = heif.CreateMetadataRecord();
 		}
 
 		await db.MediaItems.AddAsync(mf);

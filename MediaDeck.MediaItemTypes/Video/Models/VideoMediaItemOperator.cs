@@ -86,7 +86,10 @@ public partial class VideoMediaItemOperator : BaseMediaItemOperator {
 			Width = metadata.PrimaryVideoStream?.Width ?? 0,
 			Height = metadata.PrimaryVideoStream?.Height ?? 0,
 			IsUnderFolderGroup = isUnderFolderGroup,
-			VideoFile = new() { Duration = metadata.PrimaryVideoStream?.Duration.TotalSeconds, Rotation = metadata.PrimaryVideoStream?.Rotation, VideoMetadataValues = metadata.PrimaryVideoStream?.Tags?.Select(x => new VideoMetadataValue() { Key = x.Key, Value = x.Value }).ToList() ?? [] }
+			VideoFile = new() { Duration = metadata.PrimaryVideoStream?.Duration.TotalSeconds, Rotation = metadata.PrimaryVideoStream?.Rotation },
+			Metadata = new() {
+				Entries = metadata.PrimaryVideoStream?.Tags?.Select(x => new Composition.Tables.Metadata.MediaMetadataEntry() { Key = x.Key, Value = x.Value }).ToList() ?? []
+			}
 		};
 
 		await db.MediaItems.AddAsync(mf);

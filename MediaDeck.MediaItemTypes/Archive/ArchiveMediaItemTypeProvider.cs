@@ -15,6 +15,6 @@ public class ArchiveMediaItemTypeProvider : BaseMediaItemTypeProvider {
 
 	public override IQueryable<MediaItem> IncludeTables(IQueryable<MediaItem> MediaItems) {
 		return MediaItems
-			.Include(mf => mf.Container);
+			.Include(mf => mf.Metadata);
 	}
 }

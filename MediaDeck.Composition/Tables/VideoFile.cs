@@ -1,5 +1,3 @@
-using MediaDeck.Composition.Tables.Metadata;
-
 namespace MediaDeck.Composition.Tables;
 
 /// <summary>
@@ -37,13 +35,6 @@ public class VideoFile {
 	/// </summary>
 	public int? Rotation {
 		get;
-		set;
-	}
-
-	public virtual ICollection<VideoMetadataValue> VideoMetadataValues {
-		get {
-			return field ?? throw new InvalidOperationException();
-		}
 		set;
 	}
 }

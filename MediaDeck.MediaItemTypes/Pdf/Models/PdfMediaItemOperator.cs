@@ -68,7 +68,7 @@ public partial class PdfMediaItemOperator : BaseMediaItemOperator {
 			Width = (int)pdfDocument.Width,
 			Height = (int)pdfDocument.Height,
 			IsUnderFolderGroup = isUnderFolderGroup,
-			Container = new() { PageCount = pdfDocument.PageCount }
+			Metadata = new() { Entries = [new() { Key = "PageCount", Value = pdfDocument.PageCount.ToString() }] }
 		};
 
 		await db.MediaItems.AddAsync(mf);
