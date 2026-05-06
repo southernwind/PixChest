@@ -69,7 +69,8 @@ mc:Ignorable="d" >
 				</ItemsPanelTemplate>
 			</ListView.ItemsPanel>
 			<ListView.Resources>
-				<MenuFlyout x:Key="FileContextMenu" >
+				<MenuFlyout x:Key="FileContextMenu" Opening="FileContextMenu_Opening" >
+					<MenuFlyoutSubItem Text="アルバムへ追加" Tag="AddToAlbumRoot" />
 					<MenuFlyoutItem Text="Recreate Thumbnail" Click="MenuFlyoutItem_Click" Tag="RecreateThumbnail" />
 					<MenuFlyoutItem Text="Remove File" Click="MenuFlyoutItem_Click" Tag="RemoveFile" />
 					<MenuFlyoutItem Text="Open Folder" Click="MenuFlyoutItem_Click" Tag="OpenFolder" />

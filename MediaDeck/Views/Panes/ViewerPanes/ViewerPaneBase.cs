@@ -1,10 +1,12 @@
 using System.IO;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using MediaDeck.Common.Utilities;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
 using MediaDeck.Core.Stores.State;
 using MediaDeck.Services;
 using MediaDeck.ViewModels.Panes.ViewerPanes;
+using MediaDeck.Views.Dialogs;
 using MediaDeck.Views.Helpers;
 using MediaDeck.Views.Thumbnails;
 using Microsoft.UI.Input;
@@ -17,8 +19,12 @@ using Windows.UI.Core;
 namespace MediaDeck.Views.Panes.ViewerPanes;
 
 public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
+	private const string AddToAlbumRootTag = "AddToAlbumRoot";
+	private const string AddToAlbumItemTagPrefix = "AddToAlbum:";
+	private const string AddToAlbumCreateTag = "AddToAlbum:Create";
 	private readonly WindowService _windowService;
 	private readonly WindowManager _windowManager;
+	private IMediaItemViewModel? _contextMenuTargetFile;
 
 	public ViewerPaneBase() {
 		this._windowService = Ioc.Default.GetRequiredService<WindowService>();
@@ -59,6 +65,7 @@ public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
 		if (element?.DataContext is not IMediaItemViewModel fileViewModel) {
 			return;
 		}
+		this._contextMenuTargetFile = fileViewModel;
 
 		if (parentControl.Resources["FileContextMenu"] is not MenuFlyout menuFlyout) {
 			return;
@@ -75,13 +82,30 @@ public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
 		if (sender is not MenuFlyoutItem selectedItem) {
 			return;
 		}
-		if (selectedItem.DataContext is not IMediaItemViewModel fvm) {
+
+		var fvm = this._contextMenuTargetFile;
+		if (fvm is null) {
 			return;
 		}
-		switch (selectedItem.Tag.ToString()) {
+
+		var selectedFiles = this.ViewModel.MediaContentLibraryViewModel.SelectedFiles.Value;
+		var targetFiles = selectedFiles is { Length: > 0 } && selectedFiles.Contains(fvm) ? selectedFiles : [fvm];
+		var tag = selectedItem.Tag?.ToString();
+
+		if (tag == AddToAlbumCreateTag) {
+			await this.CreateAlbumAndAddItemsAsync(targetFiles);
+			return;
+		}
+		if (tag is { } t && t.StartsWith(AddToAlbumItemTagPrefix, StringComparison.Ordinal) && t != AddToAlbumCreateTag) {
+			var albumPath = t[AddToAlbumItemTagPrefix.Length..];
+			if (!string.IsNullOrWhiteSpace(albumPath)) {
+				await this.ViewModel.MediaContentLibraryViewModel.AddToAlbumAsync(albumPath, targetFiles);
+			}
+			return;
+		}
+
+		switch (tag) {
 			case "RecreateThumbnail":
-				var selectedFiles = this.ViewModel.MediaContentLibraryViewModel.SelectedFiles.Value;
-				var targetFiles = selectedFiles is { Length: > 0 } && selectedFiles.Contains(fvm) ? selectedFiles : [fvm];
 				if (targetFiles.Length > 1) {
 					var bulkWindow = Ioc.Default.GetRequiredService<BulkThumbnailRegenerationWindow>();
 					bulkWindow.ViewModel.Initialize(targetFiles);
@@ -103,8 +127,6 @@ public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
 				}
 				break;
 			case "RemoveFile": {
-					selectedFiles = this.ViewModel.MediaContentLibraryViewModel.SelectedFiles.Value;
-					targetFiles = selectedFiles is { Length: > 0 } && selectedFiles.Contains(fvm) ? selectedFiles : [fvm];
 					var message = targetFiles.Length == 1 ? "Remove file from MediaDeck database?" : $"Remove {targetFiles.Length} files from MediaDeck database?";
 
 					var dialog = new ContentDialog {
@@ -132,6 +154,47 @@ public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
 				}
 				break;
 		}
+	}
+
+	protected async void FileContextMenu_Opening(object sender, object e) {
+		if (sender is not MenuFlyout menuFlyout || this.ViewModel is null) {
+			return;
+		}
+		var addRoot = menuFlyout.Items.OfType<MenuFlyoutSubItem>().FirstOrDefault(x => x.Tag?.ToString() == AddToAlbumRootTag);
+		if (addRoot is null) {
+			return;
+		}
+
+		addRoot.Items.Clear();
+		var paths = await this.ViewModel.MediaContentLibraryViewModel.GetRecentAlbumPathsAsync(12);
+		foreach (var path in paths) {
+			var item = new MenuFlyoutItem {
+				Text = path,
+				Tag = $"{AddToAlbumItemTagPrefix}{path}",
+			};
+			item.Click += this.MenuFlyoutItem_Click;
+			addRoot.Items.Add(item);
+		}
+		if (addRoot.Items.Count > 0) {
+			addRoot.Items.Add(new MenuFlyoutSeparator());
+		}
+		var createItem = new MenuFlyoutItem {
+			Text = "アルバムを新規作成",
+			Tag = AddToAlbumCreateTag,
+		};
+		createItem.Click += this.MenuFlyoutItem_Click;
+		addRoot.Items.Add(createItem);
+	}
+
+	private async Task CreateAlbumAndAddItemsAsync(IMediaItemViewModel[] targetFiles) {
+		var dialog = Ioc.Default.GetRequiredService<NewAlbumDialog>();
+		dialog.XamlRoot = this.XamlRoot;
+		dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+		var result = await dialog.ShowAsync();
+		if (result != ContentDialogResult.Primary || string.IsNullOrWhiteSpace(dialog.FullAlbumPath)) {
+			return;
+		}
+		await this.ViewModel.MediaContentLibraryViewModel.AddToAlbumAsync(dialog.FullAlbumPath, targetFiles);
 	}
 
 	protected void HandleListPointerWheelChanged(object sender, PointerRoutedEventArgs e) {

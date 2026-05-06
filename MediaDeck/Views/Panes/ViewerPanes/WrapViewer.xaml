@@ -31,7 +31,8 @@
 				</ItemsPanelTemplate>
 			</GridView.ItemsPanel>
 			<GridView.Resources>
-				<MenuFlyout x:Key="FileContextMenu" >
+				<MenuFlyout x:Key="FileContextMenu" Opening="FileContextMenu_Opening" >
+					<MenuFlyoutSubItem Text="アルバムへ追加" Tag="AddToAlbumRoot" />
 					<MenuFlyoutItem Text="Recreate Thumbnail"
 						Click="MenuFlyoutItem_Click"
 						Tag="RecreateThumbnail" />

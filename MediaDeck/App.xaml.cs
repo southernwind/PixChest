@@ -134,6 +134,7 @@ public partial class App {
 		using (var db = dbFactory.CreateDbContext()) {
 			db.Database.EnsureCreated();
 
+
 			var dbVersion = db.DbVersions.AsNoTracking().FirstOrDefault(x => x.Id == 1);
 			if (dbVersion == null) {
 				db.DbVersions.Add(new() {

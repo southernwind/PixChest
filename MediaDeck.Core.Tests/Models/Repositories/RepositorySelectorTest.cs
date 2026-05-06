@@ -17,13 +17,16 @@ public class RepositorySelectorTest {
 		// FolderRepositoryは依存関係が多くコンストラクタが重いため、RuntimeHelpersを使用して未初期化インスタンスを生成します。
 		// RepositorySelectorはインスタンスを保持するだけなので、これで十分です。
 		var dummyFolderRepository = RuntimeHelpers.GetUninitializedObject(typeof(FolderRepository)) as FolderRepository;
+		var dummyAlbumRepository = RuntimeHelpers.GetUninitializedObject(typeof(AlbumRepository)) as AlbumRepository;
 
 		// Act
-		var selector = new RepositorySelector(dummyFolderRepository!);
+		var selector = new RepositorySelector(dummyFolderRepository!, dummyAlbumRepository!);
 
 		// Assert
 		selector.Repositories.ShouldNotBeNull();
-		selector.Repositories.ShouldHaveSingleItem().ShouldBeSameAs(dummyFolderRepository);
+		selector.Repositories.Length.ShouldBe(2);
+		selector.Repositories[0].ShouldBeSameAs(dummyFolderRepository);
+		selector.Repositories[1].ShouldBeSameAs(dummyAlbumRepository);
 
 		selector.SelectedRepository.ShouldNotBeNull();
 		selector.SelectedRepository.Value.ShouldBeSameAs(dummyFolderRepository);

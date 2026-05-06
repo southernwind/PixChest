@@ -223,6 +223,16 @@ public class MediaItem {
 	}
 
 	/// <summary>
+	/// 所属アルバムリスト
+	/// </summary>
+	public virtual ICollection<MediaItemAlbum> MediaItemAlbums {
+		get {
+			return field ?? throw new InvalidOperationException();
+		}
+		set;
+	}
+
+	/// <summary>
 	/// 動画ファイル
 	/// </summary>
 	public virtual VideoFile? VideoFile {

@@ -99,6 +99,22 @@ public class MediaDeckDbContext(DbContextOptions dbContextOptions) : DbContext(d
 	} = null!;
 
 	/// <summary>
+	/// アルバムテーブル
+	/// </summary>
+	public DbSet<Album> Albums {
+		get;
+		set;
+	} = null!;
+
+	/// <summary>
+	/// メディアアイテム・アルバム中間テーブル
+	/// </summary>
+	public DbSet<MediaItemAlbum> MediaItemAlbums {
+		get;
+		set;
+	} = null!;
+
+	/// <summary>
 	/// フォルダグループメタデータテーブル
 	/// </summary>
 	public DbSet<FolderGroupMetadata> FolderGroupMetadatas {
@@ -179,6 +195,8 @@ public class MediaDeckDbContext(DbContextOptions dbContextOptions) : DbContext(d
 		modelBuilder.Entity<Tag>().HasKey(t => t.TagId);
 		modelBuilder.Entity<TagAlias>().HasKey(ta => new { ta.TagId, ta.TagAliasId });
 		modelBuilder.Entity<TagCategory>().HasKey(tc => tc.TagCategoryId);
+		modelBuilder.Entity<Album>().HasKey(a => a.AlbumId);
+		modelBuilder.Entity<MediaItemAlbum>().HasKey(mia => new { mia.MediaItemId, mia.AlbumId });
 		modelBuilder.Entity<Jpeg>().HasKey(j => j.MediaItemId);
 		modelBuilder.Entity<Png>().HasKey(p => p.MediaItemId);
 		modelBuilder.Entity<Bmp>().HasKey(b => b.MediaItemId);
@@ -285,6 +303,20 @@ public class MediaDeckDbContext(DbContextOptions dbContextOptions) : DbContext(d
 		modelBuilder.Entity<FolderGroupMetadata>()
 			.HasOne(f => f.MediaItem)
 			.WithOne(m => m.FolderGroupMetadata)
+			.OnDelete(DeleteBehavior.Cascade);
+
+		modelBuilder.Entity<Album>()
+			.HasIndex(a => a.Path)
+			.IsUnique();
+
+		modelBuilder.Entity<MediaItemAlbum>()
+			.HasOne(mia => mia.MediaItem)
+			.WithMany(m => m.MediaItemAlbums)
+			.OnDelete(DeleteBehavior.Cascade);
+
+		modelBuilder.Entity<MediaItemAlbum>()
+			.HasOne(mia => mia.Album)
+			.WithMany(a => a.MediaItemAlbums)
 			.OnDelete(DeleteBehavior.Cascade);
 	}
 

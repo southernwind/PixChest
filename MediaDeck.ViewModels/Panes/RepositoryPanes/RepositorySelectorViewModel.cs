@@ -6,10 +6,18 @@ namespace MediaDeck.ViewModels.Panes.RepositoryPanes;
 [Inject(InjectServiceLifetime.Scoped)]
 public class RepositorySelectorViewModel : ViewModelBase {
 	public RepositorySelectorViewModel(
-		RepositorySelector repositorySelector, FolderRepositoryViewModel folderRepositoryViewModel) {
-		this.RepositoryPaneViewModels = [folderRepositoryViewModel];
-		this.FolderRepositoryViewModel = (this.RepositoryPaneViewModels.First(vm => vm is FolderRepositoryViewModel) as FolderRepositoryViewModel)!;
+		RepositorySelector repositorySelector,
+		FolderRepositoryViewModel folderRepositoryViewModel,
+		AlbumRepositoryViewModel albumRepositoryViewModel) {
+		this.RepositoryPaneViewModels = [folderRepositoryViewModel, albumRepositoryViewModel];
+		this.FolderRepositoryViewModel = folderRepositoryViewModel;
+		this.AlbumRepositoryViewModel = albumRepositoryViewModel;
 		this.SelectedRepositoryPane = repositorySelector.SelectedRepository.Select(x => this.RepositoryPaneViewModels.First(vm => vm.Model == x)).ToBindableReactiveProperty(null!);
+		this.SelectedRepositoryPane.Subscribe(vm => {
+			if (vm is { } v) {
+				repositorySelector.SelectedRepository.Value = v.Model;
+			}
+		}).AddTo(this.CompositeDisposable);
 		this.LoadCommand.Subscribe(async _ => {
 			foreach (var repository in repositorySelector.Repositories) {
 				await repository.Load();
@@ -30,6 +38,10 @@ public class RepositorySelectorViewModel : ViewModelBase {
 	}
 
 	public FolderRepositoryViewModel FolderRepositoryViewModel {
+		get;
+	}
+
+	public AlbumRepositoryViewModel AlbumRepositoryViewModel {
 		get;
 	}
 }
