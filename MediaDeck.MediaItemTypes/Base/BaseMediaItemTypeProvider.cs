@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using MediaDeck.Common.Utilities;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes;
+using MediaDeck.Composition.Interfaces.MediaItemTypes.Models;
 using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Composition.Tables;
-using MediaDeck.MediaItemTypes.Base.Models;
 
 namespace MediaDeck.MediaItemTypes.Base;
 
@@ -53,15 +53,15 @@ public abstract class BaseMediaItemTypeProvider : IMediaItemTypeProvider {
 	/// <param name="filePath">実行対象のファイルパス</param>
 	/// <param name="scopedServiceProvider">実行するタブのスコープを切ったサービスプロバイダー</param>
 	/// <returns>非同期タスク</returns>
-	public virtual Task ExecuteAsync(string filePath, IServiceProvider scopedServiceProvider) {
-		var epo = this._config.ExecutionConfig.ExecutionPrograms.FirstOrDefault(x => x.MediaType == this.MediaType) as DefaultExecutionProgramObjectModel;
-		if (epo is null) {
+	public virtual Task ExecuteAsync(string filePath, IServiceProvider scopedServiceProvider, IExecutionProgramObjectModel? program = null) {
+		program ??= this._config.ExecutionConfig.GetDefaultProgram(this.MediaType);
+
+		if (program is not Models.DefaultExecutionProgramObjectModel defaultProgram) {
 			ShellUtility.ShellExecute(filePath);
 		} else {
-			var arguments = string.Format(epo.Args.Value, $"\"{filePath}\"");
-			ShellUtility.ShellExecute(epo.Path.Value, arguments);
+			var arguments = ArgumentPlaceholderResolver.Resolve(defaultProgram.Args.Value, filePath);
+			ShellUtility.ShellExecute(defaultProgram.Path.Value, arguments);
 		}
-
 		return Task.CompletedTask;
 	}
 }

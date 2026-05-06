@@ -16,11 +16,13 @@ public class DefaultExecutionProgramObjectModel : IExecutionProgramObjectModel {
 		set;
 	}
 
-	public ReactiveProperty<string> Path {
-		get;
-	} = new();
+	// ツール名（表示用）
+	public ReactiveProperty<string> Name { get; } = new("");
 
-	public ReactiveProperty<string> Args {
-		get;
-	} = new();
+	// 既定ツールフラグ
+	public ReactiveProperty<bool> IsDefault { get; } = new(false);
+
+	public ReactiveProperty<string> Path { get; } = new();
+
+	public ReactiveProperty<string> Args { get; } = new();
 }

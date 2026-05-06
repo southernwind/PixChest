@@ -83,6 +83,10 @@ public abstract class BaseMediaItemViewModel : ViewModelBase, IMediaItemViewMode
 		await this.FileModel.ExecuteFileAsync();
 	}
 
+	public virtual async Task ExecuteFileAsync(IExecutionProgramObjectModel program) {
+		await this.FileModel.ExecuteFileAsync(program);
+	}
+
 	public void RefreshThumbnail() {
 		this._thumbnailRefreshTicks = DateTime.Now.Ticks;
 		this.ThumbnailFilePath.Value = $"file:///{this.FileModel.ThumbnailFilePath ?? FilePathConstants.NoThumbnailFilePath}?refresh={this._thumbnailRefreshTicks}";

@@ -138,4 +138,5 @@ public interface IMediaItemModel : IDisposable {
 	public Task UpdateDescriptionAsync(string description);
 
 	public Task ExecuteFileAsync();
+	public Task ExecuteFileAsync(IExecutionProgramObjectModel program);
 }

@@ -19,10 +19,24 @@ public class DefaultExecutionProgramConfigViewModel : ViewModelBase, IExecutionP
 		private set;
 	}
 
+	private BindableReactiveProperty<string>? _name;
+	private BindableReactiveProperty<bool>? _isDefault;
 	private BindableReactiveProperty<string>? _path;
 	public BindableReactiveProperty<string> Path {
 		get {
 			return this._path ?? throw this.CreateNotInitializedException();
+		}
+	}
+
+	public BindableReactiveProperty<string> Name {
+		get {
+			return this._name ?? throw this.CreateNotInitializedException();
+		}
+	}
+
+	public BindableReactiveProperty<bool> IsDefault {
+		get {
+			return this._isDefault ?? throw this.CreateNotInitializedException();
 		}
 	}
 
@@ -43,11 +57,19 @@ public class DefaultExecutionProgramConfigViewModel : ViewModelBase, IExecutionP
 
 	public void Initialize(DefaultExecutionProgramObjectModel model) {
 		this.MediaType = model.MediaType;
+		this._name = model.Name.ToTwoWayBindableReactiveProperty(string.Empty, this.CompositeDisposable).AddTo(this.CompositeDisposable);
+		this._isDefault = model.IsDefault.ToTwoWayBindableReactiveProperty(false, this.CompositeDisposable).AddTo(this.CompositeDisposable);
 		this._path = model.Path.ToTwoWayBindableReactiveProperty(string.Empty, this.CompositeDisposable).AddTo(this.CompositeDisposable);
 		this._args = model.Args.ToTwoWayBindableReactiveProperty(string.Empty, this.CompositeDisposable).AddTo(this.CompositeDisposable);
 
 		this.RemoveCommand.Subscribe(_ => {
 			this._executionConfig.RemoveExecutionProgram(model);
+		}).AddTo(this.CompositeDisposable);
+
+		this._isDefault.Subscribe(isDefault => {
+			if (isDefault) {
+				this._executionConfig.SetDefaultProgram(model);
+			}
 		}).AddTo(this.CompositeDisposable);
 	}
 

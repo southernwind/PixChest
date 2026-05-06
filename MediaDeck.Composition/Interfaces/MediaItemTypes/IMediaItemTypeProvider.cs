@@ -18,7 +18,7 @@ public interface IMediaItemTypeProvider {
 	/// <param name="filePath">実行対象のファイルパス</param>
 	/// <param name="scopedServiceProvider">実行するタブのスコープを切ったサービスプロバイダー</param>
 	/// <returns>非同期タスク</returns>
-	public Task ExecuteAsync(string filePath, IServiceProvider scopedServiceProvider);
+	public Task ExecuteAsync(string filePath, IServiceProvider scopedServiceProvider, Models.IExecutionProgramObjectModel? program = null);
 }
 
 public readonly struct MediaItemPathStatus {

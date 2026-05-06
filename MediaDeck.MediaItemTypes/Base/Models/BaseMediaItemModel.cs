@@ -204,11 +204,13 @@ public abstract class BaseMediaItemModel : ModelBase, IMediaItemModel {
 		this._changed.OnNext(Unit.Default);
 	}
 
-	/// <summary>
-	/// ファイルを実行する。実行ロジックは IMediaItemType.ExecuteAsync に委譲する。
-	/// </summary>
 	public async Task ExecuteFileAsync() {
 		await this._mediaItemTypeProvider.ExecuteAsync(this.FilePath, this._scopedServiceProvider);
+		await this.IncrementUsageCountAsync();
+	}
+
+	public async Task ExecuteFileAsync(IExecutionProgramObjectModel program) {
+		await this._mediaItemTypeProvider.ExecuteAsync(this.FilePath, this._scopedServiceProvider, program);
 		await this.IncrementUsageCountAsync();
 	}
 }

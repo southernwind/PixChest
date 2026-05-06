@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MediaDeck.Common.Extensions;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes;
+using MediaDeck.Composition.Interfaces.MediaItemTypes.Models;
 using MediaDeck.Composition.Interfaces.Notifications;
 using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Composition.Tables;
@@ -43,8 +44,9 @@ public class FolderGroupMediaItemTypeProvider : BaseMediaItemTypeProvider {
 	/// </summary>
 	/// <param name="filePath">実行ファイルパス</param>
 	/// <param name="scopedServiceProvider">実行するタブのスコープを切ったサービスプロバイダー</param>
-	public override Task ExecuteAsync(string filePath, IServiceProvider scopedServiceProvider) {
-		var epo = this._config.ExecutionConfig.ExecutionPrograms.FirstOrDefault(x => x.MediaType == this.MediaType) as FolderGroupExecutionProgramObjectModel;
+	public override Task ExecuteAsync(string filePath, IServiceProvider scopedServiceProvider, IExecutionProgramObjectModel? program = null) {
+		program ??= this._config.ExecutionConfig.GetDefaultProgram(this.MediaType);
+		var epo = program as FolderGroupExecutionProgramObjectModel;
 
 		// 実行方法が Internal の場合
 		if (epo?.ExecutionType.Value == ExecutionType.Internal) {
@@ -64,7 +66,7 @@ public class FolderGroupMediaItemTypeProvider : BaseMediaItemTypeProvider {
 		}
 
 		// それ以外（External または設定なし）はベースクラスのロジック（外部起動）を使用
-		return base.ExecuteAsync(filePath, scopedServiceProvider);
+		return base.ExecuteAsync(filePath, scopedServiceProvider, program);
 	}
 
 	public override IQueryable<MediaItem> IncludeTables(IQueryable<MediaItem> MediaItems) {

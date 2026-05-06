@@ -36,18 +36,8 @@ public class ExecutionConfigPageViewModel : ViewModelBase, IConfigPageViewModel 
 		this._executionConfig = executionConfig;
 
 		this.AvailableMediaTypes = Enum.GetValues<MediaType>().Where(x => x != MediaType.Unknown).ToArray();
-		this.SelectedMediaType = new ReactiveProperty<MediaType>(this.AvailableMediaTypes.First());
+		this.SelectedMediaType = new(this.AvailableMediaTypes.First());
 
-		var collectionChanged = Observable.Merge(
-			this._executionConfig.ExecutionPrograms.ObserveAdd().Select(_ => Unit.Default),
-			this._executionConfig.ExecutionPrograms.ObserveRemove().Select(_ => Unit.Default),
-			this._executionConfig.ExecutionPrograms.ObserveReset().Select(_ => Unit.Default)
-		).Prepend(Unit.Default);
-
-		var canAdd = this.SelectedMediaType
-			.CombineLatest(collectionChanged, (type, _) => !this._executionConfig.ExecutionPrograms.Any(x => x.MediaType == type));
-
-		this.AddExecutionProgramCommand = canAdd.ToReactiveCommand();
 		this.AddExecutionProgramCommand.Subscribe(_ => {
 			this._executionConfig.AddExecutionProgram(this.SelectedMediaType.Value);
 		})
@@ -72,7 +62,7 @@ public class ExecutionConfigPageViewModel : ViewModelBase, IConfigPageViewModel 
 	/// </summary>
 	public ReactiveCommand AddExecutionProgramCommand {
 		get;
-	}
+	} = new();
 
 	/// <summary>
 	/// 選択されたメディアタイプ

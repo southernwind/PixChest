@@ -272,7 +272,7 @@ public class MediaItemTypeServiceTest {
 			return new(true, 0, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
 		}
 
-		public Task ExecuteAsync(string filePath, IServiceProvider scopedServiceProvider) {
+		public Task ExecuteAsync(string filePath, IServiceProvider scopedServiceProvider, IExecutionProgramObjectModel? program = null) {
 			return Task.CompletedTask;
 		}
 	}
@@ -396,6 +396,10 @@ public class MediaItemTypeServiceTest {
 			return Task.CompletedTask;
 		}
 
+		public Task ExecuteFileAsync(IExecutionProgramObjectModel program) {
+			return Task.CompletedTask;
+		}
+
 	}
 
 	private sealed class TestFileViewModel : ViewModelBase, IMediaItemViewModel {
@@ -443,6 +447,10 @@ public class MediaItemTypeServiceTest {
 		}
 
 		public Task ExecuteFileAsync() {
+			return Task.CompletedTask;
+		}
+
+		public Task ExecuteFileAsync(IExecutionProgramObjectModel program) {
 			return Task.CompletedTask;
 		}
 

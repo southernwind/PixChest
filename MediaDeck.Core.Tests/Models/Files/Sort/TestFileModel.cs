@@ -123,6 +123,10 @@ public class TestFileModel : MediaItem, IMediaItemModel {
 		return Task.CompletedTask;
 	}
 
+	public Task ExecuteFileAsync(IExecutionProgramObjectModel program) {
+		return Task.CompletedTask;
+	}
+
 	/// <summary>テスト用スタブのため何もしない。</summary>
 	public void Dispose() {
 	}

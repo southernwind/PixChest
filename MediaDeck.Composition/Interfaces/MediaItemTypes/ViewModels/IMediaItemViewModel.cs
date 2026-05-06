@@ -38,6 +38,7 @@ public interface IMediaItemViewModel {
 	}
 
 	public Task ExecuteFileAsync();
+	public Task ExecuteFileAsync(IExecutionProgramObjectModel program);
 
 	public void RefreshThumbnail();
 }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using MediaDeck.Common.Utilities;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Core.Stores.State;
 using MediaDeck.Services;
 using MediaDeck.ViewModels.Panes.ViewerPanes;
@@ -160,6 +161,45 @@ public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
 		if (sender is not MenuFlyout menuFlyout || this.ViewModel is null) {
 			return;
 		}
+
+		var fvm = this._contextMenuTargetFile;
+		if (fvm is null) {
+			return;
+		}
+
+		var itemsToRemove = menuFlyout.Items.Where(x => x.Tag?.ToString()?.StartsWith("ExecuteProgram:") == true).ToList();
+		foreach (var item in itemsToRemove) {
+			menuFlyout.Items.Remove(item);
+		}
+		var sepToRemove = menuFlyout.Items.FirstOrDefault(x => x.Tag?.ToString() == "ExecuteProgramSeparator");
+		if (sepToRemove != null) {
+			menuFlyout.Items.Remove(sepToRemove);
+		}
+
+		var configModel = Ioc.Default.GetRequiredService<ExecutionConfigModel>();
+		var programs = configModel.GetPrograms(fvm.MediaType);
+
+		if (programs.Count > 0) {
+			int index = 0;
+			foreach (var program in programs) {
+				var name = string.IsNullOrWhiteSpace(program.Name.Value) ? "外部プログラムで開く" : $"{program.Name.Value}で開く";
+				var item = new MenuFlyoutItem {
+					Text = program.IsDefault.Value ? $"{name} (既定)" : name,
+					Tag = $"ExecuteProgram:{program.GetHashCode()}",
+				};
+				item.Click += async (s, args) => {
+					var targetFiles = this.ViewModel.MediaContentLibraryViewModel.SelectedFiles.Value;
+					var filesToExecute = targetFiles is { Length: > 0 } && targetFiles.Contains(fvm) ? targetFiles : [fvm];
+					foreach (var file in filesToExecute) {
+						await file.ExecuteFileAsync(program);
+					}
+				};
+				menuFlyout.Items.Insert(index++, item);
+			}
+			var separator = new MenuFlyoutSeparator { Tag = "ExecuteProgramSeparator" };
+			menuFlyout.Items.Insert(index, separator);
+		}
+
 		var addRoot = menuFlyout.Items.OfType<MenuFlyoutSubItem>().FirstOrDefault(x => x.Tag?.ToString() == AddToAlbumRootTag);
 		if (addRoot is null) {
 			return;
@@ -187,6 +227,9 @@ public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
 	}
 
 	private async Task CreateAlbumAndAddItemsAsync(IMediaItemViewModel[] targetFiles) {
+		if (this.ViewModel is null) {
+			return;
+		}
 		var dialog = Ioc.Default.GetRequiredService<NewAlbumDialog>();
 		dialog.XamlRoot = this.XamlRoot;
 		dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
