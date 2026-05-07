@@ -46,29 +46,21 @@ public class MediaItemMetadataUpdatorService {
 
 		var operators = this._mediaItemTypeService.CreateMediaItemOperators().ToDictionary(x => x.TargetMediaType);
 
-		// 50件ずつ処理する
-		foreach (var chunk in targetIds.Chunk(50)) {
+		foreach (var id in targetIds) {
 			if (ct.IsCancellationRequested) {
 				return;
 			}
 
-			await using (var db = await this._dbFactory.CreateDbContextAsync(ct)) {
-				using var transaction = await db.Database.BeginTransactionAsync(ct);
+			await using var db = await this._dbFactory.CreateDbContextAsync(ct);
+			var file = await this._mediaItemTypeService.IncludeTables(db.MediaItems).FirstOrDefaultAsync(x => x.MediaItemId == id, ct);
 
-				var items = await this._mediaItemTypeService.IncludeTables(db.MediaItems)
-					.Where(x => chunk.Contains(x.MediaItemId))
-					.ToListAsync(ct);
-
-				foreach (var file in items) {
-					if (operators.TryGetValue(file.MediaType, out var op)) {
-						await op.UpdateMetadata(file);
-					}
-					this.CompletedCount.Value++;
+			if (file != null) {
+				if (operators.TryGetValue(file.MediaType, out var op)) {
+					await op.UpdateMetadata(file);
 				}
-
 				await db.SaveChangesAsync(ct);
-				await transaction.CommitAsync(ct);
 			}
+			this.CompletedCount.Value++;
 		}
 	}
 }
