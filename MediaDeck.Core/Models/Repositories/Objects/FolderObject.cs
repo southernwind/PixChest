@@ -33,14 +33,6 @@ public partial class FolderObject {
 		set;
 	} = false;
 
-	[Obsolete("for serialize")]
-	public FolderObject() {
-		this.Parent = null!;
-		this.ChildFolders = null!;
-		this.FolderPath = null!;
-		this.FolderName = null!;
-	}
-
 	public FolderObject(FolderObject? parent, string currentPath, ValueCountPair<string>[] directories) {
 		this.Parent = parent;
 		this.FolderPath = currentPath;

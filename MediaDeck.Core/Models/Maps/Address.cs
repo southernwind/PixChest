@@ -62,11 +62,6 @@ public class Address {
 
 	private static readonly string[] sourceArray = ["postcode", "country_code"];
 
-	[Obsolete("for serialize")]
-	public Address() {
-		this.Children = null!;
-	}
-
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>

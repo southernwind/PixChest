@@ -69,23 +69,6 @@ public static class SearchTypeConverters {
 	}
 
 	/// <summary>
-	/// 検索タイプに対応するBinaryExpression生成関数を返却する。
-	/// </summary>
-	/// <param name="searchType">検索タイプ</param>
-	/// <returns>BinaryExpression生成関数</returns>
-	[Obsolete("Use BuildComparisonBody instead to support non-binary operations like Contains.")]
-	public static Func<Expression, Expression, BinaryExpression> GetBinaryExpressionFactory(SearchTypeComparison searchType) {
-		return searchType switch {
-			SearchTypeComparison.GreaterThan => Expression.GreaterThan,
-			SearchTypeComparison.GreaterThanOrEqual => Expression.GreaterThanOrEqual,
-			SearchTypeComparison.Equal => Expression.Equal,
-			SearchTypeComparison.LessThanOrEqual => Expression.LessThanOrEqual,
-			SearchTypeComparison.LessThan => Expression.LessThan,
-			_ => throw new ArgumentOutOfRangeException(nameof(searchType))
-		};
-	}
-
-	/// <summary>
 	/// 検索タイプに対応する比較Expressionボディを生成する。
 	/// </summary>
 	public static Expression BuildComparisonBody(SearchTypeComparison searchType, Expression left, Expression right) {
