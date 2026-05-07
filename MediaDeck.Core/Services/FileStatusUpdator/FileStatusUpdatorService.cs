@@ -25,69 +25,128 @@ public class FileStatusUpdatorService {
 	} = new();
 
 	public async Task UpdateFileInfo(CancellationToken ct = default) {
-		List<long> targetIds;
+		// 1. 全アイテムの情報を一気にメモリに読み込む
+		List<MediaItemBasicInfo> items;
 		await using (var db = await this._dbFactory.CreateDbContextAsync(ct)) {
-			targetIds = await db.MediaItems.Select(x => x.MediaItemId).ToListAsync(ct);
+			items = await db.MediaItems
+				.Select(x => new MediaItemBasicInfo(
+					x.MediaItemId,
+					x.FilePath,
+					x.MediaType,
+					x.IsExists,
+					x.FileSize,
+					x.CreationTime,
+					x.ModifiedTime,
+					x.LastAccessTime,
+					x.PreHashUpdatedTime
+				))
+				.AsNoTracking()
+				.ToListAsync(ct);
 		}
-		this.TargetCount.Value = targetIds.Count;
+
+		this.TargetCount.Value = items.Count;
 		this.CompletedCount.Value = 0;
 
-		foreach (var chunk in targetIds.Chunk(50)) {
+		var updates = new List<FileStatusUpdateInfo>();
+
+		// 2. 状態チェックフェーズ (DBアクセスなし、ディスクI/Oのみ)
+		foreach (var item in items) {
 			if (ct.IsCancellationRequested) {
 				return;
 			}
 
-			await using (var db = await this._dbFactory.CreateDbContextAsync(ct)) {
-				using var transaction = await db.Database.BeginTransactionAsync(ct);
+			var mediaItemTypeProvider = this._mediaItemTypeService.GetMediaItemTypeProvider(item.MediaType);
+			var pathStatus = mediaItemTypeProvider.GetPathStatus(item.FilePath);
 
-				var items = await db.MediaItems
-					.Where(x => chunk.Contains(x.MediaItemId))
-					.ToListAsync(ct);
+			if (
+				item.IsExists == pathStatus.Exists &&
+				(!item.IsExists ||
+					(
+						item.FileSize == pathStatus.FileSize &&
+						item.CreationTime == pathStatus.CreationTime &&
+						item.ModifiedTime == pathStatus.ModifiedTime &&
+						item.LastAccessTime == pathStatus.LastAccessTime &&
+						item.PreHashUpdatedTime != null &&
+						item.PreHashUpdatedTime >= pathStatus.ModifiedTime
+					)
+				)
+			) {
+				this.CompletedCount.Value++;
+				continue;
+			}
 
-				bool hasUpdate = false;
-				foreach (var file in items) {
-					this.CompletedCount.Value++;
-					var mediaItemTypeProvider = this._mediaItemTypeService.GetMediaItemTypeProvider(file.MediaType);
-					var pathStatus = mediaItemTypeProvider.GetPathStatus(file.FilePath);
-					if (
-						file.IsExists == pathStatus.Exists &&
-						(!file.IsExists ||
-							(
-								file.FileSize == pathStatus.FileSize &&
-								file.CreationTime == pathStatus.CreationTime &&
-								file.ModifiedTime == pathStatus.ModifiedTime &&
-								file.LastAccessTime == pathStatus.LastAccessTime &&
-								file.PreHashUpdatedTime != null &&
-								file.PreHashUpdatedTime >= pathStatus.ModifiedTime
-							)
-						)
-					) {
-						continue;
-					}
-					var needsHashUpdate = pathStatus.Exists && (file.PreHashUpdatedTime == null || file.PreHashUpdatedTime < pathStatus.ModifiedTime) && file.MediaType != MediaType.FolderGroup;
+			var needsHashUpdate = pathStatus.Exists && (item.PreHashUpdatedTime == null || item.PreHashUpdatedTime < pathStatus.ModifiedTime) && item.MediaType != MediaType.FolderGroup;
 
-					file.IsExists = pathStatus.Exists;
+			if (needsHashUpdate) {
+				this._fileHashUpdatorService.EnqueueHashUpdate(item.MediaItemId);
+			}
 
-					if (file.IsExists) {
-						if (needsHashUpdate) {
-							this._fileHashUpdatorService.EnqueueHashUpdate(file.MediaItemId);
-						}
-						file.FileSize = pathStatus.FileSize;
-						file.CreationTime = pathStatus.CreationTime;
-						file.ModifiedTime = pathStatus.ModifiedTime;
-						file.LastAccessTime = pathStatus.LastAccessTime;
-					}
-					hasUpdate = true;
+			updates.Add(new FileStatusUpdateInfo(
+				item.MediaItemId,
+				pathStatus.Exists,
+				pathStatus.Exists ? pathStatus.FileSize : item.FileSize,
+				pathStatus.Exists ? pathStatus.CreationTime : item.CreationTime,
+				pathStatus.Exists ? pathStatus.ModifiedTime : item.ModifiedTime,
+				pathStatus.Exists ? pathStatus.LastAccessTime : item.LastAccessTime
+			));
+			this.CompletedCount.Value++;
+		}
+
+		// 3. 更新フェーズ (ExecuteUpdate を使用してフェッチなしで直接更新)
+		if (updates.Any()) {
+			foreach (var updateChunk in updates.Chunk(100)) {
+				if (ct.IsCancellationRequested) {
+					return;
 				}
 
-				if (hasUpdate) {
-					await db.SaveChangesAsync(ct);
+				await using var db = await this._dbFactory.CreateDbContextAsync(ct);
+				using var transaction = await db.Database.BeginTransactionAsync(ct);
+				foreach (var info in updateChunk) {
+					if (info.IsExists) {
+						await db.MediaItems
+							.Where(x => x.MediaItemId == info.MediaItemId)
+							.ExecuteUpdateAsync(s => s
+								.SetProperty(m => m.IsExists, info.IsExists)
+								.SetProperty(m => m.FileSize, info.FileSize)
+								.SetProperty(m => m.CreationTime, info.CreationTime)
+								.SetProperty(m => m.ModifiedTime, info.ModifiedTime)
+								.SetProperty(m => m.LastAccessTime, info.LastAccessTime),
+							ct);
+					} else {
+						await db.MediaItems
+							.Where(x => x.MediaItemId == info.MediaItemId)
+							.ExecuteUpdateAsync(s => s
+								.SetProperty(m => m.IsExists, info.IsExists),
+							ct);
+					}
 				}
 				await transaction.CommitAsync(ct);
 			}
 		}
 
+
 		// PreHash更新がなかった場合もFullHashのチェックを行う
 		await this._fileHashUpdatorService.CheckAndEnqueueFullHashUpdatesAsync(ct);
 	}
+
+	private record FileStatusUpdateInfo(
+		long MediaItemId,
+		bool IsExists,
+		long FileSize,
+		DateTime CreationTime,
+		DateTime ModifiedTime,
+		DateTime LastAccessTime
+	);
+
+	private record MediaItemBasicInfo(
+		long MediaItemId,
+		string FilePath,
+		MediaType MediaType,
+		bool IsExists,
+		long FileSize,
+		DateTime CreationTime,
+		DateTime ModifiedTime,
+		DateTime LastAccessTime,
+		DateTime? PreHashUpdatedTime
+	);
 }
