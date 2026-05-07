@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using FFMpegCore;
+using FFMpegCore.Exceptions;
 
 using MediaDeck.Composition.Database;
 using MediaDeck.Composition.Enum;
@@ -112,7 +113,7 @@ public partial class VideoMediaItemOperator : BaseMediaItemOperator {
 			mediaItem.Metadata = new() {
 				Entries = metadata.PrimaryVideoStream?.Tags?.Select(x => new MediaMetadataEntry() { Key = x.Key, Value = x.Value }).ToList() ?? []
 			};
-		} catch (FileNotFoundException) {
+		} catch (FFMpegException) {
 			// TODO: notify
 		}
 	}
