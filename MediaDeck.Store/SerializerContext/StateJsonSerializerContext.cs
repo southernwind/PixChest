@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using MediaDeck.Composition.Interfaces.Files;
+using MediaDeck.Composition.Interfaces.Notifications;
 using MediaDeck.Composition.Stores.State.Model;
 using MediaDeck.Core.Models.Files.Filter.FilterItemObjects;
 using MediaDeck.Core.Models.Files.SearchConditions;

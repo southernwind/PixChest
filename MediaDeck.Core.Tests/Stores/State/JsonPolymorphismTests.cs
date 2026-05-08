@@ -28,6 +28,7 @@ public class JsonPolymorphismTests {
 		// 必要に応じて依存関係を登録
 		services.AddTransient<AppStateModel>();
 		services.AddTransient<FolderSearchCondition>();
+		services.AddTransient<AlbumSearchCondition>();
 		services.AddTransient<TagSearchCondition>();
 		services.AddTransient<TagFilterItemObject>();
 		services.AddTransient<RateFilterItemObject>();

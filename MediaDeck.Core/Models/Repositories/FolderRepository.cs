@@ -80,7 +80,7 @@ public class FolderRepository : RepositoryBase {
 
 	public void SetRepositoryCandidate(FolderObject folderObject, bool includeSubDirectory) {
 		this._searchConditionNotificationDispatcher.UpdateRequest.OnNext(x => {
-			x.RemoveRange(x.Where(x => x is FolderSearchCondition));
+			x.RemoveRange(x.Where(x => x is IRepositorySearchCondition));
 			x.Add(new FolderSearchCondition { FolderPath = folderObject.FolderPath, IncludeSubDirectories = includeSubDirectory });
 		});
 	}
@@ -92,7 +92,7 @@ public class FolderRepository : RepositoryBase {
 	}
 
 	private void Restore() {
-		var condition = this._tabState.SearchState.SearchCondition.FirstOrDefault(x => x is FolderSearchCondition) as FolderSearchCondition;
+		var condition = this._tabState.SearchState.SearchCondition.OfType<FolderSearchCondition>().FirstOrDefault();
 		if (condition == null) {
 			return;
 		}

@@ -1,6 +1,5 @@
 using System.IO;
 using System.Threading.Tasks;
-
 using MediaDeck.Common.Extensions;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes;
@@ -10,7 +9,6 @@ using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Composition.Tables;
 using MediaDeck.MediaItemTypes.Base;
 using MediaDeck.MediaItemTypes.FolderGroup.Models;
-
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MediaDeck.MediaItemTypes.FolderGroup;
@@ -53,7 +51,7 @@ public class FolderGroupMediaItemTypeProvider : BaseMediaItemTypeProvider {
 			// 現在のフォルダ条件を削除し、対象のパスを検索トークンとして追加する
 			var searchDispatcher = scopedServiceProvider.GetRequiredService<ISearchConditionNotificationDispatcher>();
 			searchDispatcher.UpdateRequest.OnNext(conditions => {
-				conditions.RemoveRange(conditions.Where(x => x is IFolderSearchCondition));
+				conditions.RemoveRange(conditions.Where(x => x is IRepositorySearchCondition));
 
 				// IFolderSearchCondition をサービスプロバイダーから取得して設定する
 				var folderCondition = this._serviceProvider.GetRequiredService<IFolderSearchCondition>();

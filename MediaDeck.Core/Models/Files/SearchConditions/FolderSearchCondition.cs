@@ -1,6 +1,9 @@
 using System.Linq.Expressions;
+
+using MediaDeck.Composition.Interfaces.Files;
 using MediaDeck.Composition.Interfaces.Notifications;
 using MediaDeck.Composition.Tables;
+
 using R3.JsonConfig.Attributes;
 
 namespace MediaDeck.Core.Models.Files.SearchConditions;
@@ -9,10 +12,8 @@ namespace MediaDeck.Core.Models.Files.SearchConditions;
 [JsonConfigDerivedType("folder")]
 [Inject(InjectServiceLifetime.Transient)]
 [Inject(InjectServiceLifetime.Transient, typeof(IFolderSearchCondition))]
-public class FolderSearchCondition : IFolderSearchCondition {
-	public FolderSearchCondition() {
-	}
-
+[Inject(InjectServiceLifetime.Transient, typeof(IRepositorySearchCondition))]
+public class FolderSearchCondition : ISearchCondition, IFolderSearchCondition, IRepositorySearchCondition {
 	public string FolderPath {
 		get {
 			return field ?? throw new InvalidOperationException($"{nameof(this.FolderPath)} is not initialized.");
@@ -29,7 +30,7 @@ public class FolderSearchCondition : IFolderSearchCondition {
 
 	public string DisplayText {
 		get {
-			return $"Folder={this.FolderPath}{(this.IncludeSubDirectories ? "&IncludeSubDirectories" : "")}";
+			return $"Folder={this.FolderPath}{(this.IncludeSubDirectories ? "&IncludeSubFolders" : "")}";
 		}
 	}
 
@@ -37,7 +38,7 @@ public class FolderSearchCondition : IFolderSearchCondition {
 		get {
 			if (this.IncludeSubDirectories) {
 				return MediaItem =>
-					MediaItem.DirectoryPath == this.FolderPath || MediaItem.DirectoryPath.StartsWith($"{this.FolderPath}{Path.DirectorySeparatorChar}");
+					MediaItem.DirectoryPath == this.FolderPath || MediaItem.DirectoryPath.StartsWith($"{this.FolderPath}{System.IO.Path.DirectorySeparatorChar}");
 			} else {
 				return MediaItem =>
 					MediaItem.DirectoryPath == this.FolderPath;

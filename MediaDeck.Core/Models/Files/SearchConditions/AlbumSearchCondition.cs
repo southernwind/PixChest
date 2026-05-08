@@ -1,25 +1,18 @@
 using System.Linq.Expressions;
 
 using MediaDeck.Composition.Interfaces.Files;
+using MediaDeck.Composition.Interfaces.Notifications;
 using MediaDeck.Composition.Tables;
 
 using R3.JsonConfig.Attributes;
 
 namespace MediaDeck.Core.Models.Files.SearchConditions;
 
-/// <summary>
-/// アルバムを条件にした検索。
-/// </summary>
 [GenerateR3JsonConfigDto]
 [JsonConfigDerivedType("album")]
 [Inject(InjectServiceLifetime.Transient)]
-public class AlbumSearchCondition : ISearchCondition {
-	public AlbumSearchCondition() {
-	}
-
-	/// <summary>
-	/// 対象アルバムの仮想パス。
-	/// </summary>
+[Inject(InjectServiceLifetime.Transient, typeof(IRepositorySearchCondition))]
+public class AlbumSearchCondition : ISearchCondition, IRepositorySearchCondition {
 	public string AlbumPath {
 		get {
 			return field ?? throw new InvalidOperationException($"{nameof(this.AlbumPath)} is not initialized.");
@@ -29,9 +22,6 @@ public class AlbumSearchCondition : ISearchCondition {
 		}
 	}
 
-	/// <summary>
-	/// 子階層アルバムも含めるかどうか。
-	/// </summary>
 	public bool IncludeSubAlbums {
 		get;
 		set;

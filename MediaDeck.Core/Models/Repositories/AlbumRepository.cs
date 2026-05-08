@@ -81,7 +81,7 @@ public class AlbumRepository : RepositoryBase {
 
 	public void SetRepositoryCandidate(AlbumObject albumObject, bool includeSubAlbums) {
 		this._searchConditionNotificationDispatcher.UpdateRequest.OnNext(x => {
-			x.RemoveRange(x.Where(c => c is AlbumSearchCondition));
+			x.RemoveRange(x.Where(c => c is IRepositorySearchCondition));
 			x.Add(new AlbumSearchCondition { AlbumPath = albumObject.AlbumPath, IncludeSubAlbums = includeSubAlbums });
 		});
 	}
@@ -155,7 +155,7 @@ public class AlbumRepository : RepositoryBase {
 	}
 
 	private void Restore() {
-		var condition = this._tabState.SearchState.SearchCondition.FirstOrDefault(x => x is AlbumSearchCondition) as AlbumSearchCondition;
+		var condition = this._tabState.SearchState.SearchCondition.OfType<AlbumSearchCondition>().FirstOrDefault();
 		if (condition == null) {
 			return;
 		}
