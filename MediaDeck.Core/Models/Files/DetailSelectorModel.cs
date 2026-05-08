@@ -91,7 +91,7 @@ public class DetailSelectorModel : IDisposable {
 	public ReactiveProperty<string> Description {
 		get;
 	} = new(string.Empty);
-	
+
 	/// <summary>
 	/// メタデータ
 	/// </summary>

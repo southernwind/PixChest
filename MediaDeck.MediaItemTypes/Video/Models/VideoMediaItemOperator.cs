@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -48,7 +49,7 @@ public partial class VideoMediaItemOperator : BaseMediaItemOperator {
 		if (isExists) {
 			return null;
 		}
-		var metadata = FFProbe.Analyse(filePath);
+		var metadata = await FFProbe.AnalyseAsync(filePath);
 
 		var thumbRelativePath = this._filePathService.GetThumbnailRelativeFilePath();
 		var thumbPath = this._filePathService.GetThumbnailAbsoluteFilePath(thumbRelativePath);
@@ -92,7 +93,7 @@ public partial class VideoMediaItemOperator : BaseMediaItemOperator {
 			IsUnderFolderGroup = isUnderFolderGroup,
 			VideoFile = new() { Duration = metadata.PrimaryVideoStream?.Duration.TotalSeconds, Rotation = metadata.PrimaryVideoStream?.Rotation },
 			Metadata = new() {
-				Entries = metadata.PrimaryVideoStream?.Tags?.Select(x => new MediaMetadataEntry() { Key = x.Key, Value = x.Value }).ToList() ?? []
+				Entries = this.CreateEntries(metadata)
 			}
 		};
 
@@ -106,15 +107,111 @@ public partial class VideoMediaItemOperator : BaseMediaItemOperator {
 	}
 
 	public override async Task UpdateMetadata(MediaItem mediaItem) {
-		using var fileMs = new MemoryStream();
 		try {
-			var metadata = FFProbe.Analyse(mediaItem.FilePath);
-
+			var metadata = await FFProbe.AnalyseAsync(mediaItem.FilePath);
 			mediaItem.Metadata = new() {
-				Entries = metadata.PrimaryVideoStream?.Tags?.Select(x => new MediaMetadataEntry() { Key = x.Key, Value = x.Value }).ToList() ?? []
+				Entries = this.CreateEntries(metadata)
 			};
-		} catch (FFMpegException) {
-			// TODO: notify
+		} catch (FFMpegException ex) {
+			this._logger.LogError(ex, "Failed to analyze video metadata for file {FilePath}", mediaItem.FilePath);
+		}
+	}
+
+	/// <summary>
+	/// 解析結果からメタデータエントリを作成する
+	/// </summary>
+	/// <param name="mediaAnalysis">解析結果</param>
+	/// <returns>メタデータエントリリスト</returns>
+	private List<MediaMetadataEntry> CreateEntries(IMediaAnalysis mediaAnalysis) {
+		var entries = new List<MediaMetadataEntry>();
+
+		// フォーマットタグ（タイトル、作成日時など）を抽出
+		if (mediaAnalysis.Format.Tags != null) {
+			foreach (var tag in mediaAnalysis.Format.Tags) {
+				entries.Add(new MediaMetadataEntry {
+					Key = tag.Key,
+					Value = tag.Value
+				});
+			}
+		}
+
+		// ビデオストリームのタグを抽出（重複は避ける）
+		if (mediaAnalysis.PrimaryVideoStream?.Tags != null) {
+			foreach (var tag in mediaAnalysis.PrimaryVideoStream.Tags) {
+				if (!entries.Any(x => x.Key == tag.Key)) {
+					entries.Add(new MediaMetadataEntry {
+						Key = tag.Key,
+						Value = tag.Value
+					});
+				}
+			}
+		}
+
+		// オーディオストリームのタグを抽出（重複は避ける）
+		if (mediaAnalysis.PrimaryAudioStream?.Tags != null) {
+			foreach (var tag in mediaAnalysis.PrimaryAudioStream.Tags) {
+				if (!entries.Any(x => x.Key == tag.Key)) {
+					entries.Add(new MediaMetadataEntry {
+						Key = tag.Key,
+						Value = tag.Value
+					});
+				}
+			}
+		}
+
+		// 技術的な情報を追加（タグに存在しない場合のみ）
+		AddEntryIfNotNull(entries, "Format", mediaAnalysis.Format.FormatName);
+		AddEntryIfNotNull(entries, "Duration", mediaAnalysis.Duration.ToString(@"hh\:mm\:ss\.fff"));
+		AddEntryIfNotNull(entries, "BitRate", $"{mediaAnalysis.Format.BitRate / 1000} kbps");
+
+		if (mediaAnalysis.PrimaryVideoStream is { } video) {
+			AddEntryIfNotNull(entries, "VideoCodec", video.CodecName);
+			AddEntryIfNotNull(entries, "Resolution", $"{video.Width}x{video.Height}");
+			AddEntryIfNotNull(entries, "FrameRate", $"{video.FrameRate} fps");
+		}
+
+		if (mediaAnalysis.PrimaryAudioStream is { } audio) {
+			AddEntryIfNotNull(entries, "AudioCodec", audio.CodecName);
+			AddEntryIfNotNull(entries, "Channels", audio.Channels.ToString());
+		}
+
+		// 字幕ストリームの情報を抽出
+		if (mediaAnalysis.SubtitleStreams != null && mediaAnalysis.SubtitleStreams.Count > 0) {
+			AddEntryIfNotNull(entries, "SubtitleCount", mediaAnalysis.SubtitleStreams.Count.ToString());
+			for (int i = 0; i < mediaAnalysis.SubtitleStreams.Count; i++) {
+				var subtitle = mediaAnalysis.SubtitleStreams[i];
+				var lang = subtitle.Language ?? subtitle.Tags?.FirstOrDefault(x => x.Key.Equals("language", StringComparison.OrdinalIgnoreCase)).Value;
+				var codec = subtitle.CodecName;
+				var key = $"Subtitle {i + 1}";
+				var value = string.IsNullOrEmpty(lang) ? codec : $"{codec} ({lang})";
+				AddEntryIfNotNull(entries, key, value);
+
+				// 字幕個別のタグも追加
+				if (subtitle.Tags != null) {
+					foreach (var tag in subtitle.Tags) {
+						if (!entries.Any(x => x.Key == tag.Key)) {
+							entries.Add(new MediaMetadataEntry {
+								Key = $"{key} {tag.Key}",
+								Value = tag.Value
+							});
+						}
+					}
+				}
+			}
+		}
+
+		return entries;
+	}
+
+	/// <summary>
+	/// キーが存在しない場合のみ、メタデータエントリを追加する
+	/// </summary>
+	private static void AddEntryIfNotNull(List<MediaMetadataEntry> entries, string key, string? value) {
+		if (!string.IsNullOrEmpty(value) && !entries.Any(x => x.Key == key)) {
+			entries.Add(new MediaMetadataEntry {
+				Key = key,
+				Value = value
+			});
 		}
 	}
 
@@ -166,7 +263,8 @@ public partial class VideoMediaItemOperator : BaseMediaItemOperator {
 	/// <param name="mediaAnalysis">解析結果</param>
 	/// <returns>位置情報</returns>
 	private static (double Latitude, double Longitude, double? Altitude)? GetLocation(IMediaAnalysis mediaAnalysis) {
-		var locationTag = mediaAnalysis.PrimaryVideoStream?.Tags?.FirstOrDefault(x => locationTagNames.Contains(x.Key)).Value;
+		var locationTag = mediaAnalysis.PrimaryVideoStream?.Tags?.FirstOrDefault(x => locationTagNames.Contains(x.Key)).Value
+			?? mediaAnalysis.Format.Tags?.FirstOrDefault(x => locationTagNames.Contains(x.Key)).Value;
 
 		if (locationTag is null) {
 			return null;
