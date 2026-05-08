@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 using MediaDeck.Common.Base;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Core.Models.Files.SearchConditions;
@@ -9,10 +7,13 @@ namespace MediaDeck.ViewModels.Dialogs;
 
 [Inject(InjectServiceLifetime.Transient)]
 public class PropertyComparisonDialogViewModel : ViewModelBase {
-	public MediaItemPropertyDescriptor? Descriptor {
-		get;
-		private set;
+	public MediaItemPropertyDescriptor Descriptor {
+		get {
+			return this._descriptor ?? throw new InvalidOperationException("ViewModel was not initialized.");
+		}
 	}
+
+	private MediaItemPropertyDescriptor? _descriptor;
 
 	public string PropertyNameText {
 		get;
@@ -48,7 +49,7 @@ public class PropertyComparisonDialogViewModel : ViewModelBase {
 	}
 
 	public void Initialize(MediaItemPropertyDescriptor descriptor) {
-		this.Descriptor = descriptor;
+		this._descriptor = descriptor;
 		this.PropertyNameText = $"prop.{descriptor.Name}  ({descriptor.ValueType.Name})";
 
 		this.OperatorItems = descriptor.SupportedOperators
