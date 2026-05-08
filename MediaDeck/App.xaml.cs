@@ -1,8 +1,12 @@
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
+
 using CommunityToolkit.Mvvm.DependencyInjection;
+
 using FFMpegCore;
+
 using MediaDeck.Composition.Constants;
 using MediaDeck.Composition.Database;
 using MediaDeck.Composition.Interfaces.Tags;
@@ -12,12 +16,14 @@ using MediaDeck.Core.Stores.Config;
 using MediaDeck.Core.Stores.State;
 using MediaDeck.Services;
 using MediaDeck.ViewModels;
+
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
+
 using Serilog;
 using Serilog.Events;
 
@@ -134,6 +140,9 @@ public partial class App {
 	private async Task InitializeAsync(SplashScreenViewModel? splashViewModel = null) {
 
 		await Task.Run(async () => {
+			// 画像メタデータ取得にSJISが必要
+			Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
 			splashViewModel?.UpdateStatus("データベースを準備しています...");
 			var dbPath = Path.Combine(FilePathConstants.BaseDirectory, "pix.db");
 			if (!File.Exists(dbPath)) {
