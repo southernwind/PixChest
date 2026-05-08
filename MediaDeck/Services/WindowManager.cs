@@ -104,7 +104,7 @@ public class WindowManager : DisposableBase {
 	public void RestoreWindows() {
 		var list = this._stateStore.RootState.Windows.ToList();
 		if (list.Count == 0) {
-			this.OnWindowStateAdded(new WindowStateModel());
+			this._stateStore.RootState.Windows.Add(new());
 			return;
 		}
 		foreach (var windowState in list) {
