@@ -36,6 +36,9 @@
 					<MenuFlyoutItem Text="Recreate Thumbnail"
 						Click="MenuFlyoutItem_Click"
 						Tag="RecreateThumbnail" />
+					<MenuFlyoutItem Text="メタデータを更新"
+						Click="MenuFlyoutItem_Click"
+						Tag="UpdateMetadata" />
 					<MenuFlyoutItem Text="Remove File"
 						Click="MenuFlyoutItem_Click"
 						Tag="RemoveFile" />

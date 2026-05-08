@@ -101,6 +101,18 @@ public class BackgroundTasksModel : ModelBase {
 	}
 
 	/// <summary>
+	/// メタデータの更新をキューに追加する。
+	/// </summary>
+	/// <param name="ids">更新対象のメディアアイテムID</param>
+	public void EnqueueMetadataUpdate(IEnumerable<long> ids) {
+		if (this._metadataUpdatorCts.IsCancellationRequested) {
+			this._metadataUpdatorCts.Dispose();
+			this._metadataUpdatorCts = new();
+		}
+		this.Actions.OnNext(() => this._metadataUpdator.UpdateMetadataAsync(ids, this._metadataUpdatorCts.Token));
+	}
+
+	/// <summary>
 	/// リソースを解放する。
 	/// </summary>
 	/// <param name="disposing">マネージドリソースを解放するかどうか</param>

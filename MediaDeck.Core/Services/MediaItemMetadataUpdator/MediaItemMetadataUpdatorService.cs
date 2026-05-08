@@ -6,7 +6,7 @@ namespace MediaDeck.Core.Services.MediaItemMetadataUpdator;
 /// <summary>
 /// メディアアイテムのメタデータを更新するサービス。
 /// </summary>
-[Inject(InjectServiceLifetime.Transient)]
+[Inject(InjectServiceLifetime.Singleton)]
 public class MediaItemMetadataUpdatorService {
 	private readonly IDbContextFactory<MediaDeckDbContext> _dbFactory;
 	private readonly IMediaItemTypeService _mediaItemTypeService;
@@ -41,8 +41,23 @@ public class MediaItemMetadataUpdatorService {
 			targetIds = await db.MediaItems.Select(x => x.MediaItemId).ToListAsync(ct);
 		}
 
-		this.TargetCount.Value = targetIds.Count;
-		this.CompletedCount.Value = 0;
+		await this.UpdateMetadataAsync(targetIds, ct);
+	}
+
+	/// <summary>
+	/// 指定されたメディアアイテムのメタデータを更新する。
+	/// </summary>
+	/// <param name="ids">更新対象のIDリスト</param>
+	/// <param name="ct">キャンセル・トークン</param>
+	/// <returns>タスク</returns>
+	public async Task UpdateMetadataAsync(IEnumerable<long> ids, CancellationToken ct = default) {
+		var targetIds = ids.ToList();
+		if (this.CompletedCount.Value < this.TargetCount.Value) {
+			this.TargetCount.Value += targetIds.Count;
+		} else {
+			this.TargetCount.Value = targetIds.Count;
+			this.CompletedCount.Value = 0;
+		}
 
 		var operators = this._mediaItemTypeService.CreateMediaItemOperators().ToDictionary(x => x.TargetMediaType);
 

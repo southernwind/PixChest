@@ -149,6 +149,9 @@ public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
 					}
 					break;
 				}
+			case "UpdateMetadata":
+				this.ViewModel.MediaContentLibraryViewModel.UpdateMetadata(targetFiles);
+				break;
 			case "OpenFolder":
 				if (!string.IsNullOrEmpty(fvm.FilePath) && File.Exists(fvm.FilePath)) {
 					ShellUtility.ShowInExplorer(fvm.FilePath);

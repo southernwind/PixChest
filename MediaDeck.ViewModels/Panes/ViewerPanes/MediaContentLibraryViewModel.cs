@@ -4,15 +4,18 @@ using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
 using MediaDeck.Composition.Interfaces.Notifications;
 using MediaDeck.Core.Models.Files;
 using MediaDeck.Core.Models.Repositories;
+using MediaDeck.Core.Models.Tools;
 
 namespace MediaDeck.ViewModels.Panes.ViewerPanes;
 
 [Inject(InjectServiceLifetime.Scoped)]
 public class MediaContentLibraryViewModel : ViewModelBase {
 	private readonly AlbumRepository _albumRepository;
+	private readonly BackgroundTasksModel _backgroundTasksModel;
 
-	public MediaContentLibraryViewModel(MediaContentLibrary mediaContentLibrary, SearchConditionManagerViewModel searchConditionManagerViewModel, IMediaItemTypeService MediaItemTypeService, AlbumRepository albumRepository) {
+	public MediaContentLibraryViewModel(MediaContentLibrary mediaContentLibrary, SearchConditionManagerViewModel searchConditionManagerViewModel, IMediaItemTypeService MediaItemTypeService, AlbumRepository albumRepository, BackgroundTasksModel backgroundTasksModel) {
 		this._albumRepository = albumRepository;
+		this._backgroundTasksModel = backgroundTasksModel;
 		this.SearchConditionManagerViewModel = searchConditionManagerViewModel;
 		this.Files = mediaContentLibrary.Files.CreateView(MediaItemTypeService.CreateMediaItemViewModel).ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 		this.SearchElapsedMilliseconds = mediaContentLibrary.SearchElapsedMilliseconds.ObserveOnCurrentSynchronizationContext().ToBindableReactiveProperty().AddTo(this.CompositeDisposable);
@@ -91,5 +94,17 @@ public class MediaContentLibraryViewModel : ViewModelBase {
 			return;
 		}
 		await this._albumRepository.AddItemsAsync(albumPath, ids);
+	}
+
+	/// <summary>
+	/// 指定されたメディアアイテムのメタデータ更新をキューに追加します。
+	/// </summary>
+	/// <param name="mediaItems">更新対象のメディアアイテム</param>
+	public void UpdateMetadata(IEnumerable<IMediaItemViewModel> mediaItems) {
+		var ids = mediaItems.Select(x => x.FileModel.Id).Distinct().ToArray();
+		if (ids.Length == 0) {
+			return;
+		}
+		this._backgroundTasksModel.EnqueueMetadataUpdate(ids);
 	}
 }

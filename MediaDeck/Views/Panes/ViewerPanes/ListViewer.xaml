@@ -72,6 +72,7 @@ mc:Ignorable="d" >
 				<MenuFlyout x:Key="FileContextMenu" Opening="FileContextMenu_Opening" >
 					<MenuFlyoutSubItem Text="アルバムへ追加" Tag="AddToAlbumRoot" />
 					<MenuFlyoutItem Text="Recreate Thumbnail" Click="MenuFlyoutItem_Click" Tag="RecreateThumbnail" />
+					<MenuFlyoutItem Text="メタデータを更新" Click="MenuFlyoutItem_Click" Tag="UpdateMetadata" />
 					<MenuFlyoutItem Text="Remove File" Click="MenuFlyoutItem_Click" Tag="RemoveFile" />
 					<MenuFlyoutItem Text="Open Folder" Click="MenuFlyoutItem_Click" Tag="OpenFolder" />
 				</MenuFlyout>
