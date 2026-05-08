@@ -5,6 +5,7 @@
 	xmlns:local="using:MediaDeck.Views.Panes.DetailPanes"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:metadata="using:MediaDeck.Composition.Tables.Metadata"
 	mc:Ignorable="d" >
 
 	<StackPanel Spacing="12" >
@@ -30,9 +31,11 @@
 					Text="Usage Count"
 					Style="{ThemeResource CaptionTextBlockStyle}"
 					Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+					IsTextSelectionEnabled="True"
 					VerticalAlignment="Center" />
 				<TextBlock Grid.Column="1"
 					Text="{x:Bind ViewModel.UsageCount.Value, Mode=OneWay}"
+					IsTextSelectionEnabled="True"
 					VerticalAlignment="Center" />
 			</Grid>
 			<Grid>
@@ -44,6 +47,7 @@
 					Text="File Path"
 					Style="{ThemeResource CaptionTextBlockStyle}"
 					Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+					IsTextSelectionEnabled="True"
 					VerticalAlignment="Top" />
 				<TextBlock Grid.Column="1"
 					Text="{x:Bind ViewModel.RepresentativeFilePath.Value, Mode=OneWay}"
@@ -53,47 +57,78 @@
 		</StackPanel>
 
 		<!-- Dynamic Properties -->
-		<ItemsView ItemsSource="{x:Bind ViewModel.Properties.Value, Mode=OneWay}" >
-			<ItemsView.ItemTemplate>
+		<ItemsRepeater ItemsSource="{x:Bind ViewModel.Properties.Value, Mode=OneWay}" >
+			<ItemsRepeater.ItemTemplate>
 				<DataTemplate>
-					<ItemContainer Margin="0,2" >
-						<Grid>
-							<Grid Visibility="{Binding HasMultipleValues, Converter={StaticResource InvertBoolToVisibilityConverter}}" >
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="120" />
-									<ColumnDefinition Width="*" />
-								</Grid.ColumnDefinitions>
-								<TextBlock Grid.Column="0"
-									Text="{Binding Title}"
-									Style="{ThemeResource CaptionTextBlockStyle}"
-									Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-									VerticalAlignment="Center" />
-								<TextBlock Grid.Column="1"
-									Text="{Binding RepresentativeValue.Value}"
-									VerticalAlignment="Center"
-									TextWrapping="Wrap" />
-							</Grid>
-							<Grid Visibility="{Binding HasMultipleValues, Converter={StaticResource BoolToVisibilityConverter}}" >
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="120" />
-									<ColumnDefinition Width="*" />
-								</Grid.ColumnDefinitions>
-								<TextBlock Grid.Column="0"
-									Text="{Binding Title}"
-									Style="{ThemeResource CaptionTextBlockStyle}"
-									Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-									VerticalAlignment="Center" />
-								<TextBlock Grid.Column="1"
-									Text="(Multiple values)"
-									Foreground="{ThemeResource TextFillColorTertiaryBrush}"
-									FontStyle="Italic"
-									VerticalAlignment="Center" />
-							</Grid>
+					<Grid Margin="0,2">
+						<Grid Visibility="{Binding HasMultipleValues, Converter={StaticResource InvertBoolToVisibilityConverter}}" >
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="120" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+							<TextBlock Grid.Column="0"
+								Text="{Binding Title}"
+								Style="{ThemeResource CaptionTextBlockStyle}"
+								Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+								IsTextSelectionEnabled="True"
+								VerticalAlignment="Center" />
+							<TextBlock Grid.Column="1"
+								Text="{Binding RepresentativeValue.Value}"
+								IsTextSelectionEnabled="True"
+								VerticalAlignment="Center"
+								TextWrapping="Wrap" />
 						</Grid>
-					</ItemContainer>
+						<Grid Visibility="{Binding HasMultipleValues, Converter={StaticResource BoolToVisibilityConverter}}" >
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="120" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+							<TextBlock Grid.Column="0"
+								Text="{Binding Title}"
+								Style="{ThemeResource CaptionTextBlockStyle}"
+								Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+								IsTextSelectionEnabled="True"
+								VerticalAlignment="Center" />
+							<TextBlock Grid.Column="1"
+								Text="(Multiple values)"
+								Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+								FontStyle="Italic"
+								VerticalAlignment="Center" />
+						</Grid>
+					</Grid>
 				</DataTemplate>
-			</ItemsView.ItemTemplate>
-		</ItemsView>
+			</ItemsRepeater.ItemTemplate>
+		</ItemsRepeater>
+		
+		<!-- Metadata Section -->
+		<Expander Header="Metadata" 
+				  HorizontalAlignment="Stretch" 
+				  HorizontalContentAlignment="Stretch"
+				  Visibility="{x:Bind ViewModel.Metadata.Value, Mode=OneWay, Converter={StaticResource NullToCollapseConverter}}">
+			<ItemsRepeater ItemsSource="{x:Bind ViewModel.Metadata.Value.Entries, Mode=OneWay}">
+				<ItemsRepeater.ItemTemplate>
+					<DataTemplate x:DataType="metadata:MediaMetadataEntry">
+						<Grid Margin="0,2">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="120" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+							<TextBlock Grid.Column="0"
+								Text="{x:Bind Key}"
+								Style="{ThemeResource CaptionTextBlockStyle}"
+								Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+								IsTextSelectionEnabled="True"
+								VerticalAlignment="Center" />
+							<TextBlock Grid.Column="1"
+								Text="{x:Bind Value}"
+								IsTextSelectionEnabled="True"
+								VerticalAlignment="Center"
+								TextWrapping="Wrap" />
+						</Grid>
+					</DataTemplate>
+				</ItemsRepeater.ItemTemplate>
+			</ItemsRepeater>
+		</Expander>
 
 		<!-- Description Section -->
 		<StackPanel Spacing="8" >

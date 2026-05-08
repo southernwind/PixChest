@@ -65,6 +65,7 @@ public abstract class BaseMediaItemFactory<TFileOperator, TFileModel, TExecution
 			fileModel.Location = new GpsLocation(lat, lon, MediaItem.Altitude);
 		}
 		fileModel.Tags = [.. MediaItem.MediaItemTags.Select(mft => this._tagsManager.Tags.FirstOrDefault(t => t.TagId == mft.TagId)).OfType<ITagModel>()];
+		fileModel.Metadata = MediaItem.Metadata;
 	}
 
 	IMediaItemOperator IMediaItemFactory.CreateMediaItemOperator() {

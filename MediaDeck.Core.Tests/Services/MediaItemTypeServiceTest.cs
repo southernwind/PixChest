@@ -7,6 +7,7 @@ using MediaDeck.Composition.Interfaces.Primitives;
 using MediaDeck.Composition.Interfaces.Tags;
 using MediaDeck.Composition.Objects;
 using MediaDeck.Composition.Tables;
+using MediaDeck.Composition.Tables.Metadata;
 using MediaDeck.Core.Services;
 using R3;
 using Shouldly;
@@ -376,6 +377,11 @@ public class MediaItemTypeServiceTest {
 		public Attributes<string> Properties {
 			get;
 		} = new();
+
+		public MediaMetadata? Metadata {
+			get;
+			set;
+		}
 
 		public Task UpdateRateAsync(int rate) {
 			this.Rate = rate;

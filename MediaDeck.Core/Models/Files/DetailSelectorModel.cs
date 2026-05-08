@@ -1,5 +1,6 @@
 using MediaDeck.Composition.Interfaces.MediaItemTypes.Models;
 using MediaDeck.Composition.Interfaces.Tags;
+using MediaDeck.Composition.Tables.Metadata;
 using MediaDeck.Core.Primitives;
 
 namespace MediaDeck.Core.Models.Files;
@@ -90,6 +91,13 @@ public class DetailSelectorModel : IDisposable {
 	public ReactiveProperty<string> Description {
 		get;
 	} = new(string.Empty);
+	
+	/// <summary>
+	/// メタデータ
+	/// </summary>
+	public ReactiveProperty<MediaMetadata?> Metadata {
+		get;
+	} = new();
 
 	public DetailSelectorModel(ITagsManager tagsManager) {
 		this._tagsManager = tagsManager;
@@ -120,9 +128,11 @@ public class DetailSelectorModel : IDisposable {
 		if (files.Length == 1) {
 			this.RepresentativeFilePath.Value = files[0].FilePath;
 			this.Description.Value = files[0].Description;
+			this.Metadata.Value = files[0].Metadata;
 		} else {
 			this.RepresentativeFilePath.Value = string.Empty;
 			this.Description.Value = string.Empty;
+			this.Metadata.Value = null;
 		}
 
 		this._propertyChangedSubscription.Disposable =

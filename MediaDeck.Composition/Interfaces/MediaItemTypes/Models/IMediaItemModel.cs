@@ -2,6 +2,7 @@ using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.Primitives;
 using MediaDeck.Composition.Interfaces.Tags;
 using MediaDeck.Composition.Objects;
+using MediaDeck.Composition.Tables.Metadata;
 
 namespace MediaDeck.Composition.Interfaces.MediaItemTypes.Models;
 
@@ -129,6 +130,14 @@ public interface IMediaItemModel : IDisposable {
 	/// </summary>
 	public Attributes<string> Properties {
 		get;
+	}
+
+	/// <summary>
+	/// メタデータ
+	/// </summary>
+	public MediaMetadata? Metadata {
+		get;
+		set;
 	}
 
 	public Task UpdateRateAsync(int rate);

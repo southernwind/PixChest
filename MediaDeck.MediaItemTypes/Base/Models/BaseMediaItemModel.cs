@@ -8,6 +8,7 @@ using MediaDeck.Composition.Interfaces.MediaItemTypes.Models;
 using MediaDeck.Composition.Interfaces.Primitives;
 using MediaDeck.Composition.Interfaces.Tags;
 using MediaDeck.Composition.Objects;
+using MediaDeck.Composition.Tables.Metadata;
 
 namespace MediaDeck.MediaItemTypes.Base.Models;
 
@@ -184,6 +185,14 @@ public abstract class BaseMediaItemModel : ModelBase, IMediaItemModel {
 				{ "解像度", $"{this.Resolution?.ToString()}" }
 			}.ToAttributes();
 		}
+	}
+
+	/// <summary>
+	/// メタデータ
+	/// </summary>
+	public MediaMetadata? Metadata {
+		get;
+		set;
 	}
 
 	public async Task UpdateRateAsync(int rate) {

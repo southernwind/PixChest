@@ -2,6 +2,7 @@ using MediaDeck.Common.Base;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.Models;
 using MediaDeck.Composition.Interfaces.Notifications;
 using MediaDeck.Composition.Interfaces.Tags;
+using MediaDeck.Composition.Tables.Metadata;
 using MediaDeck.Core.Models.Files;
 using MediaDeck.Core.Models.Files.SearchConditions;
 using MediaDeck.Core.Primitives;
@@ -38,6 +39,7 @@ public class DetailSelectorViewModel : ViewModelBase {
 		this.Rate = model.Rate.ToBindableReactiveProperty().AddTo(this.CompositeDisposable);
 		this.Description = model.Description.ToBindableReactiveProperty(string.Empty).AddTo(this.CompositeDisposable);
 		this.UsageCount = model.UsageCount.ToBindableReactiveProperty().AddTo(this.CompositeDisposable);
+		this.Metadata = model.Metadata.ToBindableReactiveProperty().AddTo(this.CompositeDisposable);
 		this._model.AddTo(this.CompositeDisposable);
 
 		this.TagCandidates = model.TagModels.CreateView(x => {
@@ -169,6 +171,10 @@ public class DetailSelectorViewModel : ViewModelBase {
 	}
 
 	public BindableReactiveProperty<double> UsageCount {
+		get;
+	}
+
+	public BindableReactiveProperty<MediaMetadata?> Metadata {
 		get;
 	}
 
