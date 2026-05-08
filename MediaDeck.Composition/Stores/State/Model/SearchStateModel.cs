@@ -1,7 +1,6 @@
 using System.ComponentModel;
 
 using MediaDeck.Composition.Interfaces.Files;
-using MediaDeck.Composition.Stores.State.Model.Objects;
 
 using R3.JsonConfig.Attributes;
 
@@ -23,7 +22,7 @@ public class SearchStateModel {
 	/// <summary>
 	/// カレントフィルター条件（複数選択：AND条件として適用される）
 	/// </summary>
-	public ReactiveProperty<FilterObject[]> CurrentFilteringConditions {
+	public ReactiveProperty<Guid[]> CurrentFilteringConditions {
 		get;
 	} = new([]);
 

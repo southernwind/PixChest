@@ -5,14 +5,14 @@ using Microsoft.Extensions.DependencyInjection;
 
 using R3.JsonConfig.Attributes;
 
-namespace MediaDeck.Composition.Stores.State.Model;
+namespace MediaDeck.Composition.Stores.Config.Model;
 
 /// <summary>
 /// フィルター・ソート条件の定義リスト（アプリ全体で共有）
 /// </summary>
 [Inject(InjectServiceLifetime.Singleton)]
 [GenerateR3JsonConfigDto]
-public class SearchDefinitionsStateModel {
+public class SearchDefinitionsConfigModel {
 	private readonly IServiceProvider _serviceProvider;
 
 	/// <summary>
@@ -29,7 +29,7 @@ public class SearchDefinitionsStateModel {
 		get;
 	}
 
-	public SearchDefinitionsStateModel(IServiceProvider serviceProvider) {
+	public SearchDefinitionsConfigModel(IServiceProvider serviceProvider) {
 		this._serviceProvider = serviceProvider;
 		(string, SortItemKey[])[] sc = [
 			("File Path", [SortItemKey.FilePath]),

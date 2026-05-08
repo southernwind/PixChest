@@ -1,5 +1,6 @@
 using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Composition.Stores.Config.Model.Objects;
+using MediaDeck.Composition.Stores.State.Model.Objects;
 using MediaDeck.Core.Services;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +22,10 @@ public class FilePathServiceTests {
 		services.AddSingleton<ScanConfigModel>();
 		services.AddSingleton<SearchConfigModel>();
 		services.AddSingleton<FolderManagerConfigModel>();
+		services.AddSingleton<SearchDefinitionsConfigModel>();
 		services.AddSingleton<ConfigModel>();
+		services.AddTransient<SortObject>(sp => new SortObject(sp));
+		services.AddTransient<SortItemObject>();
 
 		var provider = services.BuildServiceProvider();
 

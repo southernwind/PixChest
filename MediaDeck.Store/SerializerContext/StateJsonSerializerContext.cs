@@ -17,7 +17,6 @@ namespace MediaDeck.Stores.SerializerContext;
 [JsonSerializable(typeof(AppStateModelForJson))]
 [JsonSerializable(typeof(TabStateModelForJson))]
 [JsonSerializable(typeof(WindowStateModelForJson))]
-[JsonSerializable(typeof(SearchDefinitionsStateModelForJson))]
 [JsonSerializable(typeof(ISearchConditionForJson))]
 [JsonSerializable(typeof(AddressSearchConditionForJson))]
 [JsonSerializable(typeof(FolderSearchConditionForJson))]

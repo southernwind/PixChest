@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using MediaDeck.Composition.Enum;
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Composition.Stores.State.Model;
 using MediaDeck.Composition.Stores.State.Model.Objects;
 using MediaDeck.Core.Models.Files.Sort;
@@ -14,7 +15,7 @@ namespace MediaDeck.Core.Tests.Models.Files.Sort;
 public class SortSelectorTests {
 	private readonly IServiceProvider _serviceProvider;
 	private readonly TabStateModel _tabState;
-	private readonly SearchDefinitionsStateModel _searchDefinitions;
+	private readonly SearchDefinitionsConfigModel _searchDefinitions;
 
 	public SortSelectorTests() {
 		var services = new ServiceCollection();
@@ -23,11 +24,11 @@ public class SortSelectorTests {
 		services.AddSingleton<SearchStateModel>();
 		services.AddSingleton<ViewerStateModel>();
 		services.AddSingleton<TabStateModel>();
-		services.AddSingleton<SearchDefinitionsStateModel>();
+		services.AddSingleton<SearchDefinitionsConfigModel>();
 
 		this._serviceProvider = services.BuildServiceProvider();
 		this._tabState = this._serviceProvider.GetRequiredService<TabStateModel>();
-		this._searchDefinitions = this._serviceProvider.GetRequiredService<SearchDefinitionsStateModel>();
+		this._searchDefinitions = this._serviceProvider.GetRequiredService<SearchDefinitionsConfigModel>();
 	}
 
 	/// <summary>

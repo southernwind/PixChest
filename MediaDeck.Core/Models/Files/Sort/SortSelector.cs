@@ -2,6 +2,7 @@ using System.ComponentModel;
 using MediaDeck.Common.Base;
 using MediaDeck.Common.Extensions;
 using MediaDeck.Composition.Interfaces.Notifications;
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Composition.Stores.State.Model;
 using MediaDeck.Composition.Stores.State.Model.Objects;
 using MediaDeck.Composition.Tables;
@@ -13,7 +14,7 @@ public class SortSelector : ModelBase {
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	public SortSelector(TabStateModel tabState, SearchDefinitionsStateModel searchDefinitions, ISearchConditionNotificationDispatcher dispatcher) {
+	public SortSelector(TabStateModel tabState, SearchDefinitionsConfigModel searchDefinitions, ISearchConditionNotificationDispatcher dispatcher) {
 		// 設定値初回値読み込み
 		this.SortConditions = searchDefinitions.SortConditions;
 		this.CurrentSortCondition = tabState.SearchState.CurrentSortCondition.ToTwoWayReactiveProperty(x => this.SortConditions.FirstOrDefault(sc => sc.Id == x), x => x?.Id, null, this.CompositeDisposable);

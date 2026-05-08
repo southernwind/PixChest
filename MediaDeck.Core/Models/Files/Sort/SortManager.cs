@@ -1,7 +1,7 @@
 using MediaDeck.Common.Base;
-using MediaDeck.Composition.Stores.State.Model;
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Composition.Stores.State.Model.Objects;
-using MediaDeck.Core.Stores.State;
+using MediaDeck.Core.Stores.Config;
 
 namespace MediaDeck.Core.Models.Files.Sort;
 
@@ -10,11 +10,11 @@ namespace MediaDeck.Core.Models.Files.Sort;
 /// </summary>
 [Inject(InjectServiceLifetime.Singleton)]
 public class SortManager : ModelBase {
-	private readonly IStateStore _stateStore;
-	private readonly SearchDefinitionsStateModel _searchDefinitions;
+	private readonly IConfigStore _configStore;
+	private readonly SearchDefinitionsConfigModel _searchDefinitions;
 
-	public SortManager(IStateStore stateStore, SearchDefinitionsStateModel searchDefinitions) {
-		this._stateStore = stateStore;
+	public SortManager(IConfigStore configStore, SearchDefinitionsConfigModel searchDefinitions) {
+		this._configStore = configStore;
 		this._searchDefinitions = searchDefinitions;
 		this.SortConditions = searchDefinitions.SortConditions;
 	}
@@ -30,7 +30,7 @@ public class SortManager : ModelBase {
 	/// 保存
 	/// </summary>
 	public void Save() {
-		this._stateStore.Save();
+		this._configStore.Save();
 	}
 
 	/// <summary>

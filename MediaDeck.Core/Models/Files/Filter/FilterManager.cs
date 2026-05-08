@@ -1,6 +1,6 @@
 using MediaDeck.Common.Base;
-using MediaDeck.Composition.Stores.State.Model;
-using MediaDeck.Core.Stores.State;
+using MediaDeck.Composition.Stores.Config.Model;
+using MediaDeck.Core.Stores.Config;
 
 namespace MediaDeck.Core.Models.Files.Filter;
 
@@ -12,11 +12,11 @@ namespace MediaDeck.Core.Models.Files.Filter;
 /// </remarks>
 [Inject(InjectServiceLifetime.Singleton)]
 public class FilterManager : ModelBase {
-	private readonly IStateStore _stateStore;
-	private readonly SearchDefinitionsStateModel _searchDefinitions;
+	private readonly IConfigStore _configStore;
+	private readonly SearchDefinitionsConfigModel _searchDefinitions;
 
-	public FilterManager(IStateStore stateStore, SearchDefinitionsStateModel searchDefinitions) {
-		this._stateStore = stateStore;
+	public FilterManager(IConfigStore configStore, SearchDefinitionsConfigModel searchDefinitions) {
+		this._configStore = configStore;
 		this._searchDefinitions = searchDefinitions;
 		this.FilteringConditions = [.. searchDefinitions.FilteringConditions.Select(x => new FilteringConditionEditor(x))];
 	}
@@ -32,7 +32,7 @@ public class FilterManager : ModelBase {
 	/// 保存
 	/// </summary>
 	public void Save() {
-		this._stateStore.Save();
+		this._configStore.Save();
 	}
 
 	/// <summary>

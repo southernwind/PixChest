@@ -1,11 +1,13 @@
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.Services;
+using MediaDeck.Composition.Stores.Config.Model;
+using MediaDeck.Composition.Stores.Config.Model.Objects;
 using MediaDeck.Composition.Stores.State.Model;
 using MediaDeck.Composition.Stores.State.Model.Objects;
 using MediaDeck.Core.Models.Files.Sort;
 using MediaDeck.Core.Models.NotificationDispatcher;
-using MediaDeck.Core.Stores.State;
-using MediaDeck.Store.State;
+using MediaDeck.Core.Stores.Config;
+using MediaDeck.Store.Config;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -16,26 +18,34 @@ namespace MediaDeck.Core.Tests.Models.Files.Sort;
 /// <see cref="SortManager"/> のユニットテスト
 /// </summary>
 public class SortManagerTests {
-	private readonly IStateStore _stateStore;
+	private readonly IConfigStore _configStore;
 	private readonly Mock<IServiceProvider> _mockServiceProvider;
-	private readonly SearchDefinitionsStateModel _searchDefinitions;
+	private readonly SearchDefinitionsConfigModel _searchDefinitions;
 	private readonly TabStateModel _tabState;
 
 	public SortManagerTests() {
 		var services = new ServiceCollection();
 		services.AddTransient<SortObject>(sp => new SortObject(sp));
 		services.AddTransient<SortItemObject>();
+		services.AddTransient<FilterObject>();
+		services.AddTransient<ExtensionObjectModel>();
 		services.AddSingleton<SearchStateModel>();
 		services.AddSingleton<ViewerStateModel>();
 		services.AddSingleton<AppStateModel>();
 		services.AddSingleton<DefaultTabStateModel>();
 		services.AddSingleton<TabStateModel>();
-		services.AddSingleton<SearchDefinitionsStateModel>();
+		services.AddSingleton<SearchDefinitionsConfigModel>();
+		services.AddSingleton<ConfigModel>();
+		services.AddSingleton<PathConfigModel>();
+		services.AddSingleton<ScanConfigModel>();
+		services.AddSingleton<ExecutionConfigModel>();
+		services.AddSingleton<SearchConfigModel>();
+		services.AddSingleton<FolderManagerConfigModel>();
 		services.AddLogging();
 		services.AddSingleton<AppNotificationDispatcher>();
 
 		var realServiceProvider = services.BuildServiceProvider();
-		this._searchDefinitions = realServiceProvider.GetRequiredService<SearchDefinitionsStateModel>();
+		this._searchDefinitions = realServiceProvider.GetRequiredService<SearchDefinitionsConfigModel>();
 		this._tabState = realServiceProvider.GetRequiredService<TabStateModel>();
 
 		this._mockServiceProvider = new Mock<IServiceProvider>();
@@ -46,7 +56,7 @@ public class SortManagerTests {
 		mockScopeFactory.Setup(x => x.CreateScope()).Returns(mockScope.Object);
 		mockScope.Setup(x => x.ServiceProvider).Returns(realServiceProvider);
 
-		this._mockServiceProvider.Setup(x => x.GetService(typeof(ILogger<StateStore>))).Returns(realServiceProvider.GetRequiredService<ILogger<StateStore>>());
+		this._mockServiceProvider.Setup(x => x.GetService(typeof(ILogger<ConfigStore>))).Returns(realServiceProvider.GetRequiredService<ILogger<ConfigStore>>());
 		this._mockServiceProvider.Setup(x => x.GetService(typeof(AppNotificationDispatcher))).Returns(realServiceProvider.GetRequiredService<AppNotificationDispatcher>());
 
 		// Required for StateStore correctly resolving RootStateModel when loaded via DI if Load uses sp
@@ -55,7 +65,7 @@ public class SortManagerTests {
 		var pathProvider = new StubAppPathProvider();
 		this._mockServiceProvider.Setup(x => x.GetService(typeof(IAppPathProvider))).Returns(pathProvider);
 
-		this._stateStore = new StateStore(this._mockServiceProvider.Object, pathProvider);
+		this._configStore = new ConfigStore(this._mockServiceProvider.Object, pathProvider);
 	}
 
 	/// <summary>
@@ -64,7 +74,7 @@ public class SortManagerTests {
 	[Fact]
 	public void SortLogic_OrdersUnsortedListCorrectly() {
 		// Arrange
-		var sortManager = new SortManager(this._stateStore, this._searchDefinitions);
+		var sortManager = new SortManager(this._configStore, this._searchDefinitions);
 		sortManager.AddCondition();
 		var sortObject = sortManager.SortConditions.Last();
 
@@ -98,7 +108,7 @@ public class SortManagerTests {
 	[Fact]
 	public void Constructor_SetsSortConditionsFromStateStore() {
 		// Act
-		var sortManager = new SortManager(this._stateStore, this._searchDefinitions);
+		var sortManager = new SortManager(this._configStore, this._searchDefinitions);
 
 		// Assert
 		Assert.Same(this._searchDefinitions.SortConditions, sortManager.SortConditions);
@@ -110,7 +120,7 @@ public class SortManagerTests {
 	[Fact]
 	public void AddCondition_AddsNewSortCondition() {
 		// Arrange
-		var sortManager = new SortManager(this._stateStore, this._searchDefinitions);
+		var sortManager = new SortManager(this._configStore, this._searchDefinitions);
 		var initialCount = sortManager.SortConditions.Count;
 
 		// Act
@@ -126,7 +136,7 @@ public class SortManagerTests {
 	[Fact]
 	public void RemoveCondition_RemovesTargetSortCondition() {
 		// Arrange
-		var sortManager = new SortManager(this._stateStore, this._searchDefinitions);
+		var sortManager = new SortManager(this._configStore, this._searchDefinitions);
 		sortManager.AddCondition();
 		var conditionToRemove = sortManager.SortConditions.Last();
 		var initialCount = sortManager.SortConditions.Count;
@@ -145,7 +155,7 @@ public class SortManagerTests {
 	[Fact]
 	public void Save_ExecutesWithoutException() {
 		// Arrange
-		var sortManager = new SortManager(this._stateStore, this._searchDefinitions);
+		var sortManager = new SortManager(this._configStore, this._searchDefinitions);
 
 		// Act
 		var exception = Record.Exception(() => sortManager.Save());

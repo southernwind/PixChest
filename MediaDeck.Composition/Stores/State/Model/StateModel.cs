@@ -8,11 +8,7 @@ namespace MediaDeck.Composition.Stores.State.Model;
 /// </summary>
 [Inject(InjectServiceLifetime.Singleton)]
 [GenerateR3JsonConfigDto]
-public class AppStateModel(SearchDefinitionsStateModel searchDefinitions, DefaultTabStateModel defaultTabState) {
-	public SearchDefinitionsStateModel SearchDefinitions {
-		get;
-		set;
-	} = searchDefinitions;
+public class AppStateModel(DefaultTabStateModel defaultTabState) {
 
 	/// <summary>
 	/// アプリケーションのテーマ

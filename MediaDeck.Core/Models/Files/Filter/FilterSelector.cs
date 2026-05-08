@@ -1,5 +1,6 @@
 using MediaDeck.Common.Base;
 using MediaDeck.Composition.Interfaces.Notifications;
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Composition.Stores.State.Model;
 using MediaDeck.Composition.Tables;
 
@@ -13,12 +14,12 @@ public class FilterSelector : ModelBase {
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	public FilterSelector(TabStateModel tabState, SearchDefinitionsStateModel searchDefinitions, ISearchConditionNotificationDispatcher dispatcher) {
+	public FilterSelector(TabStateModel tabState, SearchDefinitionsConfigModel searchDefinitions, ISearchConditionNotificationDispatcher dispatcher) {
 		this._searchConditionNotificationDispatcher = dispatcher;
 		this.FilteringConditions.AddRange(searchDefinitions.FilteringConditions.Select(x => new FilteringCondition(x).AddTo(this.CompositeDisposable)));
 
 		this.CurrentFilteringConditions.Value = this.FilteringConditions
-			.Where(x => tabState.SearchState.CurrentFilteringConditions.Value.Contains(x.FilterObject))
+			.Where(x => tabState.SearchState.CurrentFilteringConditions.Value.Contains(x.FilterObject.Id))
 			.ToArray();
 
 		this._innerSubscriptions.AddTo(this.CompositeDisposable);
@@ -28,7 +29,7 @@ public class FilterSelector : ModelBase {
 			.Subscribe(selected => {
 				var conditions = selected ?? [];
 				this.RebuildInnerSubscriptions(conditions);
-				tabState.SearchState.CurrentFilteringConditions.Value = conditions.Select(x => x.FilterObject).ToArray();
+				tabState.SearchState.CurrentFilteringConditions.Value = conditions.Select(x => x.FilterObject.Id).ToArray();
 				dispatcher.FilterChanged.OnNext(Unit.Default);
 			})
 			.AddTo(this.CompositeDisposable);
