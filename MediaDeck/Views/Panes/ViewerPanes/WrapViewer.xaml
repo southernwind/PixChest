@@ -120,6 +120,12 @@
 					</Grid>
 				</DataTemplate>
 			</GridView.ItemTemplate>
+			<GridView.Footer>
+				<Button Content="さらに読み込む"
+					Command="{x:Bind ViewModel.MediaContentLibraryViewModel.LoadMoreCommand}"
+					Visibility="{x:Bind ViewModel.MediaContentLibraryViewModel.CanLoadMore.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+					HorizontalAlignment="Stretch" Margin="8" />
+			</GridView.Footer>
 		</GridView>
 	</Grid>
 </local:ViewerPaneBase>

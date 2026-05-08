@@ -51,11 +51,28 @@ public class MediaContentLibrary : ModelBase {
 	/// <summary>最後の検索にかかった時間（ミリ秒）</summary>
 	public ReactiveProperty<long?> SearchElapsedMilliseconds { get; } = new();
 
+	/// <summary>追加読み込みが可能かどうか</summary>
+	public ReactiveProperty<bool> CanLoadMore { get; } = new(false);
+
 	/// <summary>
 	/// 検索を実行する。Switch により呼び出し元のキャンセルトークンが連携されるため、
 	/// 古い検索タスクは自動的にキャンセルされる。
 	/// </summary>
 	private async ValueTask SearchAsync(CancellationToken token) {
+		await this.LoadInternalAsync(true, token).ConfigureAwait(false);
+	}
+
+	/// <summary>
+	/// 追加の検索を実行する。
+	/// </summary>
+	public async ValueTask LoadMoreAsync(CancellationToken token) {
+		if (!this.CanLoadMore.Value) {
+			return;
+		}
+		await this.LoadInternalAsync(false, token).ConfigureAwait(false);
+	}
+
+	private async ValueTask LoadInternalAsync(bool isInitial, CancellationToken token) {
 		this.SearchElapsedMilliseconds.Value = null;
 		var batch = new List<IMediaItemModel>();
 		try {
@@ -65,10 +82,10 @@ public class MediaContentLibrary : ModelBase {
 			var incrementalLoadCount = this._searchConfig.IncrementalLoadCount.Value;
 			var maxLoadCount = this._searchConfig.MaxLoadCount.Value;
 
-			var stream = this._filesLoader.GetFilesStreamAsync(this.SearchConditions, token);
+			var skip = isInitial ? 0 : this.Files.Count;
+			var stream = this._filesLoader.GetFilesStreamAsync(this.SearchConditions, skip, maxLoadCount, token);
 
 			var totalLoaded = 0;
-			var isInitial = true;
 
 			await foreach (var fileModel in stream.WithCancellation(token)) {
 				batch.Add(fileModel.AddTo(this.CompositeDisposable));
@@ -83,10 +100,6 @@ public class MediaContentLibrary : ModelBase {
 					this.Files.AddRange(batch);
 					batch.Clear();
 				}
-
-				if (totalLoaded >= maxLoadCount) {
-					break;
-				}
 			}
 
 			if (batch.Count > 0) {
@@ -98,6 +111,9 @@ public class MediaContentLibrary : ModelBase {
 			} else if (isInitial && totalLoaded == 0) {
 				this.ClearFiles();
 			}
+
+			// 取得件数が上限件数と一致する場合は、まだ続きがある可能性があるため追加読み込みを可能にする
+			this.CanLoadMore.Value = totalLoaded == maxLoadCount;
 
 			stopwatch.Stop();
 			this.SearchElapsedMilliseconds.Value = stopwatch.ElapsedMilliseconds;

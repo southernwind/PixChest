@@ -16,6 +16,22 @@ public class MediaContentLibraryViewModel : ViewModelBase {
 		this.SearchConditionManagerViewModel = searchConditionManagerViewModel;
 		this.Files = mediaContentLibrary.Files.CreateView(MediaItemTypeService.CreateMediaItemViewModel).ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 		this.SearchElapsedMilliseconds = mediaContentLibrary.SearchElapsedMilliseconds.ObserveOnCurrentSynchronizationContext().ToBindableReactiveProperty().AddTo(this.CompositeDisposable);
+		this.CanLoadMore = mediaContentLibrary.CanLoadMore.ObserveOnCurrentSynchronizationContext().ToBindableReactiveProperty().AddTo(this.CompositeDisposable);
+
+		this.LoadMoreCommand = new ReactiveCommand().AddTo(this.CompositeDisposable);
+		this.LoadMoreCommand
+			.SubscribeAwait(async (_, ct) => {
+				await mediaContentLibrary.LoadMoreAsync(ct);
+			}, AwaitOperation.Drop)
+			.AddTo(this.CompositeDisposable);
+	}
+
+	public ReactiveCommand LoadMoreCommand {
+		get;
+	}
+
+	public BindableReactiveProperty<bool> CanLoadMore {
+		get;
 	}
 
 	public SearchConditionManagerViewModel SearchConditionManagerViewModel {

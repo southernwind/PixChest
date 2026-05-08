@@ -22,11 +22,20 @@ public class FilesLoader(IDbContextFactory<MediaDeckDbContext> dbFactory, SortSe
 	/// 列挙中のみ DbContext が維持されます。
 	/// </summary>
 	/// <param name="searchConditions">検索条件</param>
+	/// <param name="skip">スキップ件数</param>
+	/// <param name="take">取得件数</param>
 	/// <param name="cancellationToken">キャンセルトークン</param>
 	/// <returns>IMediaItemModelのストリーム</returns>
-	public async IAsyncEnumerable<IMediaItemModel> GetFilesStreamAsync(IEnumerable<ISearchCondition> searchConditions, [EnumeratorCancellation] CancellationToken cancellationToken = default) {
+	public async IAsyncEnumerable<IMediaItemModel> GetFilesStreamAsync(IEnumerable<ISearchCondition> searchConditions, int? skip = null, int? take = null, [EnumeratorCancellation] CancellationToken cancellationToken = default) {
 		await using var db = await dbFactory.CreateDbContextAsync(cancellationToken);
 		var query = this.BuildQuery(db, searchConditions);
+
+		if (skip.HasValue) {
+			query = query.Skip(skip.Value);
+		}
+		if (take.HasValue) {
+			query = query.Take(take.Value);
+		}
 
 		await foreach (var item in query.AsAsyncEnumerable().WithCancellation(cancellationToken)) {
 			yield return this._MediaItemTypeService.CreateMediaItemModelFromRecord(item);

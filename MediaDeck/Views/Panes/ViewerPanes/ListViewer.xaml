@@ -103,6 +103,12 @@ mc:Ignorable="d" >
 					</Grid>
 				</DataTemplate>
 			</ListView.ItemTemplate>
+			<ListView.Footer>
+				<Button Content="さらに読み込む"
+					Command="{x:Bind ViewModel.MediaContentLibraryViewModel.LoadMoreCommand}"
+					Visibility="{x:Bind ViewModel.MediaContentLibraryViewModel.CanLoadMore.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+					HorizontalAlignment="Stretch" Margin="8" />
+			</ListView.Footer>
 		</ListView>
 	</Grid>
 </local:ViewerPaneBase>
