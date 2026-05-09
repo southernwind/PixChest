@@ -189,14 +189,17 @@ public partial class App {
 			_ = this._stateStore.RootState.AppState.DefaultTabState.SearchState.SortDirection.Subscribe(x => Debug.WriteLine($"SortDirection {x}"));
 
 			splashViewModel?.UpdateStatus("メディアエンジンを起動しています...");
-			FlyleafLib.Engine.Start(new FlyleafLib.EngineConfig() {
+			await Task.Delay(100);
+			this._dispatcherQueue?.TryEnqueue(() => {
+				FlyleafLib.Engine.Start(new FlyleafLib.EngineConfig() {
 #if DEBUG
-				LogOutput = ":debug",
-				LogLevel = FlyleafLib.LogLevel.Debug,
-				FFmpegLogLevel = Flyleaf.FFmpeg.LogLevel.Warn,
+					LogOutput = ":debug",
+					LogLevel = FlyleafLib.LogLevel.Debug,
+					FFmpegLogLevel = Flyleaf.FFmpeg.LogLevel.Warn,
 #endif
-				UIRefresh = false,
-				FFmpegPath = this._configStore.Config.PathConfig.FFMpegFolderPath.Value,
+					UIRefresh = false,
+					FFmpegPath = this._configStore.Config.PathConfig.FFMpegFolderPath.Value,
+				});
 			});
 			splashViewModel?.UpdateStatus("準備完了...");
 		});
