@@ -11,7 +11,7 @@
 	<StackPanel Spacing="12" >
 		<!-- Rating Section -->
 		<StackPanel Spacing="4" >
-			<TextBlock Text="Rating"
+			<TextBlock x:Uid="Details_Rating"
 				Style="{ThemeResource CaptionTextBlockStyle}"
 				Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
 			<RatingControl Value="{x:Bind ViewModel.Rate.Value, Mode=OneWay}"
@@ -28,7 +28,7 @@
 					<ColumnDefinition Width="*" />
 				</Grid.ColumnDefinitions>
 				<TextBlock Grid.Column="0"
-					Text="Usage Count"
+					x:Uid="Details_UsageCount"
 					Style="{ThemeResource CaptionTextBlockStyle}"
 					Foreground="{ThemeResource TextFillColorSecondaryBrush}"
 					IsTextSelectionEnabled="True"
@@ -44,7 +44,7 @@
 					<ColumnDefinition Width="*" />
 				</Grid.ColumnDefinitions>
 				<TextBlock Grid.Column="0"
-					Text="File Path"
+					x:Uid="Details_FilePath"
 					Style="{ThemeResource CaptionTextBlockStyle}"
 					Foreground="{ThemeResource TextFillColorSecondaryBrush}"
 					IsTextSelectionEnabled="True"
@@ -90,7 +90,7 @@
 								IsTextSelectionEnabled="True"
 								VerticalAlignment="Center" />
 							<TextBlock Grid.Column="1"
-								Text="(Multiple values)"
+								x:Uid="Details_MultipleValues"
 								Foreground="{ThemeResource TextFillColorTertiaryBrush}"
 								FontStyle="Italic"
 								VerticalAlignment="Center" />
@@ -101,7 +101,7 @@
 		</ItemsRepeater>
 		
 		<!-- Metadata Section -->
-		<Expander Header="Metadata" 
+		<Expander x:Uid="Details_Metadata" 
 				  HorizontalAlignment="Stretch" 
 				  HorizontalContentAlignment="Stretch"
 				  Visibility="{x:Bind ViewModel.Metadata.Value, Mode=OneWay, Converter={StaticResource NullToCollapseConverter}}">
@@ -132,15 +132,15 @@
 
 		<!-- Description Section -->
 		<StackPanel Spacing="8" >
-			<TextBlock Text="Description"
+			<TextBlock x:Uid="Details_Description"
 				Style="{ThemeResource CaptionTextBlockStyle}"
 				Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-			<TextBox Text="{x:Bind ViewModel.Description.Value, Mode=TwoWay}"
+			<TextBox x:Uid="Details_DescriptionPlaceholder"
+				Text="{x:Bind ViewModel.Description.Value, Mode=TwoWay}"
 				AcceptsReturn="True"
 				MinHeight="80"
-				TextWrapping="Wrap"
-				PlaceholderText="Add a description..." />
-			<Button Content="Update"
+				TextWrapping="Wrap" />
+			<Button x:Uid="Details_UpdateDescription"
 				Command="{x:Bind ViewModel.UpdateDescriptionCommand}"
 				HorizontalAlignment="Right" />
 		</StackPanel>

@@ -6,15 +6,12 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d"
-	Title="タブ名の変更"
-	PrimaryButtonText="OK"
-	CloseButtonText="キャンセル"
+	x:Uid="TabRenameDialog"
 	DefaultButton="Primary">
 
 	<StackPanel Margin="0,8" Spacing="8">
 		<TextBox x:Name="NameTextBox"
-				 Header="新しいタブ名"
-				 PlaceholderText="名前を入力してください"
+				 x:Uid="TabRenameDialog_Name"
 				 MinWidth="300"
 				 Loaded="NameTextBox_Loaded" />
 	</StackPanel>

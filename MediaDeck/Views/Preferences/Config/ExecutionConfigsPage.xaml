@@ -19,10 +19,10 @@
 				<!-- セクションヘッダー -->
 				<StackPanel Spacing="4"
 					Margin="0,0,0,16" >
-					<TextBlock Text="外部プログラム"
+					<TextBlock x:Uid="Execution_Header"
 						Style="{StaticResource BodyStrongTextBlockStyle}"
 						Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
-					<TextBlock Text="メディアアイテムを開く外部プログラムとその起動引数を設定します。"
+					<TextBlock x:Uid="Execution_Description"
 						Style="{StaticResource CaptionTextBlockStyle}"
 						Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
 				</StackPanel>
@@ -65,7 +65,7 @@
 										VerticalAlignment="Center"
 										Command="{x:Bind RemoveCommand}"
 										Style="{StaticResource SubtleButtonStyle}"
-										ToolTipService.ToolTip="このプログラムを削除"
+										x:Uid="Execution_RemoveProgram"
 										Padding="6"
 										BorderThickness="0" >
 										<FontIcon Glyph="&#xE74D;"
@@ -98,7 +98,7 @@
 			</Grid.ColumnDefinitions>
 			<ComboBox Grid.Column="0"
 				HorizontalAlignment="Stretch"
-				Header="追加するメディアタイプ"
+				x:Uid="Execution_AddMediaTypeHeader"
 				ItemsSource="{x:Bind ViewModel.AvailableMediaTypes}"
 				SelectedItem="{x:Bind ViewModel.SelectedMediaType.Value, Mode=TwoWay}" />
 			<Button Grid.Column="1"
@@ -108,7 +108,7 @@
 					Spacing="8" >
 					<FontIcon Glyph="&#xE710;"
 						FontSize="14" />
-					<TextBlock Text="プログラムを追加"
+					<TextBlock x:Uid="Execution_AddProgramButton"
 						FontWeight="SemiBold" />
 				</StackPanel>
 			</Button>

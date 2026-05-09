@@ -12,24 +12,21 @@
         <TextBox Grid.Column="0"
                  Margin="0,0,8,0"
                  Text="{x:Bind ViewModel.Name.Value, Mode=TwoWay}"
-                 PlaceholderText="ツール名 (例: VLC)"
-                 Header="ツール名" />
+                 x:Uid="ExecConfig_ToolName" />
         <!-- 実行ファイルパス -->
         <TextBox Grid.Column="1"
                  Margin="0,0,8,0"
                  Text="{x:Bind ViewModel.Path.Value, Mode=TwoWay}"
-                 PlaceholderText="C:\Programs\MPC-BE\mpc-be64.exe"
-                 Header="実行ファイルパス" />
+                 x:Uid="ExecConfig_FilePath" />
         <!-- 起動引数 -->
         <TextBox Grid.Column="2"
                  Width="200"
                  Margin="0,0,8,0"
                  Text="{x:Bind ViewModel.Args.Value, Mode=TwoWay}"
-                 PlaceholderText="/fullscreen"
-                 Header="起動引数" />
+                 x:Uid="ExecConfig_Args" />
         <!-- 既定ツール -->
         <ToggleSwitch Grid.Column="3"
                       IsOn="{x:Bind ViewModel.IsDefault.Value, Mode=TwoWay}"
-                      Header="既定ツール" />
+                      x:Uid="ExecConfig_IsDefault" />
     </Grid>
 </local:DefaultExecutionConfigViewUserControl>

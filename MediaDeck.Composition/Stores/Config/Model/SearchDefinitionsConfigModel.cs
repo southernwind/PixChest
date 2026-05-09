@@ -1,4 +1,5 @@
 using MediaDeck.Composition.Enum;
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Composition.Stores.State.Model.Objects;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,7 @@ namespace MediaDeck.Composition.Stores.Config.Model;
 [GenerateR3JsonConfigDto]
 public class SearchDefinitionsConfigModel {
 	private readonly IServiceProvider _serviceProvider;
+	private readonly IStringProvider _stringProvider;
 
 	/// <summary>
 	/// フィルター条件リスト
@@ -29,14 +31,15 @@ public class SearchDefinitionsConfigModel {
 		get;
 	}
 
-	public SearchDefinitionsConfigModel(IServiceProvider serviceProvider) {
+	public SearchDefinitionsConfigModel(IServiceProvider serviceProvider, IStringProvider stringProvider) {
 		this._serviceProvider = serviceProvider;
+		this._stringProvider = stringProvider;
 		(string, SortItemKey[])[] sc = [
-			("File Path", [SortItemKey.FilePath]),
-			("Modified Time", [SortItemKey.ModifiedTime]),
-			("Rate", [SortItemKey.Rate]),
-			("Usage Count", [SortItemKey.UsageCount]),
-			("File Size", [SortItemKey.FileSize])
+			(stringProvider.GetString("Sort_FilePath"), [SortItemKey.FilePath]),
+			(stringProvider.GetString("Sort_ModifiedTime"), [SortItemKey.ModifiedTime]),
+			(stringProvider.GetString("Sort_Rate"), [SortItemKey.Rate]),
+			(stringProvider.GetString("Sort_UsageCount"), [SortItemKey.UsageCount]),
+			(stringProvider.GetString("Sort_FileSize"), [SortItemKey.FileSize])
 		];
 		this.SortConditions = [
 			.. sc.Select(x => {

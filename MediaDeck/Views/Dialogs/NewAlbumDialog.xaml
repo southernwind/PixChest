@@ -6,18 +6,16 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	mc:Ignorable="d"
-	Title="アルバムを新規作成"
-	PrimaryButtonText="作成"
-	CloseButtonText="キャンセル"
+	x:Uid="NewAlbumDialog"
 	DefaultButton="Primary"
 	PrimaryButtonClick="ContentDialog_PrimaryButtonClick" >
 	<StackPanel Spacing="8">
-		<TextBlock Text="アルバム名（必須）" />
+		<TextBlock x:Uid="NewAlbumDialog_NameLabel" />
 		<TextBox x:Name="AlbumNameTextBox"
 			Text="{x:Bind AlbumName, Mode=TwoWay}"
-			PlaceholderText="北海道"
+			x:Uid="NewAlbumDialog_NamePlaceholder"
 			Loaded="AlbumNameTextBox_Loaded" />
-		<TextBlock Text="アルバムパス（任意。例: 旅行/2024）" />
-		<TextBox Text="{x:Bind AlbumPath, Mode=TwoWay}" PlaceholderText="旅行/2024" />
+		<TextBlock x:Uid="NewAlbumDialog_PathLabel" />
+		<TextBox Text="{x:Bind AlbumPath, Mode=TwoWay}" x:Uid="NewAlbumDialog_PathPlaceholder" />
 	</StackPanel>
 </ContentDialog>

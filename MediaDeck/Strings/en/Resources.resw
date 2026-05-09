@@ -63,16 +63,16 @@
   <data name="App_Title" xml:space="preserve">
     <value>MediaDeck</value>
   </data>
-  <data name="Common_Save.Text" xml:space="preserve">
+  <data name="Common_Save.Content" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="Common_Cancel.Text" xml:space="preserve">
+  <data name="Common_Cancel.Content" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="Common_Add.Text" xml:space="preserve">
+  <data name="Common_Add.Content" xml:space="preserve">
     <value>Add</value>
   </data>
-  <data name="Common_Delete.Text" xml:space="preserve">
+  <data name="Common_Delete.Content" xml:space="preserve">
     <value>Delete</value>
   </data>
 
@@ -200,5 +200,261 @@
   </data>
   <data name="LanguageConfigPage_SystemDefault" xml:space="preserve">
     <value>System default</value>
+  </data>
+  <!-- Repository -->
+  <data name="Repository_Header.Text" xml:space="preserve">
+    <value>Repository</value>
+  </data>
+  <data name="FolderRepository_IncludeSubDirectories.Content" xml:space="preserve">
+    <value>Include Subdirectories</value>
+  </data>
+  <data name="AlbumRepository_IncludeSubAlbums.Content" xml:space="preserve">
+    <value>Include Sub Albums</value>
+  </data>
+
+  <!-- Sort -->
+  <data name="Sort_Header.Text" xml:space="preserve">
+    <value>Sort</value>
+  </data>
+  <data name="Sort_Settings.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Sort Settings</value>
+  </data>
+  <data name="Sort_ToggleDirection.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Toggle Ascending / Descending</value>
+  </data>
+  <data name="Sort_FilePath" xml:space="preserve">
+    <value>File Path</value>
+  </data>
+  <data name="Sort_ModifiedTime" xml:space="preserve">
+    <value>Modified Time</value>
+  </data>
+  <data name="Sort_Rate" xml:space="preserve">
+    <value>Rating</value>
+  </data>
+  <data name="Sort_UsageCount" xml:space="preserve">
+    <value>Usage Count</value>
+  </data>
+  <data name="Sort_FileSize" xml:space="preserve">
+    <value>File Size</value>
+  </data>
+
+  <!-- Filter -->
+  <data name="Filter_Header.Text" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="Filter_Settings.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Filter Settings</value>
+  </data>
+
+  <!-- Details Pane -->
+  <data name="Details_Header.Text" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Details_Rating.Text" xml:space="preserve">
+    <value>Rating</value>
+  </data>
+  <data name="Details_UsageCount.Text" xml:space="preserve">
+    <value>Usage Count</value>
+  </data>
+  <data name="Details_FilePath.Text" xml:space="preserve">
+    <value>File Path</value>
+  </data>
+  <data name="Details_MultipleValues.Text" xml:space="preserve">
+    <value>(Multiple values)</value>
+  </data>
+  <data name="Details_Metadata.Header" xml:space="preserve">
+    <value>Metadata</value>
+  </data>
+  <data name="Details_Description.Text" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Details_DescriptionPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>Add a description...</value>
+  </data>
+  <data name="Details_UpdateDescription.Content" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Details_Tags.Text" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="Details_AddTagsPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>Add tags...</value>
+  </data>
+  <data name="Details_OpenTagManager.Text" xml:space="preserve">
+    <value>Open Tag Manager</value>
+  </data>
+  <data name="Details_DeleteTag.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <!-- Viewer -->
+  <data name="Viewer_ColumnFileName.Text" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="Viewer_ColumnResolution.Text" xml:space="preserve">
+    <value>Resolution</value>
+  </data>
+  <data name="Viewer_ColumnSize.Text" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="Viewer_ColumnCreationTime.Text" xml:space="preserve">
+    <value>Creation Time</value>
+  </data>
+  <data name="Viewer_ColumnRate.Text" xml:space="preserve">
+    <value>Rating</value>
+  </data>
+  <data name="Viewer_ContextAddToAlbum.Text" xml:space="preserve">
+    <value>Add to Album</value>
+  </data>
+  <data name="Viewer_ContextRecreateThumbnail.Text" xml:space="preserve">
+    <value>Recreate Thumbnail</value>
+  </data>
+  <data name="Viewer_ContextUpdateMetadata.Text" xml:space="preserve">
+    <value>Update Metadata</value>
+  </data>
+  <data name="Viewer_ContextRemoveFile.Text" xml:space="preserve">
+    <value>Remove File</value>
+  </data>
+  <data name="Viewer_ContextOpenFolder.Text" xml:space="preserve">
+    <value>Open Folder</value>
+  </data>
+  <data name="Viewer_LoadMore.Content" xml:space="preserve">
+    <value>Load More</value>
+  </data>
+  <!-- Status Bar -->
+  <data name="StatusBar_Count.Text" xml:space="preserve">
+    <value>Count: </value>
+  </data>
+  <data name="StatusBar_SearchTime.Text" xml:space="preserve">
+    <value>  /  Search: </value>
+  </data>
+  <data name="StatusBar_Overlay.Text" xml:space="preserve">
+    <value>Overlay</value>
+  </data>
+  <data name="StatusBar_Info.Text" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <!-- Media Types -->
+  <data name="Archive_FilesCountFormat" xml:space="preserve">
+    <value>{0} files</value>
+  </data>
+  <data name="Pdf_PagesCountFormat" xml:space="preserve">
+    <value>{0} pages</value>
+  </data>
+  <!-- Execution Program Settings -->
+  <data name="Execution_Header.Text" xml:space="preserve">
+    <value>External Programs</value>
+  </data>
+  <data name="Execution_Description.Text" xml:space="preserve">
+    <value>Configure external programs and arguments for opening media items.</value>
+  </data>
+  <data name="Execution_RemoveProgram.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Remove this program</value>
+  </data>
+  <data name="Execution_AddMediaTypeHeader.Header" xml:space="preserve">
+    <value>Media type to add</value>
+  </data>
+  <data name="Execution_AddProgramButton.Text" xml:space="preserve">
+    <value>Add Program</value>
+  </data>
+  <!-- Individual Execution Program Config -->
+  <data name="ExecConfig_ToolName.Header" xml:space="preserve">
+    <value>Tool Name</value>
+  </data>
+  <data name="ExecConfig_ToolName.PlaceholderText" xml:space="preserve">
+    <value>Tool name (e.g. VLC)</value>
+  </data>
+  <data name="ExecConfig_FilePath.Header" xml:space="preserve">
+    <value>Executable Path</value>
+  </data>
+  <data name="ExecConfig_Args.Header" xml:space="preserve">
+    <value>Startup Arguments</value>
+  </data>
+  <data name="ExecConfig_IsDefault.Header" xml:space="preserve">
+    <value>Default Tool</value>
+  </data>
+  <data name="ExecConfig_ExecutionType.Header" xml:space="preserve">
+    <value>Execution Method</value>
+  </data>
+  <data name="ExecConfig_InternalDescription.Text" xml:space="preserve">
+    <value>Open this folder in the MediaDeck library view.</value>
+  </data>
+  <!-- New Album Dialog -->
+  <data name="NewAlbumDialog.Title" xml:space="preserve">
+    <value>Create New Album</value>
+  </data>
+  <data name="NewAlbumDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="NewAlbumDialog.CloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="NewAlbumDialog_NameLabel.Text" xml:space="preserve">
+    <value>Album Name (Required)</value>
+  </data>
+  <data name="NewAlbumDialog_NamePlaceholder.PlaceholderText" xml:space="preserve">
+    <value>e.g. Travel</value>
+  </data>
+  <data name="NewAlbumDialog_PathLabel.Text" xml:space="preserve">
+    <value>Album Path (Optional. e.g. Travel/2024)</value>
+  </data>
+  <data name="NewAlbumDialog_PathPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>Travel/2024</value>
+  </data>
+  <!-- Tab Rename Dialog -->
+  <data name="TabRenameDialog.Title" xml:space="preserve">
+    <value>Rename Tab</value>
+  </data>
+  <data name="TabRenameDialog.PrimaryButtonText" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="TabRenameDialog.CloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="TabRenameDialog_Name.Header" xml:space="preserve">
+    <value>New Tab Name</value>
+  </data>
+  <data name="TabRenameDialog_Name.PlaceholderText" xml:space="preserve">
+    <value>Enter a name</value>
+  </data>
+  <!-- Property Comparison Dialog -->
+  <data name="PropertyComparisonDialog.Title" xml:space="preserve">
+    <value>Property Comparison Condition</value>
+  </data>
+  <data name="PropertyComparisonDialog_Value.Header" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="PropertyComparisonDialog_Value.PlaceholderText" xml:space="preserve">
+    <value>Enter a value to compare</value>
+  </data>
+  <data name="PropertyComparisonDialog_NumberValue.PlaceholderText" xml:space="preserve">
+    <value>Enter a number to compare</value>
+  </data>
+  <data name="PropertyComparisonDialog_Date.Header" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="PropertyComparisonDialog_Date.PlaceholderText" xml:space="preserve">
+    <value>Select a date</value>
+  </data>
+  <data name="PropertyComparisonDialog_Operator.Header" xml:space="preserve">
+    <value>Operator</value>
+  </data>
+  <!-- Splash Screen -->
+  <data name="Splash_InitializingDatabase" xml:space="preserve">
+    <value>Initializing database...</value>
+  </data>
+  <data name="Splash_LoadingConfig" xml:space="preserve">
+    <value>Loading configuration...</value>
+  </data>
+  <data name="Splash_InitializingTags" xml:space="preserve">
+    <value>Initializing tag information...</value>
+  </data>
+  <data name="Splash_PreparingBackgroundTasks" xml:space="preserve">
+    <value>Preparing background tasks...</value>
+  </data>
+  <data name="Splash_StartingMediaEngine" xml:space="preserve">
+    <value>Starting media engine...</value>
+  </data>
+  <data name="Splash_Ready" xml:space="preserve">
+    <value>Ready...</value>
   </data>
 </root>

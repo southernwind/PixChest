@@ -14,9 +14,8 @@
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 		<CheckBox Grid.Row="0"
-			IsChecked="{x:Bind ViewModel.AlbumRepositoryViewModel.IncludeSubAlbums.Value,Mode=TwoWay}" >
-			<TextBlock Text="Include Sub Albums" />
-		</CheckBox>
+			x:Uid="AlbumRepository_IncludeSubAlbums"
+			IsChecked="{x:Bind ViewModel.AlbumRepositoryViewModel.IncludeSubAlbums.Value,Mode=TwoWay}" />
 		<TreeView Grid.Row="1"
 			ItemsSource="{x:Bind ViewModel.AlbumRepositoryViewModel.RootAlbum.Value.ChildAlbums, Mode=OneWay}"
 			SelectedItem="{x:Bind ViewModel.AlbumRepositoryViewModel.SelectedAlbum.Value,Mode=TwoWay}" >

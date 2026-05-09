@@ -1,4 +1,5 @@
 using MediaDeck.Composition.Enum;
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.Models;
 using MediaDeck.MediaItemTypes.Archive.Models;
 using MediaDeck.MediaItemTypes.Base.ViewModels;
@@ -6,7 +7,9 @@ using MediaDeck.MediaItemTypes.Base.ViewModels;
 namespace MediaDeck.MediaItemTypes.Archive.ViewModels;
 
 [Inject(InjectServiceLifetime.Transient)]
-public class ArchiveMediaItemViewModel() : BaseMediaItemViewModel(MediaType.Archive) {
+public class ArchiveMediaItemViewModel(IStringProvider stringProvider) : BaseMediaItemViewModel(MediaType.Archive) {
+	private readonly IStringProvider _stringProvider = stringProvider;
+
 	public int? FileCount {
 		get;
 		private set;
@@ -14,7 +17,7 @@ public class ArchiveMediaItemViewModel() : BaseMediaItemViewModel(MediaType.Arch
 
 	public string FileCountText {
 		get {
-			return this.FileCount is { } c ? $"{c} files" : string.Empty;
+			return this.FileCount is { } c ? this._stringProvider.GetString("Archive_FilesCountFormat", c) : string.Empty;
 		}
 	}
 

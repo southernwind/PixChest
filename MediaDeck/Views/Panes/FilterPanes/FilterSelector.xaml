@@ -31,13 +31,13 @@
 				VerticalAlignment="Center" >
 				<FontIcon Glyph="&#xE71C;"
 					FontSize="16" />
-				<TextBlock Text="Filter"
+				<TextBlock x:Uid="Filter_Header"
 					Style="{ThemeResource BodyStrongTextBlockStyle}"
 					VerticalAlignment="Center" />
 			</StackPanel>
 			<Button Grid.Column="2"
-				Click="OpenFilterSettingsWindowButton_Click"
-				ToolTipService.ToolTip="Filter Settings" >
+				x:Uid="Filter_Settings"
+				Click="OpenFilterSettingsWindowButton_Click" >
 				<FontIcon Glyph="&#xE713;"
 					FontSize="14" />
 			</Button>

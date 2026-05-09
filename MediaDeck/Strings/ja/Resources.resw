@@ -63,16 +63,16 @@
   <data name="App_Title" xml:space="preserve">
     <value>MediaDeck</value>
   </data>
-  <data name="Common_Save.Text" xml:space="preserve">
+  <data name="Common_Save.Content" xml:space="preserve">
     <value>保存</value>
   </data>
-  <data name="Common_Cancel.Text" xml:space="preserve">
+  <data name="Common_Cancel.Content" xml:space="preserve">
     <value>キャンセル</value>
   </data>
-  <data name="Common_Add.Text" xml:space="preserve">
+  <data name="Common_Add.Content" xml:space="preserve">
     <value>追加</value>
   </data>
-  <data name="Common_Delete.Text" xml:space="preserve">
+  <data name="Common_Delete.Content" xml:space="preserve">
     <value>削除</value>
   </data>
 
@@ -200,5 +200,261 @@
   </data>
   <data name="LanguageConfigPage_SystemDefault" xml:space="preserve">
     <value>システムの既定</value>
+  </data>
+  <!-- リポジトリ -->
+  <data name="Repository_Header.Text" xml:space="preserve">
+    <value>リポジトリ</value>
+  </data>
+  <data name="FolderRepository_IncludeSubDirectories.Content" xml:space="preserve">
+    <value>サブディレクトリを含める</value>
+  </data>
+  <data name="AlbumRepository_IncludeSubAlbums.Content" xml:space="preserve">
+    <value>サブアルバムを含める</value>
+  </data>
+
+  <!-- 並べ替え -->
+  <data name="Sort_Header.Text" xml:space="preserve">
+    <value>並べ替え</value>
+  </data>
+  <data name="Sort_Settings.ToolTipService.ToolTip" xml:space="preserve">
+    <value>並べ替え設定</value>
+  </data>
+  <data name="Sort_ToggleDirection.ToolTipService.ToolTip" xml:space="preserve">
+    <value>昇順/降順の切り替え</value>
+  </data>
+  <data name="Sort_FilePath" xml:space="preserve">
+    <value>ファイルパス</value>
+  </data>
+  <data name="Sort_ModifiedTime" xml:space="preserve">
+    <value>更新日時</value>
+  </data>
+  <data name="Sort_Rate" xml:space="preserve">
+    <value>評価</value>
+  </data>
+  <data name="Sort_UsageCount" xml:space="preserve">
+    <value>使用回数</value>
+  </data>
+  <data name="Sort_FileSize" xml:space="preserve">
+    <value>ファイルサイズ</value>
+  </data>
+
+  <!-- フィルター -->
+  <data name="Filter_Header.Text" xml:space="preserve">
+    <value>フィルター</value>
+  </data>
+  <data name="Filter_Settings.ToolTipService.ToolTip" xml:space="preserve">
+    <value>フィルター設定</value>
+  </data>
+
+  <!-- 詳細パネル -->
+  <data name="Details_Header.Text" xml:space="preserve">
+    <value>詳細</value>
+  </data>
+  <data name="Details_Rating.Text" xml:space="preserve">
+    <value>評価</value>
+  </data>
+  <data name="Details_UsageCount.Text" xml:space="preserve">
+    <value>使用回数</value>
+  </data>
+  <data name="Details_FilePath.Text" xml:space="preserve">
+    <value>ファイルパス</value>
+  </data>
+  <data name="Details_MultipleValues.Text" xml:space="preserve">
+    <value>(複数の値)</value>
+  </data>
+  <data name="Details_Metadata.Header" xml:space="preserve">
+    <value>メタデータ</value>
+  </data>
+  <data name="Details_Description.Text" xml:space="preserve">
+    <value>説明</value>
+  </data>
+  <data name="Details_DescriptionPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>説明を追加...</value>
+  </data>
+  <data name="Details_UpdateDescription.Content" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="Details_Tags.Text" xml:space="preserve">
+    <value>タグ</value>
+  </data>
+  <data name="Details_AddTagsPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>タグを追加...</value>
+  </data>
+  <data name="Details_OpenTagManager.Text" xml:space="preserve">
+    <value>タグ管理を開く</value>
+  </data>
+  <data name="Details_DeleteTag.Text" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <!-- ビューアー -->
+  <data name="Viewer_ColumnFileName.Text" xml:space="preserve">
+    <value>ファイル名</value>
+  </data>
+  <data name="Viewer_ColumnResolution.Text" xml:space="preserve">
+    <value>解像度</value>
+  </data>
+  <data name="Viewer_ColumnSize.Text" xml:space="preserve">
+    <value>サイズ</value>
+  </data>
+  <data name="Viewer_ColumnCreationTime.Text" xml:space="preserve">
+    <value>作成日時</value>
+  </data>
+  <data name="Viewer_ColumnRate.Text" xml:space="preserve">
+    <value>評価</value>
+  </data>
+  <data name="Viewer_ContextAddToAlbum.Text" xml:space="preserve">
+    <value>アルバムへ追加</value>
+  </data>
+  <data name="Viewer_ContextRecreateThumbnail.Text" xml:space="preserve">
+    <value>サムネイルを再生成</value>
+  </data>
+  <data name="Viewer_ContextUpdateMetadata.Text" xml:space="preserve">
+    <value>メタデータを更新</value>
+  </data>
+  <data name="Viewer_ContextRemoveFile.Text" xml:space="preserve">
+    <value>ファイルを削除</value>
+  </data>
+  <data name="Viewer_ContextOpenFolder.Text" xml:space="preserve">
+    <value>フォルダを開く</value>
+  </data>
+  <data name="Viewer_LoadMore.Content" xml:space="preserve">
+    <value>さらに読み込む</value>
+  </data>
+  <!-- ステータスバー -->
+  <data name="StatusBar_Count.Text" xml:space="preserve">
+    <value>件数: </value>
+  </data>
+  <data name="StatusBar_SearchTime.Text" xml:space="preserve">
+    <value>  /  検索: </value>
+  </data>
+  <data name="StatusBar_Overlay.Text" xml:space="preserve">
+    <value>オーバーレイ</value>
+  </data>
+  <data name="StatusBar_Info.Text" xml:space="preserve">
+    <value>情報</value>
+  </data>
+  <!-- メディアタイプ別 -->
+  <data name="Archive_FilesCountFormat" xml:space="preserve">
+    <value>{0} 個のファイル</value>
+  </data>
+  <data name="Pdf_PagesCountFormat" xml:space="preserve">
+    <value>{0} ページ</value>
+  </data>
+  <!-- 実行プログラム設定 -->
+  <data name="Execution_Header.Text" xml:space="preserve">
+    <value>外部プログラム</value>
+  </data>
+  <data name="Execution_Description.Text" xml:space="preserve">
+    <value>メディアアイテムを開く外部プログラムとその起動引数を設定します。</value>
+  </data>
+  <data name="Execution_RemoveProgram.ToolTipService.ToolTip" xml:space="preserve">
+    <value>このプログラムを削除</value>
+  </data>
+  <data name="Execution_AddMediaTypeHeader.Header" xml:space="preserve">
+    <value>追加するメディアタイプ</value>
+  </data>
+  <data name="Execution_AddProgramButton.Text" xml:space="preserve">
+    <value>プログラムを追加</value>
+  </data>
+  <!-- 実行プログラム個別設定 -->
+  <data name="ExecConfig_ToolName.Header" xml:space="preserve">
+    <value>ツール名</value>
+  </data>
+  <data name="ExecConfig_ToolName.PlaceholderText" xml:space="preserve">
+    <value>ツール名 (例: VLC)</value>
+  </data>
+  <data name="ExecConfig_FilePath.Header" xml:space="preserve">
+    <value>実行ファイルパス</value>
+  </data>
+  <data name="ExecConfig_Args.Header" xml:space="preserve">
+    <value>起動引数</value>
+  </data>
+  <data name="ExecConfig_IsDefault.Header" xml:space="preserve">
+    <value>既定ツール</value>
+  </data>
+  <data name="ExecConfig_ExecutionType.Header" xml:space="preserve">
+    <value>実行方法</value>
+  </data>
+  <data name="ExecConfig_InternalDescription.Text" xml:space="preserve">
+    <value>MediaDeckのライブラリ画面でこのフォルダを開きます。</value>
+  </data>
+  <!-- アルバム新規作成ダイアログ -->
+  <data name="NewAlbumDialog.Title" xml:space="preserve">
+    <value>アルバムを新規作成</value>
+  </data>
+  <data name="NewAlbumDialog.PrimaryButtonText" xml:space="preserve">
+    <value>作成</value>
+  </data>
+  <data name="NewAlbumDialog.CloseButtonText" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="NewAlbumDialog_NameLabel.Text" xml:space="preserve">
+    <value>アルバム名（必須）</value>
+  </data>
+  <data name="NewAlbumDialog_NamePlaceholder.PlaceholderText" xml:space="preserve">
+    <value>北海道</value>
+  </data>
+  <data name="NewAlbumDialog_PathLabel.Text" xml:space="preserve">
+    <value>アルバムパス（任意。例: 旅行/2024）</value>
+  </data>
+  <data name="NewAlbumDialog_PathPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>旅行/2024</value>
+  </data>
+  <!-- タブ名変更ダイアログ -->
+  <data name="TabRenameDialog.Title" xml:space="preserve">
+    <value>タブ名の変更</value>
+  </data>
+  <data name="TabRenameDialog.PrimaryButtonText" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="TabRenameDialog.CloseButtonText" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="TabRenameDialog_Name.Header" xml:space="preserve">
+    <value>新しいタブ名</value>
+  </data>
+  <data name="TabRenameDialog_Name.PlaceholderText" xml:space="preserve">
+    <value>名前を入力してください</value>
+  </data>
+  <!-- プロパティ比較ダイアログ -->
+  <data name="PropertyComparisonDialog.Title" xml:space="preserve">
+    <value>プロパティ比較条件</value>
+  </data>
+  <data name="PropertyComparisonDialog_Value.Header" xml:space="preserve">
+    <value>値</value>
+  </data>
+  <data name="PropertyComparisonDialog_Value.PlaceholderText" xml:space="preserve">
+    <value>比較する値を入力</value>
+  </data>
+  <data name="PropertyComparisonDialog_NumberValue.PlaceholderText" xml:space="preserve">
+    <value>比較する数値を入力</value>
+  </data>
+  <data name="PropertyComparisonDialog_Date.Header" xml:space="preserve">
+    <value>日付</value>
+  </data>
+  <data name="PropertyComparisonDialog_Date.PlaceholderText" xml:space="preserve">
+    <value>日付を選択</value>
+  </data>
+  <data name="PropertyComparisonDialog_Operator.Header" xml:space="preserve">
+    <value>演算子</value>
+  </data>
+  <!-- スプラッシュ画面 -->
+  <data name="Splash_InitializingDatabase" xml:space="preserve">
+    <value>データベースを準備しています...</value>
+  </data>
+  <data name="Splash_LoadingConfig" xml:space="preserve">
+    <value>構成設定を読み込んでいます...</value>
+  </data>
+  <data name="Splash_InitializingTags" xml:space="preserve">
+    <value>タグ情報を初期化しています...</value>
+  </data>
+  <data name="Splash_PreparingBackgroundTasks" xml:space="preserve">
+    <value>バックグラウンドタスクを準備しています...</value>
+  </data>
+  <data name="Splash_StartingMediaEngine" xml:space="preserve">
+    <value>メディアエンジンを起動しています...</value>
+  </data>
+  <data name="Splash_Ready" xml:space="preserve">
+    <value>準備完了...</value>
   </data>
 </root>

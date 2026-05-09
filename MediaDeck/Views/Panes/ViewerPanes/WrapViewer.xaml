@@ -32,17 +32,17 @@
 			</GridView.ItemsPanel>
 			<GridView.Resources>
 				<MenuFlyout x:Key="FileContextMenu" Opening="FileContextMenu_Opening" >
-					<MenuFlyoutSubItem Text="アルバムへ追加" Tag="AddToAlbumRoot" />
-					<MenuFlyoutItem Text="Recreate Thumbnail"
+					<MenuFlyoutSubItem x:Uid="Viewer_ContextAddToAlbum" Tag="AddToAlbumRoot" />
+					<MenuFlyoutItem x:Uid="Viewer_ContextRecreateThumbnail"
 						Click="MenuFlyoutItem_Click"
 						Tag="RecreateThumbnail" />
-					<MenuFlyoutItem Text="メタデータを更新"
+					<MenuFlyoutItem x:Uid="Viewer_ContextUpdateMetadata"
 						Click="MenuFlyoutItem_Click"
 						Tag="UpdateMetadata" />
-					<MenuFlyoutItem Text="Remove File"
+					<MenuFlyoutItem x:Uid="Viewer_ContextRemoveFile"
 						Click="MenuFlyoutItem_Click"
 						Tag="RemoveFile" />
-					<MenuFlyoutItem Text="Open Folder"
+					<MenuFlyoutItem x:Uid="Viewer_ContextOpenFolder"
 						Click="MenuFlyoutItem_Click"
 						Tag="OpenFolder" />
 				</MenuFlyout>
@@ -124,7 +124,7 @@
 				</DataTemplate>
 			</GridView.ItemTemplate>
 			<GridView.Footer>
-				<Button Content="さらに読み込む"
+				<Button x:Uid="Viewer_LoadMore"
 					Command="{x:Bind ViewModel.MediaContentLibraryViewModel.LoadMoreCommand}"
 					Visibility="{x:Bind ViewModel.MediaContentLibraryViewModel.CanLoadMore.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
 					HorizontalAlignment="Stretch" Margin="8" />

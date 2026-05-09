@@ -31,13 +31,13 @@
 				VerticalAlignment="Center" >
 				<FontIcon Glyph="&#xE8CB;"
 					FontSize="16" />
-				<TextBlock Text="Sort"
+				<TextBlock x:Uid="Sort_Header"
 					Style="{ThemeResource BodyStrongTextBlockStyle}"
 					VerticalAlignment="Center" />
 			</StackPanel>
 			<Button Grid.Column="2"
-				Click="OpenSortSettingsWindowButton_Click"
-				ToolTipService.ToolTip="Sort Settings" >
+				x:Uid="Sort_Settings"
+				Click="OpenSortSettingsWindowButton_Click" >
 				<FontIcon Glyph="&#xE713;"
 					FontSize="14" />
 			</Button>
@@ -65,11 +65,11 @@
 			</ComboBox>
 			<ToggleButton Grid.Column="1"
 				x:Name="DirectionToggleButton"
+				x:Uid="Sort_ToggleDirection"
 				Margin="6,0,0,0"
 				IsChecked="{x:Bind ViewModel.Direction.Value, Mode=OneWay, Converter={StaticResource ListSortDirectionToBooleanConverter}}"
 				Checked="DirectionToggleButton_Checked"
-				Unchecked="DirectionToggleButton_Unchecked"
-				ToolTipService.ToolTip="Toggle Ascending / Descending" >
+				Unchecked="DirectionToggleButton_Unchecked" >
 				<FontIcon
 					Glyph="{x:Bind ViewModel.Direction.Value, Mode=OneWay, Converter={StaticResource ListSortDirectionToIconGlyphConverter}}"
 					FontSize="14" />

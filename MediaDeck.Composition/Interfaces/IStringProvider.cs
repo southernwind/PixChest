@@ -1,4 +1,4 @@
-namespace MediaDeck.ViewModels.Localization;
+namespace MediaDeck.Composition.Interfaces;
 
 /// <summary>
 /// ローカライズ済み文字列リソースへの薄いアクセサ。

@@ -1,29 +1,42 @@
-using MediaDeck.ViewModels.Localization;
+using MediaDeck.Composition.Interfaces;
 
 using Microsoft.Windows.ApplicationModel.Resources;
 
 namespace MediaDeck.Services.Localization;
 
 /// <summary>
-/// <see cref="ResourceLoader"/> をラップする <see cref="IStringProvider"/> 実装。
-/// Strings/{lang}/Resources.resw からの値解決を一元化する。
+/// <see cref="ResourceManager"/> を使用する <see cref="IStringProvider"/> 実装。
+/// Unpackaged環境でも言語設定（PrimaryLanguageOverride）が確実に反映されるように ResourceContext を明示的に使用する。
 /// </summary>
 [Inject(InjectServiceLifetime.Singleton, typeof(IStringProvider))]
 public class StringProvider : IStringProvider {
-	private readonly ResourceLoader _resourceLoader;
+	private readonly ResourceMap _resourceMap;
+	private readonly ResourceContext _context;
 
 	public StringProvider() {
-		// View 非依存の既定リソースマップ（"Resources"）を利用する。
-		// PrimaryLanguageOverride は App 起動時に設定される前提。
-		this._resourceLoader = new ResourceLoader();
+		var manager = new ResourceManager();
+		this._resourceMap = manager.MainResourceMap.GetSubtree("Resources");
+		this._context = manager.CreateResourceContext();
+
+		// Unpackaged環境では、ResourceManager作成直後にPrimaryLanguageOverrideが反映されない場合があるため
+		// 明示的にコンテキストの言語を上書きする
+		var language = Microsoft.Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride;
+		if (!string.IsNullOrEmpty(language)) {
+			this._context.QualifierValues["Language"] = language;
+		}
 	}
 
 	public string GetString(string key) {
 		if (string.IsNullOrEmpty(key)) {
 			return string.Empty;
 		}
-		var value = this._resourceLoader.GetString(key);
-		return string.IsNullOrEmpty(value) ? key : value;
+
+		try {
+			var candidate = this._resourceMap.GetValue(key, this._context);
+			return candidate?.ValueAsString ?? key;
+		} catch {
+			return key;
+		}
 	}
 
 	public string GetString(string key, params object?[] args) {

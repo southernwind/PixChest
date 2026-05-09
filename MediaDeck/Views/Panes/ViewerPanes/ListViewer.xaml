@@ -28,23 +28,23 @@
 					</Grid.ColumnDefinitions>
 					<Grid Grid.Column="0" />
 					<Grid Grid.Column="1" Visibility="{Binding ListViewerViewModel.FileNameColumn.IsVisible.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" >
-						<TextBlock Text="ファイル名" FontWeight="SemiBold" VerticalAlignment="Center" Margin="8,0,8,0" TextTrimming="CharacterEllipsis" />
+						<TextBlock x:Uid="Viewer_ColumnFileName" FontWeight="SemiBold" VerticalAlignment="Center" Margin="8,0,8,0" TextTrimming="CharacterEllipsis" />
 						<primitives:Thumb Tag="{Binding ListViewerViewModel.FileNameColumn, Mode=OneWay}" Width="6" HorizontalAlignment="Right" DragDelta="HeaderResizer_DragDelta" PointerEntered="HeaderResizer_PointerEntered" PointerExited="HeaderResizer_PointerExited" />
 					</Grid>
 					<Grid Grid.Column="2" Visibility="{Binding ListViewerViewModel.ResolutionColumn.IsVisible.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" >
-						<TextBlock Text="解像度" FontWeight="SemiBold" VerticalAlignment="Center" Margin="8,0,8,0" TextTrimming="CharacterEllipsis" />
+						<TextBlock x:Uid="Viewer_ColumnResolution" FontWeight="SemiBold" VerticalAlignment="Center" Margin="8,0,8,0" TextTrimming="CharacterEllipsis" />
 						<primitives:Thumb Tag="{Binding ListViewerViewModel.ResolutionColumn, Mode=OneWay}" Width="6" HorizontalAlignment="Right" DragDelta="HeaderResizer_DragDelta" PointerEntered="HeaderResizer_PointerEntered" PointerExited="HeaderResizer_PointerExited" />
 					</Grid>
 					<Grid Grid.Column="3" Visibility="{Binding ListViewerViewModel.FileSizeColumn.IsVisible.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" >
-						<TextBlock Text="サイズ" FontWeight="SemiBold" VerticalAlignment="Center" Margin="8,0,8,0" TextTrimming="CharacterEllipsis" />
+						<TextBlock x:Uid="Viewer_ColumnSize" FontWeight="SemiBold" VerticalAlignment="Center" Margin="8,0,8,0" TextTrimming="CharacterEllipsis" />
 						<primitives:Thumb Tag="{Binding ListViewerViewModel.FileSizeColumn, Mode=OneWay}" Width="6" HorizontalAlignment="Right" DragDelta="HeaderResizer_DragDelta" PointerEntered="HeaderResizer_PointerEntered" PointerExited="HeaderResizer_PointerExited" />
 					</Grid>
 					<Grid Grid.Column="4" Visibility="{Binding ListViewerViewModel.CreationTimeColumn.IsVisible.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" >
-						<TextBlock Text="作成日時" FontWeight="SemiBold" VerticalAlignment="Center" Margin="8,0,8,0" TextTrimming="CharacterEllipsis" />
+						<TextBlock x:Uid="Viewer_ColumnCreationTime" FontWeight="SemiBold" VerticalAlignment="Center" Margin="8,0,8,0" TextTrimming="CharacterEllipsis" />
 						<primitives:Thumb Tag="{Binding ListViewerViewModel.CreationTimeColumn, Mode=OneWay}" Width="6" HorizontalAlignment="Right" DragDelta="HeaderResizer_DragDelta" PointerEntered="HeaderResizer_PointerEntered" PointerExited="HeaderResizer_PointerExited" />
 					</Grid>
 					<Grid Grid.Column="5" Visibility="{Binding ListViewerViewModel.RateColumn.IsVisible.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" >
-						<TextBlock Text="評価" FontWeight="SemiBold" VerticalAlignment="Center" Margin="8,0,8,0" TextTrimming="CharacterEllipsis" />
+						<TextBlock x:Uid="Viewer_ColumnRate" FontWeight="SemiBold" VerticalAlignment="Center" Margin="8,0,8,0" TextTrimming="CharacterEllipsis" />
 						<primitives:Thumb Tag="{Binding ListViewerViewModel.RateColumn, Mode=OneWay}" Width="6" HorizontalAlignment="Right" DragDelta="HeaderResizer_DragDelta" PointerEntered="HeaderResizer_PointerEntered" PointerExited="HeaderResizer_PointerExited" />
 					</Grid>
 				</Grid>
@@ -67,11 +67,11 @@
 			</ListView.ItemsPanel>
 			<ListView.Resources>
 				<MenuFlyout x:Key="FileContextMenu" Opening="FileContextMenu_Opening" >
-					<MenuFlyoutSubItem Text="アルバムへ追加" Tag="AddToAlbumRoot" />
-					<MenuFlyoutItem Text="Recreate Thumbnail" Click="MenuFlyoutItem_Click" Tag="RecreateThumbnail" />
-					<MenuFlyoutItem Text="メタデータを更新" Click="MenuFlyoutItem_Click" Tag="UpdateMetadata" />
-					<MenuFlyoutItem Text="Remove File" Click="MenuFlyoutItem_Click" Tag="RemoveFile" />
-					<MenuFlyoutItem Text="Open Folder" Click="MenuFlyoutItem_Click" Tag="OpenFolder" />
+					<MenuFlyoutSubItem x:Uid="Viewer_ContextAddToAlbum" Tag="AddToAlbumRoot" />
+					<MenuFlyoutItem x:Uid="Viewer_ContextRecreateThumbnail" Click="MenuFlyoutItem_Click" Tag="RecreateThumbnail" />
+					<MenuFlyoutItem x:Uid="Viewer_ContextUpdateMetadata" Click="MenuFlyoutItem_Click" Tag="UpdateMetadata" />
+					<MenuFlyoutItem x:Uid="Viewer_ContextRemoveFile" Click="MenuFlyoutItem_Click" Tag="RemoveFile" />
+					<MenuFlyoutItem x:Uid="Viewer_ContextOpenFolder" Click="MenuFlyoutItem_Click" Tag="OpenFolder" />
 				</MenuFlyout>
 			</ListView.Resources>
 			<ListView.ItemTemplate>
@@ -102,7 +102,7 @@
 				</DataTemplate>
 			</ListView.ItemTemplate>
 			<ListView.Footer>
-				<Button Content="さらに読み込む"
+				<Button x:Uid="Viewer_LoadMore"
 					Command="{x:Bind ViewModel.MediaContentLibraryViewModel.LoadMoreCommand}"
 					Visibility="{x:Bind ViewModel.MediaContentLibraryViewModel.CanLoadMore.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
 					HorizontalAlignment="Stretch" Margin="8" />

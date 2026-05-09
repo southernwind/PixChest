@@ -31,7 +31,7 @@
 				VerticalAlignment="Center" >
 				<FontIcon Glyph="&#xE8B7;"
 					FontSize="16" />
-				<TextBlock Text="Repository"
+				<TextBlock x:Uid="Repository_Header"
 					Style="{ThemeResource BodyStrongTextBlockStyle}"
 					VerticalAlignment="Center" />
 			</StackPanel>

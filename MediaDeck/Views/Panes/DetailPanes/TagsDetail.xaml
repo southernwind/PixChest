@@ -18,7 +18,7 @@
 			Spacing="8" >
 			<FontIcon Glyph="&#xE8EC;"
 				FontSize="14" />
-			<TextBlock Text="Tags"
+			<TextBlock x:Uid="Details_Tags"
 				Style="{ThemeResource CaptionTextBlockStyle}"
 				Foreground="{ThemeResource TextFillColorSecondaryBrush}"
 				VerticalAlignment="Center" />
@@ -31,8 +31,8 @@
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
 			<AutoSuggestBox Grid.Column="0"
+				x:Uid="Details_AddTagsPlaceholder"
 				ItemsSource="{x:Bind ViewModel.FilteredTagCandidates, Mode=OneWay}"
-				PlaceholderText="Add tags..."
 				Text="{x:Bind ViewModel.Text.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 				TextMemberPath="TagName"
 				TextChanged="AutoSuggestBox_TextChanged"
@@ -57,7 +57,7 @@
 			</AutoSuggestBox>
 			<Button Grid.Column="1"
 				Margin="8,0,0,0"
-				Content="Add"
+				x:Uid="Common_Add"
 				Command="{x:Bind ViewModel.AddTagCommand}" />
 		</Grid>
 
@@ -99,14 +99,14 @@
 						</StackPanel>
 						<FlyoutBase.AttachedFlyout>
 							<MenuFlyout>
-								<MenuFlyoutItem Text="Open Tag Manager"
+								<MenuFlyoutItem x:Uid="Details_OpenTagManager"
 									Command="{Binding DataContext.OpenTagManagerCommand, ElementName=ControlRoot}"
 									CommandParameter="{Binding }" >
 									<MenuFlyoutItem.Icon>
 										<FontIcon Glyph="&#xE713;" />
 									</MenuFlyoutItem.Icon>
 								</MenuFlyoutItem>
-								<MenuFlyoutItem Text="Delete"
+								<MenuFlyoutItem x:Uid="Details_DeleteTag"
 									Command="{Binding DataContext.RemoveTagCommand, ElementName=ControlRoot}"
 									CommandParameter="{Binding }" >
 									<MenuFlyoutItem.Icon>

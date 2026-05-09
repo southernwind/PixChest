@@ -11,6 +11,7 @@ using MapControl;
 
 using MediaDeck.Composition.Constants;
 using MediaDeck.Composition.Database;
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Composition.Interfaces.Tags;
 using MediaDeck.Composition.Stores.State.Model;
 using MediaDeck.Core.Models.Tools;
@@ -54,7 +55,7 @@ public partial class App {
 		this._configStore = Ioc.Default.GetRequiredService<IConfigStore>();
 		this._stateStore = Ioc.Default.GetRequiredService<IStateStore>();
 
-		// 言語設定を UI 初期化よりも前に適用する（再起動で反映）
+		// 言語設定を UI 初期化よりも前に適用する
 		var language = this._configStore.Config.LanguageConfig.Language.Value;
 #if UNPACKAGED
 		Microsoft.Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = string.IsNullOrEmpty(language) ? "en" : language;
@@ -83,6 +84,9 @@ public partial class App {
 		var logger = LoggerFactory.CreateLogger<App>();
 		AppDomain.CurrentDomain.UnhandledException += (_, e) => {
 			logger.LogError(e.ExceptionObject as Exception, "UnhandledException");
+		};
+		UnhandledException += (_, e) => {
+			logger.LogError(e.Exception, "UnhandledException");
 		};
 
 		// メインウィンドウが表示されたらスプラッシュ画面を閉じる
@@ -156,7 +160,9 @@ public partial class App {
 			// 画像メタデータ取得にSJISが必要
 			Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-			splashViewModel?.UpdateStatus("データベースを準備しています...");
+			var stringProvider = Ioc.Default.GetRequiredService<IStringProvider>();
+
+			splashViewModel?.UpdateStatus(stringProvider.GetString("Splash_InitializingDatabase"));
 			var dbPath = Path.Combine(FilePathConstants.BaseDirectory, "pix.db");
 			if (!File.Exists(dbPath)) {
 				{
@@ -178,25 +184,25 @@ public partial class App {
 				}
 			}
 
-			splashViewModel?.UpdateStatus("構成設定を読み込んでいます...");
+			splashViewModel?.UpdateStatus(stringProvider.GetString("Splash_LoadingConfig"));
 			Directory.CreateDirectory(this._configStore.Config.PathConfig.TemporaryFolderPath.Value);
 
 			GlobalFFOptions.Configure(options => {
 				options.BinaryFolder = Path.Combine(this._configStore.Config.PathConfig.FFMpegFolderPath.Value);
 			});
 
-			splashViewModel?.UpdateStatus("タグ情報を初期化しています...");
+			splashViewModel?.UpdateStatus(stringProvider.GetString("Splash_InitializingTags"));
 			var tagsManager = Ioc.Default.GetRequiredService<ITagsManager>();
 			await tagsManager.InitializeAsync();
 
-			splashViewModel?.UpdateStatus("バックグラウンドタスクを準備しています...");
+			splashViewModel?.UpdateStatus(stringProvider.GetString("Splash_PreparingBackgroundTasks"));
 			var backgroundTasksModel = Ioc.Default.GetRequiredService<BackgroundTasksModel>();
 			backgroundTasksModel.Start();
 
 			var _ = this._stateStore.RootState.AppState.DefaultTabState.SearchState.CurrentSortCondition.Subscribe(x => Debug.WriteLine($"CurrentSortCondition {x}"));
 			_ = this._stateStore.RootState.AppState.DefaultTabState.SearchState.SortDirection.Subscribe(x => Debug.WriteLine($"SortDirection {x}"));
 
-			splashViewModel?.UpdateStatus("メディアエンジンを起動しています...");
+			splashViewModel?.UpdateStatus(stringProvider.GetString("Splash_StartingMediaEngine"));
 			await Task.Delay(100);
 			this._dispatcherQueue?.TryEnqueue(() => {
 				FlyleafLib.Engine.Start(new FlyleafLib.EngineConfig() {
@@ -209,7 +215,7 @@ public partial class App {
 					FFmpegPath = this._configStore.Config.PathConfig.FFMpegFolderPath.Value,
 				});
 			});
-			splashViewModel?.UpdateStatus("準備完了...");
+			splashViewModel?.UpdateStatus(stringProvider.GetString("Splash_Ready"));
 		});
 	}
 }

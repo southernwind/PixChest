@@ -34,13 +34,13 @@
 					Spacing="8" >
 					<TextBlock VerticalAlignment="Center"
 						Style="{StaticResource CaptionTextBlockStyle}" >
-						<Run Text="Count: " />
+						<Run x:Uid="StatusBar_Count" />
 						<Run Text="{x:Bind ViewModel.MediaContentLibrary.Files.Count, Mode=OneWay}" />
 					</TextBlock>
 					<TextBlock VerticalAlignment="Center"
 						Style="{StaticResource CaptionTextBlockStyle}"
 						Visibility="{x:Bind ViewModel.MediaContentLibrary.SearchElapsedMilliseconds.Value, Mode=OneWay, Converter={StaticResource NullToCollapseConverter}}" >
-						<Run Text="  /  Search: " />
+						<Run x:Uid="StatusBar_SearchTime" />
 						<Run Text="{x:Bind ViewModel.MediaContentLibrary.SearchElapsedMilliseconds.Value, Mode=OneWay}" />
 						<Run Text=" ms" />
 					</TextBlock>
@@ -72,7 +72,7 @@
 						IsChecked="{x:Bind ViewModel.ShowOverlay.Value, Mode=TwoWay}" >
 						<StackPanel Orientation="Horizontal" Spacing="6" >
 							<FontIcon Glyph="&#xE71E;" FontSize="14" />
-							<TextBlock Text="Overlay" VerticalAlignment="Center" />
+							<TextBlock x:Uid="StatusBar_Overlay" VerticalAlignment="Center" />
 						</StackPanel>
 					</ToggleButton>
 					<ToggleButton MinWidth="80"
@@ -80,7 +80,7 @@
 						IsChecked="{x:Bind ViewModel.ShowInfo.Value, Mode=TwoWay}" >
 						<StackPanel Orientation="Horizontal" Spacing="6" >
 							<FontIcon Glyph="&#xE946;" FontSize="14" />
-							<TextBlock Text="Info" VerticalAlignment="Center" />
+							<TextBlock x:Uid="StatusBar_Info" VerticalAlignment="Center" />
 						</StackPanel>
 					</ToggleButton>
 				</StackPanel>

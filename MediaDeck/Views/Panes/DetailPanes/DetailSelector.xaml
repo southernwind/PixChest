@@ -24,7 +24,7 @@
 				VerticalAlignment="Center" >
 				<FontIcon Glyph="&#xE946;"
 					FontSize="16" />
-				<TextBlock Text="Details"
+				<TextBlock x:Uid="Details_Header"
 					Style="{ThemeResource BodyStrongTextBlockStyle}"
 					VerticalAlignment="Center" />
 			</StackPanel>
