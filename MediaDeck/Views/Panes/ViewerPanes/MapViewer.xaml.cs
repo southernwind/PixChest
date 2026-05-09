@@ -1,3 +1,4 @@
+using System.Collections.Specialized;
 using MapControl;
 using MediaDeck.Objects.Maps;
 using MediaDeck.ViewModels.Panes.ViewerPanes;
@@ -11,10 +12,28 @@ public sealed partial class MapViewer {
 	}
 
 	private void Map_Loaded(object sender, RoutedEventArgs e) {
-		if (this.ViewModel is not { }) {
+		if (this.ViewModel is not { } vm) {
 			return;
 		}
 		this.UpdateMapControl();
+
+		// 初期状態で全アイテムが入るように調整
+		// Files が空でない場合は即座に、空の場合は最初の更新を待つ
+		if (vm.MapViewerViewModel.MediaContentLibraryViewModel.Files.Count > 0) {
+			vm.MapViewerViewModel.FitToItems(this.Map.ActualWidth, this.Map.ActualHeight);
+		}
+
+		// アイテム変更時にもフィットさせる
+		vm.MapViewerViewModel.MediaContentLibraryViewModel.Files.CollectionChanged += this.OnFilesCollectionChanged;
+	}
+
+	private void OnFilesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) {
+		if (this.ViewModel is not { } vm) {
+			return;
+		}
+		this.DispatcherQueue.TryEnqueue(() => {
+			vm.MapViewerViewModel.FitToItems(this.Map.ActualWidth, this.Map.ActualHeight);
+		});
 	}
 
 	private void Pin_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e) {
@@ -26,7 +45,8 @@ public sealed partial class MapViewer {
 	}
 
 	private void UpdateMapControl() {
-		this.Map.PointerWheelChanged += (_, _) => {
+		// ビューポート変更時にアイテムを更新する
+		this.Map.ViewportChanged += (_, _) => {
 			if (this.Map is not { } map) {
 				return;
 			}

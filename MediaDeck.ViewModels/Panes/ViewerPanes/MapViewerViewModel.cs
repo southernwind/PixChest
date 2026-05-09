@@ -56,6 +56,13 @@ public class MapViewerViewModel : ViewerPaneViewModelBase {
 	} = new();
 
 	/// <summary>
+	/// 地図のズームレベル
+	/// </summary>
+	public BindableReactiveProperty<double> ZoomLevel {
+		get;
+	} = new(11);
+
+	/// <summary>
 	/// ピンが選択されたときに呼び出す。対応するメディアを SelectedFiles に設定し、カメラ位置を更新する。
 	/// </summary>
 	public void SelectPin(MapPinViewModel pinVm) {
@@ -131,5 +138,60 @@ public class MapViewerViewModel : ViewerPaneViewModelBase {
 
 		this.MapPins.Value = list.ToArray();
 		this.UpdatePinStates(this._mediaContentLibraryViewModel.SelectedFiles.Value);
+	}
+
+	/// <summary>
+	/// すべてのアイテムが表示されるように地図の中心とズームレベルを調整する
+	/// </summary>
+	/// <param name="mapWidth">地図コントロールの幅</param>
+	/// <param name="mapHeight">地図コントロールの高さ</param>
+	public void FitToItems(double mapWidth, double mapHeight) {
+		var locations = this._mediaContentLibraryViewModel.Files
+			.Select(x => x.Location)
+			.Where(x => x is { })
+			.ToList();
+
+		if (locations.Count == 0) {
+			return;
+		}
+
+		var minLat = locations.Min(x => x!.Latitude);
+		var maxLat = locations.Max(x => x!.Latitude);
+		var minLon = locations.Min(x => x!.Longitude);
+		var maxLon = locations.Max(x => x!.Longitude);
+
+		this.Center.Value = this._locationFactory.Create((minLat + maxLat) / 2, (minLon + maxLon) / 2);
+
+		if (mapWidth <= 0 || mapHeight <= 0) {
+			return;
+		}
+
+		double lonDiff = maxLon - minLon;
+		if (lonDiff < 0) {
+			lonDiff += 360;
+		}
+
+		if (lonDiff == 0 && maxLat - minLat == 0) {
+			this.ZoomLevel.Value = 15;
+			return;
+		}
+
+		// 簡易的なズームレベル計算（Webメルカトル投影を考慮）
+		// マージンを考慮して 80% の範囲に収める
+		const double padding = 0.8;
+		const int tileSize = 256;
+
+		// 経度方向のズーム
+		double zoomLon = Math.Log(mapWidth * 360.0 / (lonDiff * tileSize / padding), 2);
+
+		// 緯度方向のズーム（メルカトル投影）
+		double latRadMin = minLat * Math.PI / 180.0;
+		double latRadMax = maxLat * Math.PI / 180.0;
+		double latDiffMerc = Math.Log(Math.Tan((latRadMax / 2.0) + (Math.PI / 4.0))) - Math.Log(Math.Tan((latRadMin / 2.0) + (Math.PI / 4.0)));
+		double zoomLat = double.IsInfinity(latDiffMerc) || latDiffMerc <= 0
+			? 21
+			: Math.Log(mapHeight * 2 * Math.PI / (latDiffMerc * tileSize / padding), 2);
+
+		this.ZoomLevel.Value = Math.Clamp(Math.Min(zoomLon, zoomLat), 2, 21);
 	}
 }

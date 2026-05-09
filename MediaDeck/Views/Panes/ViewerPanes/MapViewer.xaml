@@ -18,10 +18,10 @@
 		</Grid.RowDefinitions>
 		<local:SearchConditionManagerView Grid.Row="0" ViewModel="{x:Bind ViewModel.SearchConditionManagerViewModel, Mode=OneWay}" />
 		<map:Map x:Name="Map"
-			Center="{Binding ViewModel.MapViewerViewModel.Center.Value, Mode=OneWay}"
+			Center="{x:Bind ViewModel.MapViewerViewModel.Center.Value, Mode=TwoWay, Converter={StaticResource LocationConverter}}"
 			MinZoomLevel="2"
 			MaxZoomLevel="21"
-			ZoomLevel="11"
+			ZoomLevel="{x:Bind ViewModel.MapViewerViewModel.ZoomLevel.Value, Mode=TwoWay}"
 			ManipulationMode="All"
 			Grid.Row="2"
 			Loaded="Map_Loaded" >

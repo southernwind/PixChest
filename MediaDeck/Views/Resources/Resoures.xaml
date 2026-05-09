@@ -38,6 +38,7 @@
 	<converters:TagListConverter x:Key="TagListConverter" />
 	<converters:FileChangeFilterToDisplayNameConverter x:Key="FileChangeFilterToDisplayNameConverter" />
 	<converters:PinStateToBrushConverter x:Key="PinStateToBrushConverter" />
+	<converters:LocationConverter x:Key="LocationConverter" />
 
 	<DataTemplate x:Key="ImageDetailTpl" >
 		<imageViews:ImageDetailViewerPreviewControlView />
