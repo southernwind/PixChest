@@ -26,6 +26,7 @@
   <PropertyGroup Condition="'$(Packaged)' != 'true'">
     <WindowsPackageType>None</WindowsPackageType>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
+    <DefineConstants>$(DefineConstants);UNPACKAGED</DefineConstants>
   </PropertyGroup>
   
 

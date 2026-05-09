@@ -23,6 +23,7 @@ public class FilePathServiceTests {
 		services.AddSingleton<SearchConfigModel>();
 		services.AddSingleton<FolderManagerConfigModel>();
 		services.AddSingleton<SearchDefinitionsConfigModel>();
+		services.AddSingleton<LanguageConfigModel>();
 		services.AddSingleton<ConfigModel>();
 		services.AddTransient<SortObject>(sp => new SortObject(sp));
 		services.AddTransient<SortItemObject>();

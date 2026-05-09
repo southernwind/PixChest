@@ -53,6 +53,14 @@ public partial class App {
 		BuildConfigureServices();
 		this._configStore = Ioc.Default.GetRequiredService<IConfigStore>();
 		this._stateStore = Ioc.Default.GetRequiredService<IStateStore>();
+
+		// 言語設定を UI 初期化よりも前に適用する（再起動で反映）
+		var language = this._configStore.Config.LanguageConfig.Language.Value;
+#if UNPACKAGED
+		Microsoft.Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = string.IsNullOrEmpty(language) ? "en" : language;
+#else
+		Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = string.IsNullOrEmpty(language) ? string.Empty : language;
+#endif
 		this.InitializeComponent();
 	}
 

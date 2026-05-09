@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <!-- 共通 -->
+  <data name="App_Title" xml:space="preserve">
+    <value>MediaDeck</value>
+  </data>
+  <data name="Common_Save.Text" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="Common_Cancel.Text" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="Common_Add.Text" xml:space="preserve">
+    <value>追加</value>
+  </data>
+  <data name="Common_Delete.Text" xml:space="preserve">
+    <value>削除</value>
+  </data>
+
+  <!-- ナビゲーションメニュー -->
+  <data name="NavMenu_View.Title" xml:space="preserve">
+    <value>表示</value>
+  </data>
+  <data name="NavMenu_ThemeDefault.Text" xml:space="preserve">
+    <value>既定 (Windowsの設定)</value>
+  </data>
+  <data name="NavMenu_ThemeLight.Text" xml:space="preserve">
+    <value>ライト</value>
+  </data>
+  <data name="NavMenu_ThemeDark.Text" xml:space="preserve">
+    <value>ダーク</value>
+  </data>
+  <data name="NavMenu_Tools.Title" xml:space="preserve">
+    <value>ツール</value>
+  </data>
+  <data name="NavMenu_TagManager.Text" xml:space="preserve">
+    <value>タグ管理</value>
+  </data>
+  <data name="NavMenu_FolderManager.Text" xml:space="preserve">
+    <value>フォルダ管理</value>
+  </data>
+  <data name="NavMenu_DuplicateDetector.Text" xml:space="preserve">
+    <value>重複ファイル検索</value>
+  </data>
+  <data name="NavMenu_Config.Text" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="NavMenu_SyncNotification.ToolTipService.ToolTip" xml:space="preserve">
+    <value>未処理のファイル変更があります。</value>
+  </data>
+
+  <!-- 設定ウィンドウ -->
+  <data name="ConfigWindow_Title" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="ConfigWindow_Save.Text" xml:space="preserve">
+    <value>保存</value>
+  </data>
+
+  <!-- 設定ページ: スキャン -->
+  <data name="ScanConfigPage_Name" xml:space="preserve">
+    <value>スキャン</value>
+  </data>
+  <data name="ScanConfigPage_Description" xml:space="preserve">
+    <value>対象拡張子やスキャン方法を設定します</value>
+  </data>
+  <data name="ScanConfigPage_TargetExtensionsHeader.Text" xml:space="preserve">
+    <value>対象拡張子</value>
+  </data>
+  <data name="ScanConfigPage_TargetExtensionsDescription.Text" xml:space="preserve">
+    <value>スキャン対象とするファイルの拡張子とメディアタイプを管理します。</value>
+  </data>
+  <data name="ScanConfigPage_AddExtension.Text" xml:space="preserve">
+    <value>拡張子を追加</value>
+  </data>
+  <data name="ScanConfigPage_ExtensionPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>例: .mp4</value>
+  </data>
+  <data name="ScanConfigPage_RemoveExtension.ToolTipService.ToolTip" xml:space="preserve">
+    <value>この拡張子を削除</value>
+  </data>
+
+  <!-- 設定ページ: 検索 -->
+  <data name="SearchConfigPage_Name" xml:space="preserve">
+    <value>検索</value>
+  </data>
+  <data name="SearchConfigPage_Description" xml:space="preserve">
+    <value>検索結果の読み込み件数等を設定します</value>
+  </data>
+  <data name="SearchConfigPage_CountSettingsHeader.Text" xml:space="preserve">
+    <value>件数設定</value>
+  </data>
+  <data name="SearchConfigPage_CountSettingsDescription.Text" xml:space="preserve">
+    <value>UIへのファイル読み込み時のバッチ処理件数を設定します。</value>
+  </data>
+  <data name="SearchConfigPage_InitialLoadCount.Text" xml:space="preserve">
+    <value>初期ロード件数</value>
+  </data>
+  <data name="SearchConfigPage_InitialLoadCountDesc.Text" xml:space="preserve">
+    <value>初回のUI反映時に読み込むアイテム数</value>
+  </data>
+  <data name="SearchConfigPage_IncrementalLoadCount.Text" xml:space="preserve">
+    <value>増分読み込み件数</value>
+  </data>
+  <data name="SearchConfigPage_IncrementalLoadCountDesc.Text" xml:space="preserve">
+    <value>初期ロード以降に追加するUI反映のバッチサイズ</value>
+  </data>
+  <data name="SearchConfigPage_MaxLoadCount.Text" xml:space="preserve">
+    <value>最大ロード件数</value>
+  </data>
+  <data name="SearchConfigPage_MaxLoadCountDesc.Text" xml:space="preserve">
+    <value>表示するアイテムの最大数</value>
+  </data>
+
+  <!-- 設定ページ: 実行プログラム -->
+  <data name="ExecutionConfigPage_Name" xml:space="preserve">
+    <value>実行プログラム</value>
+  </data>
+  <data name="ExecutionConfigPage_Description" xml:space="preserve">
+    <value>メディアタイプ別の関連付けや既定アプリを設定します</value>
+  </data>
+
+  <!-- 言語設定 -->
+  <data name="LanguageConfigPage_Name" xml:space="preserve">
+    <value>言語</value>
+  </data>
+  <data name="LanguageConfigPage_Description" xml:space="preserve">
+    <value>アプリの表示言語を切り替えます</value>
+  </data>
+  <data name="LanguageConfigPage_SectionHeader.Text" xml:space="preserve">
+    <value>表示言語</value>
+  </data>
+  <data name="LanguageConfigPage_SectionDescription.Text" xml:space="preserve">
+    <value>選択した言語はアプリ再起動後に反映されます。</value>
+  </data>
+  <data name="LanguageConfigPage_LanguageLabel.Text" xml:space="preserve">
+    <value>言語</value>
+  </data>
+  <data name="LanguageConfigPage_RestartNotice.Message" xml:space="preserve">
+    <value>変更を反映するには、保存後にアプリを再起動してください。</value>
+  </data>
+  <data name="LanguageConfigPage_SystemDefault" xml:space="preserve">
+    <value>システムの既定</value>
+  </data>
+</root>

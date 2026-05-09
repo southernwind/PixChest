@@ -30,6 +30,7 @@ public sealed partial class ConfigWindow : Window {
 				ScanConfigPageViewModel => typeof(ScanConfigPage),
 				ExecutionConfigPageViewModel => typeof(ExecutionConfigPage),
 				SearchConfigPageViewModel => typeof(SearchConfigPage),
+				LanguageConfigPageViewModel => typeof(LanguageConfigPage),
 				_ => null
 			};
 

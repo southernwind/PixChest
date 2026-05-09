@@ -24,10 +24,10 @@
 			<!-- セクションヘッダー -->
 			<StackPanel Spacing="4"
 				Margin="0,0,0,16" >
-				<TextBlock Text="対象拡張子"
+				<TextBlock x:Uid="ScanConfigPage_TargetExtensionsHeader"
 					Style="{StaticResource BodyStrongTextBlockStyle}"
 					Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
-				<TextBlock Text="スキャン対象とするファイルの拡張子とメディアタイプを管理します。"
+				<TextBlock x:Uid="ScanConfigPage_TargetExtensionsDescription"
 					Style="{StaticResource CaptionTextBlockStyle}"
 					Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
 			</StackPanel>
@@ -60,17 +60,17 @@
 
 								<!-- 拡張子入力 -->
 								<TextBox Grid.Column="2"
+									x:Uid="ScanConfigPage_ExtensionPlaceholder"
 									Margin="8,0,8,0"
 									VerticalAlignment="Center"
-									Text="{x:Bind Extension.Value, Mode=TwoWay}"
-									PlaceholderText="例: .mp4" />
+									Text="{x:Bind Extension.Value, Mode=TwoWay}" />
 
 								<!-- 削除ボタン -->
 								<Button Grid.Column="3"
+									x:Uid="ScanConfigPage_RemoveExtension"
 									VerticalAlignment="Center"
 									Command="{x:Bind RemoveCommand}"
 									Style="{StaticResource SubtleButtonStyle}"
-									ToolTipService.ToolTip="この拡張子を削除"
 									Padding="6"
 									BorderThickness="0" >
 									<FontIcon Glyph="&#xE74D;"
@@ -98,7 +98,7 @@
 					<FontIcon Glyph="&#xE710;"
 						FontSize="14"
 						Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" />
-					<TextBlock Text="拡張子を追加"
+					<TextBlock x:Uid="ScanConfigPage_AddExtension"
 						Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
 						FontWeight="SemiBold" />
 				</StackPanel>

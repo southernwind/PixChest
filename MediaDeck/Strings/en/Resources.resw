@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <!-- Common -->
+  <data name="App_Title" xml:space="preserve">
+    <value>MediaDeck</value>
+  </data>
+  <data name="Common_Save.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Common_Cancel.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Common_Add.Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Common_Delete.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+
+  <!-- Navigation menu -->
+  <data name="NavMenu_View.Title" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="NavMenu_ThemeDefault.Text" xml:space="preserve">
+    <value>Default (Use system setting)</value>
+  </data>
+  <data name="NavMenu_ThemeLight.Text" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="NavMenu_ThemeDark.Text" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="NavMenu_Tools.Title" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="NavMenu_TagManager.Text" xml:space="preserve">
+    <value>Tag Manager</value>
+  </data>
+  <data name="NavMenu_FolderManager.Text" xml:space="preserve">
+    <value>Folder Manager</value>
+  </data>
+  <data name="NavMenu_DuplicateDetector.Text" xml:space="preserve">
+    <value>Duplicate File Finder</value>
+  </data>
+  <data name="NavMenu_Config.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="NavMenu_SyncNotification.ToolTipService.ToolTip" xml:space="preserve">
+    <value>There are unprocessed file changes.</value>
+  </data>
+
+  <!-- Settings window -->
+  <data name="ConfigWindow_Title" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="ConfigWindow_Save.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+
+  <!-- Settings page: Scan -->
+  <data name="ScanConfigPage_Name" xml:space="preserve">
+    <value>Scan</value>
+  </data>
+  <data name="ScanConfigPage_Description" xml:space="preserve">
+    <value>Configure target file extensions and scanning behavior</value>
+  </data>
+  <data name="ScanConfigPage_TargetExtensionsHeader.Text" xml:space="preserve">
+    <value>Target Extensions</value>
+  </data>
+  <data name="ScanConfigPage_TargetExtensionsDescription.Text" xml:space="preserve">
+    <value>Manage file extensions and media types to be scanned.</value>
+  </data>
+  <data name="ScanConfigPage_AddExtension.Text" xml:space="preserve">
+    <value>Add extension</value>
+  </data>
+  <data name="ScanConfigPage_ExtensionPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>e.g. .mp4</value>
+  </data>
+  <data name="ScanConfigPage_RemoveExtension.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Remove this extension</value>
+  </data>
+
+  <!-- Settings page: Search -->
+  <data name="SearchConfigPage_Name" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchConfigPage_Description" xml:space="preserve">
+    <value>Configure batch sizes used while loading search results</value>
+  </data>
+  <data name="SearchConfigPage_CountSettingsHeader.Text" xml:space="preserve">
+    <value>Item count settings</value>
+  </data>
+  <data name="SearchConfigPage_CountSettingsDescription.Text" xml:space="preserve">
+    <value>Configure batch sizes used when loading files into the UI.</value>
+  </data>
+  <data name="SearchConfigPage_InitialLoadCount.Text" xml:space="preserve">
+    <value>Initial load count</value>
+  </data>
+  <data name="SearchConfigPage_InitialLoadCountDesc.Text" xml:space="preserve">
+    <value>Number of items to load on the first UI update</value>
+  </data>
+  <data name="SearchConfigPage_IncrementalLoadCount.Text" xml:space="preserve">
+    <value>Incremental load count</value>
+  </data>
+  <data name="SearchConfigPage_IncrementalLoadCountDesc.Text" xml:space="preserve">
+    <value>Batch size of additional items appended after the initial load</value>
+  </data>
+  <data name="SearchConfigPage_MaxLoadCount.Text" xml:space="preserve">
+    <value>Maximum load count</value>
+  </data>
+  <data name="SearchConfigPage_MaxLoadCountDesc.Text" xml:space="preserve">
+    <value>Maximum number of items to display</value>
+  </data>
+
+  <!-- Settings page: Execution programs -->
+  <data name="ExecutionConfigPage_Name" xml:space="preserve">
+    <value>Execution programs</value>
+  </data>
+  <data name="ExecutionConfigPage_Description" xml:space="preserve">
+    <value>Configure default applications for each media type</value>
+  </data>
+
+  <!-- Language settings -->
+  <data name="LanguageConfigPage_Name" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LanguageConfigPage_Description" xml:space="preserve">
+    <value>Switch the application's display language</value>
+  </data>
+  <data name="LanguageConfigPage_SectionHeader.Text" xml:space="preserve">
+    <value>Display language</value>
+  </data>
+  <data name="LanguageConfigPage_SectionDescription.Text" xml:space="preserve">
+    <value>The selected language takes effect after restarting the app.</value>
+  </data>
+  <data name="LanguageConfigPage_LanguageLabel.Text" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LanguageConfigPage_RestartNotice.Message" xml:space="preserve">
+    <value>Restart the app after saving for the change to take effect.</value>
+  </data>
+  <data name="LanguageConfigPage_SystemDefault" xml:space="preserve">
+    <value>System default</value>
+  </data>
+</root>

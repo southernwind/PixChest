@@ -35,6 +35,7 @@ public class SortManagerTests {
 		services.AddSingleton<DefaultTabStateModel>();
 		services.AddSingleton<TabStateModel>();
 		services.AddSingleton<SearchDefinitionsConfigModel>();
+		services.AddSingleton<LanguageConfigModel>();
 		services.AddSingleton<ConfigModel>();
 		services.AddSingleton<PathConfigModel>();
 		services.AddSingleton<ScanConfigModel>();

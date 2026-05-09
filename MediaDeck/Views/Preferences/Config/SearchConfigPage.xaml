@@ -18,32 +18,32 @@
 			MaxWidth="800" >
 
 			<StackPanel Spacing="4" Margin="0,0,0,16" >
-				<TextBlock Text="件数設定"
+				<TextBlock x:Uid="SearchConfigPage_CountSettingsHeader"
 					Style="{StaticResource BodyStrongTextBlockStyle}"
 					Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
-				<TextBlock Text="UIへのファイル読み込み時のバッチ処理件数を設定します。"
+				<TextBlock x:Uid="SearchConfigPage_CountSettingsDescription"
 					Style="{StaticResource CaptionTextBlockStyle}"
 					Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
 			</StackPanel>
 
 			<!-- 初期ロード件数 -->
 			<StackPanel Spacing="8" Margin="0,0,0,16">
-				<TextBlock Text="初期ロード件数" Style="{StaticResource BodyStrongTextBlockStyle}" Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
-				<TextBlock Text="初回のUI反映時に読み込むアイテム数" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+				<TextBlock x:Uid="SearchConfigPage_InitialLoadCount" Style="{StaticResource BodyStrongTextBlockStyle}" Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
+				<TextBlock x:Uid="SearchConfigPage_InitialLoadCountDesc" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
 				<NumberBox Value="{x:Bind ViewModel.InitialLoadCount.Value, Mode=TwoWay}" Minimum="1" Maximum="100000" SpinButtonPlacementMode="Compact" HorizontalAlignment="Left" Width="200" />
 			</StackPanel>
 
 			<!-- 増分読み込み件数 -->
 			<StackPanel Spacing="8" Margin="0,0,0,16">
-				<TextBlock Text="増分読み込み件数" Style="{StaticResource BodyStrongTextBlockStyle}" Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
-				<TextBlock Text="初期ロード以降に追加するUI反映のバッチサイズ" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+				<TextBlock x:Uid="SearchConfigPage_IncrementalLoadCount" Style="{StaticResource BodyStrongTextBlockStyle}" Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
+				<TextBlock x:Uid="SearchConfigPage_IncrementalLoadCountDesc" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
 				<NumberBox Value="{x:Bind ViewModel.IncrementalLoadCount.Value, Mode=TwoWay}" Minimum="1" Maximum="100000" SpinButtonPlacementMode="Compact" HorizontalAlignment="Left" Width="200" />
 			</StackPanel>
 
 			<!-- 最大ロード件数 -->
 			<StackPanel Spacing="8" Margin="0,0,0,16">
-				<TextBlock Text="最大ロード件数" Style="{StaticResource BodyStrongTextBlockStyle}" Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
-				<TextBlock Text="表示するアイテムの最大数" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+				<TextBlock x:Uid="SearchConfigPage_MaxLoadCount" Style="{StaticResource BodyStrongTextBlockStyle}" Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
+				<TextBlock x:Uid="SearchConfigPage_MaxLoadCountDesc" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
 				<NumberBox Value="{x:Bind ViewModel.MaxLoadCount.Value, Mode=TwoWay}" Minimum="1" Maximum="500000" SpinButtonPlacementMode="Compact" HorizontalAlignment="Left" Width="200" />
 			</StackPanel>
 
