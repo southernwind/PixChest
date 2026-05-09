@@ -8,12 +8,13 @@
 	xmlns:sortVm="using:MediaDeck.ViewModels.Sort"
 	xmlns:stateObjects="using:MediaDeck.Composition.Stores.State.Model.Objects"
 	xmlns:enum="using:MediaDeck.Composition.Enum"
+	xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
 	mc:Ignorable="d" >
 
 	<Grid Padding="12" >
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="220" />
-			<ColumnDefinition Width="12" />
+			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 
@@ -71,6 +72,12 @@
 				</Button>
 			</StackPanel>
 		</Grid>
+
+		<!-- 区切り -->
+		<toolkit:GridSplitter Grid.Column="1"
+			Width="4"
+			HorizontalAlignment="Center"
+			ResizeBehavior="BasedOnAlignment" />
 
 		<!-- ソート条件編集エリア -->
 		<Border Grid.Column="2"

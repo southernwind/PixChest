@@ -6,15 +6,16 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:tags="using:MediaDeck.ViewModels.Tags"
+	xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
 	mc:Ignorable="d" >
 
 	<Grid x:Name="Root"
 		Padding="12" >
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="220" />
-			<ColumnDefinition Width="12" />
+			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="220" />
-			<ColumnDefinition Width="12" />
+			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 
@@ -91,6 +92,13 @@
 			</StackPanel>
 		</Grid>
 
+
+		<!-- 区切り2 -->
+		<toolkit:GridSplitter Grid.Column="1"
+			Width="4"
+			HorizontalAlignment="Center"
+			ResizeBehavior="BasedOnAlignment" />
+		
 		<!-- タグ一覧 -->
 		<Grid Grid.Column="2" >
 			<Grid.RowDefinitions>
@@ -136,6 +144,12 @@
 				</ListBox>
 			</Border>
 		</Grid>
+
+		<!-- 区切り2 -->
+		<toolkit:GridSplitter Grid.Column="3"
+			Width="4"
+			HorizontalAlignment="Center"
+			ResizeBehavior="BasedOnAlignment" />
 
 		<!-- タグ編集エリア -->
 		<Border Grid.Column="4"

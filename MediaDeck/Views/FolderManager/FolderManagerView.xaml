@@ -7,6 +7,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:folderManagerVm="using:MediaDeck.ViewModels.FolderManager"
 	xmlns:converters="using:MediaDeck.Views.Resources.Converters"
+	xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
 	mc:Ignorable="d" >
 
 	<local:FolderManagerViewUserControl.Resources>
@@ -20,7 +21,7 @@
 	<Grid Padding="12" >
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="320" />
-			<ColumnDefinition Width="16" />
+			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 
@@ -123,6 +124,12 @@
 				</Button>
 			</Grid>
 		</Grid>
+
+		<!-- 区切り -->
+		<toolkit:GridSplitter Grid.Column="1"
+			Width="4"
+			HorizontalAlignment="Center"
+			ResizeBehavior="BasedOnAlignment" />
 
 		<!-- フォルダ詳細・設定 -->
 		<Border Grid.Column="2"
