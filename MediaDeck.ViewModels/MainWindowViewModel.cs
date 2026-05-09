@@ -114,8 +114,9 @@ public class MainWindowViewModel : ViewModelBase {
 		};
 
 		// AppStateのデフォルトタブ状態を新規タブに適用
-		var defaultSearch = stateStore.RootState.AppState.DefaultTabState.SearchState;
-		var defaultViewer = stateStore.RootState.AppState.DefaultTabState.ViewerState;
+		var defaultTab = stateStore.RootState.AppState.DefaultTabState;
+		var defaultSearch = defaultTab.SearchState;
+		var defaultViewer = defaultTab.ViewerState;
 		tabState.SearchState.CurrentSortCondition.Value = defaultSearch.CurrentSortCondition.Value;
 		tabState.SearchState.SortDirection.Value = defaultSearch.SortDirection.Value;
 		tabState.SearchState.CurrentFilteringConditions.Value = [.. defaultSearch.CurrentFilteringConditions.Value];
@@ -123,7 +124,6 @@ public class MainWindowViewModel : ViewModelBase {
 		tabState.ViewerState.ActiveViewer.Value = defaultViewer.ActiveViewer.Value;
 		tabState.ViewerState.ShowOverlay.Value = defaultViewer.ShowOverlay.Value;
 		tabState.ViewerState.ShowInfo.Value = defaultViewer.ShowInfo.Value;
-		tabState.ActiveRepository.Value = stateStore.RootState.AppState.DefaultTabState.ActiveRepository.Value;
 
 		// ListViewer 列設定
 		tabState.ViewerState.ListFileNameColumnWidth.Value = defaultViewer.ListFileNameColumnWidth.Value;
@@ -137,6 +137,11 @@ public class MainWindowViewModel : ViewModelBase {
 		tabState.ViewerState.ListCreationTimeColumnVisible.Value = defaultViewer.ListCreationTimeColumnVisible.Value;
 		tabState.ViewerState.ListRateColumnVisible.Value = defaultViewer.ListRateColumnVisible.Value;
 
+		tabState.ActiveRepository.Value = defaultTab.ActiveRepository.Value;
+
+		tabState.LeftPaneWidth.Value = defaultTab.LeftPaneWidth.Value;
+		tabState.RightPaneWidth.Value = defaultTab.RightPaneWidth.Value;
+		tabState.RepositoryPaneHeight.Value = defaultTab.RepositoryPaneHeight.Value;
 
 		// ルートの状態リストに追加
 		this._rootState.Tabs.Add(tabState);

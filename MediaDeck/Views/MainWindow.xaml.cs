@@ -93,4 +93,5 @@ public sealed partial class MainWindow : Window {
 			tabContext.TabState.DisplayName.Value = dialog.ResultText;
 		}
 	}
+
 }

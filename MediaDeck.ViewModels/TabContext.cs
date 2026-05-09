@@ -1,4 +1,5 @@
 using MediaDeck.Common.Base;
+using MediaDeck.Common.Extensions;
 using MediaDeck.Composition.Stores.State.Model;
 using MediaDeck.Core.Stores.State;
 using MediaDeck.ViewModels.Panes.DetailPanes;
@@ -55,12 +56,27 @@ public class TabContext : ViewModelBase {
 		get;
 	}
 
+	public BindableReactiveProperty<double> LeftPaneWidth {
+		get;
+	}
+
+	public BindableReactiveProperty<double> RightPaneWidth {
+		get;
+	}
+
+	public BindableReactiveProperty<double> RepositoryPaneHeight {
+		get;
+	}
+
 	public TabContext(TabStateModel tabState) {
 		this.TabState = tabState;
 		var sp = tabState.ServiceProvider;
 		this._scopeDisposable = sp as IDisposable;
 
 		this.DisplayName = this.TabState.DisplayName.ToBindableReactiveProperty("New Tab").AddTo(this.CompositeDisposable);
+		this.LeftPaneWidth = this.TabState.LeftPaneWidth.ToTwoWayBindableReactiveProperty().AddTo(this.CompositeDisposable);
+		this.RightPaneWidth = this.TabState.RightPaneWidth.ToTwoWayBindableReactiveProperty().AddTo(this.CompositeDisposable);
+		this.RepositoryPaneHeight = this.TabState.RepositoryPaneHeight.ToTwoWayBindableReactiveProperty().AddTo(this.CompositeDisposable);
 
 		this.ViewerSelectorViewModel = sp.GetRequiredService<ViewerSelectorViewModel>();
 		this.FilterSelectorViewModel = sp.GetRequiredService<FilterSelectorViewModel>();
@@ -109,7 +125,12 @@ public class TabContext : ViewModelBase {
 		this.TabState.ViewerState.ListFileSizeColumnVisible.Skip(1).Subscribe(v => defaultViewer.ListFileSizeColumnVisible.Value = v).AddTo(this.CompositeDisposable);
 		this.TabState.ViewerState.ListCreationTimeColumnVisible.Skip(1).Subscribe(v => defaultViewer.ListCreationTimeColumnVisible.Value = v).AddTo(this.CompositeDisposable);
 		this.TabState.ViewerState.ListRateColumnVisible.Skip(1).Subscribe(v => defaultViewer.ListRateColumnVisible.Value = v).AddTo(this.CompositeDisposable);
+		// リポジトリの同期
 		this.TabState.ActiveRepository.Skip(1).Subscribe(v => appState.DefaultTabState.ActiveRepository.Value = v).AddTo(this.CompositeDisposable);
+		// Splitterの同期
+		this.TabState.LeftPaneWidth.Skip(1).Subscribe(v => appState.DefaultTabState.LeftPaneWidth.Value = v).AddTo(this.CompositeDisposable);
+		this.TabState.RightPaneWidth.Skip(1).Subscribe(v => appState.DefaultTabState.RightPaneWidth.Value = v).AddTo(this.CompositeDisposable);
+		this.TabState.RepositoryPaneHeight.Skip(1).Subscribe(v => appState.DefaultTabState.RepositoryPaneHeight.Value = v).AddTo(this.CompositeDisposable);
 	}
 
 

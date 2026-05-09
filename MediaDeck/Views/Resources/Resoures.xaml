@@ -39,6 +39,7 @@
 	<converters:FileChangeFilterToDisplayNameConverter x:Key="FileChangeFilterToDisplayNameConverter" />
 	<converters:PinStateToBrushConverter x:Key="PinStateToBrushConverter" />
 	<converters:LocationConverter x:Key="LocationConverter" />
+	<converters:DoubleToGridLengthConverter x:Key="DoubleToGridLengthConverter" />
 
 	<DataTemplate x:Key="ImageDetailTpl" >
 		<imageViews:ImageDetailViewerPreviewControlView />

@@ -1,7 +1,7 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 
-namespace MediaDeck.Views.Panes.ViewerPanes;
+namespace MediaDeck.Views.Resources.Converters;
 
 public sealed class DoubleToGridLengthConverter : IValueConverter {
 	public object Convert(object value, Type targetType, object parameter, string language) {

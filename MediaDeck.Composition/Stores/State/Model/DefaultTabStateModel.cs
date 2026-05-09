@@ -25,4 +25,28 @@ public class DefaultTabStateModel(SearchStateModel searchState, ViewerStateModel
 		get;
 		set;
 	} = new(RepositoryType.Folder);
+
+	/// <summary>
+	/// 左ペインの幅
+	/// </summary>
+	public ReactiveProperty<double> LeftPaneWidth {
+		get;
+		set;
+	} = new(250);
+
+	/// <summary>
+	/// 右ペインの幅
+	/// </summary>
+	public ReactiveProperty<double> RightPaneWidth {
+		get;
+		set;
+	} = new(250);
+
+	/// <summary>
+	/// Repository ペインの高さ
+	/// </summary>
+	public ReactiveProperty<double> RepositoryPaneHeight {
+		get;
+		set;
+	} = new(250);
 }
