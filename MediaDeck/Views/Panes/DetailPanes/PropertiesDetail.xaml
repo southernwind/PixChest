@@ -135,7 +135,7 @@
 			<TextBlock x:Uid="Details_Description"
 				Style="{ThemeResource CaptionTextBlockStyle}"
 				Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-			<TextBox x:Uid="Details_DescriptionPlaceholder"
+			<TextBox x:Uid="Details_DescriptionInput"
 				Text="{x:Bind ViewModel.Description.Value, Mode=TwoWay}"
 				AcceptsReturn="True"
 				MinHeight="80"

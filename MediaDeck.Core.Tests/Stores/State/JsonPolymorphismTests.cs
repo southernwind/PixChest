@@ -39,6 +39,7 @@ public class JsonPolymorphismTests {
 		services.AddTransient<TagAliasModel>();
 		services.AddTransient<ITagAliasModel, TagAliasModel>();
 		services.AddSingleton(this._tagsManagerMock.Object);
+		services.AddSingleton<MediaDeck.Composition.Interfaces.IStringProvider, StubStringProvider>();
 		this._serviceProvider = services.BuildServiceProvider();
 	}
 

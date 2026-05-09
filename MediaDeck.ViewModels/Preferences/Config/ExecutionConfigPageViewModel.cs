@@ -1,5 +1,6 @@
 using MediaDeck.Common.Base;
 using MediaDeck.Composition.Enum;
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Composition.Interfaces.MediaItemTypes;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
 using MediaDeck.Composition.Stores.Config.Model;
@@ -13,7 +14,7 @@ public class ExecutionConfigPageViewModel : ViewModelBase, IConfigPageViewModel 
 	/// </summary>
 	public string PageName {
 		get;
-	} = "外部プログラム";
+	}
 
 	/// <summary>
 	/// ページのアイコン（Segoe Fluent Icons のグリフ文字）
@@ -27,13 +28,15 @@ public class ExecutionConfigPageViewModel : ViewModelBase, IConfigPageViewModel 
 	/// </summary>
 	public string PageDescription {
 		get;
-	} = "メディアを開く外部プログラムを設定します";
+	}
 
 
 	private readonly ExecutionConfigModel _executionConfig;
 
-	public ExecutionConfigPageViewModel(ExecutionConfigModel executionConfig, IMediaItemTypeService mediaItemTypeService) {
+	public ExecutionConfigPageViewModel(ExecutionConfigModel executionConfig, IMediaItemTypeService mediaItemTypeService, IStringProvider stringProvider) {
 		this._executionConfig = executionConfig;
+		this.PageName = stringProvider.GetString("Config_Execution_Name");
+		this.PageDescription = stringProvider.GetString("Config_Execution_Description");
 
 		this.AvailableMediaTypes = Enum.GetValues<MediaType>().Where(x => x != MediaType.Unknown).ToArray();
 		this.SelectedMediaType = new(this.AvailableMediaTypes.First());

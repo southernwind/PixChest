@@ -56,6 +56,7 @@ public class ConfigStoreTests : IDisposable {
 		services.AddSingleton(mockConfig);
 		services.AddLogging();
 		services.AddSingleton<AppNotificationDispatcher>();
+		services.AddSingleton<MediaDeck.Composition.Interfaces.IStringProvider, StubStringProvider>();
 		var mockPathProvider = new Mock<IAppPathProvider>();
 		mockPathProvider.Setup(x => x.ConfigFilePath).Returns(() => TestableConfigStore.TestPath);
 		services.AddSingleton(mockPathProvider.Object);
@@ -82,6 +83,7 @@ public class ConfigStoreTests : IDisposable {
 		services.AddSingleton(mockConfig);
 		services.AddLogging();
 		services.AddSingleton<AppNotificationDispatcher>();
+		services.AddSingleton<MediaDeck.Composition.Interfaces.IStringProvider, StubStringProvider>();
 		var mockPathProvider = new Mock<IAppPathProvider>();
 		mockPathProvider.Setup(x => x.ConfigFilePath).Returns(() => TestableConfigStore.TestPath);
 		services.AddSingleton(mockPathProvider.Object);
@@ -105,6 +107,7 @@ public class ConfigStoreTests : IDisposable {
 		services.AddSingleton(mockConfig);
 		services.AddLogging();
 		services.AddSingleton<AppNotificationDispatcher>();
+		services.AddSingleton<MediaDeck.Composition.Interfaces.IStringProvider, StubStringProvider>();
 		var mockPathProvider = new Mock<IAppPathProvider>();
 		mockPathProvider.Setup(x => x.ConfigFilePath).Returns(() => TestableConfigStore.TestPath);
 		services.AddSingleton(mockPathProvider.Object);
@@ -132,6 +135,7 @@ public class ConfigStoreTests : IDisposable {
 			services.AddSingleton(mockConfig);
 			services.AddLogging();
 			services.AddSingleton<AppNotificationDispatcher>();
+			services.AddSingleton<MediaDeck.Composition.Interfaces.IStringProvider, StubStringProvider>();
 			var mockPathProvider = new Mock<IAppPathProvider>();
 			mockPathProvider.Setup(x => x.ConfigFilePath).Returns(() => TestableConfigStore.TestPath);
 			services.AddSingleton(mockPathProvider.Object);

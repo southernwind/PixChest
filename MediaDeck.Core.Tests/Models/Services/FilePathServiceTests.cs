@@ -24,6 +24,7 @@ public class FilePathServiceTests {
 		services.AddSingleton<FolderManagerConfigModel>();
 		services.AddSingleton<SearchDefinitionsConfigModel>();
 		services.AddSingleton<LanguageConfigModel>();
+		services.AddSingleton<MediaDeck.Composition.Interfaces.IStringProvider, StubStringProvider>();
 		services.AddSingleton<ConfigModel>();
 		services.AddTransient<SortObject>(sp => new SortObject(sp));
 		services.AddTransient<SortItemObject>();

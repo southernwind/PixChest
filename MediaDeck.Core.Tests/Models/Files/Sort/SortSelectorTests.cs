@@ -25,6 +25,7 @@ public class SortSelectorTests {
 		services.AddSingleton<ViewerStateModel>();
 		services.AddSingleton<TabStateModel>();
 		services.AddSingleton<SearchDefinitionsConfigModel>();
+		services.AddSingleton<MediaDeck.Composition.Interfaces.IStringProvider, StubStringProvider>();
 
 		this._serviceProvider = services.BuildServiceProvider();
 		this._tabState = this._serviceProvider.GetRequiredService<TabStateModel>();

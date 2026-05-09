@@ -44,6 +44,7 @@ public class SortManagerTests {
 		services.AddSingleton<FolderManagerConfigModel>();
 		services.AddLogging();
 		services.AddSingleton<AppNotificationDispatcher>();
+		services.AddSingleton<MediaDeck.Composition.Interfaces.IStringProvider, StubStringProvider>();
 
 		var realServiceProvider = services.BuildServiceProvider();
 		this._searchDefinitions = realServiceProvider.GetRequiredService<SearchDefinitionsConfigModel>();

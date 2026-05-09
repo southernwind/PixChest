@@ -24,7 +24,7 @@
 				SelectedItem="{x:Bind ViewModel.SelectedHashType.Value, Mode=TwoWay}"
 				DisplayMemberPath="DisplayString"
 				Width="200" />
-			<Button Content="Start Detection"
+			<Button x:Uid="Duplicate_StartDetection"
 				Command="{x:Bind ViewModel.DetectCommand}" />
 			<ProgressRing IsActive="{x:Bind ViewModel.IsDetecting.Value, Mode=OneWay}"
 				Width="24"
@@ -46,7 +46,7 @@
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 				<TextBlock Grid.Row="0"
-					Text="Duplicate Groups"
+					x:Uid="Duplicate_Groups"
 					FontWeight="Bold"
 					Margin="0,0,0,8" />
 				<ListView Grid.Row="1"
@@ -65,7 +65,7 @@
 								<TextBlock Grid.Column="0"
 									Text="{x:Bind Files.Count}" />
 								<TextBlock Grid.Column="1"
-									Text="files" />
+									x:Uid="Duplicate_FileCountSuffix" />
 								<TextBlock Grid.Column="2"
 									Text="-" />
 								<TextBlock Grid.Column="3"
@@ -92,7 +92,7 @@
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 				<TextBlock Grid.Row="0"
-					Text="File List"
+					x:Uid="Duplicate_FileList"
 					FontWeight="Bold"
 					Margin="0,0,0,8" />
 				<!-- ヘッダー行 -->
@@ -113,19 +113,19 @@
 						Text=""
 						FontWeight="SemiBold" />
 					<TextBlock Grid.Column="1"
-						Text="ファイルパス"
+						x:Uid="Details_FilePath"
 						FontWeight="SemiBold" />
 					<TextBlock Grid.Column="2"
-						Text="タグ"
+						x:Uid="Details_Tags"
 						FontWeight="SemiBold" />
 					<TextBlock Grid.Column="3"
-						Text="再生回数"
+						x:Uid="Details_UsageCount"
 						FontWeight="SemiBold" />
 					<TextBlock Grid.Column="4"
-						Text="評価"
+						x:Uid="Details_Rating"
 						FontWeight="SemiBold" />
 					<TextBlock Grid.Column="5"
-						Text="作成日時"
+						x:Uid="Viewer_ColumnCreationTime"
 						FontWeight="SemiBold" />
 					<TextBlock Grid.Column="6"
 						Text=""
@@ -190,22 +190,18 @@
 									<Button Click="OnOpenFileClick"
 										Padding="4"
 										Background="Transparent"
-										BorderThickness="0" >
+										BorderThickness="0"
+										x:Uid="Common_OpenFile" >
 										<FontIcon Glyph="&#xE8E5;"
 											FontSize="12" />
-										<ToolTipService.ToolTip>
-											<ToolTip Content="Open File" />
-										</ToolTipService.ToolTip>
 									</Button>
 									<Button Click="OnShowInExplorerClick"
 										Padding="4"
 										Background="Transparent"
-										BorderThickness="0" >
+										BorderThickness="0"
+										x:Uid="Common_ShowInExplorer" >
 										<FontIcon Glyph="&#xE8B7;"
 											FontSize="12" />
-										<ToolTipService.ToolTip>
-											<ToolTip Content="Show in Explorer" />
-										</ToolTipService.ToolTip>
 									</Button>
 								</StackPanel>
 							</Grid>
@@ -221,11 +217,11 @@
 			Spacing="16"
 			Margin="0,16,0,0" >
 			<TextBlock>
-				<Run Text="Duplicate Groups:" />
+				<Run x:Uid="Duplicate_GroupCountLabel" />
 				<Run Text="{x:Bind ViewModel.DuplicateGroupCount.Value, Mode=OneWay}" />
 			</TextBlock>
 			<TextBlock>
-				<Run Text="Total Duplicate Files:" />
+				<Run x:Uid="Duplicate_TotalFileCountLabel" />
 				<Run Text="{x:Bind ViewModel.DuplicateFileCount.Value, Mode=OneWay}" />
 			</TextBlock>
 		</StackPanel>

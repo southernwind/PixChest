@@ -31,7 +31,7 @@
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
 			<AutoSuggestBox Grid.Column="0"
-				x:Uid="Details_AddTagsPlaceholder"
+				x:Uid="Details_AddTags"
 				ItemsSource="{x:Bind ViewModel.FilteredTagCandidates, Mode=OneWay}"
 				Text="{x:Bind ViewModel.Text.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 				TextMemberPath="TagName"

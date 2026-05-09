@@ -39,7 +39,7 @@
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
-					<TextBlock Text="Background tasks"
+					<TextBlock x:Uid="StatusBar_BackgroundTasks"
 						Style="{StaticResource BodyStrongTextBlockStyle}" />
 					<ListView Grid.Row="1"
 						ItemsSource="{x:Bind ViewModel.TaskItems, Mode=OneWay}"
@@ -79,7 +79,7 @@
 											Padding="8,4"
 											Command="{x:Bind ReRunCommand, Mode=OneWay}"
 											Visibility="{x:Bind IsRunning.Value, Mode=OneWay, Converter={StaticResource InvertBoolToVisibilityConverter}}"
-											ToolTipService.ToolTip="再実行">
+											x:Uid="Common_ReRun">
 											<FontIcon Glyph="&#xE72C;"
 												FontSize="12" />
 										</Button>
@@ -87,7 +87,7 @@
 											Padding="8,4"
 											Command="{x:Bind CancelCommand, Mode=OneWay}"
 											Visibility="{x:Bind IsRunning.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
-											ToolTipService.ToolTip="キャンセル">
+											x:Uid="Common_Cancel">
 											<FontIcon Glyph="&#xE711;"
 												FontSize="12" />
 										</Button>

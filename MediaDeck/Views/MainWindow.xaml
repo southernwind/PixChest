@@ -15,7 +15,7 @@
 	xmlns:statusPanes="using:MediaDeck.Views.Panes.StatusPanes"
 	xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
 	mc:Ignorable="d"
-	x:Uid="App_Title">
+	Title="MediaDeck" >
 	<Window.SystemBackdrop>
 		<DesktopAcrylicBackdrop/>
 	</Window.SystemBackdrop>

@@ -41,6 +41,12 @@
 - **R3/ObservableCollectionsのバインディング (非常に重要)**: `ObservableList<T>` や `ObservableDictionary<K, V>` はそのままでは WinUI 3 の UI にバインドできません。ViewModel では `.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current)` を使用して、UI スレッドへの同期を伴う `INotifyCollectionChangedSynchronizedViewList<T>` 等に変換して公開してください。
 - **コーディングスタイル**: プロジェクトルートの `.editorconfig` に定義されているルールを遵守すること。コードを記述・修正する際は必ずこれらのルールに従うこと。
 - **x:Bind を優先すること**: XAML のデータバインディングでは `{Binding}` ではなく `{x:Bind}` を使用すること。型安全性とパフォーマンスの観点から `{x:Bind}` を優先し、`{Binding}` への安易な変更は禁止する。
+- **国際化 (i18n) の遵守 (重要)**:
+  - UI上の文字列（ラベル、ツールチップ、プレースホルダー等）は、直接ハードコードせず、必ず `Strings/ja/Resources.resw` および `Strings/en/Resources.resw` に定義すること。
+  - XAML要素のローカライズには `x:Uid` を使用すること。リソースキーは `Uid名.プロパティ名` （例: `MyButton.Content`, `MyControl.ToolTipService.ToolTip`）の形式で定義する。
+  - **Windowクラスの注意点**: WinUI 3の `Window` 要素は `x:Uid` による `Title` プロパティの設定をネイティブにサポートしていない（ビルドエラーの原因となる）。ウィンドウタイトルをローカライズする場合は、コードビハインドで `IStringProvider` を使用して `this.Title` に直接代入すること。
+  - ViewModelやビジネスロジック内で文字列が必要な場合は、`IStringProvider` をコンストラクタで注入して使用すること。
+  - リソースキーは、機能や領域が判別しやすいプレフィックスを付けること（例: `TagManager_`, `Config_`, `StatusBar_`）。
 - **作業完了前の検証 (重要)**: 作業を終了する前に、必ず `dotnet build`、`dotnet test`、および `dotnet format` を実行し、ビルドエラー、テスト失敗、フォーマット違反がすべて解消されていることを確認すること。
 
 ## 4. 拡張自動化ワークフローについて

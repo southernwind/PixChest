@@ -75,6 +75,18 @@
   <data name="Common_Delete.Content" xml:space="preserve">
     <value>削除</value>
   </data>
+  <data name="Common_ReRun.ToolTipService.ToolTip" xml:space="preserve">
+    <value>再実行</value>
+  </data>
+  <data name="Common_Cancel.ToolTipService.ToolTip" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="Common_OpenFile.ToolTipService.ToolTip" xml:space="preserve">
+    <value>ファイルを開く</value>
+  </data>
+  <data name="Common_ShowInExplorer.ToolTipService.ToolTip" xml:space="preserve">
+    <value>エクスプローラーで表示</value>
+  </data>
 
   <!-- ナビゲーションメニュー -->
   <data name="NavMenu_View.Title" xml:space="preserve">
@@ -268,7 +280,7 @@
   <data name="Details_Description.Text" xml:space="preserve">
     <value>説明</value>
   </data>
-  <data name="Details_DescriptionPlaceholder.PlaceholderText" xml:space="preserve">
+  <data name="Details_DescriptionInput.PlaceholderText" xml:space="preserve">
     <value>説明を追加...</value>
   </data>
   <data name="Details_UpdateDescription.Content" xml:space="preserve">
@@ -285,6 +297,32 @@
   </data>
   <data name="Details_DeleteTag.Text" xml:space="preserve">
     <value>削除</value>
+  </data>
+  <data name="Details_AddTags.PlaceholderText" xml:space="preserve">
+    <value>タグを追加...</value>
+  </data>
+  <!-- 検索バー -->
+  <data name="Search_AddTokens.PlaceholderText" xml:space="preserve">
+    <value>検索条件を追加...</value>
+  </data>
+  <!-- ステータスバー -->
+  <data name="StatusBar_Count.Text" xml:space="preserve">
+    <value>項目数: </value>
+  </data>
+  <data name="StatusBar_SearchTime.Text" xml:space="preserve">
+    <value> | 検索時間: </value>
+  </data>
+  <data name="StatusBar_Overlay.Text" xml:space="preserve">
+    <value>オーバーレイ</value>
+  </data>
+  <data name="StatusBar_Info.Text" xml:space="preserve">
+    <value>詳細</value>
+  </data>
+  <data name="StatusBar_BackgroundTasks.Text" xml:space="preserve">
+    <value>バックグラウンドタスク</value>
+  </data>
+  <data name="StatusBar_Milliseconds.Text" xml:space="preserve">
+    <value> ms</value>
   </data>
   <!-- ビューアー -->
   <data name="Viewer_ColumnFileName.Text" xml:space="preserve">
@@ -319,19 +357,6 @@
   </data>
   <data name="Viewer_LoadMore.Content" xml:space="preserve">
     <value>さらに読み込む</value>
-  </data>
-  <!-- ステータスバー -->
-  <data name="StatusBar_Count.Text" xml:space="preserve">
-    <value>件数: </value>
-  </data>
-  <data name="StatusBar_SearchTime.Text" xml:space="preserve">
-    <value>  /  検索: </value>
-  </data>
-  <data name="StatusBar_Overlay.Text" xml:space="preserve">
-    <value>オーバーレイ</value>
-  </data>
-  <data name="StatusBar_Info.Text" xml:space="preserve">
-    <value>情報</value>
   </data>
   <!-- メディアタイプ別 -->
   <data name="Archive_FilesCountFormat" xml:space="preserve">
@@ -456,5 +481,153 @@
   </data>
   <data name="Splash_Ready" xml:space="preserve">
     <value>準備完了...</value>
+  </data>
+  <!-- 重複ファイル検索 -->
+  <data name="Duplicate_StartDetection.Content" xml:space="preserve">
+    <value>検出開始</value>
+  </data>
+  <data name="Duplicate_Groups.Text" xml:space="preserve">
+    <value>重複グループ</value>
+  </data>
+  <data name="Duplicate_FileCountSuffix.Text" xml:space="preserve">
+    <value> ファイル</value>
+  </data>
+  <data name="Duplicate_FileList.Text" xml:space="preserve">
+    <value>ファイルリスト</value>
+  </data>
+  <data name="Duplicate_GroupCountLabel.Text" xml:space="preserve">
+    <value>重複グループ数: </value>
+  </data>
+  <data name="Duplicate_TotalFileCountLabel.Text" xml:space="preserve">
+    <value>総重複ファイル数: </value>
+  </data>
+  <!-- タグマネージャー -->
+  <data name="TagManager_Category.Text" xml:space="preserve">
+    <value>タグカテゴリ</value>
+  </data>
+  <data name="TagManager_CategoryName.Text" xml:space="preserve">
+    <value>カテゴリ名</value>
+  </data>
+  <data name="TagManager_CategoryNameInput.PlaceholderText" xml:space="preserve">
+    <value>カテゴリ名を入力</value>
+  </data>
+  <data name="TagManager_Detail.Text" xml:space="preserve">
+    <value>詳細</value>
+  </data>
+  <data name="TagManager_DetailInput.PlaceholderText" xml:space="preserve">
+    <value>詳細を入力</value>
+  </data>
+  <data name="TagManager_DeleteCategory.Content" xml:space="preserve">
+    <value>カテゴリを削除</value>
+  </data>
+  <data name="TagManager_DeleteCategory.ToolTipService.ToolTip" xml:space="preserve">
+    <value>このタグカテゴリを削除します</value>
+  </data>
+  <data name="TagManager_Tags.Text" xml:space="preserve">
+    <value>タグ</value>
+  </data>
+  <data name="TagManager_SearchTags.PlaceholderText" xml:space="preserve">
+    <value>タグを検索...</value>
+  </data>
+  <data name="TagManager_TagName.Text" xml:space="preserve">
+    <value>タグ名</value>
+  </data>
+  <data name="TagManager_TagNameInput.PlaceholderText" xml:space="preserve">
+    <value>タグ名を入力</value>
+  </data>
+  <data name="TagManager_Ruby.Text" xml:space="preserve">
+    <value>読み</value>
+  </data>
+  <data name="TagManager_RubyInput.PlaceholderText" xml:space="preserve">
+    <value>読みを入力</value>
+  </data>
+  <data name="TagManager_ParentCategory.Text" xml:space="preserve">
+    <value>所属カテゴリ</value>
+  </data>
+  <data name="TagManager_Aliases.Text" xml:space="preserve">
+    <value>タグエイリアス</value>
+  </data>
+  <data name="TagManager_AliasInput.PlaceholderText" xml:space="preserve">
+    <value>エイリアス</value>
+  </data>
+  <data name="TagManager_RubyInputShort.PlaceholderText" xml:space="preserve">
+    <value>ふりがな</value>
+  </data>
+  <data name="TagManager_AddAlias.Content" xml:space="preserve">
+    <value>エイリアスを追加</value>
+  </data>
+  <data name="TagManager_DeleteTag.Content" xml:space="preserve">
+    <value>タグを削除</value>
+  </data>
+  <data name="TagManager_DeleteTag.ToolTipService.ToolTip" xml:space="preserve">
+    <value>このタグを削除します</value>
+  </data>
+  <!-- フォルダマネージャー -->
+  <data name="FolderManager_RegisteredFolders.Text" xml:space="preserve">
+    <value>登録フォルダ</value>
+  </data>
+  <data name="FolderManager_ScanCompleteSuffix.Text" xml:space="preserve">
+    <value>件完了</value>
+  </data>
+  <data name="FolderManager_ScanAll.Content" xml:space="preserve">
+    <value>すべてスキャン</value>
+  </data>
+  <data name="FolderManager_SelectFolderMessage.Text" xml:space="preserve">
+    <value>フォルダを選択してください</value>
+  </data>
+  <data name="FolderManager_FolderSettings.Text" xml:space="preserve">
+    <value>フォルダ設定</value>
+  </data>
+  <data name="FolderManager_GeneralSettings.Text" xml:space="preserve">
+    <value>一般設定</value>
+  </data>
+  <data name="FolderManager_GroupSubfolders.Header" xml:space="preserve">
+    <value>配下フォルダをグループ化</value>
+  </data>
+  <data name="FolderManager_Status.Text" xml:space="preserve">
+    <value>ステータス</value>
+  </data>
+  <data name="FolderManager_ScanStatus.Text" xml:space="preserve">
+    <value>スキャン状況</value>
+  </data>
+  <data name="FolderManager_ItemCountSuffix.Text" xml:space="preserve">
+    <value> 件</value>
+  </data>
+  <data name="FolderManager_Scanning.Text" xml:space="preserve">
+    <value>スキャン中...</value>
+  </data>
+  <data name="FolderManager_RemoveFolder.Content" xml:space="preserve">
+    <value>このフォルダを削除</value>
+  </data>
+  <data name="FolderManager_ScanThisFolder.Content" xml:space="preserve">
+    <value>このフォルダをスキャン</value>
+  </data>
+
+  <data name="Config_Language_Name" xml:space="preserve">
+    <value>言語</value>
+  </data>
+  <data name="Config_Language_Description" xml:space="preserve">
+    <value>アプリの表示言語を切り替えます</value>
+  </data>
+  <data name="Config_Language_SystemDefault" xml:space="preserve">
+    <value>システムの既定</value>
+  </data>
+  <data name="Config_Execution_Name" xml:space="preserve">
+    <value>外部プログラム</value>
+  </data>
+  <data name="Config_Execution_Description" xml:space="preserve">
+    <value>メディアを開く外部プログラムを設定します</value>
+  </data>
+  <data name="Config_Scan_Name" xml:space="preserve">
+    <value>スキャン</value>
+  </data>
+  <data name="Config_Scan_Description" xml:space="preserve">
+    <value>対象拡張子やスキャン方法を設定します</value>
+  </data>
+  <data name="Config_Search_Name" xml:space="preserve">
+    <value>検索</value>
+  </data>
+  <data name="Config_Search_Description" xml:space="preserve">
+    <value>検索やデータ読み込みパフォーマンスに関する設定です</value>
   </data>
 </root>

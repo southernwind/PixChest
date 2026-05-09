@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Core.Stores.State;
 using MediaDeck.ViewModels;
 using MediaDeck.Views.Dialogs;
@@ -14,9 +15,11 @@ public sealed partial class MainWindow : Window {
 	private readonly MainWindowViewModel _viewModel;
 	private readonly CompositeDisposable _disposable = new();
 
-	public MainWindow(MainWindowViewModel viewModel, IStateStore stateStore) {
+	public MainWindow(MainWindowViewModel viewModel, IStateStore stateStore, IStringProvider stringProvider) {
 		this._viewModel = viewModel;
 		this.InitializeComponent();
+
+		this.Title = stringProvider.GetString("App_Title");
 
 		// テーマのバインド
 		ThemeHelper.BindTheme(this, stateStore, this._disposable);

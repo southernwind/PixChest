@@ -75,6 +75,18 @@
   <data name="Common_Delete.Content" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="Common_ReRun.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Re-run</value>
+  </data>
+  <data name="Common_Cancel.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Common_OpenFile.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Open File</value>
+  </data>
+  <data name="Common_ShowInExplorer.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Show in Explorer</value>
+  </data>
 
   <!-- Navigation menu -->
   <data name="NavMenu_View.Title" xml:space="preserve">
@@ -268,7 +280,7 @@
   <data name="Details_Description.Text" xml:space="preserve">
     <value>Description</value>
   </data>
-  <data name="Details_DescriptionPlaceholder.PlaceholderText" xml:space="preserve">
+  <data name="Details_DescriptionInput.PlaceholderText" xml:space="preserve">
     <value>Add a description...</value>
   </data>
   <data name="Details_UpdateDescription.Content" xml:space="preserve">
@@ -285,6 +297,32 @@
   </data>
   <data name="Details_DeleteTag.Text" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="Details_AddTags.PlaceholderText" xml:space="preserve">
+    <value>Add tags...</value>
+  </data>
+  <!-- Search bar -->
+  <data name="Search_AddTokens.PlaceholderText" xml:space="preserve">
+    <value>Add search tokens...</value>
+  </data>
+  <!-- Status bar -->
+  <data name="StatusBar_Count.Text" xml:space="preserve">
+    <value>Items: </value>
+  </data>
+  <data name="StatusBar_SearchTime.Text" xml:space="preserve">
+    <value> | Search time: </value>
+  </data>
+  <data name="StatusBar_Overlay.Text" xml:space="preserve">
+    <value>Overlay</value>
+  </data>
+  <data name="StatusBar_Info.Text" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="StatusBar_BackgroundTasks.Text" xml:space="preserve">
+    <value>Background tasks</value>
+  </data>
+  <data name="StatusBar_Milliseconds.Text" xml:space="preserve">
+    <value> ms</value>
   </data>
   <!-- Viewer -->
   <data name="Viewer_ColumnFileName.Text" xml:space="preserve">
@@ -319,19 +357,6 @@
   </data>
   <data name="Viewer_LoadMore.Content" xml:space="preserve">
     <value>Load More</value>
-  </data>
-  <!-- Status Bar -->
-  <data name="StatusBar_Count.Text" xml:space="preserve">
-    <value>Count: </value>
-  </data>
-  <data name="StatusBar_SearchTime.Text" xml:space="preserve">
-    <value>  /  Search: </value>
-  </data>
-  <data name="StatusBar_Overlay.Text" xml:space="preserve">
-    <value>Overlay</value>
-  </data>
-  <data name="StatusBar_Info.Text" xml:space="preserve">
-    <value>Info</value>
   </data>
   <!-- Media Types -->
   <data name="Archive_FilesCountFormat" xml:space="preserve">
@@ -456,5 +481,153 @@
   </data>
   <data name="Splash_Ready" xml:space="preserve">
     <value>Ready...</value>
+  </data>
+  <!-- Duplicate File Finder -->
+  <data name="Duplicate_StartDetection.Content" xml:space="preserve">
+    <value>Start Detection</value>
+  </data>
+  <data name="Duplicate_Groups.Text" xml:space="preserve">
+    <value>Duplicate Groups</value>
+  </data>
+  <data name="Duplicate_FileCountSuffix.Text" xml:space="preserve">
+    <value> files</value>
+  </data>
+  <data name="Duplicate_FileList.Text" xml:space="preserve">
+    <value>File List</value>
+  </data>
+  <data name="Duplicate_GroupCountLabel.Text" xml:space="preserve">
+    <value>Duplicate Groups: </value>
+  </data>
+  <data name="Duplicate_TotalFileCountLabel.Text" xml:space="preserve">
+    <value>Total Duplicate Files: </value>
+  </data>
+  <!-- Tag Manager -->
+  <data name="TagManager_Category.Text" xml:space="preserve">
+    <value>Tag Category</value>
+  </data>
+  <data name="TagManager_CategoryName.Text" xml:space="preserve">
+    <value>Category Name</value>
+  </data>
+  <data name="TagManager_CategoryNameInput.PlaceholderText" xml:space="preserve">
+    <value>Enter category name</value>
+  </data>
+  <data name="TagManager_Detail.Text" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="TagManager_DetailInput.PlaceholderText" xml:space="preserve">
+    <value>Enter detail</value>
+  </data>
+  <data name="TagManager_DeleteCategory.Content" xml:space="preserve">
+    <value>Delete Category</value>
+  </data>
+  <data name="TagManager_DeleteCategory.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Delete this tag category</value>
+  </data>
+  <data name="TagManager_Tags.Text" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="TagManager_SearchTags.PlaceholderText" xml:space="preserve">
+    <value>Search tags...</value>
+  </data>
+  <data name="TagManager_TagName.Text" xml:space="preserve">
+    <value>Tag Name</value>
+  </data>
+  <data name="TagManager_TagNameInput.PlaceholderText" xml:space="preserve">
+    <value>Enter tag name</value>
+  </data>
+  <data name="TagManager_Ruby.Text" xml:space="preserve">
+    <value>Ruby</value>
+  </data>
+  <data name="TagManager_RubyInput.PlaceholderText" xml:space="preserve">
+    <value>Enter ruby</value>
+  </data>
+  <data name="TagManager_ParentCategory.Text" xml:space="preserve">
+    <value>Parent Category</value>
+  </data>
+  <data name="TagManager_Aliases.Text" xml:space="preserve">
+    <value>Tag Aliases</value>
+  </data>
+  <data name="TagManager_AliasInput.PlaceholderText" xml:space="preserve">
+    <value>Alias</value>
+  </data>
+  <data name="TagManager_RubyInputShort.PlaceholderText" xml:space="preserve">
+    <value>Ruby</value>
+  </data>
+  <data name="TagManager_AddAlias.Content" xml:space="preserve">
+    <value>Add Alias</value>
+  </data>
+  <data name="TagManager_DeleteTag.Content" xml:space="preserve">
+    <value>Delete Tag</value>
+  </data>
+  <data name="TagManager_DeleteTag.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Delete this tag</value>
+  </data>
+  <!-- Folder Manager -->
+  <data name="FolderManager_RegisteredFolders.Text" xml:space="preserve">
+    <value>Registered Folders</value>
+  </data>
+  <data name="FolderManager_ScanCompleteSuffix.Text" xml:space="preserve">
+    <value> items completed</value>
+  </data>
+  <data name="FolderManager_ScanAll.Content" xml:space="preserve">
+    <value>Scan All</value>
+  </data>
+  <data name="FolderManager_SelectFolderMessage.Text" xml:space="preserve">
+    <value>Please select a folder</value>
+  </data>
+  <data name="FolderManager_FolderSettings.Text" xml:space="preserve">
+    <value>Folder Settings</value>
+  </data>
+  <data name="FolderManager_GeneralSettings.Text" xml:space="preserve">
+    <value>General Settings</value>
+  </data>
+  <data name="FolderManager_GroupSubfolders.Header" xml:space="preserve">
+    <value>Group subfolders</value>
+  </data>
+  <data name="FolderManager_Status.Text" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="FolderManager_ScanStatus.Text" xml:space="preserve">
+    <value>Scan Status</value>
+  </data>
+  <data name="FolderManager_ItemCountSuffix.Text" xml:space="preserve">
+    <value> items</value>
+  </data>
+  <data name="FolderManager_Scanning.Text" xml:space="preserve">
+    <value>Scanning...</value>
+  </data>
+  <data name="FolderManager_RemoveFolder.Content" xml:space="preserve">
+    <value>Remove this folder</value>
+  </data>
+  <data name="FolderManager_ScanThisFolder.Content" xml:space="preserve">
+    <value>Scan this folder</value>
+  </data>
+
+  <data name="Config_Language_Name" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Config_Language_Description" xml:space="preserve">
+    <value>Switch the display language of the app</value>
+  </data>
+  <data name="Config_Language_SystemDefault" xml:space="preserve">
+    <value>System Default</value>
+  </data>
+  <data name="Config_Execution_Name" xml:space="preserve">
+    <value>External Programs</value>
+  </data>
+  <data name="Config_Execution_Description" xml:space="preserve">
+    <value>Configure external programs to open media</value>
+  </data>
+  <data name="Config_Scan_Name" xml:space="preserve">
+    <value>Scan</value>
+  </data>
+  <data name="Config_Scan_Description" xml:space="preserve">
+    <value>Configure target extensions and scan methods</value>
+  </data>
+  <data name="Config_Search_Name" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Config_Search_Description" xml:space="preserve">
+    <value>Settings for search and data loading performance</value>
   </data>
 </root>

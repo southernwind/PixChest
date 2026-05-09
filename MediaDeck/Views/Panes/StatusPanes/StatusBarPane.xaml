@@ -42,7 +42,7 @@
 						Visibility="{x:Bind ViewModel.MediaContentLibrary.SearchElapsedMilliseconds.Value, Mode=OneWay, Converter={StaticResource NullToCollapseConverter}}" >
 						<Run x:Uid="StatusBar_SearchTime" />
 						<Run Text="{x:Bind ViewModel.MediaContentLibrary.SearchElapsedMilliseconds.Value, Mode=OneWay}" />
-						<Run Text=" ms" />
+						<Run x:Uid="StatusBar_Milliseconds" />
 					</TextBlock>
 				</StackPanel>
 			</StackPanel>

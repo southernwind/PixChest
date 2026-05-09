@@ -1,3 +1,4 @@
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Core.Stores.State;
 using MediaDeck.ViewModels.Preferences;
 using MediaDeck.ViewModels.Preferences.Config;
@@ -15,9 +16,11 @@ public sealed partial class ConfigWindow : Window {
 		get;
 	}
 
-	public ConfigWindow(ConfigWindowViewModel configWindowViewModel, IStateStore stateStore) {
+	public ConfigWindow(ConfigWindowViewModel configWindowViewModel, IStateStore stateStore, IStringProvider stringProvider) {
 		this.InitializeComponent();
 		this.ViewModel = configWindowViewModel;
+
+		this.Title = stringProvider.GetString("ConfigWindow_Title");
 
 		// テーマのバインド
 		ThemeHelper.BindTheme(this, stateStore, this._disposable);

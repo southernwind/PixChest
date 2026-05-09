@@ -1,5 +1,6 @@
 using MediaDeck.Common.Base;
 using MediaDeck.Common.Extensions;
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Composition.Stores.Config.Model;
 
 namespace MediaDeck.ViewModels.Preferences.Config;
@@ -11,7 +12,7 @@ public class SearchConfigPageViewModel : ViewModelBase, IConfigPageViewModel {
 	/// </summary>
 	public string PageName {
 		get;
-	} = "検索";
+	}
 
 	/// <summary>
 	/// ページのアイコン（Segoe Fluent Icons のグリフ文字）
@@ -25,10 +26,13 @@ public class SearchConfigPageViewModel : ViewModelBase, IConfigPageViewModel {
 	/// </summary>
 	public string PageDescription {
 		get;
-	} = "検索やデータ読み込みパフォーマンスに関する設定です";
+	}
 
 
-	public SearchConfigPageViewModel(SearchConfigModel searchConfig) {
+	public SearchConfigPageViewModel(SearchConfigModel searchConfig, IStringProvider stringProvider) {
+		this.PageName = stringProvider.GetString("Config_Search_Name");
+		this.PageDescription = stringProvider.GetString("Config_Search_Description");
+
 		this.InitialLoadCount = searchConfig.InitialLoadCount.ToTwoWayBindableReactiveProperty(500, this.CompositeDisposable).AddTo(this.CompositeDisposable);
 		this.IncrementalLoadCount = searchConfig.IncrementalLoadCount.ToTwoWayBindableReactiveProperty(10000, this.CompositeDisposable).AddTo(this.CompositeDisposable);
 		this.MaxLoadCount = searchConfig.MaxLoadCount.ToTwoWayBindableReactiveProperty(50000, this.CompositeDisposable).AddTo(this.CompositeDisposable);

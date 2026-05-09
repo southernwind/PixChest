@@ -1,4 +1,5 @@
 using MediaDeck.Common.Base;
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Composition.Stores.Config.Model;
 
 namespace MediaDeck.ViewModels.Preferences.Config;
@@ -10,7 +11,7 @@ public class ScanConfigPageViewModel : ViewModelBase, IConfigPageViewModel {
 	/// </summary>
 	public string PageName {
 		get;
-	} = "スキャン";
+	}
 
 	/// <summary>
 	/// ページのアイコン（Segoe Fluent Icons のグリフ文字）
@@ -24,13 +25,16 @@ public class ScanConfigPageViewModel : ViewModelBase, IConfigPageViewModel {
 	/// </summary>
 	public string PageDescription {
 		get;
-	} = "対象拡張子やスキャン方法を設定します";
+	}
 
 
 	private readonly ScanConfigModel _scanConfig;
 
-	public ScanConfigPageViewModel(ScanConfigModel scanConfig) {
+	public ScanConfigPageViewModel(ScanConfigModel scanConfig, IStringProvider stringProvider) {
 		this._scanConfig = scanConfig;
+		this.PageName = stringProvider.GetString("Config_Scan_Name");
+		this.PageDescription = stringProvider.GetString("Config_Scan_Description");
+
 		this.AddExtensionCommand.Subscribe(_ => {
 			this._scanConfig.AddTargetExtension();
 		})
