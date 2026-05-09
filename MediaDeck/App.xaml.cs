@@ -198,6 +198,7 @@ public partial class App {
 				UIRefresh = false,
 				FFmpegPath = this._configStore.Config.PathConfig.FFMpegFolderPath.Value,
 			});
+			splashViewModel?.UpdateStatus("準備完了...");
 		});
 	}
 }
