@@ -1,6 +1,7 @@
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
+using MediaDeck.Composition.Interfaces.Primitives;
 using MediaDeck.Composition.Interfaces.Tags;
 using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Composition.Tables;
@@ -26,9 +27,10 @@ public class VideoMediaItemFactory :
 	public VideoMediaItemFactory(
 		VideoMediaItemOperator VideoMediaItemOperator,
 		ConfigModel config,
+		ILocationFactory locationFactory,
 		ITagsManager tagsManager,
 		IServiceProvider serviceProvider)
-		: base(config, tagsManager, MediaType.Video) {
+		: base(config, locationFactory, tagsManager, MediaType.Video) {
 		this._VideoMediaItemOperator = VideoMediaItemOperator;
 		this._serviceProvider = serviceProvider;
 	}

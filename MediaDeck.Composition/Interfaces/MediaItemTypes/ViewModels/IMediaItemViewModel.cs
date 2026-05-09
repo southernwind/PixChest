@@ -33,7 +33,7 @@ public interface IMediaItemViewModel {
 		get;
 	}
 
-	public IGpsLocation? Location {
+	public ILocation? Location {
 		get;
 	}
 

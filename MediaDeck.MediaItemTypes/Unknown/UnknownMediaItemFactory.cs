@@ -1,6 +1,7 @@
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
+using MediaDeck.Composition.Interfaces.Primitives;
 using MediaDeck.Composition.Interfaces.Tags;
 using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Composition.Tables;
@@ -25,9 +26,10 @@ public class UnknownMediaItemFactory :
 	public UnknownMediaItemFactory(
 		UnknownMediaItemOperator UnknownMediaItemOperator,
 		ConfigModel config,
+		ILocationFactory locationFactory,
 		ITagsManager tagsManager,
 		IServiceProvider serviceProvider)
-		: base(config, tagsManager, MediaType.Unknown) {
+		: base(config, locationFactory, tagsManager, MediaType.Unknown) {
 		this._UnknownMediaItemOperator = UnknownMediaItemOperator;
 		this._serviceProvider = serviceProvider;
 	}

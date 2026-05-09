@@ -74,7 +74,7 @@ public abstract class BaseMediaItemViewModel : ViewModelBase, IMediaItemViewMode
 		private set;
 	}
 
-	public IGpsLocation? Location {
+	public ILocation? Location {
 		get;
 		private set;
 	}

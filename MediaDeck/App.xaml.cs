@@ -7,6 +7,8 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 
 using FFMpegCore;
 
+using MapControl;
+
 using MediaDeck.Composition.Constants;
 using MediaDeck.Composition.Database;
 using MediaDeck.Composition.Interfaces.Tags;
@@ -140,6 +142,9 @@ public partial class App {
 	private async Task InitializeAsync(SplashScreenViewModel? splashViewModel = null) {
 
 		await Task.Run(async () => {
+			// OpenStreetMapのタイルサーバーにアクセスする際のUser-Agentを設定
+			ImageLoader.HttpClient.DefaultRequestHeaders.Add("User-Agent", "MediaDeck/1.0 (+https://github.com/xm-i/MediaDeck)");
+
 			// 画像メタデータ取得にSJISが必要
 			Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 

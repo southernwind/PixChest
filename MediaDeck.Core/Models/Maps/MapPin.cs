@@ -31,10 +31,9 @@ public class MapPin : ModelBase {
 	/// <summary>
 	/// 件数
 	/// </summary>
-	public int Count {
+	public ReactiveProperty<int> Count {
 		get;
-		private set;
-	}
+	} = new(0);
 
 	/// <summary>
 	/// メディアアイテムリスト
@@ -44,7 +43,7 @@ public class MapPin : ModelBase {
 		get;
 	} = [];
 
-	public IGpsLocation? Location {
+	public ILocation? Location {
 		get;
 	}
 
@@ -65,8 +64,8 @@ public class MapPin : ModelBase {
 		this.Items.Add(core);
 		this.CoreRectangle = rectangle;
 		this.Location = this.Core.Value.Location;
-		this.Count = this.Items.Count;
-		this.Items.ObserveCountChanged().Subscribe(x => this.Count = x).AddTo(this.CompositeDisposable);
+		this.Count.Value = this.Items.Count;
+		this.Items.ObserveCountChanged().Subscribe(x => this.Count.Value = x).AddTo(this.CompositeDisposable);
 	}
 
 	public override string ToString() {

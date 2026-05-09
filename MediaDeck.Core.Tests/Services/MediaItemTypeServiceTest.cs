@@ -319,7 +319,7 @@ public class MediaItemTypeServiceTest {
 			set;
 		} = true;
 
-		public IGpsLocation? Location {
+		public ILocation? Location {
 			get;
 			set;
 		}
@@ -444,7 +444,7 @@ public class MediaItemTypeServiceTest {
 			get;
 		}
 
-		public IGpsLocation? Location {
+		public ILocation? Location {
 			get;
 		}
 

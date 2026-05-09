@@ -16,7 +16,7 @@ public class MapPinTests {
 	public void Constructor_SetsPropertiesCorrectly() {
 		// Arrange
 		var mockFile = new Mock<IMediaItemModel>();
-		var mockLocation = new Mock<IGpsLocation>();
+		var mockLocation = new Mock<ILocation>();
 		mockFile.Setup(f => f.Location).Returns(mockLocation.Object);
 		var rect = new Rectangle(new Point(10, 20), new Size(30, 40));
 
@@ -28,7 +28,7 @@ public class MapPinTests {
 		mapPin.CoreRectangle.ShouldBe(rect);
 		mapPin.Location.ShouldBe(mockLocation.Object);
 		mapPin.Items.ShouldHaveSingleItem().ShouldBe(mockFile.Object);
-		mapPin.Count.ShouldBe(1);
+		mapPin.Count.Value.ShouldBe(1);
 		mapPin.PinState.Value.ShouldBe(PinState.Unselected);
 	}
 
@@ -44,7 +44,7 @@ public class MapPinTests {
 		mapPin.Items.Add(mockFile2.Object);
 
 		// Assert
-		mapPin.Count.ShouldBe(2);
+		mapPin.Count.Value.ShouldBe(2);
 	}
 
 	[Fact]

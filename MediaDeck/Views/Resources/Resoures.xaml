@@ -37,7 +37,7 @@
 	<converters:FileSizeConverter x:Key="FileSizeConverter" />
 	<converters:TagListConverter x:Key="TagListConverter" />
 	<converters:FileChangeFilterToDisplayNameConverter x:Key="FileChangeFilterToDisplayNameConverter" />
-	<converters:GpsLocationToLocationConverter x:Key="GpsLocationToLocationConverter" />
+	<converters:PinStateToBrushConverter x:Key="PinStateToBrushConverter" />
 
 	<DataTemplate x:Key="ImageDetailTpl" >
 		<imageViews:ImageDetailViewerPreviewControlView />

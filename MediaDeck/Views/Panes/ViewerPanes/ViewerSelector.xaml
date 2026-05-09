@@ -19,11 +19,9 @@
 			<controls:Case Value="{x:Bind ViewModel.DetailViewerViewModel,Mode=OneWay}" >
 				<local:DetailViewer ViewModel="{x:Bind ViewModel,Mode=OneWay}" />
 			</controls:Case>
-			<!-- Mapはちゃんと作るまでコメントアウト
 			<controls:Case Value="{x:Bind ViewModel.MapViewerViewModel,Mode=OneWay}" >
 				<local:MapViewer ViewModel="{x:Bind ViewModel,Mode=OneWay}" />
 			</controls:Case>
-			-->
 		</controls:SwitchPresenter>
 
 	</Grid>

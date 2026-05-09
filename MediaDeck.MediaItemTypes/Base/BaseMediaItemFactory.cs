@@ -4,6 +4,7 @@ using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.Models;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
+using MediaDeck.Composition.Interfaces.Primitives;
 using MediaDeck.Composition.Interfaces.Tags;
 using MediaDeck.Composition.Objects;
 using MediaDeck.Composition.Stores.Config.Model;
@@ -20,10 +21,12 @@ public abstract class BaseMediaItemFactory<TFileOperator, TFileModel, TExecution
 	where TExecutionProgramConfigViewModel : IExecutionProgramConfigViewModel
 	where TThumbnailPickerViewModel : IThumbnailPickerViewModel {
 	protected readonly ConfigModel _config;
+	protected readonly ILocationFactory _locationFactory;
 	protected readonly ITagsManager _tagsManager;
 
-	public BaseMediaItemFactory(ConfigModel config, ITagsManager tagsManager, MediaType mediaType) {
+	public BaseMediaItemFactory(ConfigModel config, ILocationFactory locationFactory, ITagsManager tagsManager, MediaType mediaType) {
 		this._config = config;
+		this._locationFactory = locationFactory;
 		this._tagsManager = tagsManager;
 		this.MediaType = mediaType;
 	}
@@ -62,7 +65,7 @@ public abstract class BaseMediaItemFactory<TFileOperator, TFileModel, TExecution
 		fileModel.LastAccessTime = MediaItem.LastAccessTime;
 		fileModel.RegisteredTime = MediaItem.RegisteredTime;
 		if (MediaItem.Latitude is { } lat && MediaItem.Longitude is { } lon) {
-			fileModel.Location = new GpsLocation(lat, lon, MediaItem.Altitude);
+			fileModel.Location = this._locationFactory.Create(lat, lon, MediaItem.Altitude);
 		}
 		fileModel.Tags = [.. MediaItem.MediaItemTags.Select(mft => this._tagsManager.Tags.FirstOrDefault(t => t.TagId == mft.TagId)).OfType<ITagModel>()];
 		fileModel.Metadata = MediaItem.Metadata;

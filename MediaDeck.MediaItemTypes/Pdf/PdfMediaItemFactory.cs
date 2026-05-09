@@ -1,6 +1,7 @@
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
+using MediaDeck.Composition.Interfaces.Primitives;
 using MediaDeck.Composition.Interfaces.Tags;
 using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Composition.Tables;
@@ -26,9 +27,10 @@ public class PdfMediaItemFactory :
 	public PdfMediaItemFactory(
 		PdfMediaItemOperator PdfMediaItemOperator,
 		ConfigModel config,
+		ILocationFactory locationFactory,
 		ITagsManager tagsManager,
 		IServiceProvider serviceProvider)
-		: base(config, tagsManager, MediaType.Pdf) {
+		: base(config, locationFactory, tagsManager, MediaType.Pdf) {
 		this._PdfMediaItemOperator = PdfMediaItemOperator;
 		this._serviceProvider = serviceProvider;
 	}

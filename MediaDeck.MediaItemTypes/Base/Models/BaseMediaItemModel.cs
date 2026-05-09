@@ -85,7 +85,7 @@ public abstract class BaseMediaItemModel : ModelBase, IMediaItemModel {
 	/// <summary>
 	/// 座標
 	/// </summary>
-	public IGpsLocation? Location {
+	public ILocation? Location {
 		get;
 		set;
 	}

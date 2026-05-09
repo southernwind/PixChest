@@ -1,48 +1,11 @@
-using System.Collections.Generic;
-
 using MapControl;
-
-using MediaDeck.Composition.Objects;
-using MediaDeck.Core.Models.Maps;
-
+using MediaDeck.Objects.Maps;
+using MediaDeck.ViewModels.Panes.ViewerPanes;
 using Microsoft.UI.Xaml;
 
 namespace MediaDeck.Views.Panes.ViewerPanes;
 
 public sealed partial class MapViewer {
-	private double North {
-		get;
-		set;
-	}
-
-	private double South {
-		get;
-		set;
-	}
-
-	private double West {
-		get;
-		set;
-	}
-
-	private double East {
-		get;
-		set;
-	}
-
-	public BindableReactiveProperty<IEnumerable<MapPin>?> MapPins {
-		get;
-	} = new();
-
-	public BindableReactiveProperty<GpsLocation> Center {
-		get;
-	} = new(new(135, 35));
-
-
-	private ReactiveProperty<int> MapPinSize {
-		get;
-	} = new(100);
-
 	public MapViewer() {
 		this.InitializeComponent();
 	}
@@ -54,47 +17,12 @@ public sealed partial class MapViewer {
 		this.UpdateMapControl();
 	}
 
-	private void UpdateItemsForMapView() {
-		if (this.ViewModel is not { }) {
+	private void Pin_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e) {
+		if (this.ViewModel is not { } vm) {
 			return;
 		}
-		var list = new List<MapPin>();
-
-		foreach (var item in this.ViewModel.MediaContentLibraryViewModel.Files) {
-			if (item.Location is not { } location) {
-				continue;
-			}
-
-			if (
-				this.North < location.Latitude ||
-				this.South > location.Latitude ||
-				this.West > location.Longitude ||
-				this.East < location.Longitude
-			) {
-				continue;
-			}
-
-			var topLeft = new Location(location.Latitude, location.Longitude);
-			var viewPoint = this.Map.LocationToView(topLeft);
-
-			// 座標とピンサイズから矩形を生成
-			var rect =
-				new Rectangle(new((int)viewPoint.X, (int)viewPoint.Y),
-					new(this.MapPinSize.Value, this.MapPinSize.Value));
-
-			// 生成した矩形が既に存在するピンとかぶる位置にあるかを確かめて、被るようであれば
-			// 被るピンのうち、最も矩形に近いピンに含める。
-			// 被らないなら新しいピンを追加する。
-			var cores = list.Where(x => rect.IntersectsWith(x.CoreRectangle)).ToList();
-			if (cores.Count == 0) {
-				list.Add(new MapPin(item.FileModel, rect));
-			} else {
-				var mapPin = cores.OrderBy(x => rect.DistanceTo(x.CoreRectangle)).First();
-				mapPin.Items.Add(item.FileModel);
-			}
-		}
-
-		this.MapPins.Value = list;
+		var pinVm = (MapPinViewModel)((FrameworkElement)sender).DataContext;
+		vm.MapViewerViewModel.SelectPin(pinVm);
 	}
 
 	private void UpdateMapControl() {
@@ -102,13 +30,20 @@ public sealed partial class MapViewer {
 			if (this.Map is not { } map) {
 				return;
 			}
+			if (this.ViewModel is not { }) {
+				return;
+			}
 			var leftTop = map.ViewToLocation(new(0, 0));
 			var rightBottom = map.ViewToLocation(new(map.ActualWidth, map.ActualHeight));
-			this.West = leftTop.Longitude;
-			this.North = leftTop.Latitude;
-			this.East = rightBottom.Longitude;
-			this.South = rightBottom.Latitude;
-			this.UpdateItemsForMapView();
+
+			var mapVm = this.ViewModel.MapViewerViewModel;
+			mapVm.BoundsNorthWest.Value = new MediaDeckLocation(leftTop.Latitude, leftTop.Longitude);
+			mapVm.BoundsSouthEast.Value = new MediaDeckLocation(rightBottom.Latitude, rightBottom.Longitude);
+
+			mapVm.UpdateItemsForMapView(loc => {
+				var viewPoint = map.LocationToView(new Location(loc.Latitude, loc.Longitude));
+				return new System.Drawing.Point((int)viewPoint.X, (int)viewPoint.Y);
+			}, 100);
 		};
 	}
 }

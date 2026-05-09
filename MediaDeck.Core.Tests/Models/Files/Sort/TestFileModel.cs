@@ -35,7 +35,7 @@ public class TestFileModel : MediaItem, IMediaItemModel {
 	public bool Exists {
 		get; set;
 	}
-	public IGpsLocation? Location {
+	public ILocation? Location {
 		get; set;
 	}
 	public List<ITagModel> Tags { get; set; } = new();
