@@ -25,7 +25,9 @@ public class MediaContentLibraryViewModel : ViewModelBase {
 		this.LoadMoreCommand = new ReactiveCommand().AddTo(this.CompositeDisposable);
 		this.LoadMoreCommand
 			.SubscribeAwait(async (_, ct) => {
-				await mediaContentLibrary.LoadMoreAsync(ct);
+				await Task.Run(async () => {
+					await mediaContentLibrary.LoadMoreAsync(ct).ConfigureAwait(false);
+				}, ct).ConfigureAwait(false);
 			}, AwaitOperation.Drop)
 			.AddTo(this.CompositeDisposable);
 	}
