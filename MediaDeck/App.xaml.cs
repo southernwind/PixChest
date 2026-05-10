@@ -169,7 +169,7 @@ public partial class App {
 			var dbPath = Path.Combine(FilePathConstants.BaseDirectory, "pix.db");
 			if (!File.Exists(dbPath)) {
 				{
-					// 事前に接続を開いて0バイトファイルを作らないとEnsureCreatedAsyncで死ぬ
+					// 事前に0バイトファイルを作らないとEnsureCreatedAsyncで死ぬ
 					using var __ = File.Create(dbPath);
 				}
 				var dbFactory = Ioc.Default.GetRequiredService<IDbContextFactory<MediaDeckDbContext>>();
