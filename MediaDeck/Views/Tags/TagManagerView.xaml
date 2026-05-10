@@ -265,13 +265,12 @@
 					
 					<!-- エイリアス追加ボタン -->
 					<Button Grid.Column="0"
-						Command="{x:Bind ViewModel.SelectedTagCategory.Value.SelectedTag.Value.AddTagAliasCommand, Mode=OneWay}"
-						x:Uid="TagManager_AddAlias" >
+						Command="{x:Bind ViewModel.SelectedTagCategory.Value.SelectedTag.Value.AddTagAliasCommand, Mode=OneWay}" >
 						<StackPanel Orientation="Horizontal"
 							Spacing="6" >
 							<FontIcon Glyph="&#xF8AA;"
 								FontSize="12" />
-							<TextBlock />
+							<TextBlock x:Uid="TagManager_AddAlias" />
 						</StackPanel>
 					</Button>
 
