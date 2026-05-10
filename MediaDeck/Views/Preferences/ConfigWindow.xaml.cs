@@ -1,5 +1,5 @@
 using MediaDeck.Composition.Interfaces;
-using MediaDeck.Core.Stores.State;
+using MediaDeck.Core.Stores.Config;
 using MediaDeck.ViewModels.Preferences;
 using MediaDeck.ViewModels.Preferences.Config;
 using MediaDeck.Views.Helpers;
@@ -16,14 +16,14 @@ public sealed partial class ConfigWindow : Window {
 		get;
 	}
 
-	public ConfigWindow(ConfigWindowViewModel configWindowViewModel, IStateStore stateStore, IStringProvider stringProvider) {
+	public ConfigWindow(ConfigWindowViewModel configWindowViewModel, IConfigStore configStore, IStringProvider stringProvider) {
 		this.InitializeComponent();
 		this.ViewModel = configWindowViewModel;
 
 		this.Title = stringProvider.GetString("ConfigWindow_Title");
 
 		// テーマのバインド
-		ThemeHelper.BindTheme(this, stateStore, this._disposable);
+		ThemeHelper.BindTheme(this, configStore, this._disposable);
 
 		this.ViewModel.LoadCommand.Execute(Unit.Default);
 		this.AppWindow.Resize(new(1000, 700));
@@ -35,6 +35,7 @@ public sealed partial class ConfigWindow : Window {
 				ExecutionConfigPageViewModel => typeof(ExecutionConfigPage),
 				SearchConfigPageViewModel => typeof(SearchConfigPage),
 				LanguageConfigPageViewModel => typeof(LanguageConfigPage),
+				EnvironmentConfigPageViewModel => typeof(EnvironmentConfigPage),
 				_ => null
 			};
 

@@ -1,5 +1,5 @@
 using MediaDeck.Composition.Interfaces;
-using MediaDeck.Core.Stores.State;
+using MediaDeck.Core.Stores.Config;
 using MediaDeck.ViewModels.Help;
 using MediaDeck.Views.Helpers;
 using Microsoft.UI.Xaml;
@@ -17,9 +17,9 @@ public sealed partial class AboutWindow : Window {
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="viewModel">ViewModel</param>
-	/// <param name="stateStore">状態ストア</param>
+	/// <param name="configStore">設定ストア</param>
 	/// <param name="stringProvider">文字列プロバイダー</param>
-	public AboutWindow(AboutWindowViewModel viewModel, IStateStore stateStore, IStringProvider stringProvider) {
+	public AboutWindow(AboutWindowViewModel viewModel, IConfigStore configStore, IStringProvider stringProvider) {
 		this.ViewModel = viewModel;
 		this.InitializeComponent();
 
@@ -27,7 +27,7 @@ public sealed partial class AboutWindow : Window {
 		this.Title = stringProvider.GetString("AboutWindow_Title");
 
 		// テーマのバインド
-		ThemeHelper.BindTheme(this, stateStore, this._disposable);
+		ThemeHelper.BindTheme(this, configStore, this._disposable);
 
 		this.AppWindow.Resize(new(500, 450));
 

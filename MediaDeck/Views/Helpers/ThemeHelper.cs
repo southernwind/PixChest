@@ -1,5 +1,5 @@
 using MediaDeck.Composition.Enum;
-using MediaDeck.Core.Stores.State;
+using MediaDeck.Core.Stores.Config;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Windows.UI;
@@ -11,13 +11,13 @@ namespace MediaDeck.Views.Helpers;
 /// </summary>
 public static class ThemeHelper {
 	/// <summary>
-	/// ウィンドウに対してIStateStoreのテーマ設定をバインドします。
+	/// ウィンドウに対してIConfigStoreのテーマ設定をバインドします。
 	/// </summary>
 	/// <param name="window">対象のウィンドウ</param>
-	/// <param name="stateStore">状態ストア</param>
+	/// <param name="configStore">設定ストア</param>
 	/// <param name="disposable">購読管理用のCompositeDisposable</param>
-	public static void BindTheme(Window window, IStateStore stateStore, CompositeDisposable disposable) {
-		stateStore.RootState.AppState.Theme
+	public static void BindTheme(Window window, IConfigStore configStore, CompositeDisposable disposable) {
+		configStore.Config.EnvironmentConfig.Theme
 			.Subscribe(theme => {
 				var targetTheme = theme switch {
 					AppTheme.Light => ElementTheme.Light,
@@ -67,13 +67,13 @@ public static class ThemeHelper {
 	}
 
 	/// <summary>
-	/// FrameworkElementに対してIStateStoreのテーマ設定をバインドします。
+	/// FrameworkElementに対してIConfigStoreのテーマ設定をバインドします。
 	/// </summary>
 	/// <param name="element">対象の要素</param>
-	/// <param name="stateStore">状態ストア</param>
+	/// <param name="configStore">設定ストア</param>
 	/// <param name="disposable">購読管理用のCompositeDisposable</param>
-	public static void BindTheme(FrameworkElement element, IStateStore stateStore, CompositeDisposable disposable) {
-		stateStore.RootState.AppState.Theme
+	public static void BindTheme(FrameworkElement element, IConfigStore configStore, CompositeDisposable disposable) {
+		configStore.Config.EnvironmentConfig.Theme
 			.Subscribe(theme => {
 				element.RequestedTheme = theme switch {
 					AppTheme.Light => ElementTheme.Light,

@@ -1,5 +1,4 @@
 using CommunityToolkit.Mvvm.DependencyInjection;
-using MediaDeck.Composition.Enum;
 using MediaDeck.Services;
 using MediaDeck.ViewModels;
 using MediaDeck.Views.FolderManager;
@@ -71,12 +70,6 @@ public sealed partial class NavigationMenu {
 			return;
 		}
 		this._windowService.ActivateCenteredOnMainWindow(window, parent);
-	}
-
-	private void ThemeMenuFlyoutItem_Click(object sender, RoutedEventArgs e) {
-		if (sender is FrameworkElement fe && fe.Tag is string themeStr && Enum.TryParse<AppTheme>(themeStr, out var theme)) {
-			this.ViewModel?.SetThemeCommand.Execute(theme);
-		}
 	}
 }
 

@@ -4,7 +4,7 @@ namespace MediaDeck.Composition.Stores.Config.Model;
 
 [Inject(InjectServiceLifetime.Singleton)]
 [GenerateJsonConfigDto]
-public class ConfigModel(PathConfigModel pathConfigModel, ScanConfigModel scanConfigModel, ThumbnailConfigModel thumbnailConfigModel, ExecutionConfigModel executionConfigModel, SearchConfigModel searchConfigModel, FolderManagerConfigModel folderManagerConfigModel, SearchDefinitionsConfigModel searchDefinitionsConfigModel, LanguageConfigModel languageConfigModel) {
+public class ConfigModel(PathConfigModel pathConfigModel, ScanConfigModel scanConfigModel, ThumbnailConfigModel thumbnailConfigModel, ExecutionConfigModel executionConfigModel, SearchConfigModel searchConfigModel, FolderManagerConfigModel folderManagerConfigModel, SearchDefinitionsConfigModel searchDefinitionsConfigModel, LanguageConfigModel languageConfigModel, EnvironmentConfigModel environmentConfigModel) {
 	/// <summary>
 	/// 設定バージョン
 	/// </summary>
@@ -76,4 +76,12 @@ public class ConfigModel(PathConfigModel pathConfigModel, ScanConfigModel scanCo
 		get;
 		set;
 	} = languageConfigModel;
+
+	/// <summary>
+	/// 環境設定（テーマなど）
+	/// </summary>
+	public EnvironmentConfigModel EnvironmentConfig {
+		get;
+		set;
+	} = environmentConfigModel;
 }

@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using MediaDeck.Common.Utilities;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
 using MediaDeck.Composition.Stores.Config.Model;
-using MediaDeck.Core.Stores.State;
+using MediaDeck.Core.Stores.Config;
 using MediaDeck.Services;
 using MediaDeck.ViewModels.Panes.ViewerPanes;
 using MediaDeck.Views.Dialogs;
@@ -140,7 +140,7 @@ public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
 						DefaultButton = ContentDialogButton.Primary
 					};
 					using var disposable = new CompositeDisposable();
-					ThemeHelper.BindTheme(dialog, Ioc.Default.GetRequiredService<IStateStore>(), disposable);
+					ThemeHelper.BindTheme(dialog, Ioc.Default.GetRequiredService<IConfigStore>(), disposable);
 
 					var result = await dialog.ShowAsync();
 					if (result == ContentDialogResult.Primary) {

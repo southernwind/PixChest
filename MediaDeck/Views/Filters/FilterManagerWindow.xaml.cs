@@ -1,4 +1,4 @@
-using MediaDeck.Core.Stores.State;
+using MediaDeck.Core.Stores.Config;
 using MediaDeck.ViewModels.Filters;
 using MediaDeck.Views.Helpers;
 
@@ -8,12 +8,12 @@ namespace MediaDeck.Views.Filters;
 public sealed partial class FilterManagerWindow : Microsoft.UI.Xaml.Window {
 	private readonly CompositeDisposable _disposable = new();
 
-	public FilterManagerWindow(FilterManagerViewModel viewModel, IStateStore stateStore) {
+	public FilterManagerWindow(FilterManagerViewModel viewModel, IConfigStore configStore) {
 		this.ViewModel = viewModel;
 		this.InitializeComponent();
 
 		// テーマのバインド
-		ThemeHelper.BindTheme(this, stateStore, this._disposable);
+		ThemeHelper.BindTheme(this, configStore, this._disposable);
 
 		this.AppWindow.Resize(new(1000, 700));
 		this.ViewModel.RequestClose.Subscribe(_ => {

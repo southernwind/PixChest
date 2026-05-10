@@ -1,6 +1,6 @@
 using MediaDeck.Composition.Enum;
 using MediaDeck.Core.Models.Files.SearchConditions;
-using MediaDeck.Core.Stores.State;
+using MediaDeck.Core.Stores.Config;
 using MediaDeck.ViewModels.Dialogs;
 using MediaDeck.Views.Helpers;
 using Microsoft.UI.Xaml;
@@ -20,11 +20,11 @@ public sealed partial class PropertyComparisonDialog : ContentDialog {
 
 	private readonly CompositeDisposable _disposable = new();
 
-	public PropertyComparisonDialog(PropertyComparisonDialogViewModel viewModel, IStateStore stateStore) {
+	public PropertyComparisonDialog(PropertyComparisonDialogViewModel viewModel, IConfigStore configStore) {
 		this.ViewModel = viewModel;
 		this.InitializeComponent();
 
-		ThemeHelper.BindTheme(this, stateStore, this._disposable);
+		ThemeHelper.BindTheme(this, configStore, this._disposable);
 
 		this.PrimaryButtonClick += this.OnPrimaryButtonClick;
 		this.Closed += (_, _) => {

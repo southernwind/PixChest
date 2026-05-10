@@ -22,6 +22,7 @@ public class FilePathServiceTests {
 		services.AddSingleton<ScanConfigModel>();
 		services.AddSingleton<ThumbnailConfigModel>();
 		services.AddSingleton<SearchConfigModel>();
+		services.AddSingleton<EnvironmentConfigModel>();
 		services.AddSingleton<FolderManagerConfigModel>();
 		services.AddSingleton<SearchDefinitionsConfigModel>();
 		services.AddSingleton<LanguageConfigModel>();

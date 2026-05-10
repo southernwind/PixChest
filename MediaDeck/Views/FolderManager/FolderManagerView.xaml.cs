@@ -1,5 +1,5 @@
 using CommunityToolkit.Mvvm.DependencyInjection;
-using MediaDeck.Core.Stores.State;
+using MediaDeck.Core.Stores.Config;
 using MediaDeck.ViewModels.FolderManager;
 using MediaDeck.Views.Helpers;
 using Microsoft.UI.Xaml;
@@ -50,7 +50,7 @@ public sealed partial class FolderManagerView {
 			DefaultButton = ContentDialogButton.Primary
 		};
 		using var disposable = new CompositeDisposable();
-		ThemeHelper.BindTheme(dialog, Ioc.Default.GetRequiredService<IStateStore>(), disposable);
+		ThemeHelper.BindTheme(dialog, Ioc.Default.GetRequiredService<IConfigStore>(), disposable);
 
 		var result = await dialog.ShowAsync();
 

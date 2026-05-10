@@ -5,7 +5,6 @@
 	xmlns:local="using:MediaDeck.Views"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:enum="using:MediaDeck.Composition.Enum"
 	mc:Ignorable="d" >
 
 	<Grid>
@@ -32,17 +31,6 @@
 		</Grid.ColumnDefinitions>
 
 		<MenuBar Grid.Column="0" Style="{StaticResource TransparentMenuBarStyle}">
-			<MenuBarItem x:Uid="NavMenu_View" >
-				<ToggleMenuFlyoutItem x:Uid="NavMenu_ThemeDefault"
-					IsChecked="{x:Bind ViewModel.CurrentTheme.Value, Mode=OneWay, Converter={StaticResource EqualityToBooleanConverter}, ConverterParameter=Default}"
-					Click="ThemeMenuFlyoutItem_Click" Tag="Default" />
-				<ToggleMenuFlyoutItem x:Uid="NavMenu_ThemeLight"
-					IsChecked="{x:Bind ViewModel.CurrentTheme.Value, Mode=OneWay, Converter={StaticResource EqualityToBooleanConverter}, ConverterParameter=Light}"
-					Click="ThemeMenuFlyoutItem_Click" Tag="Light" />
-				<ToggleMenuFlyoutItem x:Uid="NavMenu_ThemeDark"
-					IsChecked="{x:Bind ViewModel.CurrentTheme.Value, Mode=OneWay, Converter={StaticResource EqualityToBooleanConverter}, ConverterParameter=Dark}"
-					Click="ThemeMenuFlyoutItem_Click" Tag="Dark" />
-			</MenuBarItem>
 			<MenuBarItem x:Uid="NavMenu_Tools" >
 				<MenuFlyoutItem x:Uid="NavMenu_TagManager"
 					Click="MenuFlyoutItem_Click"

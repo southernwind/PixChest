@@ -1,4 +1,4 @@
-using MediaDeck.Core.Stores.State;
+using MediaDeck.Core.Stores.Config;
 using MediaDeck.ViewModels.Tags;
 using MediaDeck.Views.Helpers;
 
@@ -8,11 +8,11 @@ namespace MediaDeck.Views.Tags;
 public sealed partial class NewTagDialog {
 	private readonly CompositeDisposable _disposable = new();
 
-	public NewTagDialog(NewTagDialogViewModel viewModel, IStateStore stateStore) {
+	public NewTagDialog(NewTagDialogViewModel viewModel, IConfigStore configStore) {
 		this.ViewModel = viewModel;
 		this.InitializeComponent();
 
-		ThemeHelper.BindTheme(this, stateStore, this._disposable);
+		ThemeHelper.BindTheme(this, configStore, this._disposable);
 		this.Closed += (_, _) => this._disposable.Dispose();
 
 		this.PrimaryButtonClick += (_, _) => {

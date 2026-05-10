@@ -1,5 +1,5 @@
 using MediaDeck.Core.Services.FileChangeMonitor;
-using MediaDeck.Core.Stores.State;
+using MediaDeck.Core.Stores.Config;
 using MediaDeck.ViewModels;
 using MediaDeck.Views.Helpers;
 using Microsoft.UI.Xaml;
@@ -11,12 +11,12 @@ namespace MediaDeck.Views;
 public sealed partial class FileChangeSyncWindow : Window {
 	private readonly CompositeDisposable _disposable = new();
 
-	public FileChangeSyncWindow(FileChangeSyncViewModel viewModel, IStateStore stateStore) {
+	public FileChangeSyncWindow(FileChangeSyncViewModel viewModel, IConfigStore configStore) {
 		this.ViewModel = viewModel;
 		this.InitializeComponent();
 
 		// テーマのバインド
-		ThemeHelper.BindTheme(this, stateStore, this._disposable);
+		ThemeHelper.BindTheme(this, configStore, this._disposable);
 
 		this.AppWindow.Resize(new(700, 500));
 

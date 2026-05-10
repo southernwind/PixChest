@@ -101,15 +101,6 @@
   <data name="NavMenu_View.Title" xml:space="preserve">
     <value>表示</value>
   </data>
-  <data name="NavMenu_ThemeDefault.Text" xml:space="preserve">
-    <value>既定 (Windowsの設定)</value>
-  </data>
-  <data name="NavMenu_ThemeLight.Text" xml:space="preserve">
-    <value>ライト</value>
-  </data>
-  <data name="NavMenu_ThemeDark.Text" xml:space="preserve">
-    <value>ダーク</value>
-  </data>
   <data name="NavMenu_Tools.Title" xml:space="preserve">
     <value>ツール</value>
   </data>
@@ -668,6 +659,33 @@
   </data>
   <data name="Config_Language_SystemDefault" xml:space="preserve">
     <value>システムの既定</value>
+  </data>
+  <data name="Config_Environment_Name" xml:space="preserve">
+    <value>環境</value>
+  </data>
+  <data name="Config_Environment_Description" xml:space="preserve">
+    <value>テーマなど、アプリの環境設定を行います</value>
+  </data>
+  <data name="Config_Environment_Theme_Default" xml:space="preserve">
+    <value>システム設定に従う</value>
+  </data>
+  <data name="Config_Environment_Theme_Light" xml:space="preserve">
+    <value>ライトテーマ</value>
+  </data>
+  <data name="Config_Environment_Theme_Dark" xml:space="preserve">
+    <value>ダークテーマ</value>
+  </data>
+  <data name="EnvironmentConfigPage_SectionHeader.Text" xml:space="preserve">
+    <value>テーマ</value>
+  </data>
+  <data name="EnvironmentConfigPage_SectionDescription.Text" xml:space="preserve">
+    <value>アプリケーションのテーマを選択します</value>
+  </data>
+  <data name="EnvironmentConfigPage_ThemeLabel.Text" xml:space="preserve">
+    <value>テーマ:</value>
+  </data>
+  <data name="EnvironmentConfigPage_RestartNotice.Message" xml:space="preserve">
+    <value>テーマの変更は即座に適用されます</value>
   </data>
   <data name="Config_Execution_Name" xml:space="preserve">
     <value>外部プログラム</value>

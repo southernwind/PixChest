@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using MediaDeck.Composition.Interfaces;
-using MediaDeck.Core.Stores.State;
+using MediaDeck.Core.Stores.Config;
 using MediaDeck.ViewModels;
 using MediaDeck.Views.Dialogs;
 using MediaDeck.Views.Helpers;
@@ -15,14 +15,14 @@ public sealed partial class MainWindow : Window {
 	private readonly MainWindowViewModel _viewModel;
 	private readonly CompositeDisposable _disposable = new();
 
-	public MainWindow(MainWindowViewModel viewModel, IStateStore stateStore, IStringProvider stringProvider) {
+	public MainWindow(MainWindowViewModel viewModel, IConfigStore configStore, IStringProvider stringProvider) {
 		this._viewModel = viewModel;
 		this.InitializeComponent();
 
 		this.Title = stringProvider.GetString("App_Title");
 
 		// テーマのバインド
-		ThemeHelper.BindTheme(this, stateStore, this._disposable);
+		ThemeHelper.BindTheme(this, configStore, this._disposable);
 
 		// カスタムタイトルバーの設定
 		this.ExtendsContentIntoTitleBar = true;

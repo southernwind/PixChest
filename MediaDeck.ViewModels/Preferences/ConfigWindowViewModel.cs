@@ -6,18 +6,20 @@ namespace MediaDeck.ViewModels.Preferences;
 
 [Inject(InjectServiceLifetime.Transient)]
 public class ConfigWindowViewModel : ViewModelBase {
-	public ConfigWindowViewModel(IConfigStore configStore, ScanConfigPageViewModel scanConfigPageViewModel, ThumbnailConfigPageViewModel thumbnailConfigPageViewModel, ExecutionConfigPageViewModel executionConfigPageViewModel, SearchConfigPageViewModel searchConfigPageViewModel, LanguageConfigPageViewModel languageConfigPageViewModel) {
+	public ConfigWindowViewModel(IConfigStore configStore, ScanConfigPageViewModel scanConfigPageViewModel, ThumbnailConfigPageViewModel thumbnailConfigPageViewModel, ExecutionConfigPageViewModel executionConfigPageViewModel, SearchConfigPageViewModel searchConfigPageViewModel, LanguageConfigPageViewModel languageConfigPageViewModel, EnvironmentConfigPageViewModel environmentConfigPageViewModel) {
 		this.ScanConfigPageViewModel = scanConfigPageViewModel;
 		this.ThumbnailConfigPageViewModel = thumbnailConfigPageViewModel;
 		this.ExecutionConfigPageViewModel = executionConfigPageViewModel;
 		this.SearchConfigPageViewModel = searchConfigPageViewModel;
 		this.LanguageConfigPageViewModel = languageConfigPageViewModel;
+		this.EnvironmentConfigPageViewModel = environmentConfigPageViewModel;
 		this.ConfigPageViewModels = [
 			this.ScanConfigPageViewModel,
 			this.ThumbnailConfigPageViewModel,
 			this.ExecutionConfigPageViewModel,
 			this.SearchConfigPageViewModel,
 			this.LanguageConfigPageViewModel,
+			this.EnvironmentConfigPageViewModel,
 		];
 		this.SelectedPageViewModel.Value = this.ScanConfigPageViewModel;
 		this.SaveCommand.Subscribe(_ => {
@@ -71,6 +73,10 @@ public class ConfigWindowViewModel : ViewModelBase {
 	}
 
 	public LanguageConfigPageViewModel LanguageConfigPageViewModel {
+		get;
+	}
+
+	public EnvironmentConfigPageViewModel EnvironmentConfigPageViewModel {
 		get;
 	}
 }

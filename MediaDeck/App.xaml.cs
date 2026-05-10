@@ -76,7 +76,7 @@ public partial class App {
 		this._dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
 		// スプラッシュ画面を表示
-		var splashScreen = new Views.SplashScreenWindow(this._stateStore);
+		var splashScreen = new Views.SplashScreenWindow(this._configStore);
 		splashScreen.Activate();
 
 		await this.InitializeAsync(splashScreen.ViewModel);

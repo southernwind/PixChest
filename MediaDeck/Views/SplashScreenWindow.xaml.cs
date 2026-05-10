@@ -1,4 +1,4 @@
-using MediaDeck.Core.Stores.State;
+using MediaDeck.Core.Stores.Config;
 using MediaDeck.ViewModels;
 using MediaDeck.Views.Helpers;
 using Microsoft.UI.Windowing;
@@ -17,11 +17,11 @@ public sealed partial class SplashScreenWindow : Window {
 		get;
 	} = new();
 
-	public SplashScreenWindow(IStateStore stateStore) {
+	public SplashScreenWindow(IConfigStore configStore) {
 		this.InitializeComponent();
 
 		// テーマを適用
-		ThemeHelper.BindTheme(this, stateStore, this.ViewModel.CompositeDisposable);
+		ThemeHelper.BindTheme(this, configStore, this.ViewModel.CompositeDisposable);
 
 		// タイトルバーを非表示にし、コンテンツを拡張する
 		this.ExtendsContentIntoTitleBar = true;

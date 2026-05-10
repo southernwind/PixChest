@@ -1,4 +1,4 @@
-using MediaDeck.Core.Stores.State;
+using MediaDeck.Core.Stores.Config;
 using MediaDeck.ViewModels.Tools;
 using MediaDeck.Views.Helpers;
 
@@ -8,12 +8,12 @@ namespace MediaDeck.Views.Tools;
 public sealed partial class DuplicateDetectorWindow : Microsoft.UI.Xaml.Window {
 	private readonly CompositeDisposable _disposable = new();
 
-	public DuplicateDetectorWindow(DuplicateDetectorViewModel duplicateDetectorViewModel, IStateStore stateStore) {
+	public DuplicateDetectorWindow(DuplicateDetectorViewModel duplicateDetectorViewModel, IConfigStore configStore) {
 		this.InitializeComponent();
 		this.ViewModel = duplicateDetectorViewModel;
 
 		// テーマのバインド
-		ThemeHelper.BindTheme(this, stateStore, this._disposable);
+		ThemeHelper.BindTheme(this, configStore, this._disposable);
 
 		this.AppWindow.Resize(new(900, 600));
 

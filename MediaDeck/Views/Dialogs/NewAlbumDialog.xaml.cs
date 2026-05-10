@@ -1,4 +1,4 @@
-using MediaDeck.Core.Stores.State;
+using MediaDeck.Core.Stores.Config;
 using MediaDeck.Views.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -9,9 +9,9 @@ namespace MediaDeck.Views.Dialogs;
 public sealed partial class NewAlbumDialog : ContentDialog {
 	private readonly CompositeDisposable _disposable = new();
 
-	public NewAlbumDialog(IStateStore stateStore) {
+	public NewAlbumDialog(IConfigStore configStore) {
 		this.InitializeComponent();
-		ThemeHelper.BindTheme(this, stateStore, this._disposable);
+		ThemeHelper.BindTheme(this, configStore, this._disposable);
 		this.Closed += (_, _) => this._disposable.Dispose();
 	}
 
