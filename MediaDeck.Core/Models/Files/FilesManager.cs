@@ -32,17 +32,16 @@ public class FilesManager {
 		await using var db = await this._dbFactory.CreateDbContextAsync();
 		using var transaction = await db.Database.BeginTransactionAsync();
 		var ids = fileModels.Select(x => x.Id).ToArray();
-		var targetFiles =
-			await db
+		var deleteQuery = db
 				.MediaItems
-				.Where(x => ids.Contains(x.MediaItemId))
-				.ToListAsync();
+				.Where(x => ids.Contains(x.MediaItemId));
+		var targetFiles = await deleteQuery.ToListAsync();
 
 		if (targetFiles.Count == 0) {
 			return;
 		}
 
-		db.MediaItems.RemoveRange(targetFiles);
+		await deleteQuery.ExecuteDeleteAsync();
 
 		var folderGroups = targetFiles.Where(x => x.MediaType == MediaType.FolderGroup).Select(fg => fg.FilePath).ToArray();
 		if (folderGroups.Any()) {
