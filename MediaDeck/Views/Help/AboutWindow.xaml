@@ -25,8 +25,8 @@
 			</StackPanel>
 		</Grid>
 
-		<StackPanel Grid.Row="1" Padding="24" Spacing="12" HorizontalAlignment="Center" VerticalAlignment="Center">
-			<Image Source="/Assets/StoreLogo.png" Width="128" Height="128" Margin="0,0,0,12"/>
+		<StackPanel Grid.Row="1" Padding="24" Spacing="12" HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="460">
+			<Image Source="/Assets/Square150x150Logo.scale-200.png" Width="128" Height="128" Margin="0,0,0,12"/>
 			<TextBlock Text="{x:Bind ViewModel.AppName}" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center"/>
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="4">
 				<TextBlock x:Uid="About_VersionLabel" FontSize="14" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"/>
@@ -34,6 +34,19 @@
 			</StackPanel>
 			<TextBlock Text="{x:Bind ViewModel.Description}" TextWrapping="Wrap" MaxWidth="400" HorizontalAlignment="Center" TextAlignment="Center" Margin="0,12"/>
 			<TextBlock Text="{x:Bind ViewModel.Copyright}" FontSize="12" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" HorizontalAlignment="Center"/>
+
+			<Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="4" Padding="16,12" Margin="0,8,0,0" HorizontalAlignment="Stretch">
+				<StackPanel Spacing="8">
+					<TextBlock x:Uid="About_DataManagementHeader" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+					<TextBlock Text="{x:Bind ViewModel.AppDataDirectoryPath, Mode=OneWay}" TextWrapping="WrapWholeWords" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+					<Button Command="{x:Bind ViewModel.OpenAppDataDirectoryCommand}" HorizontalAlignment="Left">
+						<StackPanel Orientation="Horizontal" Spacing="8">
+							<FontIcon Glyph="&#xE838;" FontSize="14"/>
+							<TextBlock x:Uid="About_OpenAppDataDirectory" FontWeight="SemiBold"/>
+						</StackPanel>
+					</Button>
+				</StackPanel>
+			</Border>
 		</StackPanel>
 	</Grid>
 </Window>

@@ -140,6 +140,12 @@
   <data name="About_Copyright" xml:space="preserve">
     <value>© 2026 xm-i</value>
   </data>
+  <data name="About_DataManagementHeader.Text" xml:space="preserve">
+    <value>データ管理</value>
+  </data>
+  <data name="About_OpenAppDataDirectory.Text" xml:space="preserve">
+    <value>データフォルダを開く</value>
+  </data>
   <data name="LicenseWindow_Title" xml:space="preserve">
     <value>ライセンス情報</value>
   </data>
@@ -695,6 +701,12 @@
   </data>
   <data name="EnvironmentConfigPage_SystemBackdropLabel.Text" xml:space="preserve">
     <value>背景効果:</value>
+  </data>
+  <data name="EnvironmentConfigPage_AppDataDirectoryLabel.Text" xml:space="preserve">
+    <value>アプリケーションデータ:</value>
+  </data>
+  <data name="EnvironmentConfigPage_OpenAppDataDirectory.Text" xml:space="preserve">
+    <value>データフォルダを開く</value>
   </data>
   <data name="EnvironmentConfigPage_RestartNotice.Message" xml:space="preserve">
     <value>テーマと背景効果の変更は即座に適用されます</value>

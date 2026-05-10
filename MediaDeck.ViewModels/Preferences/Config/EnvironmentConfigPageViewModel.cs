@@ -1,6 +1,8 @@
 using MediaDeck.Common.Base;
+using MediaDeck.Common.Utilities;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces;
+using MediaDeck.Composition.Interfaces.Services;
 using MediaDeck.Composition.Stores.Config.Model;
 
 namespace MediaDeck.ViewModels.Preferences.Config;
@@ -56,7 +58,21 @@ public class EnvironmentConfigPageViewModel : ViewModelBase, IConfigPageViewMode
 		get;
 	}
 
-	public EnvironmentConfigPageViewModel(EnvironmentConfigModel environmentConfig, IStringProvider stringProvider) {
+	/// <summary>
+	/// アプリケーションデータフォルダのパス
+	/// </summary>
+	public string AppDataDirectoryPath {
+		get;
+	}
+
+	/// <summary>
+	/// アプリケーションデータフォルダをエクスプローラーで開くコマンド
+	/// </summary>
+	public ReactiveCommand OpenAppDataDirectoryCommand {
+		get;
+	} = new();
+
+	public EnvironmentConfigPageViewModel(EnvironmentConfigModel environmentConfig, IStringProvider stringProvider, IAppPathProvider appPathProvider) {
 		this.PageName = stringProvider.GetString("Config_Environment_Name");
 		this.PageDescription = stringProvider.GetString("Config_Environment_Description");
 
@@ -82,6 +98,7 @@ public class EnvironmentConfigPageViewModel : ViewModelBase, IConfigPageViewMode
 								 ?? this.SystemBackdropOptions[0];
 
 		this.SelectedSystemBackdrop = new BindableReactiveProperty<SystemBackdropOption>(initialSystemBackdrop);
+		this.AppDataDirectoryPath = appPathProvider.BaseDirectory;
 
 		// ViewModel の選択変更を Model に反映
 		this.SelectedTheme
@@ -90,6 +107,10 @@ public class EnvironmentConfigPageViewModel : ViewModelBase, IConfigPageViewMode
 
 		this.SelectedSystemBackdrop
 			.Subscribe(opt => environmentConfig.SystemBackdrop.Value = opt?.Backdrop ?? AppSystemBackdrop.None)
+			.AddTo(this.CompositeDisposable);
+
+		this.OpenAppDataDirectoryCommand
+			.Subscribe(_ => ShellUtility.ShellExecute(this.AppDataDirectoryPath))
 			.AddTo(this.CompositeDisposable);
 	}
 }

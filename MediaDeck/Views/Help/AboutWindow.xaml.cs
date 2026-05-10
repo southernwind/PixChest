@@ -29,7 +29,7 @@ public sealed partial class AboutWindow : Window {
 		// テーマのバインド
 		ThemeHelper.BindTheme(this, configStore, this._disposable);
 
-		this.AppWindow.Resize(new(500, 450));
+		this.AppWindow.Resize(new(500, 650));
 
 		this.Closed += (s, e) => this._disposable.Dispose();
 	}

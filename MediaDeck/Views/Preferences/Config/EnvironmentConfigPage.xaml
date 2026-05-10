@@ -14,7 +14,7 @@
 		<TextBlock x:Uid="EnvironmentConfigPage_SectionDescription" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
 	  </StackPanel>
 	  <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="4" Padding="16,12">
-		<Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*" RowSpacing="12">
+		<Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*" RowSpacing="12">
 		  <TextBlock x:Uid="EnvironmentConfigPage_ThemeLabel" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,16,0" Style="{StaticResource BodyTextBlockStyle}" />
 		  <ComboBox Grid.Row="0"
 					Grid.Column="1"
@@ -30,6 +30,17 @@
 					MinWidth="200"
 					ItemsSource="{x:Bind ViewModel.SystemBackdropOptions}"
 					SelectedItem="{x:Bind ViewModel.SelectedSystemBackdrop.Value, Mode=TwoWay}" />
+
+		  <TextBlock x:Uid="EnvironmentConfigPage_AppDataDirectoryLabel" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Margin="0,8,16,0" Style="{StaticResource BodyTextBlockStyle}" />
+		  <StackPanel Grid.Row="2" Grid.Column="1" Spacing="8">
+			<TextBlock Text="{x:Bind ViewModel.AppDataDirectoryPath, Mode=OneWay}" TextWrapping="WrapWholeWords" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+			<Button Command="{x:Bind ViewModel.OpenAppDataDirectoryCommand}" HorizontalAlignment="Left">
+			  <StackPanel Orientation="Horizontal" Spacing="8">
+				<FontIcon Glyph="&#xE838;" FontSize="14" />
+				<TextBlock x:Uid="EnvironmentConfigPage_OpenAppDataDirectory" FontWeight="SemiBold" />
+			  </StackPanel>
+			</Button>
+		  </StackPanel>
 		</Grid>
 	  </Border>
 	  <InfoBar x:Uid="EnvironmentConfigPage_RestartNotice" IsOpen="True" IsClosable="False" Severity="Informational" Margin="0,16,0,0" />
