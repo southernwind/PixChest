@@ -63,6 +63,9 @@ public partial class App {
 		Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = string.IsNullOrEmpty(language) ? string.Empty : language;
 #endif
 		this.InitializeComponent();
+		AppDomain.CurrentDomain.ProcessExit += (_, _) => {
+			this._configStore.Save();
+		};
 	}
 
 	/// <summary>
