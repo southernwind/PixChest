@@ -24,7 +24,7 @@ public sealed partial class VideoDetailViewerPreviewControlView : VideoDetailVie
 		this.Player = new();
 
 		this.InitializeComponent();
-		this.btnPlayback.Content = this.Player.Status == Status.Paused ? this._iconPlay : this._iconPause;
+		this.btnPlayback.Content = this.Player.Status == Status.Playing ? this._iconPause : this._iconPlay;
 		this.Player.PropertyChanged += this.Player_PropertyChanged;
 		this.rootGrid.DataContext = this;
 
@@ -48,7 +48,7 @@ public sealed partial class VideoDetailViewerPreviewControlView : VideoDetailVie
 	private void Player_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e) {
 		switch (e.PropertyName) {
 			case nameof(this.Player.Status):
-				this.btnPlayback.Content = this.Player.Status == Status.Paused ? this._iconPlay : this._iconPause;
+				this.btnPlayback.Content = this.Player.Status == Status.Playing ? this._iconPause : this._iconPlay;
 
 				if (this.Player.Status == Status.Playing) {
 					this.ThumbnailVisibility.Value = Visibility.Collapsed;

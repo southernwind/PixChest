@@ -17,7 +17,7 @@ public sealed partial class VideoThumbnailPickerView : VideoThumbnailPickerViewU
 	public VideoThumbnailPickerView() {
 		this.Player = new();
 		this.InitializeComponent();
-		this.btnPlayback.Content = this.Player.Status == Status.Paused ? this._iconPlay : this._iconPause;
+		this.btnPlayback.Content = this.Player.Status == Status.Playing ? this._iconPause : this._iconPlay;
 		this.Player.PropertyChanged += this.Player_PropertyChanged;
 		this.playerRootGrid.DataContext = this;
 
@@ -38,6 +38,7 @@ public sealed partial class VideoThumbnailPickerView : VideoThumbnailPickerViewU
 		newViewModel.VideoFilePath.Subscribe(filePath => {
 			if (!string.IsNullOrEmpty(filePath)) {
 				this.Player.Open(filePath);
+				this.Player.Pause();
 			} else {
 				this.Player.Stop();
 			}
@@ -66,7 +67,7 @@ public sealed partial class VideoThumbnailPickerView : VideoThumbnailPickerViewU
 	private void Player_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e) {
 		switch (e.PropertyName) {
 			case nameof(this.Player.Status):
-				this.btnPlayback.Content = this.Player.Status == Status.Paused ? this._iconPlay : this._iconPause;
+				this.btnPlayback.Content = this.Player.Status == Status.Playing ? this._iconPause : this._iconPlay;
 				break;
 		}
 	}
