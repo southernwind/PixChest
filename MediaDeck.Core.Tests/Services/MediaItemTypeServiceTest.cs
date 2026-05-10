@@ -502,7 +502,8 @@ public class MediaItemTypeServiceTest {
 			get;
 		} = MediaType.Unknown;
 
-		public void RecreateThumbnail() {
+		public Task RecreateThumbnailAsync() {
+			return Task.CompletedTask;
 		}
 
 		public Task SaveAsync() {

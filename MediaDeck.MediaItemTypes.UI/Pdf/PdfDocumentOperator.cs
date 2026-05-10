@@ -1,11 +1,9 @@
-using System.Drawing.Imaging;
-using System.IO;
-
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using MediaDeck.MediaItemTypes.Pdf.Models;
-
-using Patagames.Pdf.Enums;
-
-using Patagames.Pdf.Net;
+using Windows.Data.Pdf;
+using Windows.Storage;
+using Windows.Storage.Streams;
 
 namespace MediaDeck.MediaItemTypes.UI.Pdf;
 
@@ -14,30 +12,53 @@ public class PdfDocumentOperator : IPdfDocumentOperator {
 	/// <summary>
 	/// サムネイル作成
 	/// </summary>
-	/// <param name="filePath">動画ファイルパス</param>
+	/// <param name="filePath">ファイルパス</param>
 	/// <param name="width">サムネイル幅</param>
 	/// <param name="height">サムネイル高さ</param>
 	/// <param name="pageNumber">サムネイルにするページ番号</param>
-	/// <returns>作成されたサムネイルファイル名</returns>
-	public byte[] CreateThumbnail(string filePath, int width, int height, int pageNumber = 1) {
-		var pdfDoc = PdfDocument.Load(filePath);
-		var page = pdfDoc.Pages[pageNumber - 1];
-		using var pdfBitmap = new PdfBitmap(width, height, true);
-		page.Render(pdfBitmap, 0, 0, width, height, PageRotate.Normal, RenderFlags.FPDF_NONE);
-		using var ms = new MemoryStream();
+	/// <returns>作成されたサムネイルのバイト配列</returns>
+	public async Task<byte[]> CreateThumbnailAsync(string filePath, int width, int height, int pageNumber = 1) {
+		var file = await StorageFile.GetFileFromPathAsync(filePath);
+		var pdfDoc = await PdfDocument.LoadFromFileAsync(file);
 
-		using var image = pdfBitmap.GetImage();
-		image.Save(ms, ImageFormat.Jpeg);
-		return ms.ToArray();
+		if (pdfDoc.PageCount < pageNumber || pageNumber < 1) {
+			throw new ArgumentOutOfRangeException(nameof(pageNumber), "Page number is out of range.");
+		}
+
+		using var page = pdfDoc.GetPage((uint)pageNumber - 1);
+		using var stream = new InMemoryRandomAccessStream();
+
+		var options = new PdfPageRenderOptions {
+			DestinationWidth = (uint)width,
+			DestinationHeight = (uint)height
+		};
+
+		await page.RenderToStreamAsync(stream, options);
+
+		var buffer = new byte[stream.Size];
+		await stream.ReadAsync(buffer.AsBuffer(), (uint)stream.Size, InputStreamOptions.None);
+		return buffer;
 	}
 
-	public PdfProperties GetPdfProperties(string filePath) {
-		var pdfDoc = PdfDocument.Load(filePath);
-		var page = pdfDoc.Pages[0];
-		return new PdfProperties {
-			PageCount = pdfDoc.Pages.Count,
-			Width = page.Width,
-			Height = page.Height
+	/// <summary>
+	/// PDFのプロパティ取得
+	/// </summary>
+	/// <param name="filePath">ファイルパス</param>
+	/// <returns>PDFプロパティ</returns>
+	public async Task<PdfProperties> GetPdfPropertiesAsync(string filePath) {
+		var file = await StorageFile.GetFileFromPathAsync(filePath);
+		var pdfDoc = await PdfDocument.LoadFromFileAsync(file);
+
+		var properties = new PdfProperties {
+			PageCount = (int)pdfDoc.PageCount
 		};
+
+		if (pdfDoc.PageCount > 0) {
+			using var page = pdfDoc.GetPage(0);
+			properties.Width = page.Size.Width;
+			properties.Height = page.Size.Height;
+		}
+
+		return properties;
 	}
 }

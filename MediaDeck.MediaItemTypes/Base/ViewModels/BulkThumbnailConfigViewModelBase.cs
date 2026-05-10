@@ -28,7 +28,7 @@ public abstract class BulkThumbnailConfigViewModelBase : ViewModelBase, IBulkThu
 
 	public async Task ApplyToAsync(IMediaItemViewModel target, CancellationToken cancellationToken) {
 		cancellationToken.ThrowIfCancellationRequested();
-		var bytes = await Task.Run(() => this.GenerateThumbnail(target), cancellationToken);
+		var bytes = await this.GenerateThumbnailAsync(target);
 		cancellationToken.ThrowIfCancellationRequested();
 		if (bytes is null) {
 			return;
@@ -40,5 +40,5 @@ public abstract class BulkThumbnailConfigViewModelBase : ViewModelBase, IBulkThu
 	/// <summary>
 	/// 派生クラスでサムネイルバイナリを生成する。
 	/// </summary>
-	protected abstract byte[]? GenerateThumbnail(IMediaItemViewModel target);
+	protected abstract Task<byte[]?> GenerateThumbnailAsync(IMediaItemViewModel target);
 }

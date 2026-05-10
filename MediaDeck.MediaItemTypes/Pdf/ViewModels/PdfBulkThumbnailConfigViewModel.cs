@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
 using MediaDeck.Composition.Stores.Config.Model;
@@ -26,8 +27,8 @@ public class PdfBulkThumbnailConfigViewModel : BulkThumbnailConfigViewModelBase 
 		get;
 	} = new(1);
 
-	protected override byte[]? GenerateThumbnail(IMediaItemViewModel target) {
+	protected override async Task<byte[]?> GenerateThumbnailAsync(IMediaItemViewModel target) {
 		var page = Math.Max(1, this.PageNumber.Value);
-		return this._pdfDocumentOperator.CreateThumbnail(target.FilePath, this._config.ThumbnailConfig.ThumbnailSize.Value, this._config.ThumbnailConfig.ThumbnailSize.Value, page);
+		return await this._pdfDocumentOperator.CreateThumbnailAsync(target.FilePath, this._config.ThumbnailConfig.ThumbnailSize.Value, this._config.ThumbnailConfig.ThumbnailSize.Value, page);
 	}
 }

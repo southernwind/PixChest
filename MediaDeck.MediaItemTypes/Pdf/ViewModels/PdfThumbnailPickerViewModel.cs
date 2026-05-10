@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.MediaItemTypes.Base.Models;
 using MediaDeck.MediaItemTypes.Base.ViewModels;
@@ -15,12 +16,12 @@ public class PdfThumbnailPickerViewModel(BaseThumbnailPickerModel thumbnailPicke
 		get;
 	} = new(1);
 
-	public override void RecreateThumbnail() {
+	public override async Task RecreateThumbnailAsync() {
 		if (this.targetFileViewModel is null) {
 			return;
 		}
 		try {
-			this.CandidateThumbnail.Value = this._pdfDocumentOperator.CreateThumbnail(this.targetFileViewModel.FilePath, this._config.ThumbnailConfig.ThumbnailSize.Value, this._config.ThumbnailConfig.ThumbnailSize.Value, this.PageNumber.Value);
+			this.CandidateThumbnail.Value = await this._pdfDocumentOperator.CreateThumbnailAsync(this.targetFileViewModel.FilePath, this._config.ThumbnailConfig.ThumbnailSize.Value, this._config.ThumbnailConfig.ThumbnailSize.Value, this.PageNumber.Value);
 		} catch (Exception ex) {
 			this._logger.LogError(ex, "Failed to recreate pdf thumbnail for file {FilePath} at page {PageNumber}", this.targetFileViewModel.FilePath, this.PageNumber.Value);
 			this.CandidateThumbnail.Value = null;

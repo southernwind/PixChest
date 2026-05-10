@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 namespace MediaDeck.MediaItemTypes.Pdf.Models;
 
 public interface IPdfDocumentOperator {
@@ -9,9 +10,9 @@ public interface IPdfDocumentOperator {
 	/// <param name="height">サムネイル高さ</param>
 	/// <param name="pageNumber">サムネイルにするページ番号</param>
 	/// <returns>作成されたサムネイルファイル名</returns>
-	public byte[] CreateThumbnail(string filePath, int width, int height, int pageNumber = 1);
+	public Task<byte[]> CreateThumbnailAsync(string filePath, int width, int height, int pageNumber = 1);
 
-	public PdfProperties GetPdfProperties(string filePath);
+	public Task<PdfProperties> GetPdfPropertiesAsync(string filePath);
 }
 
 public class PdfProperties {

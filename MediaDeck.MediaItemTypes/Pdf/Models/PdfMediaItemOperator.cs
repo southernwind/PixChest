@@ -41,7 +41,7 @@ public partial class PdfMediaItemOperator : BaseMediaItemOperator {
 		var thumbRelativePath = this._filePathService.GetThumbnailRelativeFilePath();
 		var thumbPath = this._filePathService.GetThumbnailAbsoluteFilePath(thumbRelativePath);
 		try {
-			var image = this._pdfDocumentOperator.CreateThumbnail(filePath, this._config.ThumbnailConfig.ThumbnailSize.Value, this._config.ThumbnailConfig.ThumbnailSize.Value, 1);
+			var image = await this._pdfDocumentOperator.CreateThumbnailAsync(filePath, this._config.ThumbnailConfig.ThumbnailSize.Value, this._config.ThumbnailConfig.ThumbnailSize.Value, 1);
 			new FileInfo(thumbPath).Directory?.Create();
 			File.WriteAllBytes(thumbPath, image);
 		} catch (Exception ex) {
@@ -50,7 +50,7 @@ public partial class PdfMediaItemOperator : BaseMediaItemOperator {
 			thumbRelativePath = null;
 		}
 
-		var pdfDocument = this._pdfDocumentOperator.GetPdfProperties(filePath);
+		var pdfDocument = await this._pdfDocumentOperator.GetPdfPropertiesAsync(filePath);
 		var fileInfo = new FileInfo(filePath);
 		var directoryPath = Path.GetDirectoryName(filePath)!;
 		var isUnderFolderGroup = await this.GetIsUnderFolderGroup(db, directoryPath);
@@ -89,7 +89,7 @@ public partial class PdfMediaItemOperator : BaseMediaItemOperator {
 		using var fileMs = new MemoryStream();
 		try {
 			using var fileFs = File.OpenRead(mediaItem.FilePath);
-			var pdfDocument = this._pdfDocumentOperator.GetPdfProperties(mediaItem.FilePath);
+			var pdfDocument = await this._pdfDocumentOperator.GetPdfPropertiesAsync(mediaItem.FilePath);
 
 			mediaItem.Metadata = new() {
 				Entries = [new() { Key = "PageCount", Value = pdfDocument.PageCount.ToString() }]

@@ -21,14 +21,14 @@ public class ArchiveThumbnailPickerViewModel : BaseThumbnailPickerViewModel<Base
 		this._ArchiveMediaItemOperator = PdfMediaItemOperator;
 		this._mediaItemTypeService = mediaItemTypeService;
 		this._logger = logger;
-		this.SelectedEntry.Subscribe(x => {
+		this.SelectedEntry.SubscribeAwait(async (x, ct) => {
 			if (x is null) {
 				this.FileName.Value = null;
 			} else {
 				this.FileName.Value = x;
-				this.RecreateThumbnail();
+				await this.RecreateThumbnailAsync();
 			}
-		}).AddTo(this.CompositeDisposable);
+		}, AwaitOperation.Drop).AddTo(this.CompositeDisposable);
 	}
 
 	public BindableReactiveProperty<string?> FileName {
@@ -43,18 +43,19 @@ public class ArchiveThumbnailPickerViewModel : BaseThumbnailPickerViewModel<Base
 		get;
 	} = new();
 
-	public override void RecreateThumbnail() {
-		using var archive = ZipFile.OpenRead(this.targetFileViewModel!.FileModel.FilePath);
+	public override Task RecreateThumbnailAsync() {
 		if (this.targetFileViewModel is null) {
-			return;
+			return Task.CompletedTask;
 		}
 		if (this.FileName.Value is null) {
 			this.CandidateThumbnail.Value = null;
-			return;
+			return Task.CompletedTask;
 		}
+
+		using var archive = ZipFile.OpenRead(this.targetFileViewModel!.FileModel.FilePath);
 		if (!archive.Entries.Any(x => x.FullName == this.FileName.Value)) {
 			this.CandidateThumbnail.Value = null;
-			return;
+			return Task.CompletedTask;
 		}
 
 		try {
@@ -63,6 +64,7 @@ public class ArchiveThumbnailPickerViewModel : BaseThumbnailPickerViewModel<Base
 			this._logger.LogError(ex, "Failed to recreate archive thumbnail for file {FilePath} at entry {EntryName}", this.targetFileViewModel.FilePath, this.FileName.Value);
 			this.CandidateThumbnail.Value = null;
 		}
+		return Task.CompletedTask;
 	}
 
 	public override async Task LoadAsync(IMediaItemViewModel fileViewModel) {

@@ -27,7 +27,7 @@ public interface IThumbnailPickerViewModel {
 		get;
 	}
 
-	public void RecreateThumbnail();
+	public Task RecreateThumbnailAsync();
 
 	public Task SaveAsync();
 

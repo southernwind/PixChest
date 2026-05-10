@@ -14,9 +14,9 @@ public abstract class BaseThumbnailPickerViewModel<TThumbnailPickerModel> : View
 	public BaseThumbnailPickerViewModel(TThumbnailPickerModel thumbnailPickerModel, IFilePickerService filePickerService, ConfigModel config) {
 		this._filePickerService = filePickerService;
 		this._config = config;
-		this.RecreateThumbnailCommand.Subscribe(_ => this.RecreateThumbnail()).AddTo(this.CompositeDisposable);
-		this.PickThumbnailFromFileCommand.Subscribe(async _ => await this.PickThumbnailFromFileAsync()).AddTo(this.CompositeDisposable);
-		this.SaveCommand.Subscribe(async _ => await this.SaveAsync()).AddTo(this.CompositeDisposable);
+		this.RecreateThumbnailCommand.SubscribeAwait(async (_, ct) => await this.RecreateThumbnailAsync(), AwaitOperation.Drop).AddTo(this.CompositeDisposable);
+		this.PickThumbnailFromFileCommand.SubscribeAwait(async (_, ct) => await this.PickThumbnailFromFileAsync(), AwaitOperation.Drop).AddTo(this.CompositeDisposable);
+		this.SaveCommand.SubscribeAwait(async (_, ct) => await this.SaveAsync(), AwaitOperation.Drop).AddTo(this.CompositeDisposable);
 		this.thumbnailPickerModel = thumbnailPickerModel;
 
 	}
@@ -52,7 +52,7 @@ public abstract class BaseThumbnailPickerViewModel<TThumbnailPickerModel> : View
 		get;
 	} = new();
 
-	public abstract void RecreateThumbnail();
+	public abstract Task RecreateThumbnailAsync();
 
 	/// <summary>
 	/// ユーザーが選択した任意の画像ファイルを候補サムネイルとして読み込む。

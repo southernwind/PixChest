@@ -1,4 +1,5 @@
 using System.IO.Compression;
+using System.Threading.Tasks;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
@@ -31,14 +32,14 @@ public class ArchiveBulkThumbnailConfigViewModel : BulkThumbnailConfigViewModelB
 		get;
 	} = new(1);
 
-	protected override byte[]? GenerateThumbnail(IMediaItemViewModel target) {
+	protected override Task<byte[]?> GenerateThumbnailAsync(IMediaItemViewModel target) {
 		using var archive = ZipFile.OpenRead(target.FilePath);
 		var images = archive.Entries.Where(x => this._mediaItemTypeService.IsTargetPath(x.Name, MediaType.Image)).ToList();
 		if (images.Count == 0) {
-			return null;
+			return Task.FromResult<byte[]?>(null);
 		}
 		var index = Math.Clamp(this.EntryIndex.Value - 1, 0, images.Count - 1);
 		var entry = images[index];
-		return this._archiveOperator.CreateThumbnail(archive, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value, entry.FullName);
+		return Task.FromResult<byte[]?>(this._archiveOperator.CreateThumbnail(archive, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value, entry.FullName));
 	}
 }

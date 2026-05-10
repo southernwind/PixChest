@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
 using MediaDeck.Composition.Stores.Config.Model;
@@ -19,7 +20,7 @@ public class ImageBulkThumbnailConfigViewModel : BulkThumbnailConfigViewModelBas
 		this._imageOperator = imageOperator;
 	}
 
-	protected override byte[]? GenerateThumbnail(IMediaItemViewModel target) {
-		return this._imageOperator.CreateThumbnail(target.FileModel, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value);
+	protected override Task<byte[]?> GenerateThumbnailAsync(IMediaItemViewModel target) {
+		return Task.FromResult<byte[]?>(this._imageOperator.CreateThumbnail(target.FileModel, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value));
 	}
 }

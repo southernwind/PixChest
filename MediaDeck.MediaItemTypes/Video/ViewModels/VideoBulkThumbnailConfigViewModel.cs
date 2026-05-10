@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using FFMpegCore;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
@@ -55,9 +56,9 @@ public class VideoBulkThumbnailConfigViewModel : BulkThumbnailConfigViewModelBas
 		get;
 	} = new(20);
 
-	protected override byte[]? GenerateThumbnail(IMediaItemViewModel target) {
+	protected override Task<byte[]?> GenerateThumbnailAsync(IMediaItemViewModel target) {
 		var time = this.ResolveTime(target.FilePath);
-		return this._videoOperator.CreateThumbnail(target.FileModel, this._config.ThumbnailConfig.ThumbnailSize.Value, this._config.ThumbnailConfig.ThumbnailSize.Value, time);
+		return Task.FromResult<byte[]?>(this._videoOperator.CreateThumbnail(target.FileModel, this._config.ThumbnailConfig.ThumbnailSize.Value, this._config.ThumbnailConfig.ThumbnailSize.Value, time));
 	}
 
 	private TimeSpan ResolveTime(string filePath) {

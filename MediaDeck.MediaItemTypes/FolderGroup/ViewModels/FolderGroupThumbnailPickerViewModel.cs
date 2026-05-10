@@ -16,13 +16,13 @@ public class FolderGroupThumbnailPickerViewModel : BaseThumbnailPickerViewModel<
 		// UIスレッドへの同期を伴うビューリストを作成
 		this.Items = this.thumbnailPickerModel.Items.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 
-		this.SelectedItem.Subscribe(x => {
+		this.SelectedItem.SubscribeAwait(async (x, ct) => {
 			if (x != null) {
-				this.RecreateThumbnail();
+				await this.RecreateThumbnailAsync();
 			} else {
 				this.CandidateThumbnail.Value = null;
 			}
-		}).AddTo(this.CompositeDisposable);
+		}, AwaitOperation.Drop).AddTo(this.CompositeDisposable);
 	}
 
 	/// <summary>
@@ -43,12 +43,13 @@ public class FolderGroupThumbnailPickerViewModel : BaseThumbnailPickerViewModel<
 
 	}
 
-	public override void RecreateThumbnail() {
+	public override Task RecreateThumbnailAsync() {
 		if (this.SelectedItem.Value == null) {
 			this.CandidateThumbnail.Value = null;
-			return;
+			return Task.CompletedTask;
 		}
 
 		this.CandidateThumbnail.Value = this.thumbnailPickerModel.GetThumbnailBinary(this.SelectedItem.Value.FileModel);
+		return Task.CompletedTask;
 	}
 }
