@@ -20,6 +20,7 @@ public class MediaContentLibraryViewModel : ViewModelBase {
 		this.Files = mediaContentLibrary.Files.CreateView(MediaItemTypeService.CreateMediaItemViewModel).ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 		this.SearchElapsedMilliseconds = mediaContentLibrary.SearchElapsedMilliseconds.ObserveOnCurrentSynchronizationContext().ToBindableReactiveProperty().AddTo(this.CompositeDisposable);
 		this.CanLoadMore = mediaContentLibrary.CanLoadMore.ObserveOnCurrentSynchronizationContext().ToBindableReactiveProperty().AddTo(this.CompositeDisposable);
+		this.TotalCount = mediaContentLibrary.TotalCount.ObserveOnCurrentSynchronizationContext().ToBindableReactiveProperty().AddTo(this.CompositeDisposable);
 
 		this.LoadMoreCommand = new ReactiveCommand().AddTo(this.CompositeDisposable);
 		this.LoadMoreCommand
@@ -34,6 +35,10 @@ public class MediaContentLibraryViewModel : ViewModelBase {
 	}
 
 	public BindableReactiveProperty<bool> CanLoadMore {
+		get;
+	}
+
+	public BindableReactiveProperty<int?> TotalCount {
 		get;
 	}
 

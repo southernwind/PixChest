@@ -22,6 +22,10 @@ public sealed partial class StatusBarPane {
 
 		this.ViewModel.ViewerSelector.SelectedViewerPane.Value = selectedViewerPane;
 	}
+
+	public string FormatCount(int count, int? total) {
+		return total.HasValue ? $"{count:#,0} / {total.Value:#,0}" : $"{count:#,0}";
+	}
 }
 
 /// <summary>

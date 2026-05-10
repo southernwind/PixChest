@@ -43,6 +43,18 @@ public class FilesLoader(IDbContextFactory<MediaDeckDbContext> dbFactory, SortSe
 	}
 
 	/// <summary>
+	/// 検索条件に基づき、全件数を取得します。
+	/// </summary>
+	/// <param name="searchConditions">検索条件</param>
+	/// <param name="cancellationToken">キャンセルトークン</param>
+	/// <returns>全件数</returns>
+	public async Task<int> GetTotalCountAsync(IEnumerable<ISearchCondition> searchConditions, CancellationToken cancellationToken = default) {
+		await using var db = await dbFactory.CreateDbContextAsync(cancellationToken);
+		var query = db.MediaItems.AsNoTracking().Where(searchConditions).Where(this.FilterSetter);
+		return await query.CountAsync(cancellationToken);
+	}
+
+	/// <summary>
 	/// 検索・フィルター・ソートを適用した IQueryable パイプラインを構築する
 	/// </summary>
 	private IQueryable<MediaItem> BuildQuery(MediaDeckDbContext db, IEnumerable<ISearchCondition> searchConditions) {

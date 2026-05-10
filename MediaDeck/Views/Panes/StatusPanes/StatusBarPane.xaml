@@ -35,7 +35,7 @@
 					<TextBlock VerticalAlignment="Center"
 						Style="{StaticResource CaptionTextBlockStyle}" >
 						<Run x:Uid="StatusBar_Count" />
-						<Run Text="{x:Bind ViewModel.MediaContentLibrary.Files.Count, Mode=OneWay}" />
+						<Run Text="{x:Bind FormatCount(ViewModel.MediaContentLibrary.Files.Count, ViewModel.MediaContentLibrary.TotalCount.Value), Mode=OneWay}" />
 					</TextBlock>
 					<TextBlock VerticalAlignment="Center"
 						Style="{StaticResource CaptionTextBlockStyle}"
