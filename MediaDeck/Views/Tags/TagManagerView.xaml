@@ -82,11 +82,10 @@
 				<Button Click="DeleteTagCategoryButton_Click"
 					Margin="0,8,0,0"
 					HorizontalAlignment="Right"
-					IsEnabled="{x:Bind ViewModel.SelectedTagCategory.Value.IsDeletable, Mode=OneWay}"
-					x:Uid="TagManager_DeleteCategory" >
+					IsEnabled="{x:Bind ViewModel.SelectedTagCategory.Value.IsDeletable, Mode=OneWay}" >
 					<StackPanel Orientation="Horizontal" Spacing="6">
 						<FontIcon Glyph="&#xE74D;" FontSize="12" Foreground="{ThemeResource SystemFillColorCriticalBrush}" />
-						<TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}" />
+						<TextBlock x:Uid="TagManager_DeleteCategory" Foreground="{ThemeResource SystemFillColorCriticalBrush}" />
 					</StackPanel>
 				</Button>
 			</StackPanel>
@@ -243,7 +242,7 @@
 											<Button Grid.Column="4"
 												Command="{Binding DataContext.SelectedTagCategory.Value.SelectedTag.Value.RemoveTagAliasCommand, ElementName=Root}"
 												CommandParameter="{x:Bind Mode=OneWay}"
-												x:Uid="Common_Delete"
+												x:Uid="Common_Delete_ToolTip"
 												Padding="6" >
 												<FontIcon Glyph="&#xF78A;"
 													FontSize="12" />
@@ -278,11 +277,10 @@
 
 					<!-- タグ削除ボタン -->
 					<Button Grid.Column="2" 
-						Click="DeleteTagButton_Click"
-						x:Uid="TagManager_DeleteTag" >
+						Click="DeleteTagButton_Click" >
 						<StackPanel Orientation="Horizontal" Spacing="6">
 							<FontIcon Glyph="&#xE74D;" FontSize="12" Foreground="{ThemeResource SystemFillColorCriticalBrush}" />
-							<TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}" />
+							<TextBlock x:Uid="TagManager_DeleteTag" Foreground="{ThemeResource SystemFillColorCriticalBrush}" />
 						</StackPanel>
 					</Button>
 				</Grid>

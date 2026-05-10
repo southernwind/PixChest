@@ -69,7 +69,10 @@
   <data name="Common_Cancel.Content" xml:space="preserve">
     <value>キャンセル</value>
   </data>
-  <data name="Common_Add.Content" xml:space="preserve">
+  <data name="Common_Add.Text" xml:space="preserve">
+    <value>追加</value>
+  </data>
+  <data name="Common_Add_Button.Content" xml:space="preserve">
     <value>追加</value>
   </data>
   <data name="Common_Delete.Content" xml:space="preserve">
@@ -86,6 +89,9 @@
   </data>
   <data name="Common_ShowInExplorer.ToolTipService.ToolTip" xml:space="preserve">
     <value>エクスプローラーで表示</value>
+  </data>
+  <data name="Common_Delete_ToolTip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>削除</value>
   </data>
 
   <!-- ナビゲーションメニュー -->
@@ -541,7 +547,7 @@
   <data name="TagManager_DetailInput.PlaceholderText" xml:space="preserve">
     <value>詳細を入力</value>
   </data>
-  <data name="TagManager_DeleteCategory.Content" xml:space="preserve">
+  <data name="TagManager_DeleteCategory.Text" xml:space="preserve">
     <value>カテゴリを削除</value>
   </data>
   <data name="TagManager_DeleteCategory.ToolTipService.ToolTip" xml:space="preserve">
@@ -577,10 +583,10 @@
   <data name="TagManager_RubyInputShort.PlaceholderText" xml:space="preserve">
     <value>ふりがな</value>
   </data>
-  <data name="TagManager_AddAlias.Content" xml:space="preserve">
+  <data name="TagManager_AddAlias.Text" xml:space="preserve">
     <value>エイリアスを追加</value>
   </data>
-  <data name="TagManager_DeleteTag.Content" xml:space="preserve">
+  <data name="TagManager_DeleteTag.Text" xml:space="preserve">
     <value>タグを削除</value>
   </data>
   <data name="TagManager_DeleteTag.ToolTipService.ToolTip" xml:space="preserve">
@@ -593,7 +599,7 @@
   <data name="FolderManager_ScanCompleteSuffix.Text" xml:space="preserve">
     <value>件完了</value>
   </data>
-  <data name="FolderManager_ScanAll.Content" xml:space="preserve">
+  <data name="FolderManager_ScanAll.Text" xml:space="preserve">
     <value>すべてスキャン</value>
   </data>
   <data name="FolderManager_SelectFolderMessage.Text" xml:space="preserve">
@@ -620,10 +626,10 @@
   <data name="FolderManager_Scanning.Text" xml:space="preserve">
     <value>スキャン中...</value>
   </data>
-  <data name="FolderManager_RemoveFolder.Content" xml:space="preserve">
+  <data name="FolderManager_RemoveFolder.Text" xml:space="preserve">
     <value>このフォルダを削除</value>
   </data>
-  <data name="FolderManager_ScanThisFolder.Content" xml:space="preserve">
+  <data name="FolderManager_ScanThisFolder.Text" xml:space="preserve">
     <value>このフォルダをスキャン</value>
   </data>
 

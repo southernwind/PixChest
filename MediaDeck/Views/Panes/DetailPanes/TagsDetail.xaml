@@ -57,7 +57,7 @@
 			</AutoSuggestBox>
 			<Button Grid.Column="1"
 				Margin="8,0,0,0"
-				x:Uid="Common_Add"
+				x:Uid="Common_Add_Button"
 				Command="{x:Bind ViewModel.AddTagCommand}" />
 		</Grid>
 
