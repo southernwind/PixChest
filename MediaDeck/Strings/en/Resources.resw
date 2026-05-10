@@ -63,20 +63,11 @@
   <data name="App_Title" xml:space="preserve">
     <value>MediaDeck</value>
   </data>
-  <data name="Common_Save.Content" xml:space="preserve">
-    <value>Save</value>
-  </data>
   <data name="Common_Save.Text" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="Common_Apply.Content" xml:space="preserve">
-    <value>Apply</value>
-  </data>
   <data name="Common_Apply.Text" xml:space="preserve">
     <value>Apply</value>
-  </data>
-  <data name="Common_Cancel.Content" xml:space="preserve">
-    <value>Cancel</value>
   </data>
   <data name="Common_Cancel.Text" xml:space="preserve">
     <value>Cancel</value>
@@ -93,7 +84,7 @@
   <data name="Common_ReRun.ToolTipService.ToolTip" xml:space="preserve">
     <value>Re-run</value>
   </data>
-  <data name="Common_Cancel.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="Common_CancelButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Cancel</value>
   </data>
   <data name="Common_OpenFile.ToolTipService.ToolTip" xml:space="preserve">

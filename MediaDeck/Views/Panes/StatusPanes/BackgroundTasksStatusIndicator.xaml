@@ -87,7 +87,7 @@
 											Padding="8,4"
 											Command="{x:Bind CancelCommand, Mode=OneWay}"
 											Visibility="{x:Bind IsRunning.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
-											x:Uid="Common_Cancel">
+											x:Uid="Common_CancelButton">
 											<FontIcon Glyph="&#xE711;"
 												FontSize="12" />
 										</Button>
