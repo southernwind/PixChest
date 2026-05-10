@@ -1,39 +1,53 @@
-# MediaDeck
+<p align="center">
+  <img src="MediaDeck/Assets/Square150x150Logo.scale-200.png" width="128" height="128" alt="MediaDeck Icon" />
+</p>
 
-Windows向けの高機能メディア管理アプリケーションです。画像、動画、PDF、アーカイブファイルなどを一元管理し、高度な検索、タグ付け、メタデータ管理機能を提供します。
+<h1 align="center">MediaDeck</h1>
+
+[![.NET](https://img.shields.io/badge/.NET-10.0-512bd4.svg)](https://dotnet.microsoft.com/download/dotnet/10.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+<p align="center">
+  Windows向けの高機能メディア管理アプリケーションです。画像、動画、PDF、アーカイブファイルなどを一元管理し、高度な検索、タグ付け、メタデータ管理機能を提供します。
+</p>
+
 
 ## 主な機能
 
-- **リポジトリ管理**: 複数のローカルフォルダをリポジトリとして登録し、一括して管理できます。
+- **リポジトリ管理**: 複数のローカルフォルダをリポジトリとして登録し、一括して管理。
 - **高度な検索とフィルタリング**:
-  - **リアクティブ検索**: R3ベースの高速エンジンを搭載。数万件のライブラリでも遅延なくフィルタリングが可能です。
-  - **プロパティ検索**: `prop.` プレフィックスを用いた詳細なプロパティ比較（解像度、ファイルサイズ、日付、評価等）に対応。候補選択時に専用のダイアログで比較演算子と値を設定できます。
-  - **多様な条件**: タグ、ファイルパス、解像度、評価、メディアタイプ、位置情報など、豊富な条件を組み合わせ可能。
-- **大規模データの高速表示**: `IAsyncEnumerable` を活用したストリーミング読み込みにより、UIをブロックすることなくバックグラウンドで逐次表示を行います。
-- **メタデータ・タグ管理**: Magick.NET や FFMpegCore を利用したメタデータの自動抽出、タグカテゴリ、エイリアス機能による高度な整理が可能です。
-- **多彩なビューア**: リスト表示、ラップ（グリッド）表示、詳細表示、マップ表示など、用途に合わせた表示モードを切り替えられます。
-- **地図連携**: 位置情報を持つメディアを地図上にマッピングして表示できます。
-- **安定したリソース管理**: 厳格なDisposeパターンの遵守により、メモリリークを抑えた安定したパフォーマンスを維持します。
+  - **リアクティブ検索**: R3ベースの高速エンジンにより、数万件のライブラリも瞬時にフィルタリング。
+  - **プロパティ検索**: `prop.` プレフィックスを用いた詳細なプロパティ比較（解像度、ファイルサイズ、日付、評価等）。専用ダイアログで直感的に操作可能。
+  - **多様な条件**: タグ、ファイルパス、解像度、評価、メディアタイプ、位置情報を自在に組み合わせ。
+- **大規模データの高速表示**: `IAsyncEnumerable` を活用したストリーミング読み込みにより、UIをブロックせずバックグラウンドで逐次表示。
+- **メタデータ・タグ管理**: Magick.NET や FFMpegCore を利用した自動抽出。タグカテゴリ、ふりがな（読み）、エイリアス機能による高度な整理。
+- **多彩なビューア**: リスト表示、グリッド表示、詳細表示に加え、位置情報を利用したマップ表示に対応。
+- **安定したパフォーマンス**: 厳格なDisposeパターンの遵守により、長時間使用でもメモリリークを抑え安定した動作を維持。
+
+## スクリーンショット
+
+| メイン画面 | マップビュー |
+| :---: | :---: |
+| ![MainWindow](https://github.com/xm-i/MediaDeck/wiki/images/main.webp) | ![MapView](https://github.com/xm-i/MediaDeck/wiki/images/map.webp) |
 
 ## 対応メディアタイプ
 
-- **画像**: JPEG, PNG, GIF, BMP, TIFF, HEIF, PSD, RAW (RAF), ICO, PCX, Netpbm 等 (Magick.NETによる広範なサポート)
-- **動画**: FFMpegが対応する各種フォーマット
-- **PDF**: PDFドキュメント
-- **アーカイブ**: 各種圧縮ファイル（ZIP, 7z, RAR等）
+- **画像**: JPEG, PNG, GIF, BMP, TIFF, HEIF, PSD, RAW (RAF), ICO, PCX, Netpbm 等
+- **動画**: MP4, MKV, AVI, MOV 等 (FFMpegがサポートする形式)
+- **PDF**: Windows.Data.Pdf を利用した高速な表示とサムネイル生成
+- **アーカイブ**: ZIP, 7z, RAR 等
 
 ## 技術スタック
 
 - **フレームワーク**: .NET 10 / WinUI 3 (Windows App SDK)
 - **アーキテクチャ**: MVVM パターン
-- **リアクティブ・状態管理**: [R3](https://github.com/Cysharp/R3) (Next-generation Reactive Extensions)
+- **リアクティブ・状態管理**: [R3](https://github.com/Cysharp/R3)
 - **データベース**: SQLite (Entity Framework Core)
-- **画像処理**: Magick.NET, MetadataExtractor
+- **画像・メタデータ**: Magick.NET, MetadataExtractor
 - **動画処理**: FFMpegCore
-- **PDF処理**: Pdfium.Net.SDK
 - **ロギング**: Serilog
-- **設定ファイル管理**: R3.JsonConfig
-- **DI・コード生成**: AutoDiAttributes (Source Generatorを活用した自動DI登録)
+- **設定管理**: GenJsonConfig
+- **DI・コード生成**: AutoDiAttributes
 
 ## プロジェクト構成
 
@@ -44,22 +58,21 @@ MediaDeck/
 ├── MediaDeck.Core/             # ビジネスロジック・検索エンジン・モデル
 ├── MediaDeck.MediaItemTypes/   # メディアタイプの共通定義とロジック実装
 ├── MediaDeck.MediaItemTypes.UI/# メディアタイプ別のUIコンポーネント
-├── MediaDeck.Store/            # 状態管理・設定永続化 (R3.JsonConfig)
+├── MediaDeck.Store/            # 状態管理・設定永続化 (GenJsonConfig)
 ├── MediaDeck.Composition/      # システム構成（DI、データベース層/EF Core）
 ├── MediaDeck.Common/           # 共通ユーティリティ・基底クラス類
 └── lib/                        # 外部ライブラリ・サブモジュール
 ```
 
-## 必要要件
+## はじめかた
 
+### 必要要件
 - Windows 10 (1809) 以降
 - .NET 10 ランタイム
-- FFMpeg (動画処理機能を利用する場合、パス設定が必要です)
 
-## ビルド手順
-
+### インストール・ビルド
 ```powershell
-# リポジトリのクローン (サブモジュールを含む)
+# リポジトリのクローン
 git clone --recursive https://github.com/xm-i/MediaDeck.git
 
 # ソリューションのビルド
@@ -68,9 +81,15 @@ dotnet build -r win-x64
 
 ## 設定
 
-初回起動時に設定ファイルが自動生成されます。アプリ内の設定画面、または設定ファイルを直接編集することで以下の調整が可能です。
+初回起動時に設定ファイルが自動生成されます。アプリ内の設定画面から以下の調整が可能です。
 
-- **スキャン設定**: 対象リポジトリのパス、スキャン対象の拡張子。
-- **読み込み設定**: 一度に読み込むバッチサイズや、ストリーミングの閾値。
-- **パス設定**: FFMpegの実行ファイルパス、一時ディレクトリの場所。
-- **外部アプリ連携**: 特定の拡張子を外部プログラムで開くための設定。
+- **スキャン**: 対象リポジトリのパス、スキャン対象の拡張子管理。
+- **検索/読み込み**: バッチサイズや最大ロード件数の調整。
+- **実行プログラム**: 特定のメディアタイプを外部プログラム（VLC等）で開く設定。
+- **サムネイル**: 生成されるサムネイルのサイズ・品質設定。
+- **表示言語**: 日本語、英語の切り替え（システムの既定に従うことも可能）。
+
+## ライセンス
+
+このプロジェクトは [MIT License](LICENSE) の下で公開されています。
+
