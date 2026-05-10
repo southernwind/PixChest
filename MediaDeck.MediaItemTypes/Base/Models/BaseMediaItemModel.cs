@@ -3,13 +3,13 @@ using System.Threading.Tasks;
 using MediaDeck.Common.Base;
 using MediaDeck.Common.Utilities;
 using MediaDeck.Composition.Enum;
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Composition.Interfaces.MediaItemTypes;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.Models;
 using MediaDeck.Composition.Interfaces.Primitives;
 using MediaDeck.Composition.Interfaces.Tags;
 using MediaDeck.Composition.Objects;
 using MediaDeck.Composition.Tables;
-using MediaDeck.Composition.Interfaces;
 using MediaDeck.Composition.Tables.Metadata;
 using Microsoft.Extensions.DependencyInjection;
 
