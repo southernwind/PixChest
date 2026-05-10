@@ -360,6 +360,9 @@
   <data name="StatusBar_Milliseconds.Text" xml:space="preserve">
     <value> ms</value>
   </data>
+  <data name="StatusBar_LoadMore.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Load More</value>
+  </data>
   <!-- Viewer -->
   <data name="Viewer_ColumnFileName.Text" xml:space="preserve">
     <value>File Name</value>

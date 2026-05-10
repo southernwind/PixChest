@@ -37,6 +37,17 @@
 						<Run x:Uid="StatusBar_Count" />
 						<Run Text="{x:Bind FormatCount(ViewModel.MediaContentLibrary.Files.Count, ViewModel.MediaContentLibrary.TotalCount.Value), Mode=OneWay}" />
 					</TextBlock>
+					<Button x:Uid="StatusBar_LoadMore"
+						VerticalAlignment="Center"
+						Padding="4"
+						Background="Transparent"
+						BorderThickness="0"
+						Command="{x:Bind ViewModel.MediaContentLibrary.LoadMoreCommand, Mode=OneWay}"
+						Visibility="{x:Bind ViewModel.MediaContentLibrary.CanLoadMore.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" >
+						<FontIcon Glyph="&#xE896;"
+							FontSize="14"
+							Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+					</Button>
 					<TextBlock VerticalAlignment="Center"
 						Style="{StaticResource CaptionTextBlockStyle}"
 						Visibility="{x:Bind ViewModel.MediaContentLibrary.SearchElapsedMilliseconds.Value, Mode=OneWay, Converter={StaticResource NullToCollapseConverter}}" >
