@@ -119,6 +119,30 @@
   <data name="NavMenu_SyncNotification.ToolTipService.ToolTip" xml:space="preserve">
     <value>未処理のファイル変更があります。</value>
   </data>
+  <data name="NavMenu_Help.Title" xml:space="preserve">
+    <value>ヘルプ</value>
+  </data>
+  <data name="NavMenu_About.Text" xml:space="preserve">
+    <value>MediaDeck について</value>
+  </data>
+  <data name="NavMenu_License.Text" xml:space="preserve">
+    <value>ライセンス情報</value>
+  </data>
+  <data name="AboutWindow_Title" xml:space="preserve">
+    <value>MediaDeck について</value>
+  </data>
+  <data name="About_Description" xml:space="preserve">
+    <value>Windows向けのメディア管理アプリケーション（画像、動画、PDF、アーカイブファイルなどを一元管理）。</value>
+  </data>
+  <data name="About_VersionLabel.Text" xml:space="preserve">
+    <value>バージョン</value>
+  </data>
+  <data name="About_Copyright" xml:space="preserve">
+    <value>© 2026 xm-i</value>
+  </data>
+  <data name="LicenseWindow_Title" xml:space="preserve">
+    <value>ライセンス情報</value>
+  </data>
 
   <!-- 設定ウィンドウ -->
   <data name="ConfigWindow_Title" xml:space="preserve">

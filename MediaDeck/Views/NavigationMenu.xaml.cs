@@ -3,6 +3,7 @@ using MediaDeck.Composition.Enum;
 using MediaDeck.Services;
 using MediaDeck.ViewModels;
 using MediaDeck.Views.FolderManager;
+using MediaDeck.Views.Help;
 using MediaDeck.Views.Preferences;
 using MediaDeck.Views.Tags;
 using MediaDeck.Views.Tools;
@@ -47,6 +48,8 @@ public sealed partial class NavigationMenu {
 			"FolderManager" => Ioc.Default.GetRequiredService<FolderManagerWindow>(),
 			"DuplicateDetector" => Ioc.Default.GetRequiredService<DuplicateDetectorWindow>(),
 			"Config" => Ioc.Default.GetRequiredService<ConfigWindow>(),
+			"About" => Ioc.Default.GetRequiredService<AboutWindow>(),
+			"License" => Ioc.Default.GetRequiredService<LicenseWindow>(),
 			_ => null
 		};
 

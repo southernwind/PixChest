@@ -59,6 +59,14 @@
 					Click="MenuFlyoutItem_Click"
 					Tag="Config" />
 			</MenuBarItem>
+			<MenuBarItem x:Uid="NavMenu_Help" >
+				<MenuFlyoutItem x:Uid="NavMenu_About"
+					Click="MenuFlyoutItem_Click"
+					Tag="About" />
+				<MenuFlyoutItem x:Uid="NavMenu_License"
+					Click="MenuFlyoutItem_Click"
+					Tag="License" />
+			</MenuBarItem>
 		</MenuBar>
 
 		<Button Grid.Column="1"
