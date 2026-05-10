@@ -44,6 +44,13 @@ public class FilterManagerViewModel : ViewModelBase {
 	} = new();
 
 	/// <summary>
+	/// 適用コマンド
+	/// </summary>
+	public ReactiveCommand ApplyCommand {
+		get;
+	} = new();
+
+	/// <summary>
 	/// フィルター条件作成VMリスト
 	/// </summary>
 	public IEnumerable<IFilterCreatorViewModel> FilterCreatorViewModels {
@@ -71,8 +78,12 @@ public class FilterManagerViewModel : ViewModelBase {
 
 		this.SaveCommand.Subscribe(_ => {
 			this.Save();
+			this.Close();
 		})
 			.AddTo(this.CompositeDisposable);
+		this.ApplyCommand.Subscribe(_ => {
+			this.Save();
+		}).AddTo(this.CompositeDisposable);
 
 		this.FilteringConditions = filterManager.FilteringConditions.CreateView(x => new FilteringConditionEditorViewModel(x)).ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 

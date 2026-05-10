@@ -43,6 +43,10 @@ public sealed partial class ConfigWindow : Window {
 			}
 		}).AddTo(this._disposable);
 
+		this.ViewModel.RequestClose.Subscribe(_ => {
+			this.Close();
+		}).AddTo(this._disposable);
+
 		this.Closed += (s, e) => this._disposable.Dispose();
 	}
 

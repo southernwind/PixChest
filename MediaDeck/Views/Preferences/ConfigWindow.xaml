@@ -76,19 +76,29 @@
 					Padding="24,12"
 					BorderThickness="0,1,0,0"
 					BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}" >
-					<Grid>
-						<Button HorizontalAlignment="Right"
-								Style="{StaticResource AccentButtonStyle}"
-								Command="{x:Bind ViewModel.SaveCommand}"
-								MinWidth="120" >
-								<StackPanel Orientation="Horizontal"
-									Spacing="8" >
-									<FontIcon Glyph="&#xE74E;"
-										FontSize="14" />
-									<TextBlock x:Uid="ConfigWindow_Save" />
-								</StackPanel>
-							</Button>
-					</Grid>
+					<StackPanel Orientation="Horizontal"
+						HorizontalAlignment="Right"
+						Spacing="12" >
+						<Button Command="{x:Bind ViewModel.ApplyCommand}"
+							MinWidth="120" >
+							<StackPanel Orientation="Horizontal"
+								Spacing="8" >
+								<FontIcon Glyph="&#xE73E;"
+									FontSize="14" />
+								<TextBlock x:Uid="ConfigWindow_Apply" />
+							</StackPanel>
+						</Button>
+						<Button Style="{StaticResource AccentButtonStyle}"
+							Command="{x:Bind ViewModel.SaveCommand}"
+							MinWidth="120" >
+							<StackPanel Orientation="Horizontal"
+								Spacing="8" >
+								<FontIcon Glyph="&#xE74E;"
+									FontSize="14" />
+								<TextBlock x:Uid="ConfigWindow_Save" />
+							</StackPanel>
+						</Button>
+					</StackPanel>
 				</Border>
 			</Grid>
 		</NavigationView>

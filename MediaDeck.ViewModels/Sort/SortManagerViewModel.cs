@@ -16,8 +16,13 @@ public class SortManagerViewModel : ViewModelBase {
 
 		this.SaveCommand.Subscribe(_ => {
 			this.Save();
+			this.Close();
 		})
 			.AddTo(this.CompositeDisposable);
+
+		this.ApplyCommand.Subscribe(_ => {
+			this.Save();
+		}).AddTo(this.CompositeDisposable);
 
 		this.LoadCommand.Subscribe(_ => {
 			this.Load();
@@ -60,6 +65,13 @@ public class SortManagerViewModel : ViewModelBase {
 	/// 保存コマンド
 	/// </summary>
 	public ReactiveCommand SaveCommand {
+		get;
+	} = new();
+
+	/// <summary>
+	/// 適用コマンド
+	/// </summary>
+	public ReactiveCommand ApplyCommand {
 		get;
 	} = new();
 

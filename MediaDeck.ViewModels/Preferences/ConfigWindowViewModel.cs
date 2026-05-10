@@ -22,6 +22,11 @@ public class ConfigWindowViewModel : ViewModelBase {
 		this.SelectedPageViewModel.Value = this.ScanConfigPageViewModel;
 		this.SaveCommand.Subscribe(_ => {
 			configStore.Save();
+			this.Close();
+		}).AddTo(this.CompositeDisposable);
+
+		this.ApplyCommand.Subscribe(_ => {
+			configStore.Save();
 		}).AddTo(this.CompositeDisposable);
 
 		this.LoadCommand.Subscribe(_ => {
@@ -38,6 +43,10 @@ public class ConfigWindowViewModel : ViewModelBase {
 	} = new();
 
 	public ReactiveCommand SaveCommand {
+		get;
+	} = new();
+
+	public ReactiveCommand ApplyCommand {
 		get;
 	} = new();
 

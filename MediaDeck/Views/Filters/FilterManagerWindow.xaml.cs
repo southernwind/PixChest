@@ -16,6 +16,9 @@ public sealed partial class FilterManagerWindow : Microsoft.UI.Xaml.Window {
 		ThemeHelper.BindTheme(this, stateStore, this._disposable);
 
 		this.AppWindow.Resize(new(1000, 700));
+		this.ViewModel.RequestClose.Subscribe(_ => {
+			this.Close();
+		}).AddTo(this._disposable);
 
 		this.Closed += (s, e) => this._disposable.Dispose();
 	}

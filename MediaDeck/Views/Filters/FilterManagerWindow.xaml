@@ -40,14 +40,23 @@
 
 		<StackPanel Grid.Row="2"
 			Orientation="Horizontal"
-			HorizontalAlignment="Right" >
+			HorizontalAlignment="Right"
+			Spacing="12" >
+			<Button Command="{x:Bind ViewModel.ApplyCommand}" >
+				<StackPanel Orientation="Horizontal"
+					Spacing="6" >
+					<FontIcon Glyph="&#xE73E;"
+						FontSize="12" />
+					<TextBlock x:Uid="Common_Apply" />
+				</StackPanel>
+			</Button>
 			<Button Command="{x:Bind ViewModel.SaveCommand}"
 				Style="{StaticResource AccentButtonStyle}" >
 				<StackPanel Orientation="Horizontal"
 					Spacing="6" >
 					<FontIcon Glyph="&#xE74E;"
 						FontSize="12" />
-					<TextBlock Text="保存" />
+					<TextBlock x:Uid="Common_Save" />
 				</StackPanel>
 			</Button>
 		</StackPanel>

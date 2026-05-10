@@ -47,7 +47,15 @@
 						Spacing="6" >
 						<FontIcon Glyph="&#xE106;"
 							FontSize="12" />
-						<TextBlock Text="キャンセル" />
+						<TextBlock x:Uid="Common_Cancel" />
+					</StackPanel>
+				</Button>
+				<Button Command="{x:Bind ViewModel.ApplyCommand}" >
+					<StackPanel Orientation="Horizontal"
+						Spacing="6" >
+						<FontIcon Glyph="&#xE73E;"
+							FontSize="12" />
+						<TextBlock x:Uid="Common_Apply" />
 					</StackPanel>
 				</Button>
 				<Button Command="{x:Bind ViewModel.SaveCommand}"
@@ -56,7 +64,7 @@
 						Spacing="6" >
 						<FontIcon Glyph="&#xE74E;"
 							FontSize="12" />
-						<TextBlock Text="保存" />
+						<TextBlock x:Uid="Common_Save" />
 					</StackPanel>
 				</Button>
 			</StackPanel>

@@ -13,7 +13,16 @@ public class TagManagerViewModel : ViewModelBase {
 				category.SyncToModel();
 			}
 			await tagsManager.SaveAsync();
+			this.Close();
 		}, AwaitOperation.Drop).AddTo(this.CompositeDisposable);
+
+		this.ApplyCommand.SubscribeAwait(async (_, ct) => {
+			foreach (var category in this.TagCategories) {
+				category.SyncToModel();
+			}
+			await tagsManager.SaveAsync();
+		}, AwaitOperation.Drop).AddTo(this.CompositeDisposable);
+
 		this.AddTagCategoryCommand.Subscribe(_ => {
 			tagsManager.AddTagCategory();
 		}).AddTo(this.CompositeDisposable);
@@ -56,6 +65,10 @@ public class TagManagerViewModel : ViewModelBase {
 	} = new();
 
 	public ReactiveCommand SaveCommand {
+		get;
+	} = new();
+
+	public ReactiveCommand ApplyCommand {
 		get;
 	} = new();
 

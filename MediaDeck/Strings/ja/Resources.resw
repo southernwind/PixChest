@@ -66,7 +66,19 @@
   <data name="Common_Save.Content" xml:space="preserve">
     <value>保存</value>
   </data>
+  <data name="Common_Save.Text" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="Common_Apply.Content" xml:space="preserve">
+    <value>適用</value>
+  </data>
+  <data name="Common_Apply.Text" xml:space="preserve">
+    <value>適用</value>
+  </data>
   <data name="Common_Cancel.Content" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="Common_Cancel.Text" xml:space="preserve">
     <value>キャンセル</value>
   </data>
   <data name="Common_Add.Text" xml:space="preserve">
@@ -156,6 +168,9 @@
   </data>
   <data name="ConfigWindow_Save.Text" xml:space="preserve">
     <value>保存</value>
+  </data>
+  <data name="ConfigWindow_Apply.Text" xml:space="preserve">
+    <value>適用</value>
   </data>
 
   <!-- 設定ページ: スキャン -->
