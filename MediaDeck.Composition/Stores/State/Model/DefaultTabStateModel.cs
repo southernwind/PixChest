@@ -1,4 +1,4 @@
-using R3.JsonConfig.Attributes;
+using GenJsonConfig.Attributes;
 
 namespace MediaDeck.Composition.Stores.State.Model;
 
@@ -6,7 +6,7 @@ namespace MediaDeck.Composition.Stores.State.Model;
 /// 新規タブのデフォルト状態
 /// </summary>
 [Inject(InjectServiceLifetime.Singleton)]
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 public class DefaultTabStateModel(SearchStateModel searchState, ViewerStateModel viewerState) {
 	public SearchStateModel SearchState {
 		get;

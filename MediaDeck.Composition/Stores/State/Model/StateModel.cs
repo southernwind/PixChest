@@ -1,5 +1,5 @@
+using GenJsonConfig.Attributes;
 using MediaDeck.Composition.Enum;
-using R3.JsonConfig.Attributes;
 
 namespace MediaDeck.Composition.Stores.State.Model;
 
@@ -7,7 +7,7 @@ namespace MediaDeck.Composition.Stores.State.Model;
 /// アプリケーション全体で共有される状態（Singleton）
 /// </summary>
 [Inject(InjectServiceLifetime.Singleton)]
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 public class AppStateModel(DefaultTabStateModel defaultTabState) {
 
 	/// <summary>

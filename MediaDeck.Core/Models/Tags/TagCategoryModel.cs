@@ -1,14 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
+using GenJsonConfig.Attributes;
 using MediaDeck.Composition.Interfaces.Tags;
 using MediaDeck.Composition.Tables;
-using R3.JsonConfig.Attributes;
 
 namespace MediaDeck.Core.Models.Tags;
 
 /// <summary>
 /// タグカテゴリーのモデルクラス
 /// </summary>
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 [JsonConfigDerivedType("tagCategory")]
 [Inject(InjectServiceLifetime.Transient, typeof(ITagCategoryModel))]
 [Inject(InjectServiceLifetime.Transient)]

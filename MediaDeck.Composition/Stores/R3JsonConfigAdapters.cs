@@ -1,7 +1,6 @@
-using R3;
-using R3.JsonConfig;
+using GenJsonConfig;
 
-namespace MediaDeck.Store.Utils;
+namespace MediaDeck.Composition.Stores;
 
 /// <summary>
 /// ReactiveProperty&lt;T&gt; 用の IJsonConfigWrapper アダプター。

@@ -1,13 +1,11 @@
 using System.ComponentModel;
-
+using GenJsonConfig.Attributes;
 using MediaDeck.Composition.Enum;
-
-using R3.JsonConfig.Attributes;
 
 namespace MediaDeck.Composition.Stores.State.Model.Objects;
 
 [Inject(InjectServiceLifetime.Transient)]
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 public class SortItemObject {
 	/// <summary>
 	/// ソートキー

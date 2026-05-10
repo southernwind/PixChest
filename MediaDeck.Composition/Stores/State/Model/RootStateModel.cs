@@ -1,4 +1,4 @@
-using R3.JsonConfig.Attributes;
+using GenJsonConfig.Attributes;
 
 namespace MediaDeck.Composition.Stores.State.Model;
 
@@ -6,7 +6,7 @@ namespace MediaDeck.Composition.Stores.State.Model;
 /// 状態保存/復元のルートモデル（AppState + ウィンドウ状態の配列）
 /// </summary>
 [Inject(InjectServiceLifetime.Transient)]
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 public class RootStateModel {
 	/// <summary>
 	/// 状態バージョン

@@ -1,9 +1,9 @@
-using R3.JsonConfig.Attributes;
+using GenJsonConfig.Attributes;
 
 namespace MediaDeck.Composition.Stores.Config.Model.Objects;
 
 [Inject(InjectServiceLifetime.Transient)]
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 public class FolderModel() {
 	public string FolderPath {
 		get;

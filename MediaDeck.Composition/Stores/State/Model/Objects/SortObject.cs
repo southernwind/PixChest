@@ -1,6 +1,5 @@
+using GenJsonConfig.Attributes;
 using Microsoft.Extensions.DependencyInjection;
-
-using R3.JsonConfig.Attributes;
 
 namespace MediaDeck.Composition.Stores.State.Model.Objects;
 
@@ -8,7 +7,7 @@ namespace MediaDeck.Composition.Stores.State.Model.Objects;
 /// ソート設定復元用オブジェクト
 /// </summary>
 [Inject(InjectServiceLifetime.Transient)]
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 public class SortObject(IServiceProvider serviceProvider) {
 	/// <summary>
 	/// ID

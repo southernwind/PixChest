@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
-
 using AutoDiAttributes;
+using GenJsonConfig;
 using MediaDeck.Common.Base;
 using MediaDeck.Composition.Interfaces.Services;
 using MediaDeck.Composition.Objects;
@@ -10,12 +10,9 @@ using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Core.Models.NotificationDispatcher;
 using MediaDeck.Core.Stores.Config;
 using MediaDeck.Stores.SerializerContext;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-
 using R3;
-using R3.JsonConfig;
 
 namespace MediaDeck.Store.Config;
 

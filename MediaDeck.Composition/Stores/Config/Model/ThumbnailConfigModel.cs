@@ -1,4 +1,4 @@
-using R3.JsonConfig.Attributes;
+using GenJsonConfig.Attributes;
 
 namespace MediaDeck.Composition.Stores.Config.Model;
 
@@ -6,7 +6,7 @@ namespace MediaDeck.Composition.Stores.Config.Model;
 /// サムネイル設定
 /// </summary>
 [Inject(InjectServiceLifetime.Singleton)]
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 public class ThumbnailConfigModel {
 	/// <summary>
 	/// サムネイル作成サイズ

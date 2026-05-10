@@ -1,11 +1,10 @@
+using GenJsonConfig.Attributes;
 using MediaDeck.Composition.Enum;
-
-using R3.JsonConfig.Attributes;
 
 namespace MediaDeck.Composition.Stores.Config.Model.Objects;
 
 [Inject(InjectServiceLifetime.Transient)]
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 public class ExtensionObjectModel {
 	public ReactiveProperty<string> Extension {
 		get;

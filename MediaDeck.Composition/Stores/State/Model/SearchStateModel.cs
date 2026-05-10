@@ -1,8 +1,6 @@
 using System.ComponentModel;
-
+using GenJsonConfig.Attributes;
 using MediaDeck.Composition.Interfaces.Files;
-
-using R3.JsonConfig.Attributes;
 
 namespace MediaDeck.Composition.Stores.State.Model;
 
@@ -10,7 +8,7 @@ namespace MediaDeck.Composition.Stores.State.Model;
 /// タブ固有の検索選択状態
 /// </summary>
 [Inject(InjectServiceLifetime.Transient)]
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 public class SearchStateModel {
 	/// <summary>
 	/// カレント検索条件

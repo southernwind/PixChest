@@ -10,7 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\lib\AutoDiAttributes\AutoDiAttributes.Generator\AutoDiAttributes.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <ProjectReference Include="..\lib\R3.JsonConfig\R3.JsonConfig.Generators\R3.JsonConfig.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\lib\GenJsonConfig\GenJsonConfig.Generators\GenJsonConfig.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\MediaDeck.Common\MediaDeck.Common.csproj" />
     <ProjectReference Include="..\MediaDeck.Composition\MediaDeck.Composition.csproj" />
   </ItemGroup>

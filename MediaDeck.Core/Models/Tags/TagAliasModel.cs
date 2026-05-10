@@ -1,15 +1,15 @@
 using System.Diagnostics.CodeAnalysis;
+using GenJsonConfig.Attributes;
 using MediaDeck.Common.Utilities;
 using MediaDeck.Composition.Interfaces.Tags;
 using MediaDeck.Composition.Tables;
-using R3.JsonConfig.Attributes;
 
 namespace MediaDeck.Core.Models.Tags;
 
 /// <summary>
 /// タグ別名のモデルクラス
 /// </summary>
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 [JsonConfigDerivedType("tagAlias")]
 [Inject(InjectServiceLifetime.Transient, typeof(ITagAliasModel))]
 [Inject(InjectServiceLifetime.Transient)]

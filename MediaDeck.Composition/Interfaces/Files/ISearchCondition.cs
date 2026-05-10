@@ -1,12 +1,10 @@
 using System.Linq.Expressions;
-
+using GenJsonConfig.Attributes;
 using MediaDeck.Composition.Tables;
-
-using R3.JsonConfig.Attributes;
 
 namespace MediaDeck.Composition.Interfaces.Files;
 
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 public interface ISearchCondition {
 	public string DisplayText {
 		get;

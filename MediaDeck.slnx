@@ -21,11 +21,11 @@
       <BuildType Solution="Debug-Unpackaged|*" Project="Debug" />
       <BuildType Solution="Release-Unpackaged|*" Project="Debug" />
     </Project>
-    <Project Path="lib/R3.JsonConfig/R3.JsonConfig.Generators/R3.JsonConfig.Generators.csproj">
+    <Project Path="lib/GenJsonConfig/GenJsonConfig.Generators/GenJsonConfig.Generators.csproj">
       <BuildType Solution="Debug-Unpackaged|*" Project="Debug" />
       <BuildType Solution="Release-Unpackaged|*" Project="Release" />
     </Project>
-    <Project Path="lib/R3.JsonConfig/R3.JsonConfig/R3.JsonConfig.csproj">
+    <Project Path="lib/GenJsonConfig/GenJsonConfig/GenJsonConfig.csproj">
       <BuildType Solution="Debug-Unpackaged|*" Project="Debug" />
       <BuildType Solution="Release-Unpackaged|*" Project="Release" />
     </Project>

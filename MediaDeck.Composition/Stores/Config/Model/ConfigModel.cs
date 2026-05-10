@@ -1,9 +1,9 @@
-using R3.JsonConfig.Attributes;
+using GenJsonConfig.Attributes;
 
 namespace MediaDeck.Composition.Stores.Config.Model;
 
 [Inject(InjectServiceLifetime.Singleton)]
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 public class ConfigModel(PathConfigModel pathConfigModel, ScanConfigModel scanConfigModel, ThumbnailConfigModel thumbnailConfigModel, ExecutionConfigModel executionConfigModel, SearchConfigModel searchConfigModel, FolderManagerConfigModel folderManagerConfigModel, SearchDefinitionsConfigModel searchDefinitionsConfigModel, LanguageConfigModel languageConfigModel) {
 	/// <summary>
 	/// 設定バージョン

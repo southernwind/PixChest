@@ -1,6 +1,6 @@
+using GenJsonConfig.Attributes;
 using MediaDeck.Composition.Interfaces.Files;
 using MediaDeck.Composition.Interfaces.Primitives;
-using R3.JsonConfig.Attributes;
 
 namespace MediaDeck.Core.Models.Files.Filter.FilterItemObjects;
 
@@ -13,7 +13,7 @@ namespace MediaDeck.Core.Models.Files.Filter.FilterItemObjects;
 /// ・座標情報を含むか否かのフィルター
 /// ・座標範囲フィルター
 /// </remarks>
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 [JsonConfigDerivedType("location")]
 [Inject(InjectServiceLifetime.Transient)]
 public class LocationFilterItemObject : IFilterItemObject {

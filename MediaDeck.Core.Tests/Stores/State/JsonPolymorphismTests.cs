@@ -18,7 +18,7 @@ public class JsonPolymorphismTests {
 	private readonly IServiceProvider _serviceProvider;
 
 	private readonly JsonSerializerOptions DefaultOptions = new JsonSerializerOptions() {
-		TypeInfoResolver = StateJsonSerializerContext.Default.WithAddedModifier(global::R3.JsonConfig.ForJsonConverterRegistry.ApplyPolymorphism)
+		TypeInfoResolver = StateJsonSerializerContext.Default.WithAddedModifier(global::GenJsonConfig.ForJsonConverterRegistry.ApplyPolymorphism)
 	};
 
 	private readonly Mock<ITagsManager> _tagsManagerMock = new();

@@ -1,12 +1,12 @@
+using GenJsonConfig.Attributes;
 using MediaDeck.Composition.Interfaces.Files;
-using R3.JsonConfig.Attributes;
 
 namespace MediaDeck.Core.Models.Files.Filter.FilterItemObjects;
 
 /// <summary>
 /// ファイルタイプフィルターアイテムオブジェクト
 /// </summary>
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 [JsonConfigDerivedType("mediaType")]
 [Inject(InjectServiceLifetime.Transient)]
 

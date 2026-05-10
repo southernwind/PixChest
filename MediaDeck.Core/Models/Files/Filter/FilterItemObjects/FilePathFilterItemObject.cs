@@ -1,13 +1,13 @@
+using GenJsonConfig.Attributes;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.Files;
-using R3.JsonConfig.Attributes;
 
 namespace MediaDeck.Core.Models.Files.Filter.FilterItemObjects;
 
 /// <summary>
 /// ファイルパスフィルターアイテムオブジェクト
 /// </summary>
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 [JsonConfigDerivedType("filePath")]
 [Inject(InjectServiceLifetime.Transient)]
 public class FilePathFilterItemObject : IFilterItemObject {

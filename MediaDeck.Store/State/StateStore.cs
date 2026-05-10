@@ -50,7 +50,7 @@ public class StateStore : DisposableBase, IStateStore {
 		get {
 			return field ??= new JsonSerializerOptions() {
 				WriteIndented = true,
-				TypeInfoResolver = StateJsonSerializerContext.Default.WithAddedModifier(global::R3.JsonConfig.ForJsonConverterRegistry.ApplyPolymorphism)
+				TypeInfoResolver = StateJsonSerializerContext.Default.WithAddedModifier(global::GenJsonConfig.ForJsonConverterRegistry.ApplyPolymorphism)
 			};
 		}
 	}

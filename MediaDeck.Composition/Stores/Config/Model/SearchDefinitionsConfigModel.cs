@@ -1,10 +1,8 @@
+using GenJsonConfig.Attributes;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces;
 using MediaDeck.Composition.Stores.State.Model.Objects;
-
 using Microsoft.Extensions.DependencyInjection;
-
-using R3.JsonConfig.Attributes;
 
 namespace MediaDeck.Composition.Stores.Config.Model;
 
@@ -12,7 +10,7 @@ namespace MediaDeck.Composition.Stores.Config.Model;
 /// フィルター・ソート条件の定義リスト（アプリ全体で共有）
 /// </summary>
 [Inject(InjectServiceLifetime.Singleton)]
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 public class SearchDefinitionsConfigModel {
 	private readonly IServiceProvider _serviceProvider;
 	private readonly IStringProvider _stringProvider;

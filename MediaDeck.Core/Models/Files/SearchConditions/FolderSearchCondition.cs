@@ -1,14 +1,12 @@
 using System.Linq.Expressions;
-
+using GenJsonConfig.Attributes;
 using MediaDeck.Composition.Interfaces.Files;
 using MediaDeck.Composition.Interfaces.Notifications;
 using MediaDeck.Composition.Tables;
 
-using R3.JsonConfig.Attributes;
-
 namespace MediaDeck.Core.Models.Files.SearchConditions;
 
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 [JsonConfigDerivedType("folder")]
 [Inject(InjectServiceLifetime.Transient)]
 [Inject(InjectServiceLifetime.Transient, typeof(IFolderSearchCondition))]

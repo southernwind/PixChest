@@ -1,13 +1,13 @@
+using GenJsonConfig.Attributes;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.Files;
-using R3.JsonConfig.Attributes;
 
 namespace MediaDeck.Core.Models.Files.Filter.FilterItemObjects;
 
 /// <summary>
 /// 評価フィルターアイテムオブジェクト
 /// </summary>
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 [JsonConfigDerivedType("rate")]
 [Inject(InjectServiceLifetime.Transient)]
 public class RateFilterItemObject : IFilterItemObject {

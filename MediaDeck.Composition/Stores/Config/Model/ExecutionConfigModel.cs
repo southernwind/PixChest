@@ -1,15 +1,13 @@
+using GenJsonConfig.Attributes;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.Models;
-
 using Microsoft.Extensions.DependencyInjection;
-
-using R3.JsonConfig.Attributes;
 
 namespace MediaDeck.Composition.Stores.Config.Model;
 
 [Inject(InjectServiceLifetime.Singleton)]
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 public class ExecutionConfigModel {
 	private readonly IServiceProvider _serviceProvider;
 	private IMediaItemTypeService _mediaItemTypeService {

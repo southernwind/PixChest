@@ -3,7 +3,7 @@
 // </auto-generated>
 
 using MediaDeck.Composition.Enum;
-using R3.JsonConfig.Attributes;
+using GenJsonConfig.Attributes;
 
 namespace MediaDeck.Composition.Interfaces.MediaItemTypes.Models;
 
@@ -11,20 +11,26 @@ namespace MediaDeck.Composition.Interfaces.MediaItemTypes.Models;
 /// 実行設定オブジェクトのインターフェース。
 /// 各メディアタイプはこのインターフェースを実装し、固有のプロパティを定義する。
 /// </summary>
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 public interface IExecutionProgramObjectModel {
     /// <summary>
     /// 対象のメディアタイプ
     /// </summary>
-    public MediaType MediaType { get; set; }
+    public MediaType MediaType {
+        get; set;
+    }
 
     /// <summary>
     /// ツール表示名（空の場合はパスから自動生成）
     /// </summary>
-    public ReactiveProperty<string> Name { get; }
+    public ReactiveProperty<string> Name {
+        get;
+    }
 
     /// <summary>
     /// 既定ツールかどうか
     /// </summary>
-    public ReactiveProperty<bool> IsDefault { get; }
+    public ReactiveProperty<bool> IsDefault {
+        get;
+    }
 }

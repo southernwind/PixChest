@@ -1,4 +1,4 @@
-using R3.JsonConfig.Attributes;
+using GenJsonConfig.Attributes;
 
 namespace MediaDeck.Composition.Stores.State.Model;
 
@@ -6,7 +6,7 @@ namespace MediaDeck.Composition.Stores.State.Model;
 /// タブごとに独立する状態モデル
 /// </summary>
 [Inject(InjectServiceLifetime.Scoped)]
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 public class TabStateModel(IServiceProvider serviceProvider, SearchStateModel searchState, ViewerStateModel viewerState) {
 	public IServiceProvider ServiceProvider {
 		get;

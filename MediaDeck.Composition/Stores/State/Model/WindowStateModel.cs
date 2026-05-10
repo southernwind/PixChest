@@ -1,4 +1,4 @@
-using R3.JsonConfig.Attributes;
+using GenJsonConfig.Attributes;
 
 namespace MediaDeck.Composition.Stores.State.Model;
 
@@ -7,7 +7,7 @@ namespace MediaDeck.Composition.Stores.State.Model;
 /// 各ウィンドウが独自のタブリストを持つ。
 /// </summary>
 [Inject(InjectServiceLifetime.Transient)]
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 public class WindowStateModel {
 	/// <summary>
 	/// ウィンドウの一意識別子

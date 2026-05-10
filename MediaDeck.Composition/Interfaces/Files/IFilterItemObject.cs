@@ -1,8 +1,8 @@
-using R3.JsonConfig.Attributes;
+using GenJsonConfig.Attributes;
 
 namespace MediaDeck.Composition.Interfaces.Files;
 
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 public interface IFilterItemObject {
 	/// <summary>
 	/// 表示名

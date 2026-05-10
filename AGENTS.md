@@ -12,7 +12,7 @@
 - **データベース**: SQLite (Entity Framework Core)
 - **主要なライブラリ**: Magick.NET, MetadataExtractor, FFMpegCore, Pdfium.Net.SDK
 - **リアクティブ・状態管理**: R3
-- **設定ファイル管理**: R3.JsonConfig
+- **設定ファイル管理**: GenJsonConfig
 - **ロギング**: Serilog
 
 ## 3. コーディング規約とアーキテクチャルール
@@ -32,7 +32,7 @@
   - `IDisposable` を返す全てのメソッド呼び出し（`Subscribe`, `SubscribeAwait`, `new ReactiveProperty<T>()` 等）は、必ず `.AddTo(this.CompositeDisposable)` すること。
   - `Dispose(bool)` のオーバーライドで独自リソースを解放する場合は、必ず `base.Dispose(disposing)` を呼ぶこと。
   - Viewのコードビハインドでは `Unloaded` イベント等で `(this.DataContext as IDisposable)?.Dispose()` を呼び、ViewModelのDisposeを確実にトリガーすること。
-- **設定管理**: アプリケーション設定は `R3.JsonConfig` を利用して管理・永続化を行う。
+- **設定管理**: アプリケーション設定は `GenJsonConfig` を利用して管理・永続化を行う。
 - **TabState拡張時の必須更新 (重要)**: `TabStateModel` / `SearchStateModel` / `ViewerStateModel` に新しい状態プロパティを追加した場合、必ず次の2箇所も同時に更新すること。
   - `MainWindowViewModel.AddTab`: `AppState.DefaultTabState` から新規 `tabState` へ初期値をコピーする処理を追加する。
   - `TabContext.SubscribeDefaultTabStateSync`: タブ側変更を `AppState.DefaultTabState` へ反映する購読処理を追加する。

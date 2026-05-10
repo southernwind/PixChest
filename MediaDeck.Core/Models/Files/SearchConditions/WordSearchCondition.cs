@@ -1,14 +1,12 @@
 using System.Linq.Expressions;
-
+using GenJsonConfig.Attributes;
 using MediaDeck.Common.Utilities;
 using MediaDeck.Composition.Interfaces.Files;
 using MediaDeck.Composition.Tables;
 
-using R3.JsonConfig.Attributes;
-
 namespace MediaDeck.Core.Models.Files.SearchConditions;
 
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 [JsonConfigDerivedType("word")]
 [Inject(InjectServiceLifetime.Transient)]
 public class WordSearchCondition : ISearchCondition {

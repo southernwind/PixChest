@@ -1,10 +1,8 @@
 using System.Linq.Expressions;
-
+using GenJsonConfig.Attributes;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.Files;
 using MediaDeck.Composition.Tables;
-
-using R3.JsonConfig.Attributes;
 
 namespace MediaDeck.Core.Models.Files.SearchConditions;
 
@@ -13,7 +11,7 @@ namespace MediaDeck.Core.Models.Files.SearchConditions;
 /// 検索入力欄で <c>prop.&lt;PropertyName&gt;</c> のプレフィックス入力時にサジェストされ、
 /// 演算子と値が確定した後に <see cref="WherePredicate"/> が有効な式ツリーを返す。
 /// </summary>
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 [JsonConfigDerivedType("property")]
 [Inject(InjectServiceLifetime.Transient)]
 public class PropertySearchCondition : ISearchCondition {

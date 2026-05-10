@@ -1,12 +1,12 @@
+using GenJsonConfig.Attributes;
 using MediaDeck.Composition.Tables;
-using R3.JsonConfig.Attributes;
 
 namespace MediaDeck.Composition.Interfaces.Tags;
 
 /// <summary>
 /// タグ別名のモデルクラスのインターフェース
 /// </summary>
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 public interface ITagAliasModel {
 	/// <summary>
 	/// タグ別名ID

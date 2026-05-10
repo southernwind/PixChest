@@ -1,5 +1,4 @@
-using MediaDeck.Store.Utils;
-using R3;
-using R3.JsonConfig.Attributes;
+using GenJsonConfig.Attributes;
+using MediaDeck.Composition.Stores;
 
 [assembly: RegisterJsonConfigWrapper(typeof(ReactiveProperty<>), typeof(ReactivePropertyAdapter<>))]

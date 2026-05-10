@@ -54,6 +54,9 @@ public class MediaContentLibrary : ModelBase {
 	/// <summary>追加読み込みが可能かどうか</summary>
 	public ReactiveProperty<bool> CanLoadMore { get; } = new(false);
 
+	/// <summary>全件数（上限に達した場合のみ取得）</summary>
+	public ReactiveProperty<int?> TotalCount { get; } = new();
+
 	/// <summary>
 	/// 検索を実行する。Switch により呼び出し元のキャンセルトークンが連携されるため、
 	/// 古い検索タスクは自動的にキャンセルされる。
@@ -74,6 +77,9 @@ public class MediaContentLibrary : ModelBase {
 
 	private async ValueTask LoadInternalAsync(bool isInitial, CancellationToken token) {
 		this.SearchElapsedMilliseconds.Value = null;
+		if (isInitial) {
+			this.TotalCount.Value = null;
+		}
 		var batch = new List<IMediaItemModel>();
 		try {
 			var stopwatch = Stopwatch.StartNew();
@@ -86,34 +92,43 @@ public class MediaContentLibrary : ModelBase {
 			var stream = this._filesLoader.GetFilesStreamAsync(this.SearchConditions, skip, maxLoadCount, token);
 
 			var totalLoaded = 0;
+			var isFirstBatch = isInitial;
 
 			await foreach (var fileModel in stream.WithCancellation(token)) {
 				batch.Add(fileModel.AddTo(this.CompositeDisposable));
 				totalLoaded++;
 
-				if (isInitial && batch.Count >= initialLoadCount) {
+				if (isFirstBatch && batch.Count >= initialLoadCount) {
 					this.ClearFiles();
 					this.Files.AddRange(batch);
 					batch.Clear();
-					isInitial = false;
-				} else if (!isInitial && batch.Count >= incrementalLoadCount) {
+					isFirstBatch = false;
+				} else if (!isFirstBatch && batch.Count >= incrementalLoadCount) {
 					this.Files.AddRange(batch);
 					batch.Clear();
 				}
 			}
 
 			if (batch.Count > 0) {
-				if (isInitial) {
+				if (isFirstBatch) {
 					this.ClearFiles();
 				}
 				this.Files.AddRange(batch);
 				batch.Clear();
-			} else if (isInitial && totalLoaded == 0) {
+			} else if (isFirstBatch && totalLoaded == 0) {
 				this.ClearFiles();
 			}
 
-			// 取得件数が上限件数と一致する場合は、まだ続きがある可能性があるため追加読み込みを可能にする
-			this.CanLoadMore.Value = totalLoaded == maxLoadCount;
+			if (isInitial) {
+				if (totalLoaded == maxLoadCount) {
+					this.TotalCount.Value = await this._filesLoader.GetTotalCountAsync(this.SearchConditions, token).ConfigureAwait(false);
+				} else {
+					this.TotalCount.Value = this.Files.Count;
+				}
+			}
+
+			// 全体件数が現在の表示件数より多ければ、まだ続きがある
+			this.CanLoadMore.Value = this.TotalCount.Value > this.Files.Count;
 
 			stopwatch.Stop();
 			this.SearchElapsedMilliseconds.Value = stopwatch.ElapsedMilliseconds;

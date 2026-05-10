@@ -1,12 +1,12 @@
+using GenJsonConfig.Attributes;
 using MediaDeck.Composition.Tables;
-using R3.JsonConfig.Attributes;
 
 namespace MediaDeck.Composition.Interfaces.Tags;
 
 /// <summary>
 /// タグカテゴリーのモデルクラスのインターフェース
 /// </summary>
-[GenerateR3JsonConfigDto]
+[GenerateJsonConfigDto]
 public interface ITagCategoryModel {
 	/// <summary>
 	/// 変更フラグ
