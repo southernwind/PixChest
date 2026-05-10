@@ -388,6 +388,11 @@ public class MediaItemTypeServiceTest {
 			set;
 		}
 
+		public MediaItemAdditionalInfo? AdditionalInfo {
+			get;
+			set;
+		}
+
 		public Task UpdateRateAsync(int rate) {
 			this.Rate = rate;
 			return Task.CompletedTask;

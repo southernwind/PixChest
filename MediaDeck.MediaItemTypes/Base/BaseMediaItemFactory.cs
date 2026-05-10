@@ -70,6 +70,7 @@ public abstract class BaseMediaItemFactory<TFileOperator, TFileModel, TExecution
 		}
 		fileModel.Tags = [.. MediaItem.MediaItemTags.Select(mft => this._tagsManager.Tags.FirstOrDefault(t => t.TagId == mft.TagId)).OfType<ITagModel>()];
 		fileModel.Metadata = MediaItem.Metadata;
+		fileModel.AdditionalInfo = MediaItem.AdditionalInfo;
 	}
 
 	IMediaItemOperator IMediaItemFactory.CreateMediaItemOperator() {

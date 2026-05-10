@@ -198,6 +198,11 @@ public class MediaDeckDbContext(DbContextOptions dbContextOptions) : DbContext(d
 				b.OwnsMany(m => m.Entries);
 			});
 
+		modelBuilder.Entity<MediaItem>()
+			.OwnsOne(m => m.AdditionalInfo, b => {
+				b.ToJson();
+			});
+
 		modelBuilder.Entity<Album>()
 			.HasIndex(a => a.Path)
 			.IsUnique();

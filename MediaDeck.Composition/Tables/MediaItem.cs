@@ -271,4 +271,12 @@ public class MediaItem {
 		get;
 		set;
 	}
+
+	/// <summary>
+	/// 追加情報（JSONカラム）
+	/// </summary>
+	public MediaItemAdditionalInfo? AdditionalInfo {
+		get;
+		set;
+	}
 }
