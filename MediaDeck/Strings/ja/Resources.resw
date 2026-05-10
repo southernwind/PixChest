@@ -675,17 +675,29 @@
   <data name="Config_Environment_Theme_Dark" xml:space="preserve">
     <value>ダークテーマ</value>
   </data>
+  <data name="Config_Environment_SystemBackdrop_None" xml:space="preserve">
+    <value>なし</value>
+  </data>
+  <data name="Config_Environment_SystemBackdrop_Mica" xml:space="preserve">
+    <value>Mica</value>
+  </data>
+  <data name="Config_Environment_SystemBackdrop_Acrylic" xml:space="preserve">
+    <value>Acrylic</value>
+  </data>
   <data name="EnvironmentConfigPage_SectionHeader.Text" xml:space="preserve">
-    <value>テーマ</value>
+    <value>外観</value>
   </data>
   <data name="EnvironmentConfigPage_SectionDescription.Text" xml:space="preserve">
-    <value>アプリケーションのテーマを選択します</value>
+    <value>アプリケーションのテーマとシステムバックドロップを選択します</value>
   </data>
   <data name="EnvironmentConfigPage_ThemeLabel.Text" xml:space="preserve">
     <value>テーマ:</value>
   </data>
+  <data name="EnvironmentConfigPage_SystemBackdropLabel.Text" xml:space="preserve">
+    <value>背景効果:</value>
+  </data>
   <data name="EnvironmentConfigPage_RestartNotice.Message" xml:space="preserve">
-    <value>テーマの変更は即座に適用されます</value>
+    <value>テーマと背景効果の変更は即座に適用されます</value>
   </data>
   <data name="Config_Execution_Name" xml:space="preserve">
     <value>外部プログラム</value>

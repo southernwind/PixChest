@@ -36,9 +36,23 @@ public class EnvironmentConfigPageViewModel : ViewModelBase, IConfigPageViewMode
 	}
 
 	/// <summary>
+	/// バックドロップ選択肢
+	/// </summary>
+	public SystemBackdropOption[] SystemBackdropOptions {
+		get;
+	}
+
+	/// <summary>
 	/// 選択中のテーマ
 	/// </summary>
 	public BindableReactiveProperty<ThemeOption> SelectedTheme {
+		get;
+	}
+
+	/// <summary>
+	/// 選択中のバックドロップ
+	/// </summary>
+	public BindableReactiveProperty<SystemBackdropOption> SelectedSystemBackdrop {
 		get;
 	}
 
@@ -52,15 +66,30 @@ public class EnvironmentConfigPageViewModel : ViewModelBase, IConfigPageViewMode
 			new ThemeOption { Theme = AppTheme.Dark, DisplayName = stringProvider.GetString("Config_Environment_Theme_Dark") },
 		];
 
-		var currentTheme = environmentConfig.Theme.Value;
-		var initial = Array.Find(this.ThemeOptions, x => x.Theme == currentTheme)
-					  ?? this.ThemeOptions[0];
+		this.SystemBackdropOptions = [
+			new SystemBackdropOption { Backdrop = AppSystemBackdrop.Mica, DisplayName = stringProvider.GetString("Config_Environment_SystemBackdrop_Mica") },
+			new SystemBackdropOption { Backdrop = AppSystemBackdrop.Acrylic, DisplayName = stringProvider.GetString("Config_Environment_SystemBackdrop_Acrylic") },
+		];
 
-		this.SelectedTheme = new BindableReactiveProperty<ThemeOption>(initial);
+		var currentTheme = environmentConfig.Theme.Value;
+		var initialTheme = Array.Find(this.ThemeOptions, x => x.Theme == currentTheme)
+						  ?? this.ThemeOptions[0];
+
+		this.SelectedTheme = new BindableReactiveProperty<ThemeOption>(initialTheme);
+
+		var currentSystemBackdrop = environmentConfig.SystemBackdrop.Value;
+		var initialSystemBackdrop = Array.Find(this.SystemBackdropOptions, x => x.Backdrop == currentSystemBackdrop)
+								 ?? this.SystemBackdropOptions[0];
+
+		this.SelectedSystemBackdrop = new BindableReactiveProperty<SystemBackdropOption>(initialSystemBackdrop);
 
 		// ViewModel の選択変更を Model に反映
 		this.SelectedTheme
 			.Subscribe(opt => environmentConfig.Theme.Value = opt?.Theme ?? AppTheme.Default)
+			.AddTo(this.CompositeDisposable);
+
+		this.SelectedSystemBackdrop
+			.Subscribe(opt => environmentConfig.SystemBackdrop.Value = opt?.Backdrop ?? AppSystemBackdrop.None)
 			.AddTo(this.CompositeDisposable);
 	}
 }
@@ -70,6 +99,25 @@ public class EnvironmentConfigPageViewModel : ViewModelBase, IConfigPageViewMode
 /// </summary>
 public sealed class ThemeOption {
 	public AppTheme Theme {
+		get;
+		init;
+	}
+
+	public string DisplayName {
+		get;
+		init;
+	} = string.Empty;
+
+	public override string ToString() {
+		return this.DisplayName;
+	}
+}
+
+/// <summary>
+/// システムバックドロップの選択肢
+/// </summary>
+public sealed class SystemBackdropOption {
+	public AppSystemBackdrop Backdrop {
 		get;
 		init;
 	}

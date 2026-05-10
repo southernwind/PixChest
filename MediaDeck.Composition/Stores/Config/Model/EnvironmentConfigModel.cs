@@ -12,4 +12,11 @@ public class EnvironmentConfigModel {
 	public ReactiveProperty<AppTheme> Theme {
 		get;
 	} = new(AppTheme.Default);
+
+	/// <summary>
+	/// アプリケーションのシステムバックドロップ設定
+	/// </summary>
+	public ReactiveProperty<AppSystemBackdrop> SystemBackdrop {
+		get;
+	} = new(AppSystemBackdrop.Mica);
 }

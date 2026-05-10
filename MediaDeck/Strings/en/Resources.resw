@@ -675,17 +675,29 @@
   <data name="Config_Environment_Theme_Dark" xml:space="preserve">
     <value>Dark Theme</value>
   </data>
+  <data name="Config_Environment_SystemBackdrop_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Config_Environment_SystemBackdrop_Mica" xml:space="preserve">
+    <value>Mica</value>
+  </data>
+  <data name="Config_Environment_SystemBackdrop_Acrylic" xml:space="preserve">
+    <value>Acrylic</value>
+  </data>
   <data name="EnvironmentConfigPage_SectionHeader.Text" xml:space="preserve">
-    <value>Theme</value>
+    <value>Appearance</value>
   </data>
   <data name="EnvironmentConfigPage_SectionDescription.Text" xml:space="preserve">
-    <value>Select the application theme</value>
+    <value>Select the application theme and system backdrop</value>
   </data>
   <data name="EnvironmentConfigPage_ThemeLabel.Text" xml:space="preserve">
     <value>Theme:</value>
   </data>
+  <data name="EnvironmentConfigPage_SystemBackdropLabel.Text" xml:space="preserve">
+    <value>Background effect:</value>
+  </data>
   <data name="EnvironmentConfigPage_RestartNotice.Message" xml:space="preserve">
-    <value>Theme changes are applied immediately</value>
+    <value>Theme and background effect changes are applied immediately</value>
   </data>
   <data name="Config_Execution_Name" xml:space="preserve">
     <value>External Programs</value>

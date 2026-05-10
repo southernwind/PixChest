@@ -2,6 +2,7 @@ using MediaDeck.Composition.Enum;
 using MediaDeck.Core.Stores.Config;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
 using Windows.UI;
 
 namespace MediaDeck.Views.Helpers;
@@ -18,8 +19,12 @@ public static class ThemeHelper {
 	/// <param name="disposable">購読管理用のCompositeDisposable</param>
 	public static void BindTheme(Window window, IConfigStore configStore, CompositeDisposable disposable) {
 		configStore.Config.EnvironmentConfig.Theme
-			.Subscribe(theme => {
-				var targetTheme = theme switch {
+			.CombineLatest(configStore.Config.EnvironmentConfig.SystemBackdrop, (theme, backdrop) => new {
+				Theme = theme,
+				Backdrop = backdrop,
+			})
+			.Subscribe(x => {
+				var targetTheme = x.Theme switch {
 					AppTheme.Light => ElementTheme.Light,
 					AppTheme.Dark => ElementTheme.Dark,
 					_ => ElementTheme.Default,
@@ -29,9 +34,18 @@ public static class ThemeHelper {
 					fe.RequestedTheme = targetTheme;
 				}
 
+				window.SystemBackdrop = CreateSystemBackdrop(x.Backdrop);
 				UpdateTitleBarColors(window, targetTheme);
 			})
 			.AddTo(disposable);
+	}
+
+	private static SystemBackdrop? CreateSystemBackdrop(AppSystemBackdrop backdrop) {
+		return backdrop switch {
+			AppSystemBackdrop.Mica => new MicaBackdrop(),
+			AppSystemBackdrop.Acrylic => new DesktopAcrylicBackdrop(),
+			_ => null,
+		};
 	}
 
 	private static void UpdateTitleBarColors(Window window, ElementTheme theme) {
@@ -76,6 +90,24 @@ public static class ThemeHelper {
 		configStore.Config.EnvironmentConfig.Theme
 			.Subscribe(theme => {
 				element.RequestedTheme = theme switch {
+					AppTheme.Light => ElementTheme.Light,
+					AppTheme.Dark => ElementTheme.Dark,
+					_ => ElementTheme.Default,
+				};
+			})
+			.AddTo(disposable);
+	}
+
+	/// <summary>
+	/// ContentDialogに対してIConfigStoreのテーマ設定をバインドします。
+	/// </summary>
+	/// <param name="dialog">対象のダイアログ</param>
+	/// <param name="configStore">設定ストア</param>
+	/// <param name="disposable">購読管理用のCompositeDisposable</param>
+	public static void BindTheme(Microsoft.UI.Xaml.Controls.ContentDialog dialog, IConfigStore configStore, CompositeDisposable disposable) {
+		configStore.Config.EnvironmentConfig.Theme
+			.Subscribe(theme => {
+				dialog.RequestedTheme = theme switch {
 					AppTheme.Light => ElementTheme.Light,
 					AppTheme.Dark => ElementTheme.Dark,
 					_ => ElementTheme.Default,
