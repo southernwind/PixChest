@@ -19,11 +19,6 @@ public sealed partial class WrapViewer : IDisposable {
 			this.List.AddHandler(PointerWheelChangedEvent, new PointerEventHandler(this.HandleListPointerWheelChanged), true);
 			this.UpdateItemWidth();
 		};
-		this.Unloaded += (_, _) => {
-			// ViewModelのDisposeを確実にトリガーする (ルールに従う)
-			(this.DataContext as IDisposable)?.Dispose();
-			this.Dispose();
-		};
 	}
 
 	/// <summary>
@@ -85,5 +80,9 @@ public sealed partial class WrapViewer : IDisposable {
 	/// </summary>
 	public void Dispose() {
 		this._disposables.Dispose();
+	}
+
+	~WrapViewer() {
+		this.Dispose();
 	}
 }

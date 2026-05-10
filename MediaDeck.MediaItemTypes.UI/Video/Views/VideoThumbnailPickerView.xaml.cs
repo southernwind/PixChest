@@ -15,16 +15,11 @@ public sealed partial class VideoThumbnailPickerView : VideoThumbnailPickerViewU
 	}
 
 	public VideoThumbnailPickerView() {
-		this.Player = new();
+		this.Player = new Player().AddTo(this._disposables);
 		this.InitializeComponent();
 		this.btnPlayback.Content = this.Player.Status == Status.Playing ? this._iconPause : this._iconPlay;
 		this.Player.PropertyChanged += this.Player_PropertyChanged;
 		this.playerRootGrid.DataContext = this;
-
-		this.Unloaded += (s, e) => {
-			this._disposables.Dispose();
-			this.Player.Dispose();
-		};
 	}
 
 	protected override void OnViewModelChanged(VideoThumbnailPickerViewModel? oldViewModel, VideoThumbnailPickerViewModel? newViewModel) {
@@ -70,6 +65,11 @@ public sealed partial class VideoThumbnailPickerView : VideoThumbnailPickerViewU
 				this.btnPlayback.Content = this.Player.Status == Status.Playing ? this._iconPause : this._iconPlay;
 				break;
 		}
+	}
+
+	~VideoThumbnailPickerView() {
+		this._disposables.Dispose();
+		this.Player.Dispose();
 	}
 }
 

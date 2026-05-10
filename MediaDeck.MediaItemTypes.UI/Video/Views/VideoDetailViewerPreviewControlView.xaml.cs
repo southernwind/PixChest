@@ -27,10 +27,6 @@ public sealed partial class VideoDetailViewerPreviewControlView : VideoDetailVie
 		this.btnPlayback.Content = this.Player.Status == Status.Playing ? this._iconPause : this._iconPlay;
 		this.Player.PropertyChanged += this.Player_PropertyChanged;
 		this.rootGrid.DataContext = this;
-
-		this.Unloaded += (s, e) => {
-			this.Player.Dispose();
-		};
 	}
 
 	protected override void OnViewModelChanged(IMediaItemViewModel? oldViewModel, IMediaItemViewModel? newViewModel) {
@@ -56,6 +52,10 @@ public sealed partial class VideoDetailViewerPreviewControlView : VideoDetailVie
 
 				break;
 		}
+	}
+
+	~VideoDetailViewerPreviewControlView() {
+		this.Player.Dispose();
 	}
 }
 

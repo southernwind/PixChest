@@ -54,12 +54,6 @@ public sealed partial class GlobalInfoBar {
 				var infoBarNotification = InfoBarNotification.FromAppNotification(appNotification);
 				this.EnqueueNotification(infoBarNotification);
 			}).AddTo(this._disposable);
-
-		this.Unloaded += (s, e) => {
-			this._disposable.Dispose();
-			this._autoCloseCts?.Cancel();
-			this._autoCloseCts?.Dispose();
-		};
 	}
 
 	/// <summary>
@@ -130,5 +124,11 @@ public sealed partial class GlobalInfoBar {
 		this._autoCloseCts?.Cancel();
 		this._isShowingNotification = false;
 		this.ShowNextNotification();
+	}
+
+	~GlobalInfoBar() {
+		this._disposable.Dispose();
+		this._autoCloseCts?.Cancel();
+		this._autoCloseCts?.Dispose();
 	}
 }
