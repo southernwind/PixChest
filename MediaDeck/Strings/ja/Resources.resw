@@ -337,6 +337,24 @@
   <data name="Details_AddTags.PlaceholderText" xml:space="preserve">
     <value>タグを追加...</value>
   </data>
+  <data name="Details_Property_CreationTime" xml:space="preserve">
+    <value>作成日時</value>
+  </data>
+  <data name="Details_Property_ModifiedTime" xml:space="preserve">
+    <value>編集日時</value>
+  </data>
+  <data name="Details_Property_LastAccessTime" xml:space="preserve">
+    <value>最終アクセス日時</value>
+  </data>
+  <data name="Details_Property_RegisteredTime" xml:space="preserve">
+    <value>登録日時</value>
+  </data>
+  <data name="Details_Property_FileSize" xml:space="preserve">
+    <value>ファイルサイズ</value>
+  </data>
+  <data name="Details_Property_Resolution" xml:space="preserve">
+    <value>解像度</value>
+  </data>
   <!-- 検索バー -->
   <data name="Search_AddTokens.PlaceholderText" xml:space="preserve">
     <value>検索条件を追加...</value>

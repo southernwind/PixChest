@@ -9,13 +9,16 @@ using MediaDeck.Composition.Interfaces.Primitives;
 using MediaDeck.Composition.Interfaces.Tags;
 using MediaDeck.Composition.Objects;
 using MediaDeck.Composition.Tables;
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Composition.Tables.Metadata;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MediaDeck.MediaItemTypes.Base.Models;
 
 public abstract class BaseMediaItemModel : ModelBase, IMediaItemModel {
 	private readonly IMediaItemTypeProvider _mediaItemTypeProvider;
 	private readonly IServiceProvider _scopedServiceProvider;
+	private readonly IStringProvider _stringProvider;
 
 	protected IMediaItemOperator FileOperator {
 		get;
@@ -36,6 +39,7 @@ public abstract class BaseMediaItemModel : ModelBase, IMediaItemModel {
 	protected BaseMediaItemModel(IMediaItemOperator fileOperator, MediaType mediaType, IMediaItemTypeProvider mediaItemTypeProvider, IServiceProvider scopedServiceProvider) : base() {
 		this._mediaItemTypeProvider = mediaItemTypeProvider;
 		this._scopedServiceProvider = scopedServiceProvider;
+		this._stringProvider = scopedServiceProvider.GetRequiredService<IStringProvider>();
 		this.FileOperator = fileOperator;
 		this.MediaType = mediaType;
 		this._changed.AddTo(this.CompositeDisposable);
@@ -183,12 +187,12 @@ public abstract class BaseMediaItemModel : ModelBase, IMediaItemModel {
 	public virtual Attributes<string> Properties {
 		get {
 			return new Dictionary<string, string> {
-				{ "作成日時", $"{this.CreationTime}" },
-				{ "編集日時", $"{this.ModifiedTime}" },
-				{ "最終アクセス日時", $"{this.LastAccessTime}" },
-				{ "登録日時", $"{this.RegisteredTime}" },
-				{ "ファイルサイズ", $"{StringUtility.LongToFileSize(this.FileSize)}" },
-				{ "解像度", $"{this.Resolution?.ToString()}" }
+				{ this._stringProvider.GetString("Details_Property_CreationTime"), $"{this.CreationTime}" },
+				{ this._stringProvider.GetString("Details_Property_ModifiedTime"), $"{this.ModifiedTime}" },
+				{ this._stringProvider.GetString("Details_Property_LastAccessTime"), $"{this.LastAccessTime}" },
+				{ this._stringProvider.GetString("Details_Property_RegisteredTime"), $"{this.RegisteredTime}" },
+				{ this._stringProvider.GetString("Details_Property_FileSize"), $"{StringUtility.LongToFileSize(this.FileSize)}" },
+				{ this._stringProvider.GetString("Details_Property_Resolution"), $"{this.Resolution?.ToString()}" }
 			}.ToAttributes();
 		}
 	}

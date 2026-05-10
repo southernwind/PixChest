@@ -337,6 +337,24 @@
   <data name="Details_AddTags.PlaceholderText" xml:space="preserve">
     <value>Add tags...</value>
   </data>
+  <data name="Details_Property_CreationTime" xml:space="preserve">
+    <value>Creation Time</value>
+  </data>
+  <data name="Details_Property_ModifiedTime" xml:space="preserve">
+    <value>Modified Time</value>
+  </data>
+  <data name="Details_Property_LastAccessTime" xml:space="preserve">
+    <value>Last Access Time</value>
+  </data>
+  <data name="Details_Property_RegisteredTime" xml:space="preserve">
+    <value>Registered Time</value>
+  </data>
+  <data name="Details_Property_FileSize" xml:space="preserve">
+    <value>File Size</value>
+  </data>
+  <data name="Details_Property_Resolution" xml:space="preserve">
+    <value>Resolution</value>
+  </data>
   <!-- Search bar -->
   <data name="Search_AddTokens.PlaceholderText" xml:space="preserve">
     <value>Add search tokens...</value>
