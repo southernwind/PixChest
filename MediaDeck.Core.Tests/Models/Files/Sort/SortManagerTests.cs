@@ -39,6 +39,7 @@ public class SortManagerTests {
 		services.AddSingleton<ConfigModel>();
 		services.AddSingleton<PathConfigModel>();
 		services.AddSingleton<ScanConfigModel>();
+		services.AddSingleton<ThumbnailConfigModel>();
 		services.AddSingleton<ExecutionConfigModel>();
 		services.AddSingleton<SearchConfigModel>();
 		services.AddSingleton<FolderManagerConfigModel>();

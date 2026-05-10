@@ -1,5 +1,6 @@
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.MediaItemTypes.Base.Models;
 using MediaDeck.MediaItemTypes.Base.ViewModels;
 using MediaDeck.MediaItemTypes.Pdf.Models;
@@ -13,8 +14,8 @@ namespace MediaDeck.MediaItemTypes.Pdf.ViewModels;
 public class PdfBulkThumbnailConfigViewModel : BulkThumbnailConfigViewModelBase {
 	private readonly IPdfDocumentOperator _pdfDocumentOperator;
 
-	public PdfBulkThumbnailConfigViewModel(IPdfDocumentOperator pdfDocumentOperator, BaseThumbnailPickerModel thumbnailPickerModel)
-		: base(MediaType.Pdf, thumbnailPickerModel) {
+	public PdfBulkThumbnailConfigViewModel(IPdfDocumentOperator pdfDocumentOperator, BaseThumbnailPickerModel thumbnailPickerModel, ConfigModel config)
+		: base(MediaType.Pdf, thumbnailPickerModel, config) {
 		this._pdfDocumentOperator = pdfDocumentOperator;
 	}
 
@@ -27,6 +28,6 @@ public class PdfBulkThumbnailConfigViewModel : BulkThumbnailConfigViewModelBase 
 
 	protected override byte[]? GenerateThumbnail(IMediaItemViewModel target) {
 		var page = Math.Max(1, this.PageNumber.Value);
-		return this._pdfDocumentOperator.CreateThumbnail(target.FilePath, 300, 300, page);
+		return this._pdfDocumentOperator.CreateThumbnail(target.FilePath, this._config.ThumbnailConfig.ThumbnailSize.Value, this._config.ThumbnailConfig.ThumbnailSize.Value, page);
 	}
 }

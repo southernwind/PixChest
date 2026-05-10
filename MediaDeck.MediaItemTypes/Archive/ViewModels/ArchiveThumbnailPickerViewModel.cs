@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.MediaItemTypes.Archive.Models;
 using MediaDeck.MediaItemTypes.Base.Models;
 using MediaDeck.MediaItemTypes.Base.ViewModels;
@@ -16,7 +17,7 @@ public class ArchiveThumbnailPickerViewModel : BaseThumbnailPickerViewModel<Base
 	private readonly IMediaItemTypeService _mediaItemTypeService;
 	private readonly ILogger<ArchiveThumbnailPickerViewModel> _logger;
 
-	public ArchiveThumbnailPickerViewModel(BaseThumbnailPickerModel thumbnailPickerModel, ArchiveMediaItemOperator PdfMediaItemOperator, IMediaItemTypeService mediaItemTypeService, ILogger<ArchiveThumbnailPickerViewModel> logger, IFilePickerService filePickerService) : base(thumbnailPickerModel, filePickerService) {
+	public ArchiveThumbnailPickerViewModel(BaseThumbnailPickerModel thumbnailPickerModel, ArchiveMediaItemOperator PdfMediaItemOperator, IMediaItemTypeService mediaItemTypeService, ILogger<ArchiveThumbnailPickerViewModel> logger, IFilePickerService filePickerService, ConfigModel config) : base(thumbnailPickerModel, filePickerService, config) {
 		this._ArchiveMediaItemOperator = PdfMediaItemOperator;
 		this._mediaItemTypeService = mediaItemTypeService;
 		this._logger = logger;
@@ -57,7 +58,7 @@ public class ArchiveThumbnailPickerViewModel : BaseThumbnailPickerViewModel<Base
 		}
 
 		try {
-			this.CandidateThumbnail.Value = this._ArchiveMediaItemOperator.CreateThumbnail(archive, 300, 300, this.FileName.Value);
+			this.CandidateThumbnail.Value = this._ArchiveMediaItemOperator.CreateThumbnail(archive, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value, this.FileName.Value);
 		} catch (Exception ex) {
 			this._logger.LogError(ex, "Failed to recreate archive thumbnail for file {FilePath} at entry {EntryName}", this.targetFileViewModel.FilePath, this.FileName.Value);
 			this.CandidateThumbnail.Value = null;

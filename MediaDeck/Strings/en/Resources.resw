@@ -630,4 +630,22 @@
   <data name="Config_Search_Description" xml:space="preserve">
     <value>Settings for search and data loading performance</value>
   </data>
+  <data name="Config_Thumbnail_Name" xml:space="preserve">
+    <value>Thumbnail</value>
+  </data>
+  <data name="Config_Thumbnail_Description" xml:space="preserve">
+    <value>Configure thumbnail creation size and other settings</value>
+  </data>
+  <data name="ThumbnailConfigPage_Header.Text" xml:space="preserve">
+    <value>Thumbnail Settings</value>
+  </data>
+  <data name="ThumbnailConfigPage_Description.Text" xml:space="preserve">
+    <value>Configure the quality and size of automatically generated thumbnails.</value>
+  </data>
+  <data name="ThumbnailConfigPage_ThumbnailSize.Text" xml:space="preserve">
+    <value>Thumbnail Creation Size (px)</value>
+  </data>
+  <data name="ThumbnailConfigPage_ThumbnailSizeDesc.Text" xml:space="preserve">
+    <value>Specify the size of the long side of the created thumbnails. Changes will apply to future thumbnails.</value>
+  </data>
 </root>

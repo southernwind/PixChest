@@ -31,6 +31,7 @@ public sealed partial class ConfigWindow : Window {
 		this.ViewModel.SelectedPageViewModel.Subscribe(vm => {
 			var view = vm switch {
 				ScanConfigPageViewModel => typeof(ScanConfigPage),
+				ThumbnailConfigPageViewModel => typeof(ThumbnailConfigPage),
 				ExecutionConfigPageViewModel => typeof(ExecutionConfigPage),
 				SearchConfigPageViewModel => typeof(SearchConfigPage),
 				LanguageConfigPageViewModel => typeof(LanguageConfigPage),

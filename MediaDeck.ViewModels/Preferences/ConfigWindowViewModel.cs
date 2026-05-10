@@ -6,13 +6,15 @@ namespace MediaDeck.ViewModels.Preferences;
 
 [Inject(InjectServiceLifetime.Transient)]
 public class ConfigWindowViewModel : ViewModelBase {
-	public ConfigWindowViewModel(IConfigStore configStore, ScanConfigPageViewModel scanConfigPageViewModel, ExecutionConfigPageViewModel executionConfigPageViewModel, SearchConfigPageViewModel searchConfigPageViewModel, LanguageConfigPageViewModel languageConfigPageViewModel) {
+	public ConfigWindowViewModel(IConfigStore configStore, ScanConfigPageViewModel scanConfigPageViewModel, ThumbnailConfigPageViewModel thumbnailConfigPageViewModel, ExecutionConfigPageViewModel executionConfigPageViewModel, SearchConfigPageViewModel searchConfigPageViewModel, LanguageConfigPageViewModel languageConfigPageViewModel) {
 		this.ScanConfigPageViewModel = scanConfigPageViewModel;
+		this.ThumbnailConfigPageViewModel = thumbnailConfigPageViewModel;
 		this.ExecutionConfigPageViewModel = executionConfigPageViewModel;
 		this.SearchConfigPageViewModel = searchConfigPageViewModel;
 		this.LanguageConfigPageViewModel = languageConfigPageViewModel;
 		this.ConfigPageViewModels = [
 			this.ScanConfigPageViewModel,
+			this.ThumbnailConfigPageViewModel,
 			this.ExecutionConfigPageViewModel,
 			this.SearchConfigPageViewModel,
 			this.LanguageConfigPageViewModel,
@@ -44,6 +46,10 @@ public class ConfigWindowViewModel : ViewModelBase {
 	} = new();
 
 	public ScanConfigPageViewModel ScanConfigPageViewModel {
+		get;
+	}
+
+	public ThumbnailConfigPageViewModel ThumbnailConfigPageViewModel {
 		get;
 	}
 

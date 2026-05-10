@@ -1,3 +1,4 @@
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.MediaItemTypes.Base.Models;
 using MediaDeck.MediaItemTypes.Base.ViewModels;
 using MediaDeck.MediaItemTypes.Image.Models;
@@ -5,13 +6,13 @@ using MediaDeck.MediaItemTypes.Image.Models;
 namespace MediaDeck.MediaItemTypes.Image.ViewModels;
 
 [Inject(InjectServiceLifetime.Transient)]
-public class ImageThumbnailPickerViewModel(BaseThumbnailPickerModel thumbnailPickerModel, ImageMediaItemOperator ImageMediaItemOperator, IFilePickerService filePickerService) : BaseThumbnailPickerViewModel<BaseThumbnailPickerModel>(thumbnailPickerModel, filePickerService) {
+public class ImageThumbnailPickerViewModel(BaseThumbnailPickerModel thumbnailPickerModel, ImageMediaItemOperator ImageMediaItemOperator, IFilePickerService filePickerService, ConfigModel config) : BaseThumbnailPickerViewModel<BaseThumbnailPickerModel>(thumbnailPickerModel, filePickerService, config) {
 	private readonly ImageMediaItemOperator _ImageMediaItemOperator = ImageMediaItemOperator;
 
 	public override void RecreateThumbnail() {
 		if (this.targetFileViewModel is null) {
 			return;
 		}
-		this.CandidateThumbnail.Value = this._ImageMediaItemOperator.CreateThumbnail(this.targetFileViewModel.FileModel, 300, 300);
+		this.CandidateThumbnail.Value = this._ImageMediaItemOperator.CreateThumbnail(this.targetFileViewModel.FileModel, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value);
 	}
 }

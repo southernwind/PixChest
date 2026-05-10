@@ -1,5 +1,6 @@
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.MediaItemTypes.Base.Models;
 using MediaDeck.MediaItemTypes.Base.ViewModels;
 using MediaDeck.MediaItemTypes.Image.Models;
@@ -13,12 +14,12 @@ namespace MediaDeck.MediaItemTypes.Image.ViewModels;
 public class ImageBulkThumbnailConfigViewModel : BulkThumbnailConfigViewModelBase {
 	private readonly ImageMediaItemOperator _imageOperator;
 
-	public ImageBulkThumbnailConfigViewModel(ImageMediaItemOperator imageOperator, BaseThumbnailPickerModel thumbnailPickerModel)
-		: base(MediaType.Image, thumbnailPickerModel) {
+	public ImageBulkThumbnailConfigViewModel(ImageMediaItemOperator imageOperator, BaseThumbnailPickerModel thumbnailPickerModel, ConfigModel config)
+		: base(MediaType.Image, thumbnailPickerModel, config) {
 		this._imageOperator = imageOperator;
 	}
 
 	protected override byte[]? GenerateThumbnail(IMediaItemViewModel target) {
-		return this._imageOperator.CreateThumbnail(target.FileModel, 300, 300);
+		return this._imageOperator.CreateThumbnail(target.FileModel, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value);
 	}
 }

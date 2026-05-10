@@ -1,8 +1,8 @@
 using System.IO.Compression;
-
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.MediaItemTypes.Archive.Models;
 using MediaDeck.MediaItemTypes.Base.Models;
 using MediaDeck.MediaItemTypes.Base.ViewModels;
@@ -18,8 +18,8 @@ public class ArchiveBulkThumbnailConfigViewModel : BulkThumbnailConfigViewModelB
 	private readonly ArchiveMediaItemOperator _archiveOperator;
 	private readonly IMediaItemTypeService _mediaItemTypeService;
 
-	public ArchiveBulkThumbnailConfigViewModel(ArchiveMediaItemOperator archiveOperator, IMediaItemTypeService mediaItemTypeService, BaseThumbnailPickerModel thumbnailPickerModel)
-		: base(MediaType.Archive, thumbnailPickerModel) {
+	public ArchiveBulkThumbnailConfigViewModel(ArchiveMediaItemOperator archiveOperator, IMediaItemTypeService mediaItemTypeService, BaseThumbnailPickerModel thumbnailPickerModel, ConfigModel config)
+		: base(MediaType.Archive, thumbnailPickerModel, config) {
 		this._archiveOperator = archiveOperator;
 		this._mediaItemTypeService = mediaItemTypeService;
 	}
@@ -39,6 +39,6 @@ public class ArchiveBulkThumbnailConfigViewModel : BulkThumbnailConfigViewModelB
 		}
 		var index = Math.Clamp(this.EntryIndex.Value - 1, 0, images.Count - 1);
 		var entry = images[index];
-		return this._archiveOperator.CreateThumbnail(archive, 300, 300, entry.FullName);
+		return this._archiveOperator.CreateThumbnail(archive, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value, entry.FullName);
 	}
 }

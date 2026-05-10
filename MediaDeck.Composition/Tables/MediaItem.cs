@@ -45,6 +45,14 @@ public class MediaItem {
 	}
 
 	/// <summary>
+	/// 最後に作成したサムネイルサイズ
+	/// </summary>
+	public int ThumbnailSize {
+		get;
+		set;
+	}
+
+	/// <summary>
 	/// 緯度
 	/// </summary>
 	public double? Latitude {

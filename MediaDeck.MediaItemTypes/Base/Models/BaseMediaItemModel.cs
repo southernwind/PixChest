@@ -77,6 +77,11 @@ public abstract class BaseMediaItemModel : ModelBase, IMediaItemModel {
 		set;
 	}
 
+	public int ThumbnailSize {
+		get;
+		set;
+	}
+
 	public bool Exists {
 		get;
 		set;

@@ -14,4 +14,12 @@ public interface IFilePathService {
 	/// <returns>サムネイル絶対ファイルパス</returns>
 	public string GetThumbnailAbsoluteFilePath(string thumbRelativePath);
 
+	/// <summary>
+	/// サムネイル絶対ファイルパス取得
+	/// </summary>
+	/// <param name="thumbRelativePath">サムネイル相対ファイルパス</param>
+	/// <param name="size">サムネイルサイズ</param>
+	/// <returns>サムネイル絶対ファイルパス</returns>
+	public string GetThumbnailAbsoluteFilePath(string thumbRelativePath, int size);
+
 }

@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.MediaItemTypes.Base.ViewModels;
 using MediaDeck.MediaItemTypes.FolderGroup.Models;
 
@@ -10,7 +11,7 @@ namespace MediaDeck.MediaItemTypes.FolderGroup.ViewModels;
 /// </summary>
 [Inject(InjectServiceLifetime.Transient)]
 public class FolderGroupThumbnailPickerViewModel : BaseThumbnailPickerViewModel<FolderGroupThumbnailPickerModel> {
-	public FolderGroupThumbnailPickerViewModel(FolderGroupThumbnailPickerModel thumbnailPickerModel, IFilePickerService filePickerService) : base(thumbnailPickerModel, filePickerService) {
+	public FolderGroupThumbnailPickerViewModel(FolderGroupThumbnailPickerModel thumbnailPickerModel, IFilePickerService filePickerService, ConfigModel config) : base(thumbnailPickerModel, filePickerService, config) {
 
 		// UIスレッドへの同期を伴うビューリストを作成
 		this.Items = this.thumbnailPickerModel.Items.ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);

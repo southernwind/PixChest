@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
-
 using MediaDeck.Common.Base;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.MediaItemTypes.Base.Models;
 
 namespace MediaDeck.MediaItemTypes.Base.ViewModels;
@@ -14,10 +14,12 @@ namespace MediaDeck.MediaItemTypes.Base.ViewModels;
 /// </summary>
 public abstract class BulkThumbnailConfigViewModelBase : ViewModelBase, IBulkThumbnailConfigViewModel {
 	private readonly BaseThumbnailPickerModel _thumbnailPickerModel;
+	protected readonly ConfigModel _config;
 
-	protected BulkThumbnailConfigViewModelBase(MediaType mediaType, BaseThumbnailPickerModel thumbnailPickerModel) {
+	protected BulkThumbnailConfigViewModelBase(MediaType mediaType, BaseThumbnailPickerModel thumbnailPickerModel, ConfigModel config) {
 		this.MediaType = mediaType;
 		this._thumbnailPickerModel = thumbnailPickerModel;
+		this._config = config;
 	}
 
 	public MediaType MediaType {
@@ -31,7 +33,7 @@ public abstract class BulkThumbnailConfigViewModelBase : ViewModelBase, IBulkThu
 		if (bytes is null) {
 			return;
 		}
-		await this._thumbnailPickerModel.UpdateThumbnailAsync(target.FileModel, bytes);
+		await this._thumbnailPickerModel.UpdateThumbnailAsync(target.FileModel, bytes, this._config.ThumbnailConfig.ThumbnailSize.Value);
 		target.RefreshThumbnail();
 	}
 

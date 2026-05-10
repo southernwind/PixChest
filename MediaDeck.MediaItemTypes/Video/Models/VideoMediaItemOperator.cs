@@ -57,7 +57,7 @@ public partial class VideoMediaItemOperator : BaseMediaItemOperator {
 			if (metadata.PrimaryVideoStream is not { } videoStream) {
 				throw new Exception("PrimaryVideoStream is null");
 			}
-			var image = this.CreateThumbnail(filePath, videoStream.Width, videoStream.Height, 300, 300, metadata.Duration / 5);
+			var image = this.CreateThumbnail(filePath, videoStream.Width, videoStream.Height, this._config.ThumbnailConfig.ThumbnailSize.Value, this._config.ThumbnailConfig.ThumbnailSize.Value, metadata.Duration / 5);
 			new FileInfo(thumbPath).Directory?.Create();
 			File.WriteAllBytes(thumbPath, image);
 		} catch (Exception ex) {
@@ -91,6 +91,7 @@ public partial class VideoMediaItemOperator : BaseMediaItemOperator {
 			Width = metadata.PrimaryVideoStream?.Width ?? 0,
 			Height = metadata.PrimaryVideoStream?.Height ?? 0,
 			IsUnderFolderGroup = isUnderFolderGroup,
+			ThumbnailSize = this._config.ThumbnailConfig.ThumbnailSize.Value,
 			VideoFile = new() { Duration = metadata.PrimaryVideoStream?.Duration.TotalSeconds, Rotation = metadata.PrimaryVideoStream?.Rotation },
 			Metadata = new() {
 				Entries = this.CreateEntries(metadata)

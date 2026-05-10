@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.MediaItemTypes.Base.Models;
 using MediaDeck.MediaItemTypes.Base.ViewModels;
 using MediaDeck.MediaItemTypes.Video.Models;
@@ -13,7 +14,8 @@ public class VideoThumbnailPickerViewModel : BaseThumbnailPickerViewModel<BaseTh
 		BaseThumbnailPickerModel thumbnailPickerModel,
 		VideoMediaItemOperator VideoMediaItemOperator,
 		ILogger<VideoThumbnailPickerViewModel> logger,
-		IFilePickerService filePickerService) : base(thumbnailPickerModel, filePickerService) {
+		IFilePickerService filePickerService,
+		ConfigModel config) : base(thumbnailPickerModel, filePickerService, config) {
 		this._VideoMediaItemOperator = VideoMediaItemOperator;
 		this._logger = logger;
 		this._updateTimeSubject.ObserveOnCurrentSynchronizationContext().Subscribe(x => this.Time.Value = x).AddTo(this.CompositeDisposable);
@@ -38,7 +40,7 @@ public class VideoThumbnailPickerViewModel : BaseThumbnailPickerViewModel<BaseTh
 			return;
 		}
 		try {
-			this.CandidateThumbnail.Value = this._VideoMediaItemOperator.CreateThumbnail(this.targetFileViewModel.FileModel, 300, 300, this.Time.Value);
+			this.CandidateThumbnail.Value = this._VideoMediaItemOperator.CreateThumbnail(this.targetFileViewModel.FileModel, this._config.ThumbnailConfig.ThumbnailSize.Value, this._config.ThumbnailConfig.ThumbnailSize.Value, this.Time.Value);
 		} catch (Exception ex) {
 			this._logger.LogError(ex, "Failed to recreate video thumbnail for file {FilePath}", this.targetFileViewModel.FilePath);
 			this.CandidateThumbnail.Value = null;

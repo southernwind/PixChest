@@ -630,4 +630,22 @@
   <data name="Config_Search_Description" xml:space="preserve">
     <value>検索やデータ読み込みパフォーマンスに関する設定です</value>
   </data>
+  <data name="Config_Thumbnail_Name" xml:space="preserve">
+    <value>サムネイル</value>
+  </data>
+  <data name="Config_Thumbnail_Description" xml:space="preserve">
+    <value>サムネイルの作成サイズなどを設定します</value>
+  </data>
+  <data name="ThumbnailConfigPage_Header.Text" xml:space="preserve">
+    <value>サムネイル設定</value>
+  </data>
+  <data name="ThumbnailConfigPage_Description.Text" xml:space="preserve">
+    <value>自動生成されるサムネイルの品質とサイズを設定します。</value>
+  </data>
+  <data name="ThumbnailConfigPage_ThumbnailSize.Text" xml:space="preserve">
+    <value>サムネイル作成サイズ (px)</value>
+  </data>
+  <data name="ThumbnailConfigPage_ThumbnailSizeDesc.Text" xml:space="preserve">
+    <value>作成されるサムネイルの長辺のサイズを指定します。変更は今後作成されるサムネイルに適用されます。</value>
+  </data>
 </root>

@@ -32,6 +32,15 @@ public class TestFileModel : MediaItem, IMediaItemModel {
 	public string? ThumbnailFilePath {
 		get; set;
 	}
+	public new int ThumbnailSize {
+		get {
+			return base.ThumbnailSize;
+		}
+
+		set {
+			base.ThumbnailSize = value;
+		}
+	}
 	public bool Exists {
 		get; set;
 	}

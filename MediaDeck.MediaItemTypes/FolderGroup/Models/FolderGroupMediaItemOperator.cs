@@ -2,6 +2,7 @@ using System.IO;
 using System.Threading.Tasks;
 using MediaDeck.Composition.Database;
 using MediaDeck.Composition.Enum;
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Composition.Tables;
 using MediaDeck.MediaItemTypes.Base.Models;
 
@@ -10,13 +11,16 @@ namespace MediaDeck.MediaItemTypes.FolderGroup.Models;
 [Inject(InjectServiceLifetime.Transient)]
 public partial class FolderGroupMediaItemOperator : BaseMediaItemOperator {
 	private readonly IFilePathService _filePathService;
+	private readonly ConfigModel _config;
 
 	public FolderGroupMediaItemOperator(
 		IDbContextFactory<MediaDeckDbContext> dbFactory,
 		IFileHashUpdatorService updateFileHashBackgroundService,
-		IFilePathService filePathService)
+		IFilePathService filePathService,
+		ConfigModel config)
 		: base(dbFactory, updateFileHashBackgroundService, MediaType.FolderGroup) {
 		this._filePathService = filePathService;
+		this._config = config;
 	}
 
 	public override async Task<MediaItem?> RegisterMediaItemAsync(string filePath) {
@@ -36,9 +40,10 @@ public partial class FolderGroupMediaItemOperator : BaseMediaItemOperator {
 			.OrderBy(x => x.FilePath)
 			.FirstOrDefaultAsync();
 
+		var currentSize = this._config.ThumbnailConfig.ThumbnailSize.Value;
 		if (firstItem != null && firstItem.ThumbnailFileName != null) {
 			new FileInfo(thumbPath).Directory?.Create();
-			File.Copy(this._filePathService.GetThumbnailAbsoluteFilePath(firstItem.ThumbnailFileName), thumbPath, true);
+			File.Copy(this._filePathService.GetThumbnailAbsoluteFilePath(firstItem.ThumbnailFileName, firstItem.ThumbnailSize), thumbPath, true);
 		}
 
 		var directoryInfo = new DirectoryInfo(filePath);
@@ -59,7 +64,8 @@ public partial class FolderGroupMediaItemOperator : BaseMediaItemOperator {
 			LastAccessTime = directoryInfo.Exists ? directoryInfo.LastAccessTime : DateTime.MinValue,
 			RegisteredTime = DateTime.Now,
 			IsExists = directoryInfo.Exists,
-			IsUnderFolderGroup = isUnderFolderGroup
+			IsUnderFolderGroup = isUnderFolderGroup,
+			ThumbnailSize = currentSize
 		};
 
 		await db.MediaItems.AddAsync(mediaItem);

@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
-
 using MediaDeck.Common.Base;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.MediaItemTypes.Base.Models;
 using MediaDeck.MediaItemTypes.FolderGroup.Models;
 
@@ -18,11 +18,13 @@ public class FolderGroupBulkThumbnailConfigViewModel : ViewModelBase, IBulkThumb
 	private readonly FolderGroupThumbnailPickerModel _model;
 	private readonly BaseThumbnailPickerModel _baseThumbnailPickerModel;
 	private readonly IFilePathService _filePathService;
+	private readonly ConfigModel _config;
 
-	public FolderGroupBulkThumbnailConfigViewModel(FolderGroupThumbnailPickerModel model, BaseThumbnailPickerModel baseThumbnailPickerModel, IFilePathService filePathService) {
+	public FolderGroupBulkThumbnailConfigViewModel(FolderGroupThumbnailPickerModel model, BaseThumbnailPickerModel baseThumbnailPickerModel, IFilePathService filePathService, ConfigModel config) {
 		this._model = model;
 		this._baseThumbnailPickerModel = baseThumbnailPickerModel;
 		this._filePathService = filePathService;
+		this._config = config;
 	}
 
 	public MediaType MediaType {
@@ -50,7 +52,7 @@ public class FolderGroupBulkThumbnailConfigViewModel : ViewModelBase, IBulkThumb
 			return;
 		}
 		cancellationToken.ThrowIfCancellationRequested();
-		await this._baseThumbnailPickerModel.UpdateThumbnailAsync(target.FileModel, bytes);
+		await this._baseThumbnailPickerModel.UpdateThumbnailAsync(target.FileModel, bytes, this._config.ThumbnailConfig.ThumbnailSize.Value);
 		target.RefreshThumbnail();
 	}
 }

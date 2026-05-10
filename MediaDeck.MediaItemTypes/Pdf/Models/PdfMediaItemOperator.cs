@@ -1,11 +1,10 @@
 using System.IO;
 using System.Threading.Tasks;
-
 using MediaDeck.Composition.Database;
 using MediaDeck.Composition.Enum;
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Composition.Tables;
 using MediaDeck.MediaItemTypes.Base.Models;
-
 using Microsoft.Extensions.Logging;
 
 namespace MediaDeck.MediaItemTypes.Pdf.Models;
@@ -15,17 +14,20 @@ public partial class PdfMediaItemOperator : BaseMediaItemOperator {
 	private readonly IFilePathService _filePathService;
 	private readonly ILogger<PdfMediaItemOperator> _logger;
 	private readonly IPdfDocumentOperator _pdfDocumentOperator;
+	private readonly ConfigModel _config;
 
 	public PdfMediaItemOperator(
 		IFilePathService filePathService,
 		ILogger<PdfMediaItemOperator> logger,
 		IDbContextFactory<MediaDeckDbContext> dbFactory,
 		IFileHashUpdatorService updateFileHashBackgroundService,
-		IPdfDocumentOperator pdfDocumentOperator)
+		IPdfDocumentOperator pdfDocumentOperator,
+		ConfigModel config)
 		: base(dbFactory, updateFileHashBackgroundService, MediaType.Pdf) {
 		this._filePathService = filePathService;
 		this._logger = logger;
 		this._pdfDocumentOperator = pdfDocumentOperator;
+		this._config = config;
 	}
 
 	public override async Task<MediaItem?> RegisterMediaItemAsync(string filePath) {
@@ -39,7 +41,7 @@ public partial class PdfMediaItemOperator : BaseMediaItemOperator {
 		var thumbRelativePath = this._filePathService.GetThumbnailRelativeFilePath();
 		var thumbPath = this._filePathService.GetThumbnailAbsoluteFilePath(thumbRelativePath);
 		try {
-			var image = this._pdfDocumentOperator.CreateThumbnail(filePath, 300, 300, 1);
+			var image = this._pdfDocumentOperator.CreateThumbnail(filePath, this._config.ThumbnailConfig.ThumbnailSize.Value, this._config.ThumbnailConfig.ThumbnailSize.Value, 1);
 			new FileInfo(thumbPath).Directory?.Create();
 			File.WriteAllBytes(thumbPath, image);
 		} catch (Exception ex) {
@@ -70,6 +72,7 @@ public partial class PdfMediaItemOperator : BaseMediaItemOperator {
 			Width = (int)pdfDocument.Width,
 			Height = (int)pdfDocument.Height,
 			IsUnderFolderGroup = isUnderFolderGroup,
+			ThumbnailSize = this._config.ThumbnailConfig.ThumbnailSize.Value,
 			Metadata = new() { Entries = [new() { Key = "PageCount", Value = pdfDocument.PageCount.ToString() }] }
 		};
 

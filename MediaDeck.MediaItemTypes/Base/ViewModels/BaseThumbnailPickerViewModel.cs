@@ -1,19 +1,19 @@
 using System.IO;
 using System.Threading.Tasks;
-
 using ImageMagick;
-
 using MediaDeck.Common.Base;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.MediaItemTypes.Base.Models;
 
 namespace MediaDeck.MediaItemTypes.Base.ViewModels;
 
 public abstract class BaseThumbnailPickerViewModel<TThumbnailPickerModel> : ViewModelBase, IThumbnailPickerViewModel
 	where TThumbnailPickerModel : BaseThumbnailPickerModel {
-	public BaseThumbnailPickerViewModel(TThumbnailPickerModel thumbnailPickerModel, IFilePickerService filePickerService) {
+	public BaseThumbnailPickerViewModel(TThumbnailPickerModel thumbnailPickerModel, IFilePickerService filePickerService, ConfigModel config) {
 		this._filePickerService = filePickerService;
+		this._config = config;
 		this.RecreateThumbnailCommand.Subscribe(_ => this.RecreateThumbnail()).AddTo(this.CompositeDisposable);
 		this.PickThumbnailFromFileCommand.Subscribe(async _ => await this.PickThumbnailFromFileAsync()).AddTo(this.CompositeDisposable);
 		this.SaveCommand.Subscribe(async _ => await this.SaveAsync()).AddTo(this.CompositeDisposable);
@@ -22,6 +22,7 @@ public abstract class BaseThumbnailPickerViewModel<TThumbnailPickerModel> : View
 	}
 
 	private readonly IFilePickerService _filePickerService;
+	protected readonly ConfigModel _config;
 
 	protected IMediaItemViewModel? targetFileViewModel;
 	protected TThumbnailPickerModel thumbnailPickerModel;
@@ -67,7 +68,7 @@ public abstract class BaseThumbnailPickerViewModel<TThumbnailPickerModel> : View
 		using var output = new MemoryStream();
 		using var image = new MagickImage(input);
 		image.AutoOrient();
-		image.Thumbnail(300, 300);
+		image.Thumbnail((uint)this._config.ThumbnailConfig.ThumbnailSize.Value, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value);
 		image.Format = MagickFormat.Jpg;
 		image.Write(output);
 
@@ -81,7 +82,7 @@ public abstract class BaseThumbnailPickerViewModel<TThumbnailPickerModel> : View
 		if (this.CandidateThumbnail.Value is null) {
 			return;
 		}
-		await this.thumbnailPickerModel.UpdateThumbnailAsync(this.targetFileViewModel.FileModel, this.CandidateThumbnail.Value);
+		await this.thumbnailPickerModel.UpdateThumbnailAsync(this.targetFileViewModel.FileModel, this.CandidateThumbnail.Value, this._config.ThumbnailConfig.ThumbnailSize.Value);
 		this.targetFileViewModel.RefreshThumbnail();
 	}
 

@@ -1,11 +1,10 @@
 using System.IO;
 using System.Threading.Tasks;
-
 using ImageMagick;
-
 using MediaDeck.Composition.Database;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.Models;
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Composition.Tables;
 using MediaDeck.MediaItemTypes.Base.Models;
 using MediaDeck.MediaItemTypes.Image.Utils;
@@ -15,13 +14,16 @@ namespace MediaDeck.MediaItemTypes.Image.Models;
 [Inject(InjectServiceLifetime.Transient)]
 public class ImageMediaItemOperator : BaseMediaItemOperator {
 	private readonly IFilePathService _filePathService;
+	private readonly ConfigModel _config;
 
 	public ImageMediaItemOperator(
 		IFilePathService filePathService,
+		ConfigModel config,
 		IDbContextFactory<MediaDeckDbContext> dbFactory,
 		IFileHashUpdatorService updateFileHashBackgroundService)
 		: base(dbFactory, updateFileHashBackgroundService, MediaType.Image) {
 		this._filePathService = filePathService;
+		this._config = config;
 	}
 
 	public override async Task<MediaItem?> RegisterMediaItemAsync(string filePath) {
@@ -40,7 +42,7 @@ public class ImageMediaItemOperator : BaseMediaItemOperator {
 		var thumbRelativePath = this._filePathService.GetThumbnailRelativeFilePath();
 		var thumbPath = this._filePathService.GetThumbnailAbsoluteFilePath(thumbRelativePath);
 		try {
-			var image = this.CreateThumbnail(fileMs, 300, 300);
+			var image = this.CreateThumbnail(fileMs, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value);
 			new FileInfo(thumbPath).Directory?.Create();
 			File.WriteAllBytes(thumbPath, image);
 		} catch {
@@ -66,7 +68,8 @@ public class ImageMediaItemOperator : BaseMediaItemOperator {
 			LastAccessTime = fileInfo.Exists ? fileInfo.LastAccessTime : DateTime.MinValue,
 			RegisteredTime = DateTime.Now,
 			IsExists = fileInfo.Exists,
-			IsUnderFolderGroup = isUnderFolderGroup
+			IsUnderFolderGroup = isUnderFolderGroup,
+			ThumbnailSize = this._config.ThumbnailConfig.ThumbnailSize.Value
 		};
 
 		// metadata

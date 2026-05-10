@@ -4,7 +4,7 @@ namespace MediaDeck.Composition.Stores.Config.Model;
 
 [Inject(InjectServiceLifetime.Singleton)]
 [GenerateR3JsonConfigDto]
-public class ConfigModel(PathConfigModel pathConfigModel, ScanConfigModel scanConfigModel, ExecutionConfigModel executionConfigModel, SearchConfigModel searchConfigModel, FolderManagerConfigModel folderManagerConfigModel, SearchDefinitionsConfigModel searchDefinitionsConfigModel, LanguageConfigModel languageConfigModel) {
+public class ConfigModel(PathConfigModel pathConfigModel, ScanConfigModel scanConfigModel, ThumbnailConfigModel thumbnailConfigModel, ExecutionConfigModel executionConfigModel, SearchConfigModel searchConfigModel, FolderManagerConfigModel folderManagerConfigModel, SearchDefinitionsConfigModel searchDefinitionsConfigModel, LanguageConfigModel languageConfigModel) {
 	/// <summary>
 	/// 設定バージョン
 	/// </summary>
@@ -28,6 +28,14 @@ public class ConfigModel(PathConfigModel pathConfigModel, ScanConfigModel scanCo
 		get;
 		set;
 	} = scanConfigModel;
+
+	/// <summary>
+	/// サムネイル設定
+	/// </summary>
+	public ThumbnailConfigModel ThumbnailConfig {
+		get;
+		set;
+	} = thumbnailConfigModel;
 
 	/// <summary>
 	/// 実行設定

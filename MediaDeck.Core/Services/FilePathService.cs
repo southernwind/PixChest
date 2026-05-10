@@ -18,7 +18,12 @@ public class FilePathService : IFilePathService {
 
 	/// <inheritdoc/>
 	public string GetThumbnailAbsoluteFilePath(string thumbRelativePath) {
-		return Path.Combine(this._config.PathConfig.ThumbnailFolderPath.Value, thumbRelativePath);
+		return this.GetThumbnailAbsoluteFilePath(thumbRelativePath, this._config.ThumbnailConfig.ThumbnailSize.Value);
+	}
+
+	/// <inheritdoc/>
+	public string GetThumbnailAbsoluteFilePath(string thumbRelativePath, int size) {
+		return Path.Combine(this._config.PathConfig.ThumbnailFolderPath.Value, size.ToString(), thumbRelativePath);
 	}
 
 }

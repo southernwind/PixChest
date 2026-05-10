@@ -20,6 +20,7 @@ public class FilePathServiceTests {
 		services.AddSingleton<ExecutionConfigModel>();
 		services.AddTransient<ExtensionObjectModel>();
 		services.AddSingleton<ScanConfigModel>();
+		services.AddSingleton<ThumbnailConfigModel>();
 		services.AddSingleton<SearchConfigModel>();
 		services.AddSingleton<FolderManagerConfigModel>();
 		services.AddSingleton<SearchDefinitionsConfigModel>();
@@ -54,11 +55,27 @@ public class FilePathServiceTests {
 	public void GetThumbnailAbsoluteFilePath_ShouldReturnCombinedPath() {
 		// Arrange
 		var relativePath = @"1a\bcdef0123456789abcdef0123456789.jpg";
+		var size = this._config.ThumbnailConfig.ThumbnailSize.Value;
 		var expectedBasePath = this._config.PathConfig.ThumbnailFolderPath.Value;
-		var expectedAbsolutePath = Path.Combine(expectedBasePath, relativePath);
+		var expectedAbsolutePath = Path.Combine(expectedBasePath, size.ToString(), relativePath);
 
 		// Act
 		var result = this._sut.GetThumbnailAbsoluteFilePath(relativePath);
+
+		// Assert
+		result.ShouldBe(expectedAbsolutePath);
+	}
+
+	[Fact]
+	public void GetThumbnailAbsoluteFilePath_WithSpecifiedSize_ShouldReturnCombinedPath() {
+		// Arrange
+		var relativePath = @"1a\bcdef0123456789abcdef0123456789.jpg";
+		var size = 128;
+		var expectedBasePath = this._config.PathConfig.ThumbnailFolderPath.Value;
+		var expectedAbsolutePath = Path.Combine(expectedBasePath, "128", relativePath);
+
+		// Act
+		var result = this._sut.GetThumbnailAbsoluteFilePath(relativePath, size);
 
 		// Assert
 		result.ShouldBe(expectedAbsolutePath);

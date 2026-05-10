@@ -51,8 +51,9 @@ public abstract class BaseMediaItemFactory<TFileOperator, TFileModel, TExecution
 
 
 	protected void SetModelProperties(TFileModel fileModel, MediaItem MediaItem) {
+		fileModel.ThumbnailSize = MediaItem.ThumbnailSize;
 		if (MediaItem.ThumbnailFileName != null) {
-			fileModel.ThumbnailFilePath = Path.Combine(this._config.PathConfig.ThumbnailFolderPath.Value, MediaItem.ThumbnailFileName);
+			fileModel.ThumbnailFilePath = Path.Combine(this._config.PathConfig.ThumbnailFolderPath.Value, MediaItem.ThumbnailSize.ToString(), MediaItem.ThumbnailFileName);
 		}
 		fileModel.Rate = MediaItem.Rate;
 		fileModel.Description = MediaItem.Description;

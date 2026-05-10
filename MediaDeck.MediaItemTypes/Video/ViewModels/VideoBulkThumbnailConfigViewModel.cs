@@ -1,7 +1,7 @@
 using FFMpegCore;
-
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.MediaItemTypes.Base.Models;
 using MediaDeck.MediaItemTypes.Base.ViewModels;
 using MediaDeck.MediaItemTypes.Video.Models;
@@ -29,8 +29,8 @@ public enum VideoBulkThumbnailMode {
 public class VideoBulkThumbnailConfigViewModel : BulkThumbnailConfigViewModelBase {
 	private readonly VideoMediaItemOperator _videoOperator;
 
-	public VideoBulkThumbnailConfigViewModel(VideoMediaItemOperator videoOperator, BaseThumbnailPickerModel thumbnailPickerModel)
-		: base(MediaType.Video, thumbnailPickerModel) {
+	public VideoBulkThumbnailConfigViewModel(VideoMediaItemOperator videoOperator, BaseThumbnailPickerModel thumbnailPickerModel, ConfigModel config)
+		: base(MediaType.Video, thumbnailPickerModel, config) {
 		this._videoOperator = videoOperator;
 	}
 
@@ -57,7 +57,7 @@ public class VideoBulkThumbnailConfigViewModel : BulkThumbnailConfigViewModelBas
 
 	protected override byte[]? GenerateThumbnail(IMediaItemViewModel target) {
 		var time = this.ResolveTime(target.FilePath);
-		return this._videoOperator.CreateThumbnail(target.FileModel, 300, 300, time);
+		return this._videoOperator.CreateThumbnail(target.FileModel, this._config.ThumbnailConfig.ThumbnailSize.Value, this._config.ThumbnailConfig.ThumbnailSize.Value, time);
 	}
 
 	private TimeSpan ResolveTime(string filePath) {

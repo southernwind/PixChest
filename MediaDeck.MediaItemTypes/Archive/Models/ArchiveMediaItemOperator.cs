@@ -1,16 +1,14 @@
 using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
-
 using ImageMagick;
-
 using MediaDeck.Composition.Database;
 using MediaDeck.Composition.Enum;
 using MediaDeck.Composition.Interfaces.MediaItemTypes;
+using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Composition.Tables;
 using MediaDeck.MediaItemTypes.Base.Models;
 using MediaDeck.MediaItemTypes.Image.Utils;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -26,17 +24,20 @@ public partial class ArchiveMediaItemOperator : BaseMediaItemOperator {
 	private readonly IFilePathService _filePathService;
 	private readonly ILogger<ArchiveMediaItemOperator> _logger;
 	private readonly IServiceProvider _serviceProvider;
+	private readonly ConfigModel _config;
 
 	public ArchiveMediaItemOperator(
 		IFilePathService filePathService,
 		ILogger<ArchiveMediaItemOperator> logger,
 		IDbContextFactory<MediaDeckDbContext> dbFactory,
 		IFileHashUpdatorService updateFileHashBackgroundService,
-		IServiceProvider serviceProvider)
+		IServiceProvider serviceProvider,
+		ConfigModel config)
 		: base(dbFactory, updateFileHashBackgroundService, MediaType.Archive) {
 		this._filePathService = filePathService;
 		this._logger = logger;
 		this._serviceProvider = serviceProvider;
+		this._config = config;
 	}
 
 	public override async Task<MediaItem?> RegisterMediaItemAsync(string filePath) {
@@ -54,7 +55,7 @@ public partial class ArchiveMediaItemOperator : BaseMediaItemOperator {
 		var first = archiveFile.Entries.FirstOrDefault(x => this._mediaItemTypeService.IsTargetPath(x.Name, MediaType.Image));
 		try {
 			if (first != null) {
-				var image = this.CreateThumbnail(archiveFile, 300, 300, first.FullName);
+				var image = this.CreateThumbnail(archiveFile, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value, (uint)this._config.ThumbnailConfig.ThumbnailSize.Value, first.FullName);
 				new FileInfo(thumbPath).Directory?.Create();
 				File.WriteAllBytes(thumbPath, image);
 			}
@@ -82,6 +83,7 @@ public partial class ArchiveMediaItemOperator : BaseMediaItemOperator {
 			RegisteredTime = DateTime.Now,
 			IsExists = fileInfo.Exists,
 			IsUnderFolderGroup = isUnderFolderGroup,
+			ThumbnailSize = this._config.ThumbnailConfig.ThumbnailSize.Value,
 			Metadata = new() { Entries = [new() { Key = "PageCount", Value = archiveFile.Entries.Count(x => this._mediaItemTypeService.IsTargetPath(x.Name, MediaType.Image)).ToString() }] }
 		};
 
