@@ -12,7 +12,7 @@ public class FolderManagerModel : ModelBase {
 	private readonly FolderManagerConfigModel _folderManagerConfig;
 	private readonly IConfigStore _configStore;
 
-	public FolderManagerModel(FileRegistrar fileRegistrar, FolderManagerConfigModel folderManagerConfig,IConfigStore configStore) {
+	public FolderManagerModel(FileRegistrar fileRegistrar, FolderManagerConfigModel folderManagerConfig, IConfigStore configStore) {
 		this._fileRegistrar = fileRegistrar;
 		this._folderManagerConfig = folderManagerConfig;
 		this.Folders = this._folderManagerConfig.Folders;

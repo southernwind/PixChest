@@ -7,8 +7,32 @@ using Microsoft.UI.Xaml;
 namespace MediaDeck.Views.Panes.ViewerPanes;
 
 public sealed partial class MapViewer {
+	private readonly Subject<Unit> PinUpdateRequest = new();
+	private readonly CompositeDisposable _disposables = new();
 	public MapViewer() {
 		this.InitializeComponent();
+		this.PinUpdateRequest
+			.Debounce(TimeSpan.FromMilliseconds(300))
+			.ObserveOnCurrentSynchronizationContext()
+			.Subscribe(x => {
+				if (this.Map is not { } map) {
+					return;
+				}
+				if (this.ViewModel is not { }) {
+					return;
+				}
+				var leftTop = map.ViewToLocation(new(0, 0));
+				var rightBottom = map.ViewToLocation(new(map.ActualWidth, map.ActualHeight));
+
+				var mapVm = this.ViewModel.MapViewerViewModel;
+				mapVm.BoundsNorthWest.Value = new MediaDeckLocation(leftTop.Latitude, leftTop.Longitude);
+				mapVm.BoundsSouthEast.Value = new MediaDeckLocation(rightBottom.Latitude, rightBottom.Longitude);
+
+				mapVm.UpdateItemsForMapView(loc => {
+					var viewPoint = map.LocationToView(new Location(loc.Latitude, loc.Longitude));
+					return new System.Drawing.Point((int)viewPoint.X, (int)viewPoint.Y);
+				}, 100);
+			}).AddTo(this._disposables);
 	}
 
 	private void Map_Loaded(object sender, RoutedEventArgs e) {
@@ -32,7 +56,7 @@ public sealed partial class MapViewer {
 			return;
 		}
 		this.DispatcherQueue.TryEnqueue(() => {
-			vm.MapViewerViewModel.FitToItems(this.Map.ActualWidth, this.Map.ActualHeight);
+			this.PinUpdateRequest.OnNext(Unit.Default);
 		});
 	}
 
@@ -47,23 +71,11 @@ public sealed partial class MapViewer {
 	private void UpdateMapControl() {
 		// ビューポート変更時にアイテムを更新する
 		this.Map.ViewportChanged += (_, _) => {
-			if (this.Map is not { } map) {
-				return;
-			}
-			if (this.ViewModel is not { }) {
-				return;
-			}
-			var leftTop = map.ViewToLocation(new(0, 0));
-			var rightBottom = map.ViewToLocation(new(map.ActualWidth, map.ActualHeight));
-
-			var mapVm = this.ViewModel.MapViewerViewModel;
-			mapVm.BoundsNorthWest.Value = new MediaDeckLocation(leftTop.Latitude, leftTop.Longitude);
-			mapVm.BoundsSouthEast.Value = new MediaDeckLocation(rightBottom.Latitude, rightBottom.Longitude);
-
-			mapVm.UpdateItemsForMapView(loc => {
-				var viewPoint = map.LocationToView(new Location(loc.Latitude, loc.Longitude));
-				return new System.Drawing.Point((int)viewPoint.X, (int)viewPoint.Y);
-			}, 100);
+			this.PinUpdateRequest.OnNext(Unit.Default);
 		};
+	}
+
+	~MapViewer() {
+		this._disposables.Dispose();
 	}
 }
