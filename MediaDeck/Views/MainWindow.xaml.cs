@@ -2,11 +2,13 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using MediaDeck.Composition.Interfaces;
 using MediaDeck.Core.Stores.Config;
+using MediaDeck.Services;
 using MediaDeck.ViewModels;
 using MediaDeck.Views.Dialogs;
 using MediaDeck.Views.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 
 namespace MediaDeck.Views;
 
@@ -14,9 +16,11 @@ namespace MediaDeck.Views;
 public sealed partial class MainWindow : Window {
 	private readonly MainWindowViewModel _viewModel;
 	private readonly CompositeDisposable _disposable = new();
+	private readonly IStringProvider _stringProvider;
 
 	public MainWindow(MainWindowViewModel viewModel, IConfigStore configStore, IStringProvider stringProvider) {
 		this._viewModel = viewModel;
+		this._stringProvider = stringProvider;
 		this.InitializeComponent();
 
 		this.Title = stringProvider.GetString("App_Title");
@@ -95,6 +99,110 @@ public sealed partial class MainWindow : Window {
 		if (result == ContentDialogResult.Primary && !string.IsNullOrWhiteSpace(dialog.ResultText)) {
 			tabContext.TabState.DisplayName.Value = dialog.ResultText;
 		}
+	}
+
+	private Brush? _originalBorderBrush;
+
+	/// <summary>
+	/// ウィンドウのボーダーをハイライト色に変更する、または元の色に戻す。
+	/// ホバー時の視認性向上のために使用される。
+	/// </summary>
+	/// <param name="highlight">true時はハイライト色（黄色）に、false時は元の色に戻す</param>
+	public void HighlightBorder(bool highlight) {
+		if (highlight) {
+			this._originalBorderBrush = this.RootBorder.BorderBrush;
+			// ハイライト色: 黄色（でも背景の邪魔にならないように薄めの黄色）
+			this.RootBorder.BorderBrush = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 200, 0));
+		} else {
+			if (this._originalBorderBrush != null) {
+				this.RootBorder.BorderBrush = this._originalBorderBrush;
+			}
+		}
+	}
+
+	private void TabContextFlyout_Opening(object sender, object e) {
+		if (sender is MenuFlyout flyout) {
+			var windowManager = Ioc.Default.GetRequiredService<WindowManager>();
+			var currentWindowId = this._viewModel.WindowId;
+			var otherWindows = windowManager.GetOtherWindows(currentWindowId);
+
+			// メニューテキストを設定
+			if (flyout.Items.FirstOrDefault() is MenuFlyoutItem openItem) {
+				openItem.Text = this._stringProvider.GetString("TabContext_OpenInNewWindow");
+			}
+
+			// "ウィンドウへ移動" サブメニューを動的に構築
+			var subItem = flyout.Items.OfType<MenuFlyoutSubItem>().FirstOrDefault();
+			if (subItem != null) {
+				subItem.Text = this._stringProvider.GetString("TabContext_MoveToWindow");
+				subItem.Items.Clear();
+				if (otherWindows.Count == 0) {
+					var noItemText = this._stringProvider.GetString("TabContext_NoOtherWindows");
+					var noItem = new MenuFlyoutItem { Text = noItemText, IsEnabled = false };
+					subItem.Items.Add(noItem);
+				} else {
+					foreach (var (windowId, title) in otherWindows) {
+						var item = new MenuFlyoutItem { Text = $"{title} ({windowId.ToString().Substring(0, 6)})", Tag = windowId };
+						item.Click += this.MoveToExistingWindow_Click;
+						item.PointerEntered += (s, e) => this.MoveWindowMenuItem_PointerEntered(s, windowId);
+						item.PointerExited += (s, e) => this.MoveWindowMenuItem_PointerExited(s, windowId);
+						subItem.Items.Add(item);
+					}
+				}
+			}
+		}
+	}
+
+	private void OpenInNewWindow_Click(object sender, RoutedEventArgs e) {
+		if (sender is MenuFlyoutItem menuItem && menuItem.DataContext is TabContext tabContext) {
+			var windowManager = Ioc.Default.GetRequiredService<WindowManager>();
+			var currentWindowId = this._viewModel.WindowId;
+			var tabId = tabContext.TabState.TabId;
+			this._viewModel.DetachTab(tabContext);
+			windowManager.MoveTabToNewWindow(tabId, currentWindowId);
+		}
+	}
+
+	private void MoveToExistingWindow_Click(object sender, RoutedEventArgs e) {
+		if (sender is MenuFlyoutItem menuItem && menuItem.Tag is Guid targetWindowId) {
+			var tabContext = this.GetTabContextFromFlyout(menuItem);
+			if (tabContext != null) {
+				var windowManager = Ioc.Default.GetRequiredService<WindowManager>();
+				var currentWindowId = this._viewModel.WindowId;
+				var tabId = tabContext.TabState.TabId;
+				this._viewModel.DetachTab(tabContext);
+				windowManager.MoveTabToWindow(tabId, currentWindowId, targetWindowId);
+			}
+		}
+	}
+
+	private TabContext? GetTabContextFromFlyout(FrameworkElement element) {
+		// MenuFlyoutItemのDataContextはTabViewItemのDataContext（TabContext）
+		if (element.DataContext is TabContext tc) {
+			return tc;
+		}
+		return null;
+	}
+
+	/// <summary>
+	/// メニュー項目にマウスがホバーしたときに、対応するウィンドウのボーダーをハイライトする。
+	/// ユーザーが移動先を視認できるようにするためのハンドラ。
+	/// </summary>
+	/// <param name="sender">イベント発信元のMenuFlyoutItem</param>
+	/// <param name="targetWindowId">ホバーされたウィンドウID</param>
+	private void MoveWindowMenuItem_PointerEntered(object sender, Guid targetWindowId) {
+		var windowManager = Ioc.Default.GetRequiredService<WindowManager>();
+		windowManager.HighlightWindow(targetWindowId);
+	}
+
+	/// <summary>
+	/// メニュー項目からマウスがホバーを外れたときに、対応するウィンドウのボーダーハイライトを解除する。
+	/// </summary>
+	/// <param name="sender">イベント発信元のMenuFlyoutItem</param>
+	/// <param name="targetWindowId">ホバーを外れたウィンドウID</param>
+	private void MoveWindowMenuItem_PointerExited(object sender, Guid targetWindowId) {
+		var windowManager = Ioc.Default.GetRequiredService<WindowManager>();
+		windowManager.UnhighlightWindow(targetWindowId);
 	}
 
 }

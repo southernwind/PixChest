@@ -164,6 +164,30 @@ public class WindowManager : DisposableBase {
 		return Win32Interop.GetWindowIdFromWindow(hWnd);
 	}
 
+	/// <summary>
+	/// 指定されたWindowIdのウィンドウのボーダーをハイライトする。
+	/// ホバー時に他ウィンドウを視覚的に識別するために使用される。
+	/// </summary>
+	/// <param name="windowId">ハイライトするウィンドウID</param>
+	public void HighlightWindow(Guid windowId) {
+		var windowContext = this._windows.FirstOrDefault(x => x.WindowId == windowId);
+		if (windowContext?.Window is MainWindow mainWindow) {
+			mainWindow.HighlightBorder(true);
+		}
+	}
+
+	/// <summary>
+	/// 指定されたWindowIdのウィンドウのボーダーハイライトを解除する。
+	/// ホバーを外したときに元のボーダー色に戻すために使用される。
+	/// </summary>
+	/// <param name="windowId">ハイライトを解除するウィンドウID</param>
+	public void UnhighlightWindow(Guid windowId) {
+		var windowContext = this._windows.FirstOrDefault(x => x.WindowId == windowId);
+		if (windowContext?.Window is MainWindow mainWindow) {
+			mainWindow.HighlightBorder(false);
+		}
+	}
+
 	private void OnWindowStateAdded(WindowStateModel windowState) {
 		if (this._windows.Any(x => x.WindowId == windowState.WindowId)) {
 			return;
@@ -214,6 +238,53 @@ public class WindowManager : DisposableBase {
 		if (this.WindowCount == 0) {
 			Application.Current.Exit();
 		}
+	}
+
+	/// <summary>
+	/// 指定ウィンドウ以外のウィンドウ情報を取得する。
+	/// </summary>
+	/// <param name="currentWindowId">除外するウィンドウID</param>
+	/// <returns>指定ウィンドウ以外のウィンドウのID・タイトルのコレクション</returns>
+	public IReadOnlyList<(Guid WindowId, string Title)> GetOtherWindows(Guid currentWindowId) {
+		return this._windows
+			.Where(x => x.WindowId != currentWindowId)
+			.Select(x => (x.WindowId, Title: x.Window?.Title ?? x.WindowId.ToString()))
+			.ToList();
+	}
+
+	/// <summary>
+	/// タブを別のウィンドウへ移動する。
+	/// 呼び出し前に元ウィンドウのTabIdsからは既に削除されていることを前提とする。
+	/// ターゲットウィンドウのTabIdsに追加する。
+	/// </summary>
+	/// <param name="tabId">移動するタブID</param>
+	/// <param name="sourceWindowId">元のウィンドウID（参考用、この段階では削除済み）</param>
+	/// <param name="targetWindowId">移動先ウィンドウID</param>
+	public void MoveTabToWindow(Guid tabId, Guid sourceWindowId, Guid targetWindowId) {
+		var targetWindow = this._stateStore.RootState.Windows.FirstOrDefault(w => w.WindowId == targetWindowId);
+		if (targetWindow == null) {
+			return;
+		}
+
+		targetWindow.TabIds.Add(tabId);
+	}
+
+	/// <summary>
+	/// タブを新しいウィンドウで開く。
+	/// 呼び出し前に元ウィンドウのTabIdsからは既に削除されていることを前提とする。
+	/// 新しいウィンドウ状態を作成し、そこにタブを追加する。
+	/// リアクティブバインディングにより自動的にUIが更新される。
+	/// </summary>
+	/// <param name="tabId">新しいウィンドウで開くタブID</param>
+	/// <param name="sourceWindowId">元のウィンドウID（参考用、この段階では削除済み）</param>
+	public void MoveTabToNewWindow(Guid tabId, Guid sourceWindowId) {
+		// 新しいウィンドウ状態を作成
+		var newWindowState = new WindowStateModel {
+			WindowId = Guid.NewGuid()
+		};
+
+		newWindowState.TabIds.Add(tabId);
+		this._stateStore.RootState.Windows.Add(newWindowState);
 	}
 
 	protected override void Dispose(bool disposing) {

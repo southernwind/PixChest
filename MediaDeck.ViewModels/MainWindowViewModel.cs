@@ -15,6 +15,12 @@ public class MainWindowViewModel : ViewModelBase {
 	private readonly RootStateModel _rootState;
 
 
+	public Guid WindowId {
+		get {
+			return this._windowState.WindowId;
+		}
+	}
+
 	public MainWindowViewModel(
 		IServiceProvider serviceProvider,
 		IStateStore stateStore,
@@ -156,6 +162,25 @@ public class MainWindowViewModel : ViewModelBase {
 	}
 
 	/// <summary>
+	/// 指定タブを元ウィンドウのTabIdsから削除する（他ウィンドウへ移動用）。
+	/// TabStateModelはRootStateModel.Tabsに残したまま、UI上のTabContextのみDisposeする。
+	/// </summary>
+	/// <param name="tab">削除するタブコンテキスト</param>
+	public void DetachTab(TabContext tab) {
+		tab.Dispose();
+		this._windowState.TabIds.Remove(tab.TabState.TabId);
+
+		if (this.SelectedTab.Value == tab) {
+			this.SelectedTab.Value = this.Tabs.LastOrDefault();
+		}
+
+		// 最後のタブを移動した際、他にウィンドウがあればこのウィンドウを閉じる
+		if (!this.Tabs.Any() && this._rootState.Windows.Count > 1) {
+			this._rootState.Windows.Remove(this._windowState);
+		}
+	}
+
+	/// <summary>
 	/// 指定タブを閉じる
 	/// </summary>
 	public void CloseTab(TabContext tab) {
@@ -167,9 +192,9 @@ public class MainWindowViewModel : ViewModelBase {
 			this.SelectedTab.Value = this.Tabs.LastOrDefault();
 		}
 
-		// 最後のタブを閉じたら新しいタブを作る
-		if (!this.Tabs.Any()) {
-			this.AddTab();
+		// 最後のタブを閉じたらウィンドウを閉じる。他にウィンドウがあればこのウィンドウを閉じる
+		if (!this.Tabs.Any() && this._rootState.Windows.Count > 1) {
+			this._rootState.Windows.Remove(this._windowState);
 		}
 	}
 

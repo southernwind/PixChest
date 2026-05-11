@@ -63,8 +63,14 @@
 			TabItemsSource="{x:Bind _viewModel.Tabs}"
 			Style="{StaticResource ModernTabViewStyle}">
 			<TabView.TabItemTemplate>
-				<DataTemplate x:DataType="viewmodels:TabContext">
-					<TabViewItem KeyDown="TabViewItem_KeyDown" Style="{StaticResource ModernTabViewItemStyle}">
+					<DataTemplate x:DataType="viewmodels:TabContext">
+						<TabViewItem KeyDown="TabViewItem_KeyDown" Style="{StaticResource ModernTabViewItemStyle}">
+							<TabViewItem.ContextFlyout>
+								<MenuFlyout Opening="TabContextFlyout_Opening">
+									<MenuFlyoutItem x:Name="OpenInNewWindowItem" Click="OpenInNewWindow_Click" />
+									<MenuFlyoutSubItem x:Name="MoveToWindowSubItem" />
+								</MenuFlyout>
+							</TabViewItem.ContextFlyout>
 						<TabViewItem.Header>
 							<Grid Background="Transparent" DoubleTapped="TabHeader_DoubleTapped">
 								<TextBlock Text="{x:Bind DisplayName.Value, Mode=OneWay}" />
