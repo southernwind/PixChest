@@ -1,3 +1,4 @@
+using MediaDeck.Composition.Objects;
 using MediaDeck.Core.Models.NotificationDispatcher;
 using R3;
 using Shouldly;
