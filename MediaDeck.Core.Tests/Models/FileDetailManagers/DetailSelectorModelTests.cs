@@ -261,9 +261,6 @@ public class DetailSelectorModelTests {
 		tagMock.SetupGet(x => x.TagCategory).Returns(new Mock<ITagCategoryModel>().Object);
 		tagMock.SetupGet(x => x.UsageCount).Returns(new ReactiveProperty<int>(0));
 
-		// By setting Id to 0 (or simply not verifying DB integrity strongly) we might still get FK issues.
-		// So let's intercept DbFactory if needed, OR just mock the Tags list so the test passes.
-		// Actually AddTagAsync returns without touching db if tag is already in file.Tags.
 		var fileMock = new Mock<IFileModel>();
 		fileMock.SetupGet(x => x.Tags).Returns([tagMock.Object]);
 
@@ -271,10 +268,8 @@ public class DetailSelectorModelTests {
 		await model.AddTagAsync([fileMock.Object], tagMock.Object);
 
 		// Assert
-		// The tag list should be refreshed based on the file's tags collection
-		// Note: since the file's Tags is a mock returning a new list each time, or static,
-		// if the manager adds it to the mock's collection, we might need an actual list.
-		// To properly verify `RefreshTags` was called, we can check model.Tags.
+		model.Tags.Count.ShouldBe(1);
+		model.Tags[0].Value.TagId.ShouldBe(1);
 	}
 
 	/// <summary>
@@ -319,7 +314,6 @@ public class DetailSelectorModelTests {
 			var aliasMock = new Mock<ITagAliasModel>();
 			aliasMock.SetupGet(x => x.Alias).Returns("TestAlias");
 			aliasMock.SetupGet(x => x.Ruby).Returns("testruby");
-			aliasMock.SetupGet(x => x.Romaji).Returns("testromaji");
 			aliasMock.SetupGet(x => x.Romaji).Returns("testromaji");
 			aliasList.Add(aliasMock.Object);
 		}
