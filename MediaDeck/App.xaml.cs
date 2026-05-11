@@ -2,13 +2,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-
 using CommunityToolkit.Mvvm.DependencyInjection;
-
 using FFMpegCore;
-
 using MapControl;
-
 using MediaDeck.Composition.Constants;
 using MediaDeck.Composition.Database;
 using MediaDeck.Composition.Interfaces;
@@ -19,14 +15,12 @@ using MediaDeck.Core.Stores.Config;
 using MediaDeck.Core.Stores.State;
 using MediaDeck.Services;
 using MediaDeck.ViewModels;
-
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
-
 using Serilog;
 using Serilog.Events;
 
@@ -65,6 +59,7 @@ public partial class App {
 		this.InitializeComponent();
 		AppDomain.CurrentDomain.ProcessExit += (_, _) => {
 			this._configStore.Save();
+			this.Vacuum();
 		};
 	}
 
@@ -104,6 +99,19 @@ public partial class App {
 		this._dispatcherQueue?.TryEnqueue(() => {
 			this._stateStore.RootState.Windows.Add(new WindowStateModel());
 		});
+	}
+
+	/// <summary>
+	/// データベースの最適化（VACUUM）を実行する。
+	/// </summary>
+	private void Vacuum() {
+		try {
+			var dbFactory = Ioc.Default.GetRequiredService<IDbContextFactory<MediaDeckDbContext>>();
+			using var db = dbFactory.CreateDbContext();
+			db.Database.ExecuteSqlRaw("VACUUM");
+		} catch (Exception ex) {
+			Log.Error(ex, "データベースの最適化（VACUUM）中にエラーが発生しました。");
+		}
 	}
 
 	private static void BuildConfigureServices() {
