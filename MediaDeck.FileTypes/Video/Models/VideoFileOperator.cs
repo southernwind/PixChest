@@ -44,7 +44,7 @@ internal partial class VideoFileOperator : BaseFileOperator {
 		var thumbPath = this._filePathService.GetThumbnailAbsoluteFilePath(thumbRelativePath);
 		try {
 			if (metadata.PrimaryVideoStream is not { } videoStream) {
-				throw new Exception("PrimaryVideoStream is null");
+				throw new InvalidOperationException("PrimaryVideoStream is null");
 			}
 			var image = this.CreateThumbnail(filePath, videoStream.Width, videoStream.Height, 300, 300, metadata.Duration / 5);
 			new FileInfo(thumbPath).Directory?.Create();
@@ -99,7 +99,7 @@ internal partial class VideoFileOperator : BaseFileOperator {
 	internal byte[] CreateThumbnail(IFileModel fileModel, int width, int height, TimeSpan time) {
 		var metadata = FFProbe.Analyse(fileModel.FilePath);
 		if (metadata.PrimaryVideoStream is not { } videoStream) {
-			throw new Exception("PrimaryVideoStream is null");
+			throw new InvalidOperationException("PrimaryVideoStream is null");
 		}
 		return this.CreateThumbnail(fileModel.FilePath, videoStream.Width, videoStream.Height, width, height, time);
 	}
