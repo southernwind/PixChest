@@ -52,8 +52,9 @@
 											Stretch="UniformToFill" />
 									</Border.Background>
 								</Border>
-								<Border Width="26"
+								<Border MinWidth="26"
 									Height="26"
+									Padding="4,0"
 									CornerRadius="13"
 									Background="White"
 									BorderBrush="#FFCCCCCC"
@@ -61,7 +62,7 @@
 									HorizontalAlignment="Right"
 									VerticalAlignment="Top"
 									Margin="0,-6,-6,0" >
-									<TextBlock Text="{x:Bind Count.Value, Mode=OneWay}"
+									<TextBlock Text="{x:Bind Count.Value, Mode=OneWay, Converter={StaticResource CountToFormattedStringConverter}}"
 										Foreground="Black"
 										FontSize="14"
 										FontWeight="SemiBold"

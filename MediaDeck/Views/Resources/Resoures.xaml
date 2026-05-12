@@ -40,6 +40,7 @@
 	<converters:PinStateToBrushConverter x:Key="PinStateToBrushConverter" />
 	<converters:LocationConverter x:Key="LocationConverter" />
 	<converters:DoubleToGridLengthConverter x:Key="DoubleToGridLengthConverter" />
+	<converters:CountToFormattedStringConverter x:Key="CountToFormattedStringConverter" />
 
 	<DataTemplate x:Key="ImageDetailTpl" >
 		<imageViews:ImageDetailViewerPreviewControlView />
