@@ -747,13 +747,13 @@
   <data name="ThumbnailConfigPage_ThumbnailSizeDesc.Text" xml:space="preserve">
     <value>作成されるサムネイルの長辺のサイズを指定します。変更は今後作成されるサムネイルに適用されます。</value>
   </data>
-  <data name="TabContext_OpenInNewWindow" xml:space="preserve">
+  <data name="TabViewModel_OpenInNewWindow" xml:space="preserve">
     <value>新しいウィンドウで開く</value>
   </data>
-  <data name="TabContext_MoveToWindow" xml:space="preserve">
+  <data name="TabViewModel_MoveToWindow" xml:space="preserve">
     <value>ウィンドウへ移動</value>
   </data>
-  <data name="TabContext_NoOtherWindows" xml:space="preserve">
+  <data name="TabViewModel_NoOtherWindows" xml:space="preserve">
     <value>(他のウィンドウなし)</value>
   </data>
 </root>

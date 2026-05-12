@@ -57,15 +57,15 @@ public sealed partial class MainWindow : Window {
 	}
 
 	private void MainTabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args) {
-		if (args.Item is TabContext tabContext) {
-			this._viewModel.CloseTab(tabContext);
+		if (args.Item is TabViewModel tabViewModel) {
+			this._viewModel.CloseTab(tabViewModel);
 		}
 	}
 
 	private void MainTabView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-		if (this.MainTabView.SelectedItem is TabContext tabContext) {
-			if (this._viewModel.SelectedTab.Value != tabContext) {
-				this._viewModel.SelectedTab.Value = tabContext;
+		if (this.MainTabView.SelectedItem is TabViewModel tabViewModel) {
+			if (this._viewModel.SelectedTab.Value != tabViewModel) {
+				this._viewModel.SelectedTab.Value = tabViewModel;
 			}
 		}
 	}
@@ -75,29 +75,29 @@ public sealed partial class MainWindow : Window {
 	}
 
 	private async void TabHeader_DoubleTapped(object sender, Microsoft.UI.Xaml.Input.DoubleTappedRoutedEventArgs e) {
-		if (sender is FrameworkElement fe && fe.DataContext is TabContext tabContext) {
-			await this.ShowRenameTabDialogAsync(tabContext);
+		if (sender is FrameworkElement fe && fe.DataContext is TabViewModel tabViewModel) {
+			await this.ShowRenameTabDialogAsync(tabViewModel);
 			e.Handled = true;
 		}
 	}
 
 	private async void TabViewItem_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e) {
 		if (e.Key == Windows.System.VirtualKey.F2) {
-			if (sender is FrameworkElement fe && fe.DataContext is TabContext tabContext) {
-				await this.ShowRenameTabDialogAsync(tabContext);
+			if (sender is FrameworkElement fe && fe.DataContext is TabViewModel tabViewModel) {
+				await this.ShowRenameTabDialogAsync(tabViewModel);
 				e.Handled = true;
 			}
 		}
 	}
 
-	private async Task ShowRenameTabDialogAsync(TabContext tabContext) {
+	private async Task ShowRenameTabDialogAsync(TabViewModel tabViewModel) {
 		var dialog = Ioc.Default.GetRequiredService<TabRenameDialog>();
 		dialog.XamlRoot = this.Content.XamlRoot;
-		dialog.Initialize(tabContext.TabState.DisplayName.Value);
+		dialog.Initialize(tabViewModel.TabState.DisplayName.Value);
 
 		var result = await dialog.ShowAsync();
 		if (result == ContentDialogResult.Primary && !string.IsNullOrWhiteSpace(dialog.ResultText)) {
-			tabContext.TabState.DisplayName.Value = dialog.ResultText;
+			tabViewModel.TabState.DisplayName.Value = dialog.ResultText;
 		}
 	}
 
@@ -128,16 +128,16 @@ public sealed partial class MainWindow : Window {
 
 			// メニューテキストを設定
 			if (flyout.Items.FirstOrDefault() is MenuFlyoutItem openItem) {
-				openItem.Text = this._stringProvider.GetString("TabContext_OpenInNewWindow");
+				openItem.Text = this._stringProvider.GetString("TabViewModel_OpenInNewWindow");
 			}
 
 			// "ウィンドウへ移動" サブメニューを動的に構築
 			var subItem = flyout.Items.OfType<MenuFlyoutSubItem>().FirstOrDefault();
 			if (subItem != null) {
-				subItem.Text = this._stringProvider.GetString("TabContext_MoveToWindow");
+				subItem.Text = this._stringProvider.GetString("TabViewModel_MoveToWindow");
 				subItem.Items.Clear();
 				if (otherWindows.Count == 0) {
-					var noItemText = this._stringProvider.GetString("TabContext_NoOtherWindows");
+					var noItemText = this._stringProvider.GetString("TabViewModel_NoOtherWindows");
 					var noItem = new MenuFlyoutItem { Text = noItemText, IsEnabled = false };
 					subItem.Items.Add(noItem);
 				} else {
@@ -154,35 +154,36 @@ public sealed partial class MainWindow : Window {
 	}
 
 	private void OpenInNewWindow_Click(object sender, RoutedEventArgs e) {
-		if (sender is MenuFlyoutItem menuItem && menuItem.DataContext is TabContext tabContext) {
+		if (sender is MenuFlyoutItem menuItem && menuItem.DataContext is TabViewModel tabViewModel) {
 			var windowManager = Ioc.Default.GetRequiredService<WindowManager>();
 			var currentWindowId = this._viewModel.WindowId;
-			var tabId = tabContext.TabState.TabId;
-			this._viewModel.DetachTab(tabContext);
+			var tabId = tabViewModel.TabState.TabId;
+			this._viewModel.DetachTab(tabViewModel);
 			windowManager.MoveTabToNewWindow(tabId, currentWindowId);
 		}
 	}
 
 	private void MoveToExistingWindow_Click(object sender, RoutedEventArgs e) {
 		if (sender is MenuFlyoutItem menuItem && menuItem.Tag is Guid targetWindowId) {
-			var tabContext = this.GetTabContextFromFlyout(menuItem);
-			if (tabContext != null) {
+			var tabViewModel = this.GetTabContextFromFlyout(menuItem);
+			if (tabViewModel != null) {
 				var windowManager = Ioc.Default.GetRequiredService<WindowManager>();
 				var currentWindowId = this._viewModel.WindowId;
-				var tabId = tabContext.TabState.TabId;
-				this._viewModel.DetachTab(tabContext);
+				var tabId = tabViewModel.TabState.TabId;
+				this._viewModel.DetachTab(tabViewModel);
 				windowManager.MoveTabToWindow(tabId, currentWindowId, targetWindowId);
 			}
 		}
 	}
 
-	private TabContext? GetTabContextFromFlyout(FrameworkElement element) {
-		// MenuFlyoutItemのDataContextはTabViewItemのDataContext（TabContext）
-		if (element.DataContext is TabContext tc) {
+	private TabViewModel? GetTabContextFromFlyout(FrameworkElement element) {
+		// MenuFlyoutItemのDataContextはTabViewItemのDataContext（TabViewModel）
+		if (element.DataContext is TabViewModel tc) {
 			return tc;
 		}
 		return null;
 	}
+
 
 	/// <summary>
 	/// メニュー項目にマウスがホバーしたときに、対応するウィンドウのボーダーをハイライトする。

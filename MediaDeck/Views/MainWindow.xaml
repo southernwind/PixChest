@@ -63,7 +63,7 @@
 			TabItemsSource="{x:Bind _viewModel.Tabs}"
 			Style="{StaticResource ModernTabViewStyle}">
 			<TabView.TabItemTemplate>
-					<DataTemplate x:DataType="viewmodels:TabContext">
+					<DataTemplate x:DataType="viewmodels:TabViewModel">
 						<TabViewItem KeyDown="TabViewItem_KeyDown" Style="{StaticResource ModernTabViewItemStyle}">
 							<TabViewItem.ContextFlyout>
 								<MenuFlyout Opening="TabContextFlyout_Opening">

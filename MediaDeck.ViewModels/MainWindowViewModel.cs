@@ -37,11 +37,11 @@ public class MainWindowViewModel : ViewModelBase {
 				tabId => {
 					var tabState = this._rootState.Tabs.FirstOrDefault(t => t.TabId == tabId)
 						?? throw new InvalidOperationException($"TabStateModel not found for TabId: {tabId}");
-					return new TabContext(tabState);
+					return tabState.ServiceProvider.GetRequiredService<TabViewModel>();
 				},
-			(TabContext tabContext, Guid tabId, ref bool setValue) => {
+			(TabViewModel tabViewModel, Guid tabId, ref bool setValue) => {
 				setValue = true;
-				return tabContext.TabState.TabId;
+				return tabViewModel.TabState.TabId;
 			},
 			SynchronizationContextCollectionEventDispatcher.Current);
 
@@ -62,14 +62,14 @@ public class MainWindowViewModel : ViewModelBase {
 	/// <summary>
 	/// タブ一覧
 	/// </summary>
-	public INotifyCollectionChangedSynchronizedViewList<TabContext> Tabs {
+	public INotifyCollectionChangedSynchronizedViewList<TabViewModel> Tabs {
 		get;
 	}
 
 	/// <summary>
 	/// 選択中のタブ
 	/// </summary>
-	public BindableReactiveProperty<TabContext?> SelectedTab {
+	public BindableReactiveProperty<TabViewModel?> SelectedTab {
 		get;
 	}
 
@@ -94,7 +94,7 @@ public class MainWindowViewModel : ViewModelBase {
 	/// <summary>
 	/// タブ終了コマンド
 	/// </summary>
-	public ReactiveCommand<TabContext> CloseTabCommand {
+	public ReactiveCommand<TabViewModel> CloseTabCommand {
 		get;
 	} = new();
 
@@ -163,11 +163,11 @@ public class MainWindowViewModel : ViewModelBase {
 
 	/// <summary>
 	/// 指定タブを元ウィンドウのTabIdsから削除する（他ウィンドウへ移動用）。
-	/// TabStateModelはRootStateModel.Tabsに残したまま、UI上のTabContextのみDisposeする。
+	/// TabStateModelはRootStateModel.Tabsに残したまま、UI上のTabViewModelのみ切り離す。
+	/// 移動先ウィンドウで復元した際にDisposedExceptionが出るのを防ぐため、ここではDisposeしない。
 	/// </summary>
-	/// <param name="tab">削除するタブコンテキスト</param>
-	public void DetachTab(TabContext tab) {
-		tab.Dispose();
+	/// <param name="tab">削除するタブViewModel</param>
+	public void DetachTab(TabViewModel tab) {
 		this._windowState.TabIds.Remove(tab.TabState.TabId);
 
 		if (this.SelectedTab.Value == tab) {
@@ -183,7 +183,7 @@ public class MainWindowViewModel : ViewModelBase {
 	/// <summary>
 	/// 指定タブを閉じる
 	/// </summary>
-	public void CloseTab(TabContext tab) {
+	public void CloseTab(TabViewModel tab) {
 		tab.Dispose();
 		this._windowState.TabIds.Remove(tab.TabState.TabId);
 		this._rootState.Tabs.Remove(tab.TabState);
@@ -201,10 +201,12 @@ public class MainWindowViewModel : ViewModelBase {
 	protected override void Dispose(bool disposing) {
 		if (disposing) {
 			foreach (var tab in this.Tabs) {
+				this._rootState.Tabs.Remove(tab.TabState);
 				tab.Dispose();
 			}
 			this.Tabs.Dispose();
 		}
 		base.Dispose(disposing);
 	}
+
 }

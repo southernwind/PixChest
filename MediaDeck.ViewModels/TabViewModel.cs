@@ -7,15 +7,14 @@ using MediaDeck.ViewModels.Panes.FilterPanes;
 using MediaDeck.ViewModels.Panes.RepositoryPanes;
 using MediaDeck.ViewModels.Panes.ViewerPanes;
 
-using Microsoft.Extensions.DependencyInjection;
-
 namespace MediaDeck.ViewModels;
 
 /// <summary>
-/// 1つのタブに対応するDIスコープとViewModel群を管理するコンテキスト。
-/// Disposeするとスコープが破棄され、スコープ内の全サービスが解放される。
+/// 1つのタブに対応するViewModel。
+/// タブ固有のDIスコープ内で管理される。
 /// </summary>
-public class TabContext : ViewModelBase {
+[Inject(InjectServiceLifetime.Scoped)]
+public class TabViewModel : ViewModelBase {
 	private readonly IDisposable? _scopeDisposable;
 
 	/// <summary>
@@ -68,29 +67,36 @@ public class TabContext : ViewModelBase {
 		get;
 	}
 
-	public TabContext(TabStateModel tabState) {
+	public TabViewModel(
+		TabStateModel tabState,
+		IStateStore stateStore,
+		ViewerSelectorViewModel viewerSelectorViewModel,
+		FilterSelectorViewModel filterSelectorViewModel,
+		SortSelectorViewModel sortSelectorViewModel,
+		DetailSelectorViewModel detailSelectorViewModel,
+		RepositorySelectorViewModel repositorySelectorViewModel,
+		StatusBarViewModel statusBarViewModel) {
 		this.TabState = tabState;
-		var sp = tabState.ServiceProvider;
-		this._scopeDisposable = sp as IDisposable;
+		this._scopeDisposable = tabState.ServiceProvider as IDisposable;
 
 		this.DisplayName = this.TabState.DisplayName.ToBindableReactiveProperty("New Tab").AddTo(this.CompositeDisposable);
 		this.LeftPaneWidth = this.TabState.LeftPaneWidth.ToTwoWayBindableReactiveProperty().AddTo(this.CompositeDisposable);
 		this.RightPaneWidth = this.TabState.RightPaneWidth.ToTwoWayBindableReactiveProperty().AddTo(this.CompositeDisposable);
 		this.RepositoryPaneHeight = this.TabState.RepositoryPaneHeight.ToTwoWayBindableReactiveProperty().AddTo(this.CompositeDisposable);
 
-		this.ViewerSelectorViewModel = sp.GetRequiredService<ViewerSelectorViewModel>();
-		this.FilterSelectorViewModel = sp.GetRequiredService<FilterSelectorViewModel>();
-		this.SortSelectorViewModel = sp.GetRequiredService<SortSelectorViewModel>();
-		this.DetailSelectorViewModel = sp.GetRequiredService<DetailSelectorViewModel>();
-		this.RepositorySelectorViewModel = sp.GetRequiredService<RepositorySelectorViewModel>();
-		this.StatusBarViewModel = sp.GetRequiredService<StatusBarViewModel>().AddTo(this.CompositeDisposable);
+		this.ViewerSelectorViewModel = viewerSelectorViewModel;
+		this.FilterSelectorViewModel = filterSelectorViewModel;
+		this.SortSelectorViewModel = sortSelectorViewModel;
+		this.DetailSelectorViewModel = detailSelectorViewModel;
+		this.RepositorySelectorViewModel = repositorySelectorViewModel;
+		this.StatusBarViewModel = statusBarViewModel.AddTo(this.CompositeDisposable);
 
 		this.ViewerSelectorViewModel.MediaContentLibraryViewModel.SelectedFiles.Subscribe(x => {
 			this.DetailSelectorViewModel.TargetFiles.Value = x.Select(v => v.FileModel).ToArray();
 		}).AddTo(this.CompositeDisposable);
 
 		// タブの状態変更をAppStateのデフォルトタブ状態に同期
-		this.SubscribeDefaultTabStateSync(sp.GetRequiredService<IStateStore>().RootState.AppState);
+		this.SubscribeDefaultTabStateSync(stateStore.RootState.AppState);
 
 		// 初回ロード
 		this.ViewerSelectorViewModel.MediaContentLibraryViewModel.Reload();
