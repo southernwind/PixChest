@@ -167,13 +167,16 @@ public partial class App {
 	private async Task InitializeAsync(SplashScreenViewModel? splashViewModel = null) {
 
 		await Task.Run(async () => {
+			var stringProvider = Ioc.Default.GetRequiredService<IStringProvider>();
+			splashViewModel?.UpdateStatus(stringProvider.GetString("Splash_CleaningUpStates"));
+			this.CleanupOrphanedTabs();
+
 			// OpenStreetMapのタイルサーバーにアクセスする際のUser-Agentを設定
 			ImageLoader.HttpClient.DefaultRequestHeaders.Add("User-Agent", "MediaDeck/1.0 (+https://github.com/xm-i/MediaDeck)");
 
 			// 画像メタデータ取得にSJISが必要
 			Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-			var stringProvider = Ioc.Default.GetRequiredService<IStringProvider>();
 
 			splashViewModel?.UpdateStatus(stringProvider.GetString("Splash_InitializingDatabase"));
 			var dbPath = Path.Combine(FilePathConstants.BaseDirectory, "pix.db");
@@ -230,5 +233,23 @@ public partial class App {
 			});
 			splashViewModel?.UpdateStatus(stringProvider.GetString("Splash_Ready"));
 		});
+	}
+
+	/// <summary>
+	///     所属ウィンドウのないタブをクリーンアップします。
+	/// </summary>
+	private void CleanupOrphanedTabs() {
+		var activeTabIds = this._stateStore.RootState.Windows
+			.SelectMany(w => w.TabIds)
+			.ToHashSet();
+
+		var orphanedTabs = this._stateStore.RootState.Tabs
+			.Where(t => !activeTabIds.Contains(t.TabId))
+			.ToList();
+
+		foreach (var tab in orphanedTabs) {
+			this._stateStore.RootState.Tabs.Remove(tab);
+			LoggerFactory.CreateLogger<App>().LogInformation("所属ウィンドウのないタブを削除しました: {TabId}", tab.TabId);
+		}
 	}
 }

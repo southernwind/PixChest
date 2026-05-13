@@ -106,8 +106,6 @@ public class StateStore : DisposableBase, IStateStore {
 	/// </summary>
 	public void Save() {
 		try {
-			this.CleanupOrphanedTabs();
-
 			Directory.CreateDirectory(Path.GetDirectoryName(this.StateFilePath)!);
 
 			var jsonDto = RootStateModelForJson.CreateJson(this.RootState);
@@ -127,24 +125,6 @@ public class StateStore : DisposableBase, IStateStore {
 			this._logger.LogError(ex, "状態設定の保存中に予期しないエラーが発生しました");
 			this._notificationDispatcher.Notify.OnNext(
 				AppNotification.Error("状態設定の保存中にエラーが発生しました。", "保存エラー"));
-		}
-	}
-
-	/// <summary>
-	///     所属ウィンドウのないタブをクリーンアップします。
-	/// </summary>
-	private void CleanupOrphanedTabs() {
-		var activeTabIds = this.RootState.Windows
-			.SelectMany(w => w.TabIds)
-			.ToHashSet();
-
-		var orphanedTabs = this.RootState.Tabs
-			.Where(t => !activeTabIds.Contains(t.TabId))
-			.ToList();
-
-		foreach (var tab in orphanedTabs) {
-			this.RootState.Tabs.Remove(tab);
-			this._logger.LogInformation("所属ウィンドウのないタブを削除しました: {TabId}", tab.TabId);
 		}
 	}
 }
