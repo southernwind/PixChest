@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -172,7 +173,9 @@ public partial class App {
 			this.CleanupOrphanedTabs();
 
 			// OpenStreetMapのタイルサーバーにアクセスする際のUser-Agentを設定
-			ImageLoader.HttpClient.DefaultRequestHeaders.Add("User-Agent", "MediaDeck/1.0 (+https://github.com/xm-i/MediaDeck)");
+			var version = Assembly.GetEntryAssembly()?.GetName().Version;
+			var versionString = version != null ? $"{version.Major}.{version.Minor}.{version.Build}" : "1.0.0";
+			ImageLoader.HttpClient.DefaultRequestHeaders.Add("User-Agent", $"MediaDeck/{versionString} (+https://github.com/xm-i/MediaDeck)");
 
 			// 画像メタデータ取得にSJISが必要
 			Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
