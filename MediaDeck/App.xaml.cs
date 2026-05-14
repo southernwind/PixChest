@@ -83,12 +83,21 @@ public partial class App {
 		var logger = LoggerFactory.CreateLogger<App>();
 		AppDomain.CurrentDomain.UnhandledException += (_, e) => {
 			logger.LogError(e.ExceptionObject as Exception, "UnhandledException");
+#if DEBUG
+			Debugger.Break();
+#endif
 		};
 		UnhandledException += (_, e) => {
 			logger.LogError(e.Exception, "XAML UnhandledException");
+#if DEBUG
+			Debugger.Break();
+#endif
 		};
 		ObservableSystem.RegisterUnhandledExceptionHandler(e => {
 			logger.LogError(e, "R3 UnhandledException");
+#if DEBUG
+			Debugger.Break();
+#endif
 		});
 		// メインウィンドウが表示されたらスプラッシュ画面を閉じる
 		splashScreen.Close();
