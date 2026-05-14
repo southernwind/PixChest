@@ -89,12 +89,12 @@ namespace MediaDeck.Analyzers {
 
 		private static bool HasChainedAddTo(SyntaxNode node) {
 			var current = node;
-			while (current.Parent is MemberAccessExpressionSyntax ma) {
+			while (current?.Parent is MemberAccessExpressionSyntax ma) {
 				if (ma.Name.Identifier.Text == "AddTo") {
 					return true;
 				}
 
-				current = current.Parent.Parent; // InvocationExpression (`.AddTo()`)
+				current = ma.Parent; // ma.Parent is InvocationExpression (e.g. `.Subscribe(...)`), which becomes the new `current` to check its parent in the next iteration.
 			}
 			return false;
 		}
