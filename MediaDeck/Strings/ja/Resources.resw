@@ -762,4 +762,7 @@
   <data name="TabViewModel_OtherTabsFormat" xml:space="preserve">
     <value>{0}、他{1}個のタブ</value>
   </data>
+  <data name="TabViewModel_RenameTab" xml:space="preserve">
+    <value>タブの名前を変更</value>
+  </data>
 </root>

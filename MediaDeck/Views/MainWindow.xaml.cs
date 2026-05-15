@@ -129,6 +129,9 @@ public sealed partial class MainWindow : Window {
 
 			var openInNewWindowItem = flyout.Items.OfType<MenuFlyoutItem>().FirstOrDefault(x => x.Name == "OpenInNewWindowItem");
 			var moveToWindowSubItem = flyout.Items.OfType<MenuFlyoutSubItem>().FirstOrDefault(x => x.Name == "MoveToWindowSubItem");
+			var renameTabItem = flyout.Items.OfType<MenuFlyoutItem>().FirstOrDefault(x => x.Name == "RenameTabItem");
+
+			renameTabItem?.Text = this._stringProvider.GetString("TabViewModel_RenameTab");
 
 			if (otherWindows.Count == 0) {
 				// ウィンドウが1つのみの場合
@@ -177,6 +180,12 @@ public sealed partial class MainWindow : Window {
 					}
 				}
 			}
+		}
+	}
+
+	private async void RenameTab_Click(object sender, RoutedEventArgs e) {
+		if (sender is MenuFlyoutItem menuItem && menuItem.DataContext is TabViewModel tabViewModel) {
+			await this.ShowRenameTabDialogAsync(tabViewModel);
 		}
 	}
 

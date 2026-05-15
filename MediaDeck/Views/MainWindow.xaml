@@ -67,6 +67,8 @@
 						<TabViewItem KeyDown="TabViewItem_KeyDown" Style="{StaticResource ModernTabViewItemStyle}">
 							<TabViewItem.ContextFlyout>
 								<MenuFlyout Opening="TabContextFlyout_Opening">
+									<MenuFlyoutItem x:Name="RenameTabItem" Click="RenameTab_Click" />
+									<MenuFlyoutSeparator />
 									<MenuFlyoutItem x:Name="OpenInNewWindowItem" Click="OpenInNewWindow_Click" />
 									<MenuFlyoutSubItem x:Name="MoveToWindowSubItem" />
 								</MenuFlyout>
