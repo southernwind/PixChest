@@ -125,28 +125,55 @@ public sealed partial class MainWindow : Window {
 			var windowManager = Ioc.Default.GetRequiredService<WindowManager>();
 			var currentWindowId = this._viewModel.WindowId;
 			var otherWindows = windowManager.GetOtherWindows(currentWindowId);
+			var canMove = (this._viewModel.Tabs as System.Collections.Generic.IReadOnlyList<TabViewModel>).Count > 1;
 
-			// メニューテキストを設定
-			if (flyout.Items.FirstOrDefault() is MenuFlyoutItem openItem) {
-				openItem.Text = this._stringProvider.GetString("TabViewModel_OpenInNewWindow");
-			}
+			var openInNewWindowItem = flyout.Items.OfType<MenuFlyoutItem>().FirstOrDefault(x => x.Name == "OpenInNewWindowItem");
+			var moveToWindowSubItem = flyout.Items.OfType<MenuFlyoutSubItem>().FirstOrDefault(x => x.Name == "MoveToWindowSubItem");
 
-			// "ウィンドウへ移動" サブメニューを動的に構築
-			var subItem = flyout.Items.OfType<MenuFlyoutSubItem>().FirstOrDefault();
-			if (subItem != null) {
-				subItem.Text = this._stringProvider.GetString("TabViewModel_MoveToWindow");
-				subItem.Items.Clear();
-				if (otherWindows.Count == 0) {
-					var noItemText = this._stringProvider.GetString("TabViewModel_NoOtherWindows");
-					var noItem = new MenuFlyoutItem { Text = noItemText, IsEnabled = false };
-					subItem.Items.Add(noItem);
-				} else {
-					foreach (var (windowId, title) in otherWindows) {
-						var item = new MenuFlyoutItem { Text = $"{title} ({windowId.ToString().Substring(0, 6)})", Tag = windowId };
+			if (otherWindows.Count == 0) {
+				// ウィンドウが1つのみの場合
+				if (openInNewWindowItem != null) {
+					openInNewWindowItem.Visibility = Visibility.Visible;
+					openInNewWindowItem.Text = this._stringProvider.GetString("TabViewModel_MoveToNewWindow");
+					openInNewWindowItem.IsEnabled = canMove;
+				}
+				moveToWindowSubItem?.Visibility = Visibility.Collapsed;
+			} else {
+				// 他にウィンドウがある場合
+				openInNewWindowItem?.Visibility = Visibility.Collapsed;
+				if (moveToWindowSubItem != null) {
+					moveToWindowSubItem.Visibility = Visibility.Visible;
+					moveToWindowSubItem.Text = this._stringProvider.GetString("TabViewModel_MoveToAnotherWindow");
+					moveToWindowSubItem.Items.Clear();
+
+					// "新しいウィンドウ" 項目を追加
+					var newWindowItem = new MenuFlyoutItem {
+						Text = this._stringProvider.GetString("TabViewModel_NewWindow"),
+						IsEnabled = canMove
+					};
+					newWindowItem.Click += this.OpenInNewWindow_Click;
+					moveToWindowSubItem.Items.Add(newWindowItem);
+
+					// セパレーター
+					moveToWindowSubItem.Items.Add(new MenuFlyoutSeparator());
+
+					// 既存のウィンドウリスト
+					foreach (var (windowId, tabName, tabCount) in otherWindows) {
+						string itemText;
+						if (tabCount <= 1) {
+							itemText = tabName;
+						} else {
+							itemText = string.Format(this._stringProvider.GetString("TabViewModel_OtherTabsFormat"), tabName, tabCount - 1);
+						}
+
+						var item = new MenuFlyoutItem {
+							Text = itemText,
+							Tag = windowId
+						};
 						item.Click += this.MoveToExistingWindow_Click;
 						item.PointerEntered += (s, e) => this.MoveWindowMenuItem_PointerEntered(s, windowId);
 						item.PointerExited += (s, e) => this.MoveWindowMenuItem_PointerExited(s, windowId);
-						subItem.Items.Add(item);
+						moveToWindowSubItem.Items.Add(item);
 					}
 				}
 			}

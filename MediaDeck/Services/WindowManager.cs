@@ -244,11 +244,23 @@ public class WindowManager : DisposableBase {
 	/// 指定ウィンドウ以外のウィンドウ情報を取得する。
 	/// </summary>
 	/// <param name="currentWindowId">除外するウィンドウID</param>
-	/// <returns>指定ウィンドウ以外のウィンドウのID・タイトルのコレクション</returns>
-	public IReadOnlyList<(Guid WindowId, string Title)> GetOtherWindows(Guid currentWindowId) {
+	/// <returns>指定ウィンドウ以外のウィンドウのID・代表タブ名・タブ数のコレクション</returns>
+	public IReadOnlyList<(Guid WindowId, string TabName, int TabCount)> GetOtherWindows(Guid currentWindowId) {
 		return this._windows
 			.Where(x => x.WindowId != currentWindowId)
-			.Select(x => (x.WindowId, Title: x.Window?.Title ?? x.WindowId.ToString()))
+			.Select(x => {
+				var windowState = this._stateStore.RootState.Windows.FirstOrDefault(w => w.WindowId == x.WindowId);
+				var tabCount = windowState?.TabIds.Count ?? 0;
+				var selectedTabId = windowState?.SelectedTabId.Value;
+				var representativeTab = this._stateStore.RootState.Tabs.FirstOrDefault(t => t.TabId == selectedTabId);
+				// 選択されているタブがない場合は最初のタブを使用
+				if (representativeTab == null && windowState?.TabIds.Count > 0) {
+					var firstTabId = windowState.TabIds[0];
+					representativeTab = this._stateStore.RootState.Tabs.FirstOrDefault(t => t.TabId == firstTabId);
+				}
+
+				return (x.WindowId, TabName: representativeTab?.DisplayName.Value ?? x.WindowId.ToString(), TabCount: tabCount);
+			})
 			.ToList();
 	}
 
