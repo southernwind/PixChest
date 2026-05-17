@@ -772,6 +772,6 @@
     <value>A media management application for Windows (centralized management of images, videos, PDFs, archives, etc.).</value>
   </data>
   <data name="PublisherDisplayName" xml:space="preserve">
-    <value>xm-i</value>
+    <value>xmi</value>
   </data>
 </root>
