@@ -51,14 +51,14 @@ jobs:
 
       - name: Publish MSIX Package for Store
         run: |
-          dotnet publish MediaDeck/MediaDeck.csproj -c Release -r ${{ matrix.runtime }} -p:Platform=${{ matrix.platform }} -p:GenerateAppxPackageOnBuild=true -p:AppxPackageSigningEnabled=false -p:AppxBundle=Always -p:UapAppxPackageBuildMode=StoreUpload -p:AppxPackageDir=../publish-packaged/
+          dotnet publish MediaDeck/MediaDeck.csproj -c Release -r ${{ matrix.runtime }} -p:Platform=${{ matrix.platform }} -p:GenerateAppxPackageOnBuild=true -p:AppxPackageSigningEnabled=false -p:AppxBundle=Never -p:UapAppxPackageBuildMode=StoreUpload -p:AppxPackageDir=../publish-packaged/
         shell: pwsh
 
-      # 生成されたパッケージファイル（msix/msixuploadなど）を作業用一時ディレクトリにコピー
+      # 生成された msixupload ファイルを作業用一時ディレクトリにコピー
       - name: Prepare Artifact
         run: |
           New-Item -Path ./artifacts-store -ItemType Directory -Force
-          Get-ChildItem -Path ./publish-packaged/ -Filter *.msix* -Recurse | Copy-Item -Destination ./artifacts-store/ -Force
+          Get-ChildItem -Path ./publish-packaged/ -Filter *.msixupload -Recurse | Copy-Item -Destination ./artifacts-store/ -Force
         shell: pwsh
 
       - name: Upload Artifact
