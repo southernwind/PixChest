@@ -23,7 +23,6 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 using Serilog;
-using Serilog.Events;
 
 namespace MediaDeck;
 
