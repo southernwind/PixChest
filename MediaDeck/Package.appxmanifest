@@ -7,16 +7,9 @@
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="uap rescap">
 
-  <!--
-    IMPORTANT: ストア公開時には、パートナーセンターで予約したアプリ情報に合わせて
-    以下の Identity (Name, Publisher) および Properties を書き換えてください。
-    例:
-    Name="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-    Publisher="CN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-  -->
   <Identity
-    Name="5b44ee96-aad8-4594-a13a-6dbcfb1b06fc"
-    Publisher="CN=admin"
+    Name="xmi.MediaDeck"
+    Publisher="CN=E31B20E5-2E2D-4987-A053-01449B6DA81A"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="5b44ee96-aad8-4594-a13a-6dbcfb1b06fc" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
