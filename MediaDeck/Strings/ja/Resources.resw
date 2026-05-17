@@ -765,4 +765,13 @@
   <data name="TabViewModel_RenameTab" xml:space="preserve">
     <value>タブの名前を変更</value>
   </data>
+  <data name="AppName" xml:space="preserve">
+    <value>MediaDeck</value>
+  </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>Windows向けのメディア管理アプリケーション（画像、動画、PDF、アーカイブファイルなどを一元管理）。</value>
+  </data>
+  <data name="PublisherDisplayName" xml:space="preserve">
+    <value>xm-i</value>
+  </data>
 </root>

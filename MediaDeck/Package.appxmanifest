@@ -8,21 +8,21 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="5b44ee96-aad8-4594-a13a-6dbcfb1b06fc"
-    Publisher="CN=admin"
+    Name="xmi.MediaDeck"
+    Publisher="CN=E31B20E5-2E2D-4987-A053-01449B6DA81A"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="5b44ee96-aad8-4594-a13a-6dbcfb1b06fc" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>MediaDeck</DisplayName>
-    <PublisherDisplayName>admin</PublisherDisplayName>
+    <DisplayName>ms-resource:AppName</DisplayName>
+    <PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
-    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17763.0" MaxVersionTested="10.0.26100.0" />
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.26100.0" />
   </Dependencies>
 
   <Resources>
@@ -35,8 +35,8 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="MediaDeck"
-        Description="MediaDeck"
+        DisplayName="ms-resource:AppName"
+        Description="ms-resource:AppDescription"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">

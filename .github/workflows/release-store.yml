@@ -1,0 +1,68 @@
+name: Build-Store-Packages
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    permissions:
+      contents: read
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        include:
+          - runtime: win-x64
+            platform: x64
+            ffmpeg_url: https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2026-02-28-12-59/ffmpeg-n8.0.1-66-g27b8d1a017-win64-gpl-shared-8.0.zip
+          - runtime: win-arm64
+            platform: ARM64
+            ffmpeg_url: https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2026-02-28-12-59/ffmpeg-n8.0.1-66-g27b8d1a017-winarm64-gpl-shared-8.0.zip
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      # mspdbcmf.exe はシンボルパッケージ生成に必要。MSVC C++ ビルドツールに含まれる。
+      - name: Install MSVC C++ Build Tools
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Download FFmpeg
+        run: |
+          curl.exe -L -o ffmpeg.zip "${{ matrix.ffmpeg_url }}"
+          expand-archive ffmpeg.zip -destinationpath ffmpeg_temp
+          $binDir = Get-ChildItem -Path ffmpeg_temp -Filter bin -Recurse | Select-Object -First 1
+          if ($binDir) {
+            Copy-Item -Path "$($binDir.FullName)\*" -Destination "MediaDeck/Assets/" -Force
+          }
+        shell: pwsh
+
+      - name: Restore dependencies
+        run: dotnet restore MediaDeck/MediaDeck.csproj -p:Platform=${{ matrix.platform }}
+
+      - name: Publish MSIX Package for Store
+        run: |
+          dotnet publish MediaDeck/MediaDeck.csproj -c Release -r ${{ matrix.runtime }} -p:Platform=${{ matrix.platform }} -p:GenerateAppxPackageOnBuild=true -p:AppxPackageSigningEnabled=false -p:AppxBundle=Always -p:UapAppxPackageBuildMode=StoreUpload -p:AppxPackageDir=../publish-packaged/
+        shell: pwsh
+
+      # 生成された msixupload ファイルを作業用一時ディレクトリにコピー
+      - name: Prepare Artifact
+        run: |
+          New-Item -Path ./artifacts-store -ItemType Directory -Force
+          Copy-Item -Path ./publish-packaged/**/*.msixupload -Destination ./artifacts-store/ -Force
+        shell: pwsh
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MediaDeck-Store-${{ matrix.runtime }}
+          path: ./artifacts-store/
