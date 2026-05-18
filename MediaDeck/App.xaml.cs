@@ -140,7 +140,7 @@ public partial class App {
 			.Enrich.WithThreadId()
 #if DEBUG
 			.MinimumLevel.Verbose()
-			.MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Information)
+			.MinimumLevel.Override("Microsoft.EntityFrameworkCore", Serilog.Events.LogEventLevel.Information)
 #else
 			.MinimumLevel.Information()
 #endif
