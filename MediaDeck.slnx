@@ -35,6 +35,7 @@
     <File Path=".gitattributes" />
     <File Path=".github/dependabot.yml" />
     <File Path=".github/workflows/format-check.yml" />
+    <File Path=".github/workflows/release-store.yml" />
     <File Path=".github/workflows/release.yml" />
     <File Path=".github/workflows/test.yml" />
     <File Path=".gitignore" />
