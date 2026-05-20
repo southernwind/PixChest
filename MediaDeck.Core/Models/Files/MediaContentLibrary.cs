@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using MediaDeck.Common.Base;
+using MediaDeck.Common.Utilities;
 using MediaDeck.Composition.Interfaces.Files;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.Models;
 using MediaDeck.Composition.Interfaces.Notifications;
@@ -10,10 +11,10 @@ namespace MediaDeck.Core.Models.Files;
 
 [Inject(InjectServiceLifetime.Scoped)]
 public class MediaContentLibrary : ModelBase {
+	private readonly AsyncLock _asyncLock = new();
 	private readonly FilesLoader _filesLoader;
 	private readonly SearchConfigModel _searchConfig;
 	private readonly SearchConditionManager _searchConditionManager;
-
 	/// <summary>コンストラクタ</summary>
 	public MediaContentLibrary(FilesLoader filesLoader, SearchConfigModel searchConfig, SearchConditionManager searchConditionManager, ISearchConditionNotificationDispatcher dispatcher) {
 		this._filesLoader = filesLoader;
@@ -24,9 +25,7 @@ public class MediaContentLibrary : ModelBase {
 		// Switch により、新しい検索リクエストが来たら前の検索タスクを自動キャンセルする。
 		dispatcher.SearchRequested
 			.SubscribeAwait(async (_, ct) => {
-				await Task.Run(async () => {
-					await this.SearchAsync(ct).ConfigureAwait(false);
-				}, ct).ConfigureAwait(false);
+				await this.SearchAsync(ct).ConfigureAwait(false);
 			}, AwaitOperation.Switch, false)
 			.AddTo(this.CompositeDisposable);
 	}
@@ -76,62 +75,58 @@ public class MediaContentLibrary : ModelBase {
 	}
 
 	private async ValueTask LoadInternalAsync(bool isInitial, CancellationToken token) {
+		using var _ = await this._asyncLock.LockAsync(token).ConfigureAwait(false);
 		this.SearchElapsedMilliseconds.Value = null;
 		if (isInitial) {
 			this.TotalCount.Value = null;
+			this.ClearFiles();
 		}
 		var batch = new List<IMediaItemModel>();
 		try {
-			var stopwatch = Stopwatch.StartNew();
+			await Task.Run(async () => {
+				var stopwatch = Stopwatch.StartNew();
 
-			var initialLoadCount = this._searchConfig.InitialLoadCount.Value;
-			var incrementalLoadCount = this._searchConfig.IncrementalLoadCount.Value;
-			var maxLoadCount = this._searchConfig.MaxLoadCount.Value;
+				var initialLoadCount = this._searchConfig.InitialLoadCount.Value;
+				var incrementalLoadCount = this._searchConfig.IncrementalLoadCount.Value;
+				var maxLoadCount = this._searchConfig.MaxLoadCount.Value;
 
-			var skip = isInitial ? 0 : this.Files.Count;
-			var stream = this._filesLoader.GetFilesStreamAsync(this.SearchConditions, skip, maxLoadCount, token);
+				var skip = isInitial ? 0 : this.Files.Count;
+				var stream = this._filesLoader.GetFilesStreamAsync(this.SearchConditions, skip, maxLoadCount, token);
 
-			var totalLoaded = 0;
-			var isFirstBatch = isInitial;
+				var totalLoaded = 0;
+				var batchLimit = isInitial ? initialLoadCount : incrementalLoadCount;
 
-			await foreach (var fileModel in stream.WithCancellation(token)) {
-				batch.Add(fileModel.AddTo(this.CompositeDisposable));
-				totalLoaded++;
+				await foreach (var fileModel in stream.WithCancellation(token)) {
+					batch.Add(fileModel.AddTo(this.CompositeDisposable));
+					totalLoaded++;
 
-				if (isFirstBatch && batch.Count >= initialLoadCount) {
-					this.ClearFiles();
+					if (batch.Count >= batchLimit) {
+						this.Files.AddRange(batch);
+						batch.Clear();
+						batchLimit = incrementalLoadCount;
+					}
+				}
+
+				if (batch.Count > 0) {
 					this.Files.AddRange(batch);
 					batch.Clear();
-					isFirstBatch = false;
-				} else if (!isFirstBatch && batch.Count >= incrementalLoadCount) {
-					this.Files.AddRange(batch);
-					batch.Clear();
 				}
-			}
 
-			if (batch.Count > 0) {
-				if (isFirstBatch) {
-					this.ClearFiles();
+				if (isInitial) {
+					if (totalLoaded == maxLoadCount) {
+						this.TotalCount.Value = await this._filesLoader.GetTotalCountAsync(this.SearchConditions, token).ConfigureAwait(false);
+					} else {
+						this.TotalCount.Value = this.Files.Count;
+					}
 				}
-				this.Files.AddRange(batch);
-				batch.Clear();
-			} else if (isFirstBatch && totalLoaded == 0) {
-				this.ClearFiles();
-			}
 
-			if (isInitial) {
-				if (totalLoaded == maxLoadCount) {
-					this.TotalCount.Value = await this._filesLoader.GetTotalCountAsync(this.SearchConditions, token).ConfigureAwait(false);
-				} else {
-					this.TotalCount.Value = this.Files.Count;
-				}
-			}
+				// 全体件数が現在の表示件数より多ければ、まだ続きがある
+				this.CanLoadMore.Value = this.TotalCount.Value > this.Files.Count;
 
-			// 全体件数が現在の表示件数より多ければ、まだ続きがある
-			this.CanLoadMore.Value = this.TotalCount.Value > this.Files.Count;
+				stopwatch.Stop();
+				this.SearchElapsedMilliseconds.Value = stopwatch.ElapsedMilliseconds;
 
-			stopwatch.Stop();
-			this.SearchElapsedMilliseconds.Value = stopwatch.ElapsedMilliseconds;
+			}, token).ConfigureAwait(false);
 		} catch (OperationCanceledException) when (token.IsCancellationRequested) {
 			// 新しい検索によりキャンセルされた場合は何もしない
 		} finally {
