@@ -126,15 +126,10 @@
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
   </PropertyGroup>
 
-  <!-- デバッグビルド時は開発用のPackage.Dev.appxmanifestを、それ以外は本番用のPackage.appxmanifestを使用する -->
-  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+  <!-- デバッグビルド時（パッケージ版）は開発用のPackage.Dev.appxmanifestを使用する -->
+  <ItemGroup Condition="'$(Packaged)' == 'true' And '$(Configuration)' == 'Debug'">
     <AppxManifest Remove="Package.appxmanifest" />
     <AppxManifest Include="Package.Dev.appxmanifest">
-      <SubType>Designer</SubType>
-    </AppxManifest>
-  </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' != 'Debug'">
-    <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
   </ItemGroup>
