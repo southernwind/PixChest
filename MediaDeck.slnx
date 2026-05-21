@@ -40,6 +40,7 @@
     <File Path=".github/workflows/test.yml" />
     <File Path=".gitignore" />
     <File Path="AGENTS.md" />
+    <File Path="CHANGELOG.md" />
     <File Path="Directory.Build.props" />
     <File Path="Directory.Build.targets" />
     <File Path="LICENSE" />
