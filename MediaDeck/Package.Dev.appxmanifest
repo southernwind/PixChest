@@ -7,15 +7,18 @@
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="uap rescap">
 
+  <!-- 開発用のパッケージ識別名を設定 -->
   <Identity
-    Name="xmi.MediaDeck"
+    Name="xmi.MediaDeck.Dev"
     Publisher="CN=E31B20E5-2E2D-4987-A053-01449B6DA81A"
     Version="1.0.1.0" />
 
-  <mp:PhoneIdentity PhoneProductId="5b44ee96-aad8-4594-a13a-6dbcfb1b06fc" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <!-- ストア版と衝突しないように別のPhoneProductId（GUID）を設定 -->
+  <mp:PhoneIdentity PhoneProductId="8c6efbd6-db52-47ef-b816-75fa590b5a32" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>ms-resource:AppName</DisplayName>
+    <!-- スタートメニューや設定で見分けがつくよう、表示名をMediaDeck (Dev)に固定 -->
+    <DisplayName>MediaDeck (Dev)</DisplayName>
     <PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -34,8 +37,9 @@
     <Application Id="App"
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
+      <!-- アプリの表示名をMediaDeck (Dev)に設定 -->
       <uap:VisualElements
-        DisplayName="ms-resource:AppName"
+        DisplayName="MediaDeck (Dev)"
         Description="ms-resource:AppDescription"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"

@@ -125,4 +125,12 @@
     <PublishReadyToRun Condition="'$(Configuration)' == 'Release-Unpackaged'">True</PublishReadyToRun>
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <!-- デバッグビルド時（パッケージ版）は開発用のPackage.Dev.appxmanifestを使用する -->
+  <ItemGroup Condition="'$(Packaged)' == 'true' And '$(Configuration)' == 'Debug'">
+    <AppxManifest Remove="Package.appxmanifest" />
+    <AppxManifest Include="Package.Dev.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
 </Project>

@@ -4,6 +4,8 @@ on: [push]
 
 jobs:
   check-format:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
