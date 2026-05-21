@@ -4,6 +4,7 @@ using MediaDeck.Common.Utilities;
 using MediaDeck.Composition.Interfaces.Files;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.Models;
 using MediaDeck.Composition.Interfaces.Notifications;
+using MediaDeck.Composition.Interfaces.Threading;
 using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Core.Models.Files.Loaders;
 
@@ -15,11 +16,14 @@ public class MediaContentLibrary : ModelBase {
 	private readonly FilesLoader _filesLoader;
 	private readonly SearchConfigModel _searchConfig;
 	private readonly SearchConditionManager _searchConditionManager;
+	private readonly IUiDispatcher _uiDispatcher;
+
 	/// <summary>コンストラクタ</summary>
-	public MediaContentLibrary(FilesLoader filesLoader, SearchConfigModel searchConfig, SearchConditionManager searchConditionManager, ISearchConditionNotificationDispatcher dispatcher) {
+	public MediaContentLibrary(FilesLoader filesLoader, SearchConfigModel searchConfig, SearchConditionManager searchConditionManager, ISearchConditionNotificationDispatcher dispatcher, IUiDispatcher uiDispatcher) {
 		this._filesLoader = filesLoader;
 		this._searchConfig = searchConfig;
 		this._searchConditionManager = searchConditionManager;
+		this._uiDispatcher = uiDispatcher;
 
 		// Dispatcher の統合ストリームを監視する。
 		// Switch により、新しい検索リクエストが来たら前の検索タスクを自動キャンセルする。
@@ -101,14 +105,14 @@ public class MediaContentLibrary : ModelBase {
 					totalLoaded++;
 
 					if (batch.Count >= batchLimit) {
-						this.Files.AddRange(batch);
+						this._uiDispatcher.Run(() => this.Files.AddRange(batch));
 						batch.Clear();
 						batchLimit = incrementalLoadCount;
 					}
 				}
 
 				if (batch.Count > 0) {
-					this.Files.AddRange(batch);
+					this._uiDispatcher.Run(() => this.Files.AddRange(batch));
 					batch.Clear();
 				}
 
@@ -138,9 +142,11 @@ public class MediaContentLibrary : ModelBase {
 
 	/// <summary>ファイルリストをクリアし、各要素を Dispose する。</summary>
 	private void ClearFiles() {
-		foreach (var file in this.Files) {
-			file.Dispose();
-		}
-		this.Files.Clear();
+		this._uiDispatcher.Run(() => {
+			foreach (var file in this.Files) {
+				file.Dispose();
+			}
+			this.Files.Clear();
+		});
 	}
 }
