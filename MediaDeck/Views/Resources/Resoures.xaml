@@ -41,6 +41,8 @@
 	<converters:LocationConverter x:Key="LocationConverter" />
 	<converters:DoubleToGridLengthConverter x:Key="DoubleToGridLengthConverter" />
 	<converters:CountToFormattedStringConverter x:Key="CountToFormattedStringConverter" />
+	<converters:FilterItemToDisplayNameConverter x:Key="FilterItemToDisplayNameConverter" />
+	<converters:StringNullOrEmptyToDefaultConverter x:Key="StringNullOrEmptyToDefaultConverter" />
 
 	<DataTemplate x:Key="ImageDetailTpl" >
 		<imageViews:ImageDetailViewerPreviewControlView />

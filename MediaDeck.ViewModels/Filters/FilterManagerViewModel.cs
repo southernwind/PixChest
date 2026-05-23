@@ -1,4 +1,5 @@
 using MediaDeck.Common.Base;
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Core.Models.Files.Filter;
 using MediaDeck.ViewModels.Filters.FilterItemCreators;
 
@@ -67,7 +68,7 @@ public class FilterManagerViewModel : ViewModelBase {
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	public FilterManagerViewModel(FilterManager filterManager) {
+	public FilterManagerViewModel(FilterManager filterManager, IStringProvider stringProvider) {
 		this._filterManager = filterManager;
 
 		this.AddFilteringConditionCommand.Subscribe(_ => {
@@ -88,14 +89,14 @@ public class FilterManagerViewModel : ViewModelBase {
 		this.FilteringConditions = filterManager.FilteringConditions.CreateView(x => new FilteringConditionEditorViewModel(x)).ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
 
 		this.FilterCreatorViewModels = [
-			new ExistsFilterCreatorViewModel(this.CurrentCondition),
-			new FilePathFilterCreatorViewModel(this.CurrentCondition),
-			new LocationFilterCreatorViewModel(this.CurrentCondition),
-			new MediaTypeFilterCreatorViewModel(this.CurrentCondition),
-			new RateFilterCreatorViewModel(this.CurrentCondition),
-			new ResolutionFilterCreatorViewModel(this.CurrentCondition),
-			new TagFilterCreatorViewModel(this.CurrentCondition),
-			new FolderGroupFilterCreatorViewModel(this.CurrentCondition)
+			new ExistsFilterCreatorViewModel(this.CurrentCondition, stringProvider),
+			new FilePathFilterCreatorViewModel(this.CurrentCondition, stringProvider),
+			new LocationFilterCreatorViewModel(this.CurrentCondition, stringProvider),
+			new MediaTypeFilterCreatorViewModel(this.CurrentCondition, stringProvider),
+			new RateFilterCreatorViewModel(this.CurrentCondition, stringProvider),
+			new ResolutionFilterCreatorViewModel(this.CurrentCondition, stringProvider),
+			new TagFilterCreatorViewModel(this.CurrentCondition, stringProvider),
+			new FolderGroupFilterCreatorViewModel(this.CurrentCondition, stringProvider)
 		];
 		this.SelectedFilterCreatorViewModel.Value = this.FilterCreatorViewModels.First();
 	}

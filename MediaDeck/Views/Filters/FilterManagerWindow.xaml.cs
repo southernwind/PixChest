@@ -1,3 +1,4 @@
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Core.Stores.Config;
 using MediaDeck.ViewModels.Filters;
 using MediaDeck.Views.Helpers;
@@ -8,9 +9,11 @@ namespace MediaDeck.Views.Filters;
 public sealed partial class FilterManagerWindow : Microsoft.UI.Xaml.Window {
 	private readonly CompositeDisposable _disposable = new();
 
-	public FilterManagerWindow(FilterManagerViewModel viewModel, IConfigStore configStore) {
+	public FilterManagerWindow(FilterManagerViewModel viewModel, IConfigStore configStore, IStringProvider stringProvider) {
 		this.ViewModel = viewModel;
 		this.InitializeComponent();
+
+		this.Title = stringProvider.GetString("FilterManager_WindowTitle");
 
 		// テーマのバインド
 		ThemeHelper.BindTheme(this, configStore, this._disposable);

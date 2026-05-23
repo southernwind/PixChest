@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using MediaDeck.Common.Base;
 using MediaDeck.Common.Extensions;
 using MediaDeck.Composition.Enum;
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Composition.Interfaces.Files;
 using MediaDeck.Composition.Objects;
 using MediaDeck.Core.Models.Files.Filter.FilterItemObjects;
@@ -14,12 +15,14 @@ namespace MediaDeck.ViewModels.Filters.FilterItemCreators;
 /// 解像度フィルター作成ViewModel
 /// </summary>
 public class ResolutionFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel {
+	private readonly IStringProvider _stringProvider;
+
 	/// <summary>
 	/// 表示名
 	/// </summary>
 	public string Title {
 		get {
-			return "解像度フィルター";
+			return this._stringProvider.GetString("FilterCreator_Resolution_Title");
 		}
 	}
 
@@ -58,15 +61,17 @@ public class ResolutionFilterCreatorViewModel : ViewModelBase, IFilterCreatorVie
 	/// </summary>
 	public IEnumerable<DisplayObject<SearchTypeComparison>> SearchTypeList {
 		get;
-	} = [
-		new DisplayObject<SearchTypeComparison>("を超える", SearchTypeComparison.GreaterThan),
-		new DisplayObject<SearchTypeComparison>("以上", SearchTypeComparison.GreaterThanOrEqual),
-		new DisplayObject<SearchTypeComparison>("と等しい", SearchTypeComparison.Equal),
-		new DisplayObject<SearchTypeComparison>("以下", SearchTypeComparison.LessThanOrEqual),
-		new DisplayObject<SearchTypeComparison>("未満", SearchTypeComparison.LessThan)
-	];
+	}
 
-	public ResolutionFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target) {
+	public ResolutionFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target, IStringProvider stringProvider) {
+		this._stringProvider = stringProvider;
+		this.SearchTypeList = [
+			new DisplayObject<SearchTypeComparison>(this._stringProvider.GetString("FilterCreator_Comparison_GreaterThan"), SearchTypeComparison.GreaterThan),
+			new DisplayObject<SearchTypeComparison>(this._stringProvider.GetString("FilterCreator_Comparison_GreaterThanOrEqual"), SearchTypeComparison.GreaterThanOrEqual),
+			new DisplayObject<SearchTypeComparison>(this._stringProvider.GetString("FilterCreator_Comparison_Equal"), SearchTypeComparison.Equal),
+			new DisplayObject<SearchTypeComparison>(this._stringProvider.GetString("FilterCreator_Comparison_LessThanOrEqual"), SearchTypeComparison.LessThanOrEqual),
+			new DisplayObject<SearchTypeComparison>(this._stringProvider.GetString("FilterCreator_Comparison_LessThan"), SearchTypeComparison.LessThan)
+		];
 		this.ResolutionWidthText = new BindableReactiveProperty<string?>().EnableValidation(() => this.ResolutionWidthText);
 		this.ResolutionHeightText = new BindableReactiveProperty<string?>().EnableValidation(() => this.ResolutionHeightText);
 		this.SearchType.Value = this.SearchTypeList.First(x => x.Value == SearchTypeComparison.GreaterThanOrEqual);

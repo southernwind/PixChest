@@ -774,4 +774,299 @@
   <data name="PublisherDisplayName" xml:space="preserve">
     <value>xmi</value>
   </data>
+  <!-- SortManager -->
+  <data name="SortManager_WindowTitle" xml:space="preserve">
+    <value>Sort Manager</value>
+  </data>
+  <data name="SortManager_SortConditionsTitle.Text" xml:space="preserve">
+    <value>Sort Conditions</value>
+  </data>
+  <data name="SortManager_Untitled" xml:space="preserve">
+    <value>Untitled</value>
+  </data>
+  <data name="SortManager_AddConditionButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Add new sort condition</value>
+  </data>
+  <data name="SortManager_AddConditionButton_Text.Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="SortManager_RemoveConditionButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Delete selected sort condition</value>
+  </data>
+  <data name="SortManager_RemoveConditionButton_Text.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="SortManager_ConditionNameLabel.Text" xml:space="preserve">
+    <value>Condition Name</value>
+  </data>
+  <data name="SortManager_ConditionNameTextBox.PlaceholderText" xml:space="preserve">
+    <value>Enter sort condition name</value>
+  </data>
+  <data name="SortManager_AddSortItemLabel.Text" xml:space="preserve">
+    <value>Add Sort Item</value>
+  </data>
+  <data name="SortManager_SortDirectionToggle.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Toggle Ascending/Descending</value>
+  </data>
+  <data name="SortManager_SortItemComboBox.PlaceholderText" xml:space="preserve">
+    <value>Select sort item</value>
+  </data>
+  <data name="SortManager_AddSortItemButton_Text.Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="SortManager_ActiveSortItemsLabel.Text" xml:space="preserve">
+    <value>Active Sort Items</value>
+  </data>
+  <data name="SortManager_RemoveSortItemButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Delete this sort item</value>
+  </data>
+
+  <!-- FilterManager -->
+  <data name="FilterManager_WindowTitle" xml:space="preserve">
+    <value>Filter Manager</value>
+  </data>
+  <data name="FilterManager_FilteringConditionsTitle.Text" xml:space="preserve">
+    <value>Filter Conditions</value>
+  </data>
+  <data name="FilterManager_Untitled" xml:space="preserve">
+    <value>Untitled</value>
+  </data>
+  <data name="FilterManager_AddConditionButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Add new filter condition</value>
+  </data>
+  <data name="FilterManager_AddConditionButton_Text.Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="FilterManager_RemoveConditionButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Delete selected filter condition</value>
+  </data>
+  <data name="FilterManager_RemoveConditionButton_Text.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="FilterManager_ConditionNameLabel.Text" xml:space="preserve">
+    <value>Condition Name</value>
+  </data>
+  <data name="FilterManager_ConditionNameTextBox.PlaceholderText" xml:space="preserve">
+    <value>Enter filter condition name</value>
+  </data>
+  <data name="FilterManager_AddFilterItemLabel.Text" xml:space="preserve">
+    <value>Add Filter Item</value>
+  </data>
+  <data name="FilterManager_FilterItemComboBox.PlaceholderText" xml:space="preserve">
+    <value>Select filter item</value>
+  </data>
+  <data name="FilterManager_ActiveFilterItemsLabel.Text" xml:space="preserve">
+    <value>Active Filter Items</value>
+  </data>
+  <data name="FilterManager_RemoveFilterItemButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Delete this filter item</value>
+  </data>
+
+  <!-- SortItemKeys -->
+  <data name="SortItemKey_FilePath" xml:space="preserve">
+    <value>File Path</value>
+  </data>
+  <data name="SortItemKey_CreationTime" xml:space="preserve">
+    <value>Creation Time</value>
+  </data>
+  <data name="SortItemKey_ModifiedTime" xml:space="preserve">
+    <value>Modified Time</value>
+  </data>
+  <data name="SortItemKey_LastAccessTime" xml:space="preserve">
+    <value>Last Access Time</value>
+  </data>
+  <data name="SortItemKey_RegisteredTime" xml:space="preserve">
+    <value>Registered Time</value>
+  </data>
+  <data name="SortItemKey_FileSize" xml:space="preserve">
+    <value>File Size</value>
+  </data>
+  <data name="SortItemKey_Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="SortItemKey_Rate" xml:space="preserve">
+    <value>Rate</value>
+  </data>
+  <data name="SortItemKey_Resolution" xml:space="preserve">
+    <value>Resolution</value>
+  </data>
+  <data name="SortItemKey_UsageCount" xml:space="preserve">
+    <value>Usage Count</value>
+  </data>
+
+  <!-- FilterCreator -->
+  <data name="FilterCreator_Exists_Title" xml:space="preserve">
+    <value>Exists Filter</value>
+  </data>
+  <data name="FilterCreator_FilePath_Title" xml:space="preserve">
+    <value>File Path Filter</value>
+  </data>
+  <data name="FilterCreator_FolderGroup_Title" xml:space="preserve">
+    <value>Folder Group Filter</value>
+  </data>
+  <data name="FilterCreator_Location_Title" xml:space="preserve">
+    <value>Location Filter</value>
+  </data>
+  <data name="FilterCreator_MediaType_Title" xml:space="preserve">
+    <value>Media Type Filter</value>
+  </data>
+  <data name="FilterCreator_Rate_Title" xml:space="preserve">
+    <value>Rate Filter</value>
+  </data>
+  <data name="FilterCreator_Resolution_Title" xml:space="preserve">
+    <value>Resolution Filter</value>
+  </data>
+  <data name="FilterCreator_Tag_Title" xml:space="preserve">
+    <value>Tag Filter</value>
+  </data>
+
+  <data name="FilterCreator_Exists_True" xml:space="preserve">
+    <value>File exists</value>
+  </data>
+  <data name="FilterCreator_Exists_False" xml:space="preserve">
+    <value>File does not exist</value>
+  </data>
+  <data name="FilterCreator_FolderGroup_Include" xml:space="preserve">
+    <value>Include</value>
+  </data>
+  <data name="FilterCreator_FolderGroup_Exclude" xml:space="preserve">
+    <value>Exclude</value>
+  </data>
+  <data name="FilterCreator_Location_Contains_True" xml:space="preserve">
+    <value>Contains coordinate information</value>
+  </data>
+  <data name="FilterCreator_Location_Contains_False" xml:space="preserve">
+    <value>Does not contain coordinate information</value>
+  </data>
+  <data name="FilterCreator_MediaType_Image" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="FilterCreator_MediaType_Video" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="FilterCreator_Include" xml:space="preserve">
+    <value>Include</value>
+  </data>
+  <data name="FilterCreator_Exclude" xml:space="preserve">
+    <value>Exclude</value>
+  </data>
+  <data name="FilterCreator_Comparison_GreaterThan" xml:space="preserve">
+    <value>greater than</value>
+  </data>
+  <data name="FilterCreator_Comparison_GreaterThanOrEqual" xml:space="preserve">
+    <value>greater than or equal to</value>
+  </data>
+  <data name="FilterCreator_Comparison_Equal" xml:space="preserve">
+    <value>equal to</value>
+  </data>
+  <data name="FilterCreator_Comparison_LessThanOrEqual" xml:space="preserve">
+    <value>less than or equal to</value>
+  </data>
+  <data name="FilterCreator_Comparison_LessThan" xml:space="preserve">
+    <value>less than</value>
+  </data>
+
+  <!-- FilterItemObject DisplayName Formats -->
+  <data name="FilterItem_Exists_True" xml:space="preserve">
+    <value>File exists</value>
+  </data>
+  <data name="FilterItem_Exists_False" xml:space="preserve">
+    <value>File does not exist</value>
+  </data>
+  <data name="FilterItem_FilePath_Include" xml:space="preserve">
+    <value>\"{0}\" in file path includes</value>
+  </data>
+  <data name="FilterItem_FilePath_Exclude" xml:space="preserve">
+    <value>\"{0}\" in file path does not include</value>
+  </data>
+  <data name="FilterItem_FolderGroup_Include" xml:space="preserve">
+    <value>Include files in folder group</value>
+  </data>
+  <data name="FilterItem_FolderGroup_Exclude" xml:space="preserve">
+    <value>Exclude files in folder group</value>
+  </data>
+  <data name="FilterItem_Location_Text" xml:space="preserve">
+    <value>Includes \"{0}\" in place name</value>
+  </data>
+  <data name="FilterItem_Location_Contains_True" xml:space="preserve">
+    <value>Contains coordinate information</value>
+  </data>
+  <data name="FilterItem_Location_Contains_False" xml:space="preserve">
+    <value>Does not contain coordinate information</value>
+  </data>
+  <data name="FilterItem_Location_Range" xml:space="preserve">
+    <value>Within the range of [{0}] and [{1}]</value>
+  </data>
+  <data name="FilterItem_MediaType_Video" xml:space="preserve">
+    <value>Video file</value>
+  </data>
+  <data name="FilterItem_MediaType_Image" xml:space="preserve">
+    <value>Image file</value>
+  </data>
+  <data name="FilterItem_Rate_GreaterThan" xml:space="preserve">
+    <value>Rating is greater than {0}</value>
+  </data>
+  <data name="FilterItem_Rate_GreaterThanOrEqual" xml:space="preserve">
+    <value>Rating is {0} or more</value>
+  </data>
+  <data name="FilterItem_Rate_Equal" xml:space="preserve">
+    <value>Rating is equal to {0}</value>
+  </data>
+  <data name="FilterItem_Rate_LessThanOrEqual" xml:space="preserve">
+    <value>Rating is {0} or less</value>
+  </data>
+  <data name="FilterItem_Rate_LessThan" xml:space="preserve">
+    <value>Rating is less than {0}</value>
+  </data>
+  <data name="FilterItem_Resolution_Width_GreaterThan" xml:space="preserve">
+    <value>Width is greater than {0}</value>
+  </data>
+  <data name="FilterItem_Resolution_Width_GreaterThanOrEqual" xml:space="preserve">
+    <value>Width is {0} or more</value>
+  </data>
+  <data name="FilterItem_Resolution_Width_Equal" xml:space="preserve">
+    <value>Width is equal to {0}</value>
+  </data>
+  <data name="FilterItem_Resolution_Width_LessThanOrEqual" xml:space="preserve">
+    <value>Width is {0} or less</value>
+  </data>
+  <data name="FilterItem_Resolution_Width_LessThan" xml:space="preserve">
+    <value>Width is less than {0}</value>
+  </data>
+  <data name="FilterItem_Resolution_Height_GreaterThan" xml:space="preserve">
+    <value>Height is greater than {0}</value>
+  </data>
+  <data name="FilterItem_Resolution_Height_GreaterThanOrEqual" xml:space="preserve">
+    <value>Height is {0} or more</value>
+  </data>
+  <data name="FilterItem_Resolution_Height_Equal" xml:space="preserve">
+    <value>Height is equal to {0}</value>
+  </data>
+  <data name="FilterItem_Resolution_Height_LessThanOrEqual" xml:space="preserve">
+    <value>Height is {0} or less</value>
+  </data>
+  <data name="FilterItem_Resolution_Height_LessThan" xml:space="preserve">
+    <value>Height is less than {0}</value>
+  </data>
+  <data name="FilterItem_Resolution_Area_GreaterThan" xml:space="preserve">
+    <value>Resolution is greater than {0}</value>
+  </data>
+  <data name="FilterItem_Resolution_Area_GreaterThanOrEqual" xml:space="preserve">
+    <value>Resolution is {0} or more</value>
+  </data>
+  <data name="FilterItem_Resolution_Area_Equal" xml:space="preserve">
+    <value>Resolution is equal to {0}</value>
+  </data>
+  <data name="FilterItem_Resolution_Area_LessThanOrEqual" xml:space="preserve">
+    <value>Resolution is {0} or less</value>
+  </data>
+  <data name="FilterItem_Resolution_Area_LessThan" xml:space="preserve">
+    <value>Resolution is less than {0}</value>
+  </data>
+  <data name="FilterItem_Tag_Include" xml:space="preserve">
+    <value>Tag \"{0}\" included</value>
+  </data>
+  <data name="FilterItem_Tag_Exclude" xml:space="preserve">
+    <value>Tag \"{0}\" not included</value>
+  </data>
 </root>

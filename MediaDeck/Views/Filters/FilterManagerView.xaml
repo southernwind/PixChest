@@ -7,6 +7,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:filteritemobjects="using:MediaDeck.Composition.Interfaces.Files"
 	xmlns:creators="using:MediaDeck.ViewModels.Filters.FilterItemCreators"
+	xmlns:filterVm="using:MediaDeck.ViewModels.Filters"
 	xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
 	mc:Ignorable="d" >
 
@@ -29,7 +30,7 @@
 			</Grid.RowDefinitions>
 
 			<TextBlock Grid.Row="0"
-				Text="フィルター条件"
+				x:Uid="FilterManager_FilteringConditionsTitle"
 				FontWeight="SemiBold"
 				FontSize="14" />
 
@@ -40,8 +41,8 @@
 				<ListBox ItemsSource="{x:Bind ViewModel.FilteringConditions}"
 					SelectedItem="{x:Bind ViewModel.CurrentCondition.Value, Mode=TwoWay}" >
 					<ItemsControl.ItemTemplate>
-						<DataTemplate>
-							<TextBlock Text="{Binding DisplayName.Value, TargetNullValue=(名称未設定)}"
+						<DataTemplate x:DataType="filterVm:FilteringConditionEditorViewModel" >
+							<TextBlock Text="{x:Bind DisplayName.Value, Converter={StaticResource StringNullOrEmptyToDefaultConverter}, ConverterParameter=FilterManager_Untitled, Mode=OneWay}"
 								TextTrimming="CharacterEllipsis" />
 						</DataTemplate>
 					</ItemsControl.ItemTemplate>
@@ -52,22 +53,22 @@
 				Orientation="Horizontal"
 				Spacing="8" >
 				<Button Command="{x:Bind ViewModel.AddFilteringConditionCommand}"
-					ToolTipService.ToolTip="新しいフィルター条件を追加" >
+					x:Uid="FilterManager_AddConditionButton" >
 					<StackPanel Orientation="Horizontal"
 						Spacing="6" >
 						<FontIcon Glyph="&#xF8AA;"
 							FontSize="12" />
-						<TextBlock Text="追加" />
+						<TextBlock x:Uid="FilterManager_AddConditionButton_Text" />
 					</StackPanel>
 				</Button>
 				<Button Command="{x:Bind ViewModel.RemoveFilteringConditionCommand}"
 					CommandParameter="{x:Bind ViewModel.CurrentCondition.Value, Mode=OneWay}"
-					ToolTipService.ToolTip="選択中のフィルター条件を削除" >
+					x:Uid="FilterManager_RemoveConditionButton" >
 					<StackPanel Orientation="Horizontal"
 						Spacing="6" >
 						<FontIcon Glyph="&#xF78A;"
 							FontSize="12" />
-						<TextBlock Text="削除" />
+						<TextBlock x:Uid="FilterManager_RemoveConditionButton_Text" />
 					</StackPanel>
 				</Button>
 			</StackPanel>
@@ -99,17 +100,17 @@
 				<!-- 条件名入力 -->
 				<StackPanel Grid.Row="0"
 					Spacing="6" >
-					<TextBlock Text="条件名"
+					<TextBlock x:Uid="FilterManager_ConditionNameLabel"
 						FontWeight="SemiBold" />
 					<TextBox
 						Text="{x:Bind ViewModel.CurrentCondition.Value.DisplayName.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-						PlaceholderText="フィルター条件の名前を入力" />
+						x:Uid="FilterManager_ConditionNameTextBox" />
 				</StackPanel>
 
 				<!-- フィルター項目追加 -->
 				<StackPanel Grid.Row="2"
 					Spacing="6" >
-					<TextBlock Text="フィルター項目を追加"
+					<TextBlock x:Uid="FilterManager_AddFilterItemLabel"
 						FontWeight="SemiBold" />
 					<Grid>
 						<Grid.ColumnDefinitions>
@@ -119,7 +120,7 @@
 						</Grid.ColumnDefinitions>
 						<ComboBox Grid.Column="0"
 							HorizontalAlignment="Stretch"
-							PlaceholderText="フィルター項目を選択"
+							x:Uid="FilterManager_FilterItemComboBox"
 							SelectionChanged="FilterCreatorComboBox_SelectionChanged"
 							ItemsSource="{x:Bind ViewModel.FilterCreatorViewModels, Mode=OneWay}"
 							SelectedItem="{x:Bind ViewModel.SelectedFilterCreatorViewModel.Value, Mode=TwoWay}" >
@@ -143,7 +144,7 @@
 					</Grid.RowDefinitions>
 
 					<TextBlock Grid.Row="0"
-						Text="適用中のフィルター項目"
+						x:Uid="FilterManager_ActiveFilterItemsLabel"
 						FontWeight="SemiBold" />
 
 					<Border Grid.Row="2"
@@ -161,12 +162,12 @@
 											<ColumnDefinition Width="Auto" />
 										</Grid.ColumnDefinitions>
 										<TextBlock Grid.Column="0"
-											Text="{x:Bind DisplayName}"
+											Text="{x:Bind Mode=OneWay, Converter={StaticResource FilterItemToDisplayNameConverter}}"
 											VerticalAlignment="Center" />
 										<Button Grid.Column="1"
 											Command="{Binding DataContext.CurrentCondition.Value.RemoveFilterCommand, Mode=OneWay, ElementName=ControlRoot}"
 											CommandParameter="{Binding Mode=OneWay}"
-											ToolTipService.ToolTip="このフィルター項目を削除"
+											x:Uid="FilterManager_RemoveFilterItemButton"
 											Padding="6" >
 											<FontIcon Glyph="&#xF78A;"
 												FontSize="12" />

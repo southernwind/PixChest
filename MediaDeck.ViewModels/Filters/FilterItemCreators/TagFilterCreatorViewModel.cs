@@ -1,5 +1,6 @@
 using MediaDeck.Common.Base;
 using MediaDeck.Composition.Enum;
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Core.Models.Files.Filter.FilterItemObjects;
 using MediaDeck.Core.Primitives;
 
@@ -9,12 +10,14 @@ namespace MediaDeck.ViewModels.Filters.FilterItemCreators;
 /// タグフィルター作成ViewModel
 /// </summary>
 public class TagFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel {
+	private readonly IStringProvider _stringProvider;
+
 	/// <summary>
 	/// 表示名
 	/// </summary>
 	public string Title {
 		get {
-			return "タグフィルター";
+			return this._stringProvider.GetString("FilterCreator_Tag_Title");
 		}
 	}
 
@@ -37,10 +40,7 @@ public class TagFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel 
 	/// </summary>
 	public IEnumerable<DisplayObject<SearchTypeInclude>> SearchTypeList {
 		get;
-	} = [
-		new DisplayObject<SearchTypeInclude>("含む", SearchTypeInclude.Include),
-		new DisplayObject<SearchTypeInclude>("含まない", SearchTypeInclude.Exclude)
-	];
+	}
 
 	/// <summary>
 	/// フィルター追加コマンド
@@ -49,7 +49,12 @@ public class TagFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel 
 		get;
 	}
 
-	public TagFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target) {
+	public TagFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target, IStringProvider stringProvider) {
+		this._stringProvider = stringProvider;
+		this.SearchTypeList = [
+			new DisplayObject<SearchTypeInclude>(this._stringProvider.GetString("FilterCreator_Include"), SearchTypeInclude.Include),
+			new DisplayObject<SearchTypeInclude>(this._stringProvider.GetString("FilterCreator_Exclude"), SearchTypeInclude.Exclude)
+		];
 		this.SearchType.Value = this.SearchTypeList.First();
 		this.AddFilterCommand = this.TagName.Select(x => !string.IsNullOrEmpty(x)).ToReactiveCommand();
 		this.AddFilterCommand.Subscribe(_ => {
