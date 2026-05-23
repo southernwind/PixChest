@@ -12,10 +12,9 @@
 		<SolidColorBrush x:Key="CardBorderBrush" Color="{ThemeResource CardStrokeColorDefaultColor}" />
 	</Page.Resources>
 
-	<ScrollViewer VerticalScrollBarVisibility="Auto" >
-		<StackPanel Spacing="4"
-			Padding="36,24,36,36"
-			MaxWidth="800" >
+	<Grid MaxWidth="800" Margin="36,24,36,36">
+		<ScrollViewer VerticalScrollBarVisibility="Auto">
+			<StackPanel Spacing="4">
 
 			<StackPanel Spacing="4" Margin="0,0,0,16" >
 				<TextBlock x:Uid="SearchConfigPage_CountSettingsHeader"
@@ -47,6 +46,7 @@
 				<NumberBox Value="{x:Bind ViewModel.MaxLoadCount.Value, Mode=TwoWay}" Minimum="1" Maximum="500000" SpinButtonPlacementMode="Compact" HorizontalAlignment="Left" Width="200" />
 			</StackPanel>
 
-		</StackPanel>
-	</ScrollViewer>
+			</StackPanel>
+		</ScrollViewer>
+	</Grid>
 </Page>

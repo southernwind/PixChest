@@ -6,10 +6,9 @@
 	mc:Ignorable="d"
 	Background="Transparent" >
 
-	<ScrollViewer VerticalScrollBarVisibility="Auto" >
-		<StackPanel Spacing="4"
-			Padding="36,24,36,36"
-			MaxWidth="800" >
+	<Grid MaxWidth="800" Margin="36,24,36,36">
+		<ScrollViewer VerticalScrollBarVisibility="Auto">
+			<StackPanel Spacing="4">
 
 			<StackPanel Spacing="4" Margin="0,0,0,16" >
 				<TextBlock x:Uid="ThumbnailConfigPage_Header"
@@ -27,6 +26,7 @@
 				<NumberBox Value="{x:Bind ViewModel.ThumbnailSize.Value, Mode=TwoWay}" Minimum="64" Maximum="2048" SpinButtonPlacementMode="Compact" HorizontalAlignment="Left" Width="200" />
 			</StackPanel>
 
-		</StackPanel>
-	</ScrollViewer>
+			</StackPanel>
+		</ScrollViewer>
+	</Grid>
 </Page>
