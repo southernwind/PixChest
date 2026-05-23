@@ -1069,4 +1069,10 @@
   <data name="FilterItem_Tag_Exclude" xml:space="preserve">
     <value>Tag \"{0}\" not included</value>
   </data>
+  <data name="TagCategory_Unassigned_Name" xml:space="preserve">
+    <value>Unassigned</value>
+  </data>
+  <data name="TagCategory_Unassigned_Detail" xml:space="preserve">
+    <value>Tags with no category assigned</value>
+  </data>
 </root>

@@ -1069,4 +1069,10 @@
   <data name="FilterItem_Tag_Exclude" xml:space="preserve">
     <value>タグに「{0}」を含まない</value>
   </data>
+  <data name="TagCategory_Unassigned_Name" xml:space="preserve">
+    <value>未設定</value>
+  </data>
+  <data name="TagCategory_Unassigned_Detail" xml:space="preserve">
+    <value>カテゴリーが設定されていないタグ</value>
+  </data>
 </root>

@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using GenJsonConfig.Attributes;
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Composition.Interfaces.Tags;
 using MediaDeck.Composition.Tables;
 
@@ -13,12 +14,24 @@ namespace MediaDeck.Core.Models.Tags;
 [Inject(InjectServiceLifetime.Transient, typeof(ITagCategoryModel))]
 [Inject(InjectServiceLifetime.Transient)]
 public class TagCategoryModel : ITagCategoryModel {
+	private readonly IStringProvider? _stringProvider;
 	private int? _tagCategoryId;
 	private string? _tagCategoryName;
 	private string? _detail;
 	private readonly ObservableList<ITagModel> _tags = [];
 	private bool _isInitialized;
 
+	/// <summary>
+	/// <see cref="IStringProvider"/> を使用して <see cref="TagCategoryModel"/> を初期化します。
+	/// </summary>
+	/// <param name="stringProvider">文字列リソースプロバイダー</param>
+	public TagCategoryModel(IStringProvider stringProvider) {
+		this._stringProvider = stringProvider;
+	}
+
+	/// <summary>
+	/// シリアライズやテストのためのデフォルトコンストラクタ。
+	/// </summary>
 	public TagCategoryModel() {
 	}
 
@@ -48,6 +61,7 @@ public class TagCategoryModel : ITagCategoryModel {
 		this._tags.Clear();
 	}
 
+	/// <inheritdoc />
 	[MemberNotNull(nameof(_tagCategoryName), nameof(_detail))]
 	public void Initialize(TagCategory? tagCategory, ITagModelFactory factory) {
 		if (tagCategory != null) {
@@ -58,8 +72,8 @@ public class TagCategoryModel : ITagCategoryModel {
 			this._tags.AddRange(tagCategory.Tags.OrderByDescending(x => x.MediaItemTags.Count).Select(t => factory.Create(t, this)));
 		} else {
 			this._tagCategoryId = null;
-			this._tagCategoryName = "未設定";
-			this._detail = "カテゴリーが設定されていないタグ";
+			this._tagCategoryName = this._stringProvider?.GetString("TagCategory_Unassigned_Name") ?? "未設定";
+			this._detail = this._stringProvider?.GetString("TagCategory_Unassigned_Detail") ?? "カテゴリーが設定されていないタグ";
 			this._tags.Clear();
 		}
 		this._isInitialized = true;
