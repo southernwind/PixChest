@@ -20,6 +20,7 @@ public sealed partial class VideoThumbnailPickerView : VideoThumbnailPickerViewU
 		this.btnPlayback.Content = this.Player.Status == Status.Playing ? this._iconPause : this._iconPlay;
 		this.Player.PropertyChanged += this.Player_PropertyChanged;
 		this.playerRootGrid.DataContext = this;
+		this.Unloaded += this.VideoThumbnailPickerView_Unloaded;
 	}
 
 	protected override void OnViewModelChanged(VideoThumbnailPickerViewModel? oldViewModel, VideoThumbnailPickerViewModel? newViewModel) {
@@ -67,9 +68,15 @@ public sealed partial class VideoThumbnailPickerView : VideoThumbnailPickerViewU
 		}
 	}
 
-	~VideoThumbnailPickerView() {
-		this._disposables.Dispose();
+	/// <summary>
+	/// ビューがアンロードされた際に呼び出され、再生プレイヤーおよび関連リソースを破棄します。
+	/// </summary>
+	/// <param name="sender">イベントの発生元。</param>
+	/// <param name="e">イベントデータ。</param>
+	private void VideoThumbnailPickerView_Unloaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
+		this.Player.PropertyChanged -= this.Player_PropertyChanged;
 		this.Player.Dispose();
+		this._disposables?.Dispose();
 	}
 }
 
