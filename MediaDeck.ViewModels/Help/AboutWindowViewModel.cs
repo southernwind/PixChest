@@ -25,6 +25,10 @@ public class AboutWindowViewModel : ViewModelBase {
 		this.OpenAppDataDirectoryCommand
 			.Subscribe(_ => ShellUtility.ShellExecute(this.AppDataDirectoryPath))
 			.AddTo(this.CompositeDisposable);
+
+		this.OpenWebSiteCommand
+			.Subscribe(_ => ShellUtility.ShellExecute("https://mediadeck.xm-i.net/"))
+			.AddTo(this.CompositeDisposable);
 	}
 
 	/// <summary>
@@ -66,6 +70,13 @@ public class AboutWindowViewModel : ViewModelBase {
 	/// アプリケーションデータフォルダをエクスプローラーで開くコマンド
 	/// </summary>
 	public ReactiveCommand OpenAppDataDirectoryCommand {
+		get;
+	} = new();
+
+	/// <summary>
+	/// 公式ウェブサイトをブラウザで開くコマンド
+	/// </summary>
+	public ReactiveCommand OpenWebSiteCommand {
 		get;
 	} = new();
 }

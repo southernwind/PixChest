@@ -34,6 +34,7 @@
 			</StackPanel>
 			<TextBlock Text="{x:Bind ViewModel.Description}" TextWrapping="Wrap" MaxWidth="400" HorizontalAlignment="Center" TextAlignment="Center" Margin="0,12"/>
 			<TextBlock Text="{x:Bind ViewModel.Copyright}" FontSize="12" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" HorizontalAlignment="Center"/>
+			<HyperlinkButton x:Uid="About_WebSiteLink" Command="{x:Bind ViewModel.OpenWebSiteCommand}" HorizontalAlignment="Center" FontSize="12" Margin="0,4,0,0"/>
 
 			<Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="4" Padding="16,12" Margin="0,8,0,0" HorizontalAlignment="Stretch">
 				<StackPanel Spacing="8">
