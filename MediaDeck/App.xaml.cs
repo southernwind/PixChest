@@ -169,7 +169,6 @@ public partial class App {
 		await Task.Run(async () => {
 			var stringProvider = Ioc.Default.GetRequiredService<IStringProvider>();
 			splashViewModel?.UpdateStatus(stringProvider.GetString("Splash_CleaningUpStates"));
-			this.CleanupOrphanedTabs();
 
 			// OpenStreetMapのタイルサーバーにアクセスする際のUser-Agentを設定
 			var version = Assembly.GetEntryAssembly()?.GetName().Version;
@@ -237,21 +236,4 @@ public partial class App {
 		});
 	}
 
-	/// <summary>
-	///     所属ウィンドウのないタブをクリーンアップします。
-	/// </summary>
-	private void CleanupOrphanedTabs() {
-		var activeTabIds = this._stateStore.RootState.Windows
-			.SelectMany(w => w.TabIds)
-			.ToHashSet();
-
-		var orphanedTabs = this._stateStore.RootState.Tabs
-			.Where(t => !activeTabIds.Contains(t.TabId))
-			.ToList();
-
-		foreach (var tab in orphanedTabs) {
-			this._stateStore.RootState.Tabs.Remove(tab);
-			LoggerFactory.CreateLogger<App>().LogInformation("所属ウィンドウのないタブを削除しました: {TabId}", tab.TabId);
-		}
-	}
 }

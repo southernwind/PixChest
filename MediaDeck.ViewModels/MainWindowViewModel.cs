@@ -121,33 +121,7 @@ public class MainWindowViewModel : ViewModelBase {
 
 		// AppStateのデフォルトタブ状態を新規タブに適用
 		var defaultTab = stateStore.RootState.AppState.DefaultTabState;
-		var defaultSearch = defaultTab.SearchState;
-		var defaultViewer = defaultTab.ViewerState;
-		tabState.SearchState.CurrentSortCondition.Value = defaultSearch.CurrentSortCondition.Value;
-		tabState.SearchState.SortDirection.Value = defaultSearch.SortDirection.Value;
-		tabState.SearchState.CurrentFilteringConditions.Value = [.. defaultSearch.CurrentFilteringConditions.Value];
-		tabState.ViewerState.ItemSize.Value = defaultViewer.ItemSize.Value;
-		tabState.ViewerState.ActiveViewer.Value = defaultViewer.ActiveViewer.Value;
-		tabState.ViewerState.ShowOverlay.Value = defaultViewer.ShowOverlay.Value;
-		tabState.ViewerState.ShowInfo.Value = defaultViewer.ShowInfo.Value;
-
-		// ListViewer 列設定
-		tabState.ViewerState.ListFileNameColumnWidth.Value = defaultViewer.ListFileNameColumnWidth.Value;
-		tabState.ViewerState.ListResolutionColumnWidth.Value = defaultViewer.ListResolutionColumnWidth.Value;
-		tabState.ViewerState.ListFileSizeColumnWidth.Value = defaultViewer.ListFileSizeColumnWidth.Value;
-		tabState.ViewerState.ListCreationTimeColumnWidth.Value = defaultViewer.ListCreationTimeColumnWidth.Value;
-		tabState.ViewerState.ListRateColumnWidth.Value = defaultViewer.ListRateColumnWidth.Value;
-		tabState.ViewerState.ListFileNameColumnVisible.Value = defaultViewer.ListFileNameColumnVisible.Value;
-		tabState.ViewerState.ListResolutionColumnVisible.Value = defaultViewer.ListResolutionColumnVisible.Value;
-		tabState.ViewerState.ListFileSizeColumnVisible.Value = defaultViewer.ListFileSizeColumnVisible.Value;
-		tabState.ViewerState.ListCreationTimeColumnVisible.Value = defaultViewer.ListCreationTimeColumnVisible.Value;
-		tabState.ViewerState.ListRateColumnVisible.Value = defaultViewer.ListRateColumnVisible.Value;
-
-		tabState.ActiveRepository.Value = defaultTab.ActiveRepository.Value;
-
-		tabState.LeftPaneWidth.Value = defaultTab.LeftPaneWidth.Value;
-		tabState.RightPaneWidth.Value = defaultTab.RightPaneWidth.Value;
-		tabState.RepositoryPaneHeight.Value = defaultTab.RepositoryPaneHeight.Value;
+		tabState.ApplyDefaultState(defaultTab);
 
 		// ルートの状態リストに追加
 		this._rootState.Tabs.Add(tabState);
