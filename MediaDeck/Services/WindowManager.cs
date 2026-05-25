@@ -62,6 +62,15 @@ public class WindowManager : DisposableBase {
 		}
 	}
 
+	/// <summary>
+	/// 管理されているすべてのウィンドウコンテキストを取得します。
+	/// </summary>
+	public IReadOnlyList<WindowContext> Windows {
+		get {
+			return this._windows;
+		}
+	}
+
 	public WindowManager(
 		IServiceProvider rootProvider,
 		IStateStore stateStore,

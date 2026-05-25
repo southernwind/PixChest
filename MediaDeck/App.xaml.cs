@@ -16,6 +16,7 @@ using MediaDeck.Core.Stores.Config;
 using MediaDeck.Core.Stores.State;
 using MediaDeck.Services;
 using MediaDeck.ViewModels;
+using MediaDeck.Views.FolderManager;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -78,6 +79,18 @@ public partial class App {
 
 		var windowManager = Ioc.Default.GetRequiredService<WindowManager>();
 		windowManager.RestoreWindows();
+
+		// 登録フォルダ数が0件の場合はフォルダ管理画面を自動で開く
+		if (this._configStore.Config.FolderManagerConfig.Folders.Count == 0) {
+			var folderManagerWindow = Ioc.Default.GetRequiredService<FolderManagerWindow>();
+			var windowService = Ioc.Default.GetRequiredService<WindowService>();
+			var mainWindow = windowManager.Windows.FirstOrDefault()?.Window;
+			if (mainWindow != null) {
+				windowService.ActivateCenteredOnMainWindow(folderManagerWindow, mainWindow);
+			} else {
+				folderManagerWindow.Activate();
+			}
+		}
 
 		var logger = LoggerFactory.CreateLogger<App>();
 		AppDomain.CurrentDomain.UnhandledException += (_, e) => {
