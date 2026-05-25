@@ -20,13 +20,9 @@ public sealed class AsyncLock {
 	/// </summary>
 	/// <param name="cancellationToken">キャンセル トークン。</param>
 	/// <returns>ロックを解放するための <see cref="IDisposable"/> を表すタスク。</returns>
-	public Task<IDisposable> LockAsync(CancellationToken cancellationToken = default) {
-		var wait = this._semaphore.WaitAsync(cancellationToken);
-		return wait.IsCompleted ?
-			this._releaser :
-			wait.ContinueWith((_, state) => (IDisposable)state!,
-				this._releaser.Result, cancellationToken,
-				TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default)!;
+	public async Task<IDisposable> LockAsync(CancellationToken cancellationToken = default) {
+		await this._semaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+		return this._releaser.Result;
 	}
 
 	/// <summary>
