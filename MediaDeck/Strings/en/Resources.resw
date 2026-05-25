@@ -632,6 +632,9 @@
   <data name="FolderManager_SelectFolderMessage.Text" xml:space="preserve">
     <value>Please select a folder</value>
   </data>
+  <data name="FolderManager_EmptyFoldersMessage.Text" xml:space="preserve">
+    <value>Please click the "Add" button to add a folder scan setting.</value>
+  </data>
   <data name="FolderManager_FolderSettings.Text" xml:space="preserve">
     <value>Folder Settings</value>
   </data>
