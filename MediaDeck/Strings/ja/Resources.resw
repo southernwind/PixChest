@@ -445,11 +445,26 @@
   <data name="ExecConfig_ToolName.PlaceholderText" xml:space="preserve">
     <value>ツール名 (例: VLC)</value>
   </data>
+  <data name="ExecConfig_ToolName.ToolTipService.ToolTip" xml:space="preserve">
+    <value>設定画面やメニューで表示されるツールの名前です。</value>
+  </data>
   <data name="ExecConfig_FilePath.Header" xml:space="preserve">
     <value>実行ファイルパス</value>
   </data>
+  <data name="ExecConfig_FilePath.PlaceholderText" xml:space="preserve">
+    <value>例: C:\Program Files\VideoLAN\VLC\vlc.exe</value>
+  </data>
+  <data name="ExecConfig_FilePath.ToolTipService.ToolTip" xml:space="preserve">
+    <value>実行プログラムの絶対パスです。</value>
+  </data>
   <data name="ExecConfig_Args.Header" xml:space="preserve">
     <value>起動引数</value>
+  </data>
+  <data name="ExecConfig_Args.PlaceholderText" xml:space="preserve">
+    <value>例: --fullscreen {path}</value>
+  </data>
+  <data name="ExecConfig_Args.ToolTipService.ToolTip" xml:space="preserve">
+    <value>起動引数（オプション）です。空欄の場合は "{path}"（ファイルのフルパス）が自動的に渡されます。</value>
   </data>
   <data name="ExecConfig_IsDefault.Header" xml:space="preserve">
     <value>既定ツール</value>
@@ -459,6 +474,30 @@
   </data>
   <data name="ExecConfig_InternalDescription.Text" xml:space="preserve">
     <value>MediaDeckのライブラリ画面でこのフォルダを開きます。</value>
+  </data>
+  <data name="Execution_Help_Expander.Header" xml:space="preserve">
+    <value>起動引数（オプション）の設定ヘルプ</value>
+  </data>
+  <data name="Execution_Help_Intro.Text" xml:space="preserve">
+    <value>起動引数（オプション）には、以下のプレースホルダーを使用して実行時にファイル情報を動的に埋め込むことができます。</value>
+  </data>
+  <data name="Execution_Help_Path.Text" xml:space="preserve">
+    <value>ファイルのフルパス（自動的にダブルクォーテーションで囲まれます）</value>
+  </data>
+  <data name="Execution_Help_Dir.Text" xml:space="preserve">
+    <value>親フォルダのパス（自動的にダブルクォーテーションで囲まれます）</value>
+  </data>
+  <data name="Execution_Help_Name.Text" xml:space="preserve">
+    <value>拡張子を含むファイル名（例: photo.jpg）</value>
+  </data>
+  <data name="Execution_Help_NameNoExt.Text" xml:space="preserve">
+    <value>拡張子を含まないファイル名（例: photo）</value>
+  </data>
+  <data name="Execution_Help_Ext.Text" xml:space="preserve">
+    <value>ファイル拡張子（ドットを含む。例: .jpg）</value>
+  </data>
+  <data name="Execution_Help_Note.Text" xml:space="preserve">
+    <value>※起動引数を空欄にした場合は、自動的に "{path}" が指定されたものとして実行されます。</value>
   </data>
   <!-- アルバム新規作成ダイアログ -->
   <data name="NewAlbumDialog.Title" xml:space="preserve">

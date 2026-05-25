@@ -27,6 +27,82 @@
 						Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
 				</StackPanel>
 
+				<!-- 起動引数の説明ヘルプ -->
+				<Expander x:Uid="Execution_Help_Expander"
+					HorizontalAlignment="Stretch"
+					Margin="0,0,0,16" >
+					<StackPanel Spacing="8" Padding="16">
+						<TextBlock x:Uid="Execution_Help_Intro"
+							TextWrapping="Wrap" />
+						<Grid Margin="0,8,0,0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
+							<!-- {path} -->
+							<TextBlock Grid.Row="0" Grid.Column="0"
+								Text="{}{path}"
+								FontWeight="SemiBold"
+								Margin="0,0,16,4"/>
+							<TextBlock Grid.Row="0" Grid.Column="1"
+								x:Uid="Execution_Help_Path"
+								TextWrapping="Wrap"
+								Margin="0,0,0,4"/>
+							
+							<!-- {dir} -->
+							<TextBlock Grid.Row="1" Grid.Column="0"
+								Text="{}{dir}"
+								FontWeight="SemiBold"
+								Margin="0,0,16,4"/>
+							<TextBlock Grid.Row="1" Grid.Column="1"
+								x:Uid="Execution_Help_Dir"
+								TextWrapping="Wrap"
+								Margin="0,0,0,4"/>
+							
+							<!-- {name} -->
+							<TextBlock Grid.Row="2" Grid.Column="0"
+								Text="{}{name}"
+								FontWeight="SemiBold"
+								Margin="0,0,16,4"/>
+							<TextBlock Grid.Row="2" Grid.Column="1"
+								x:Uid="Execution_Help_Name"
+								TextWrapping="Wrap"
+								Margin="0,0,0,4"/>
+							
+							<!-- {namenoext} -->
+							<TextBlock Grid.Row="3" Grid.Column="0"
+								Text="{}{namenoext}"
+								FontWeight="SemiBold"
+								Margin="0,0,16,4"/>
+							<TextBlock Grid.Row="3" Grid.Column="1"
+								x:Uid="Execution_Help_NameNoExt"
+								TextWrapping="Wrap"
+								Margin="0,0,0,4"/>
+							
+							<!-- {ext} -->
+							<TextBlock Grid.Row="4" Grid.Column="0"
+								Text="{}{ext}"
+								FontWeight="SemiBold"
+								Margin="0,0,16,4"/>
+							<TextBlock Grid.Row="4" Grid.Column="1"
+								x:Uid="Execution_Help_Ext"
+								TextWrapping="Wrap"
+								Margin="0,0,0,4"/>
+						</Grid>
+						<TextBlock x:Uid="Execution_Help_Note"
+							Margin="0,8,0,0"
+							Style="{StaticResource CaptionTextBlockStyle}"
+							Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+					</StackPanel>
+				</Expander>
+
 				<!-- プログラムリスト -->
 				<ItemsControl ItemsSource="{x:Bind ViewModel.ExecutionPrograms}" >
 					<ItemsControl.ItemTemplate>
