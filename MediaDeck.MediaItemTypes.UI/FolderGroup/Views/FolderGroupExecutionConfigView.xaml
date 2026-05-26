@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:enum="using:MediaDeck.Composition.Enum"
     xmlns:ctConverters="using:CommunityToolkit.WinUI.Converters"
-    xmlns:conv="using:MediaDeck.MediaItemTypes.UI.Base.Converters"
     x:DataType="local:FolderGroupExecutionConfigView"
     mc:Ignorable="d">
 
@@ -38,16 +37,29 @@
                       IsOn="{x:Bind ViewModel.IsDefault.Value, Mode=TwoWay}"
                       x:Uid="ExecConfig_IsDefault" />
 
-        <!-- File Path -->
-        <TextBlock Grid.Row="2" Grid.Column="0" x:Uid="ExecConfig_FilePathLabel" VerticalAlignment="Center" Margin="0,0,8,0" />
+        <!-- File Path (外部実行時のみ表示) -->
+        <TextBlock Grid.Row="2" Grid.Column="0" x:Uid="ExecConfig_FilePathLabel" VerticalAlignment="Center" Margin="0,0,8,0"
+                   Visibility="{x:Bind ViewModel.IsExternal.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
         <TextBox Grid.Row="2" Grid.Column="1" MinWidth="200" Padding="0" Margin="0,0,0,8"
                  Text="{x:Bind ViewModel.Path.Value, Mode=TwoWay}"
-                 x:Uid="ExecConfig_FilePath" />
+                 x:Uid="ExecConfig_FilePath"
+                 Visibility="{x:Bind ViewModel.IsExternal.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
 
-        <!-- Arguments -->
-        <TextBlock Grid.Row="3" Grid.Column="0" x:Uid="ExecConfig_ArgsLabel" VerticalAlignment="Center" Margin="0,0,8,0" />
-        <TextBox Grid.Row="3" Grid.Column="1" MinWidth="200" Padding="0" Margin="0,0,0,8"
-                 Text="{x:Bind ViewModel.Args.Value, Mode=TwoWay}"
-                 x:Uid="ExecConfig_Args" />
+        <!-- Arguments / Internal description -->
+        <TextBlock Grid.Row="3" Grid.Column="0" x:Uid="ExecConfig_ArgsLabel" VerticalAlignment="Center" Margin="0,0,8,0"
+                   Visibility="{x:Bind ViewModel.IsExternal.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+        <Grid Grid.Row="3" Grid.Column="1">
+            <TextBox MinWidth="200" Padding="0" Margin="0,0,0,8"
+                     Text="{x:Bind ViewModel.Args.Value, Mode=TwoWay}"
+                     x:Uid="ExecConfig_Args"
+                     Visibility="{x:Bind ViewModel.IsExternal.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+
+            <TextBlock x:Uid="ExecConfig_InternalDescription"
+                       Style="{StaticResource CaptionTextBlockStyle}"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                       TextWrapping="Wrap"
+                       Visibility="{x:Bind ViewModel.IsInternal.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+        </Grid>
     </Grid>
 </local:FolderGroupExecutionConfigViewUserControl>
+

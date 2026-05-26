@@ -75,8 +75,7 @@ public sealed partial class VideoThumbnailPickerView : VideoThumbnailPickerViewU
 	/// <param name="e">イベントデータ。</param>
 	private void VideoThumbnailPickerView_Unloaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
 		this.Player.PropertyChanged -= this.Player_PropertyChanged;
-		this.Player.Dispose();
-		this._disposables?.Dispose();
+		this._disposables.Dispose();
 	}
 }
 

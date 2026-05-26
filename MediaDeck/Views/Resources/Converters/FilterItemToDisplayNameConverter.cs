@@ -13,12 +13,23 @@ namespace MediaDeck.Views.Resources.Converters;
 /// フィルターオブジェクトを多言語対応された表示名に変換するコンバータ。
 /// </summary>
 public class FilterItemToDisplayNameConverter : IValueConverter {
+	private IStringProvider? _stringProvider;
+
+	/// <summary>
+	/// 多言語リソースプロバイダーのキャッシュ。初回アクセス時に解決される。
+	/// </summary>
+	private IStringProvider StringProvider {
+		get {
+			return this._stringProvider ??= Ioc.Default.GetRequiredService<IStringProvider>();
+		}
+	}
+
 	public object? Convert(object value, Type targetType, object parameter, string language) {
 		if (value is not IFilterItemObject filterItem) {
 			return null;
 		}
 
-		var stringProvider = Ioc.Default.GetRequiredService<IStringProvider>();
+		var stringProvider = this.StringProvider;
 
 		switch (filterItem) {
 			case ExistsFilterItemObject ef:
