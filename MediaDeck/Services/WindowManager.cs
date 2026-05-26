@@ -67,7 +67,7 @@ public class WindowManager : DisposableBase {
 	/// </summary>
 	public IReadOnlyList<WindowContext> Windows {
 		get {
-			return this._windows;
+			return this._windows.AsReadOnly();
 		}
 	}
 
