@@ -42,6 +42,19 @@ public class FileStatusUpdatorServiceTests : IDisposable {
 		this._connection?.Dispose();
 	}
 
+	/// <summary>
+	/// テスト用のデータベース書き込み直列化サービスを生成します。
+	/// </summary>
+	/// <returns>即時実行するモックサービス</returns>
+	private static IDatabaseWriteCoordinator CreateDatabaseWriteCoordinator() {
+		var databaseWriteCoordinatorMock = new Mock<IDatabaseWriteCoordinator>();
+		databaseWriteCoordinatorMock
+			.Setup(x => x.ExecuteAsync(It.IsAny<Func<CancellationToken, Task>>(), It.IsAny<CancellationToken>()))
+			.Returns<Func<CancellationToken, Task>, CancellationToken>((operation, ct) => operation(ct));
+
+		return databaseWriteCoordinatorMock.Object;
+	}
+
 	[Fact]
 	public async Task UpdateFileInfo_FileNotModified_ShouldNotQueueHashUpdate() {
 		// Arrange
@@ -80,7 +93,7 @@ public class FileStatusUpdatorServiceTests : IDisposable {
 		));
 		mediaTypeServiceMock.Setup(x => x.GetMediaItemTypeProvider(MediaType.Image)).Returns(providerMock.Object);
 
-		var service = new FileStatusUpdatorService(dbFactory, hashUpdatorMock.Object, mediaTypeServiceMock.Object);
+		var service = new FileStatusUpdatorService(dbFactory, hashUpdatorMock.Object, mediaTypeServiceMock.Object, CreateDatabaseWriteCoordinator());
 
 		// Act
 		await service.UpdateFileInfo();
@@ -135,7 +148,7 @@ public class FileStatusUpdatorServiceTests : IDisposable {
 		));
 		mediaTypeServiceMock.Setup(x => x.GetMediaItemTypeProvider(MediaType.Image)).Returns(providerMock.Object);
 
-		var service = new FileStatusUpdatorService(dbFactory, hashUpdatorMock.Object, mediaTypeServiceMock.Object);
+		var service = new FileStatusUpdatorService(dbFactory, hashUpdatorMock.Object, mediaTypeServiceMock.Object, CreateDatabaseWriteCoordinator());
 
 		// Act
 		await service.UpdateFileInfo();
@@ -190,7 +203,7 @@ public class FileStatusUpdatorServiceTests : IDisposable {
 		));
 		mediaTypeServiceMock.Setup(x => x.GetMediaItemTypeProvider(MediaType.Image)).Returns(providerMock.Object);
 
-		var service = new FileStatusUpdatorService(dbFactory, hashUpdatorMock.Object, mediaTypeServiceMock.Object);
+		var service = new FileStatusUpdatorService(dbFactory, hashUpdatorMock.Object, mediaTypeServiceMock.Object, CreateDatabaseWriteCoordinator());
 
 		// Act
 		await service.UpdateFileInfo();

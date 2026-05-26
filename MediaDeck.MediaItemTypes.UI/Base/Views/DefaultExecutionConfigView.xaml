@@ -7,26 +7,24 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Margin="0,10,0,0" ColumnDefinitions="*,*,Auto,Auto">
-        <!-- ツール名入力 -->
-        <TextBox Grid.Column="0"
-                 Margin="0,0,8,0"
-                 Text="{x:Bind ViewModel.Name.Value, Mode=TwoWay}"
-                 x:Uid="ExecConfig_ToolName" />
-        <!-- 実行ファイルパス -->
-        <TextBox Grid.Column="1"
-                 Margin="0,0,8,0"
-                 Text="{x:Bind ViewModel.Path.Value, Mode=TwoWay}"
-                 x:Uid="ExecConfig_FilePath" />
-        <!-- 起動引数 -->
-        <TextBox Grid.Column="2"
-                 Width="200"
-                 Margin="0,0,8,0"
-                 Text="{x:Bind ViewModel.Args.Value, Mode=TwoWay}"
-                 x:Uid="ExecConfig_Args" />
-        <!-- 既定ツール -->
-        <ToggleSwitch Grid.Column="3"
-                      IsOn="{x:Bind ViewModel.IsDefault.Value, Mode=TwoWay}"
-                      x:Uid="ExecConfig_IsDefault" />
+    <Grid Margin="0,10,0,0" RowSpacing="8" ColumnDefinitions="Auto,*">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" x:Uid="ExecConfig_ToolNameLabel" VerticalAlignment="Center" Margin="0,0,8,0" />
+        <TextBox Grid.Row="0" Grid.Column="1" MinWidth="120" Text="{x:Bind ViewModel.Name.Value, Mode=TwoWay}" x:Uid="ExecConfig_ToolName" />
+
+        <TextBlock Grid.Row="1" Grid.Column="0" x:Uid="ExecConfig_FilePathLabel" VerticalAlignment="Center" Margin="0,0,8,0" />
+        <TextBox Grid.Row="1" Grid.Column="1" MinWidth="200" Text="{x:Bind ViewModel.Path.Value, Mode=TwoWay}" x:Uid="ExecConfig_FilePath" />
+
+        <TextBlock Grid.Row="2" Grid.Column="0" x:Uid="ExecConfig_ArgsLabel" VerticalAlignment="Center" Margin="0,0,8,0" />
+        <TextBox Grid.Row="2" Grid.Column="1" MinWidth="200" Text="{x:Bind ViewModel.Args.Value, Mode=TwoWay}" x:Uid="ExecConfig_Args" />
+
+        <TextBlock Grid.Row="3" Grid.Column="0" x:Uid="ExecConfig_IsDefaultLabel" VerticalAlignment="Center" Margin="0,0,8,0" />
+        <ToggleSwitch Grid.Row="3" Grid.Column="1" IsOn="{x:Bind ViewModel.IsDefault.Value, Mode=TwoWay}" x:Uid="ExecConfig_IsDefault" />
     </Grid>
 </local:DefaultExecutionConfigViewUserControl>

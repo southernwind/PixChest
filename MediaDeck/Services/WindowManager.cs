@@ -62,6 +62,15 @@ public class WindowManager : DisposableBase {
 		}
 	}
 
+	/// <summary>
+	/// 管理されているすべてのウィンドウコンテキストを取得します。
+	/// </summary>
+	public IReadOnlyList<WindowContext> Windows {
+		get {
+			return this._windows.AsReadOnly();
+		}
+	}
+
 	public WindowManager(
 		IServiceProvider rootProvider,
 		IStateStore stateStore,
@@ -102,13 +111,65 @@ public class WindowManager : DisposableBase {
 	/// 保存された状態からすべてのウィンドウを復元する。
 	/// </summary>
 	public void RestoreWindows() {
+		this.CleanAndAdjustState();
+
 		var list = this._stateStore.RootState.Windows.ToList();
-		if (list.Count == 0) {
-			this._stateStore.RootState.Windows.Add(new());
-			return;
-		}
 		foreach (var windowState in list) {
 			this.OnWindowStateAdded(windowState);
+		}
+	}
+
+	/// <summary>
+	/// 起動時のウィンドウとタブの状態をクリーンアップおよび調整します。
+	/// </summary>
+	private void CleanAndAdjustState() {
+		var rootState = this._stateStore.RootState;
+
+		// 1. 所属ウィンドウのないタブをクリーンアップ
+		var activeTabIds = rootState.Windows
+			.SelectMany(w => w.TabIds)
+			.ToHashSet();
+
+		var orphanedTabs = rootState.Tabs
+			.Where(t => !activeTabIds.Contains(t.TabId))
+			.ToList();
+
+		foreach (var tab in orphanedTabs) {
+			rootState.Tabs.Remove(tab);
+			this._logger.LogInformation("所属ウィンドウのないタブを削除しました: {TabId}", tab.TabId);
+		}
+
+		// 2. ウィンドウが複数あり、タブ数が0のウィンドウがあれば削除する
+		if (rootState.Windows.Count > 1) {
+			var emptyWindows = rootState.Windows.Where(w => w.TabIds.Count == 0).ToList();
+			foreach (var w in emptyWindows) {
+				rootState.Windows.Remove(w);
+				this._logger.LogInformation("起動時にタブのないウィンドウを削除しました: {WindowId}", w.WindowId);
+			}
+		}
+
+		// 3. 保存されたウィンドウ情報がなければ（あるいは上の処理で0件になったら）、空のウィンドウを1つ追加しておく
+		if (rootState.Windows.Count == 0) {
+			rootState.Windows.Add(new WindowStateModel());
+		}
+
+		// 4. ウィンドウが1つで、かつそのウィンドウのタブ数が0の場合、デフォルト設定でタブを1つ追加する
+		if (rootState.Windows.Count == 1 && rootState.Windows[0].TabIds.Count == 0) {
+			var windowState = rootState.Windows[0];
+
+			var scope = this._rootProvider.CreateScope();
+			var tabState = scope.ServiceProvider.GetRequiredService<TabStateModel>();
+			tabState.DisplayName.Value = "Tab 1";
+
+			// デフォルト値のコピー
+			var defaultTab = rootState.AppState.DefaultTabState;
+			tabState.ApplyDefaultState(defaultTab);
+
+			rootState.Tabs.Add(tabState);
+			windowState.TabIds.Add(tabState.TabId);
+			windowState.SelectedTabId.Value = tabState.TabId;
+
+			this._logger.LogInformation("起動時にウィンドウが1つでタブが0だったため、新規タブを追加しました: {TabId}", tabState.TabId);
 		}
 	}
 

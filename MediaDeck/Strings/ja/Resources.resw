@@ -131,6 +131,9 @@
   <data name="AboutWindow_Title" xml:space="preserve">
     <value>MediaDeck について</value>
   </data>
+  <data name="About_WebSiteLink.Content" xml:space="preserve">
+    <value>公式ウェブサイト</value>
+  </data>
   <data name="About_Description" xml:space="preserve">
     <value>Windows向けのメディア管理アプリケーション（画像、動画、PDF、アーカイブファイルなどを一元管理）。</value>
   </data>
@@ -442,11 +445,26 @@
   <data name="ExecConfig_ToolName.PlaceholderText" xml:space="preserve">
     <value>ツール名 (例: VLC)</value>
   </data>
+  <data name="ExecConfig_ToolName.ToolTipService.ToolTip" xml:space="preserve">
+    <value>設定画面やメニューで表示されるツールの名前です。</value>
+  </data>
   <data name="ExecConfig_FilePath.Header" xml:space="preserve">
     <value>実行ファイルパス</value>
   </data>
+  <data name="ExecConfig_FilePath.PlaceholderText" xml:space="preserve">
+    <value>例: C:\Program Files\VideoLAN\VLC\vlc.exe</value>
+  </data>
+  <data name="ExecConfig_FilePath.ToolTipService.ToolTip" xml:space="preserve">
+    <value>実行プログラムの絶対パスです。</value>
+  </data>
   <data name="ExecConfig_Args.Header" xml:space="preserve">
     <value>起動引数</value>
+  </data>
+  <data name="ExecConfig_Args.PlaceholderText" xml:space="preserve">
+    <value>例: --fullscreen {path}</value>
+  </data>
+  <data name="ExecConfig_Args.ToolTipService.ToolTip" xml:space="preserve">
+    <value>起動引数（オプション）です。空欄の場合は "{path}"（ファイルのフルパス）が自動的に渡されます。</value>
   </data>
   <data name="ExecConfig_IsDefault.Header" xml:space="preserve">
     <value>既定ツール</value>
@@ -456,6 +474,30 @@
   </data>
   <data name="ExecConfig_InternalDescription.Text" xml:space="preserve">
     <value>MediaDeckのライブラリ画面でこのフォルダを開きます。</value>
+  </data>
+  <data name="Execution_Help_Expander.Header" xml:space="preserve">
+    <value>起動引数（オプション）の設定ヘルプ</value>
+  </data>
+  <data name="Execution_Help_Intro.Text" xml:space="preserve">
+    <value>起動引数（オプション）には、以下のプレースホルダーを使用して実行時にファイル情報を動的に埋め込むことができます。</value>
+  </data>
+  <data name="Execution_Help_Path.Text" xml:space="preserve">
+    <value>ファイルのフルパス（自動的にダブルクォーテーションで囲まれます）</value>
+  </data>
+  <data name="Execution_Help_Dir.Text" xml:space="preserve">
+    <value>親フォルダのパス（自動的にダブルクォーテーションで囲まれます）</value>
+  </data>
+  <data name="Execution_Help_Name.Text" xml:space="preserve">
+    <value>拡張子を含むファイル名（例: photo.jpg）</value>
+  </data>
+  <data name="Execution_Help_NameNoExt.Text" xml:space="preserve">
+    <value>拡張子を含まないファイル名（例: photo）</value>
+  </data>
+  <data name="Execution_Help_Ext.Text" xml:space="preserve">
+    <value>ファイル拡張子（ドットを含む。例: .jpg）</value>
+  </data>
+  <data name="Execution_Help_Note.Text" xml:space="preserve">
+    <value>※起動引数を空欄にした場合は、自動的に "{path}" が指定されたものとして実行されます。</value>
   </data>
   <!-- アルバム新規作成ダイアログ -->
   <data name="NewAlbumDialog.Title" xml:space="preserve">
@@ -632,6 +674,9 @@
   <data name="FolderManager_SelectFolderMessage.Text" xml:space="preserve">
     <value>フォルダを選択してください</value>
   </data>
+  <data name="FolderManager_EmptyFoldersMessage.Text" xml:space="preserve">
+    <value>「追加」ボタンを押して、フォルダスキャン設定を追加してください。</value>
+  </data>
   <data name="FolderManager_FolderSettings.Text" xml:space="preserve">
     <value>フォルダ設定</value>
   </data>
@@ -773,5 +818,306 @@
   </data>
   <data name="PublisherDisplayName" xml:space="preserve">
     <value>xmi</value>
+  </data>
+  <!-- SortManager -->
+  <data name="SortManager_WindowTitle" xml:space="preserve">
+    <value>ソート管理</value>
+  </data>
+  <data name="SortManager_SortConditionsTitle.Text" xml:space="preserve">
+    <value>ソート条件</value>
+  </data>
+  <data name="SortManager_Untitled" xml:space="preserve">
+    <value>名称未設定</value>
+  </data>
+  <data name="SortManager_AddConditionButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>新しいソート条件を追加</value>
+  </data>
+  <data name="SortManager_AddConditionButton_Text.Text" xml:space="preserve">
+    <value>追加</value>
+  </data>
+  <data name="SortManager_RemoveConditionButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>選択中のソート条件を削除</value>
+  </data>
+  <data name="SortManager_RemoveConditionButton_Text.Text" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="SortManager_ConditionNameLabel.Text" xml:space="preserve">
+    <value>条件名</value>
+  </data>
+  <data name="SortManager_ConditionNameTextBox.PlaceholderText" xml:space="preserve">
+    <value>ソート条件の名前を入力</value>
+  </data>
+  <data name="SortManager_AddSortItemLabel.Text" xml:space="preserve">
+    <value>ソート項目を追加</value>
+  </data>
+  <data name="SortManager_SortDirectionToggle.ToolTipService.ToolTip" xml:space="preserve">
+    <value>昇順/降順を切り替え</value>
+  </data>
+  <data name="SortManager_SortItemComboBox.PlaceholderText" xml:space="preserve">
+    <value>ソート項目を選択</value>
+  </data>
+  <data name="SortManager_AddSortItemButton_Text.Text" xml:space="preserve">
+    <value>追加</value>
+  </data>
+  <data name="SortManager_ActiveSortItemsLabel.Text" xml:space="preserve">
+    <value>適用中のソート項目</value>
+  </data>
+  <data name="SortManager_RemoveSortItemButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>このソート項目を削除</value>
+  </data>
+
+  <!-- FilterManager -->
+  <data name="FilterManager_WindowTitle" xml:space="preserve">
+    <value>フィルター管理</value>
+  </data>
+  <data name="FilterManager_FilteringConditionsTitle.Text" xml:space="preserve">
+    <value>フィルター条件</value>
+  </data>
+  <data name="FilterManager_Untitled" xml:space="preserve">
+    <value>名称未設定</value>
+  </data>
+  <data name="FilterManager_AddConditionButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>新しいフィルター条件を追加</value>
+  </data>
+  <data name="FilterManager_AddConditionButton_Text.Text" xml:space="preserve">
+    <value>追加</value>
+  </data>
+  <data name="FilterManager_RemoveConditionButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>選択中のフィルター条件を削除</value>
+  </data>
+  <data name="FilterManager_RemoveConditionButton_Text.Text" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="FilterManager_ConditionNameLabel.Text" xml:space="preserve">
+    <value>条件名</value>
+  </data>
+  <data name="FilterManager_ConditionNameTextBox.PlaceholderText" xml:space="preserve">
+    <value>フィルター条件の名前を入力</value>
+  </data>
+  <data name="FilterManager_AddFilterItemLabel.Text" xml:space="preserve">
+    <value>フィルター項目を追加</value>
+  </data>
+  <data name="FilterManager_FilterItemComboBox.PlaceholderText" xml:space="preserve">
+    <value>フィルター項目を選択</value>
+  </data>
+  <data name="FilterManager_ActiveFilterItemsLabel.Text" xml:space="preserve">
+    <value>適用中のフィルター項目</value>
+  </data>
+  <data name="FilterManager_RemoveFilterItemButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>このフィルター項目を削除</value>
+  </data>
+
+  <!-- SortItemKeys -->
+  <data name="SortItemKey_FilePath" xml:space="preserve">
+    <value>ファイルパス</value>
+  </data>
+  <data name="SortItemKey_CreationTime" xml:space="preserve">
+    <value>作成日時</value>
+  </data>
+  <data name="SortItemKey_ModifiedTime" xml:space="preserve">
+    <value>更新日時</value>
+  </data>
+  <data name="SortItemKey_LastAccessTime" xml:space="preserve">
+    <value>最終アクセス日時</value>
+  </data>
+  <data name="SortItemKey_RegisteredTime" xml:space="preserve">
+    <value>登録日時</value>
+  </data>
+  <data name="SortItemKey_FileSize" xml:space="preserve">
+    <value>ファイルサイズ</value>
+  </data>
+  <data name="SortItemKey_Location" xml:space="preserve">
+    <value>座標</value>
+  </data>
+  <data name="SortItemKey_Rate" xml:space="preserve">
+    <value>評価</value>
+  </data>
+  <data name="SortItemKey_Resolution" xml:space="preserve">
+    <value>解像度</value>
+  </data>
+  <data name="SortItemKey_UsageCount" xml:space="preserve">
+    <value>使用回数</value>
+  </data>
+
+  <!-- FilterCreator -->
+  <data name="FilterCreator_Exists_Title" xml:space="preserve">
+    <value>存在フィルター</value>
+  </data>
+  <data name="FilterCreator_FilePath_Title" xml:space="preserve">
+    <value>ファイルパスフィルター</value>
+  </data>
+  <data name="FilterCreator_FolderGroup_Title" xml:space="preserve">
+    <value>フォルダグループフィルター</value>
+  </data>
+  <data name="FilterCreator_Location_Title" xml:space="preserve">
+    <value>座標フィルター</value>
+  </data>
+  <data name="FilterCreator_MediaType_Title" xml:space="preserve">
+    <value>メディアタイプフィルター</value>
+  </data>
+  <data name="FilterCreator_Rate_Title" xml:space="preserve">
+    <value>評価フィルター</value>
+  </data>
+  <data name="FilterCreator_Resolution_Title" xml:space="preserve">
+    <value>解像度フィルター</value>
+  </data>
+  <data name="FilterCreator_Tag_Title" xml:space="preserve">
+    <value>タグフィルター</value>
+  </data>
+
+  <data name="FilterCreator_Exists_True" xml:space="preserve">
+    <value>ファイルが存在する</value>
+  </data>
+  <data name="FilterCreator_Exists_False" xml:space="preserve">
+    <value>ファイルが存在しない</value>
+  </data>
+  <data name="FilterCreator_FolderGroup_Include" xml:space="preserve">
+    <value>配下</value>
+  </data>
+  <data name="FilterCreator_FolderGroup_Exclude" xml:space="preserve">
+    <value>配下外</value>
+  </data>
+  <data name="FilterCreator_Location_Contains_True" xml:space="preserve">
+    <value>座標情報を含む</value>
+  </data>
+  <data name="FilterCreator_Location_Contains_False" xml:space="preserve">
+    <value>座標情報を含まない</value>
+  </data>
+  <data name="FilterCreator_MediaType_Image" xml:space="preserve">
+    <value>画像</value>
+  </data>
+  <data name="FilterCreator_MediaType_Video" xml:space="preserve">
+    <value>動画</value>
+  </data>
+  <data name="FilterCreator_Include" xml:space="preserve">
+    <value>含む</value>
+  </data>
+  <data name="FilterCreator_Exclude" xml:space="preserve">
+    <value>含まない</value>
+  </data>
+  <data name="FilterCreator_Comparison_GreaterThan" xml:space="preserve">
+    <value>を超える</value>
+  </data>
+  <data name="FilterCreator_Comparison_GreaterThanOrEqual" xml:space="preserve">
+    <value>以上</value>
+  </data>
+  <data name="FilterCreator_Comparison_Equal" xml:space="preserve">
+    <value>と等しい</value>
+  </data>
+  <data name="FilterCreator_Comparison_LessThanOrEqual" xml:space="preserve">
+    <value>以下</value>
+  </data>
+  <data name="FilterCreator_Comparison_LessThan" xml:space="preserve">
+    <value>未満</value>
+  </data>
+
+  <!-- FilterItemObject DisplayName Formats -->
+  <data name="FilterItem_Exists_True" xml:space="preserve">
+    <value>ファイルが存在する</value>
+  </data>
+  <data name="FilterItem_Exists_False" xml:space="preserve">
+    <value>ファイルが存在しない</value>
+  </data>
+  <data name="FilterItem_FilePath_Include" xml:space="preserve">
+    <value>ファイルパスに「{0}」を含む</value>
+  </data>
+  <data name="FilterItem_FilePath_Exclude" xml:space="preserve">
+    <value>ファイルパスに「{0}」を含まない</value>
+  </data>
+  <data name="FilterItem_FolderGroup_Include" xml:space="preserve">
+    <value>フォルダグループの配下</value>
+  </data>
+  <data name="FilterItem_FolderGroup_Exclude" xml:space="preserve">
+    <value>フォルダグループの配下外</value>
+  </data>
+  <data name="FilterItem_Location_Text" xml:space="preserve">
+    <value>地名に「{0}」を含む</value>
+  </data>
+  <data name="FilterItem_Location_Contains_True" xml:space="preserve">
+    <value>座標情報を含む</value>
+  </data>
+  <data name="FilterItem_Location_Contains_False" xml:space="preserve">
+    <value>座標情報を含まない</value>
+  </data>
+  <data name="FilterItem_Location_Range" xml:space="preserve">
+    <value>範囲 [{0}] 〜 [{1}] 内</value>
+  </data>
+  <data name="FilterItem_MediaType_Video" xml:space="preserve">
+    <value>動画ファイル</value>
+  </data>
+  <data name="FilterItem_MediaType_Image" xml:space="preserve">
+    <value>画像ファイル</value>
+  </data>
+  <data name="FilterItem_Rate_GreaterThan" xml:space="preserve">
+    <value>評価が「{0}」を超える</value>
+  </data>
+  <data name="FilterItem_Rate_GreaterThanOrEqual" xml:space="preserve">
+    <value>評価が「{0}」以上</value>
+  </data>
+  <data name="FilterItem_Rate_Equal" xml:space="preserve">
+    <value>評価が「{0}」と等しい</value>
+  </data>
+  <data name="FilterItem_Rate_LessThanOrEqual" xml:space="preserve">
+    <value>評価が「{0}」以下</value>
+  </data>
+  <data name="FilterItem_Rate_LessThan" xml:space="preserve">
+    <value>評価が「{0}」未満</value>
+  </data>
+  <data name="FilterItem_Resolution_Width_GreaterThan" xml:space="preserve">
+    <value>幅が「{0}」を超える</value>
+  </data>
+  <data name="FilterItem_Resolution_Width_GreaterThanOrEqual" xml:space="preserve">
+    <value>幅が「{0}」以上</value>
+  </data>
+  <data name="FilterItem_Resolution_Width_Equal" xml:space="preserve">
+    <value>幅が「{0}」と等しい</value>
+  </data>
+  <data name="FilterItem_Resolution_Width_LessThanOrEqual" xml:space="preserve">
+    <value>幅が「{0}」以下</value>
+  </data>
+  <data name="FilterItem_Resolution_Width_LessThan" xml:space="preserve">
+    <value>幅が「{0}」未満</value>
+  </data>
+  <data name="FilterItem_Resolution_Height_GreaterThan" xml:space="preserve">
+    <value>高さが「{0}」を超える</value>
+  </data>
+  <data name="FilterItem_Resolution_Height_GreaterThanOrEqual" xml:space="preserve">
+    <value>高さが「{0}」以上</value>
+  </data>
+  <data name="FilterItem_Resolution_Height_Equal" xml:space="preserve">
+    <value>高さが「{0}」と等しい</value>
+  </data>
+  <data name="FilterItem_Resolution_Height_LessThanOrEqual" xml:space="preserve">
+    <value>高さが「{0}」以下</value>
+  </data>
+  <data name="FilterItem_Resolution_Height_LessThan" xml:space="preserve">
+    <value>高さが「{0}」未満</value>
+  </data>
+  <data name="FilterItem_Resolution_Area_GreaterThan" xml:space="preserve">
+    <value>解像度が「{0}」を超える</value>
+  </data>
+  <data name="FilterItem_Resolution_Area_GreaterThanOrEqual" xml:space="preserve">
+    <value>解像度が「{0}」以上</value>
+  </data>
+  <data name="FilterItem_Resolution_Area_Equal" xml:space="preserve">
+    <value>解像度が「{0}」と等しい</value>
+  </data>
+  <data name="FilterItem_Resolution_Area_LessThanOrEqual" xml:space="preserve">
+    <value>解像度が「{0}」以下</value>
+  </data>
+  <data name="FilterItem_Resolution_Area_LessThan" xml:space="preserve">
+    <value>解像度が「{0}」未満</value>
+  </data>
+  <data name="FilterItem_Tag_Include" xml:space="preserve">
+    <value>タグに「{0}」を含む</value>
+  </data>
+  <data name="FilterItem_Tag_Exclude" xml:space="preserve">
+    <value>タグに「{0}」を含まない</value>
+  </data>
+  <data name="TagCategory_Unassigned_Name" xml:space="preserve">
+    <value>未設定</value>
+  </data>
+  <data name="TagCategory_Unassigned_Detail" xml:space="preserve">
+    <value>カテゴリーが設定されていないタグ</value>
   </data>
 </root>

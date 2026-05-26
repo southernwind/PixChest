@@ -16,10 +16,9 @@
 			Color="{ThemeResource CardStrokeColorDefaultColor}" />
 	</Page.Resources>
 
-	<ScrollViewer VerticalScrollBarVisibility="Auto" >
-		<StackPanel Spacing="4"
-			Padding="36,24,36,36"
-			MaxWidth="800" >
+	<Grid MaxWidth="800" Margin="36,24,36,36">
+		<ScrollViewer VerticalScrollBarVisibility="Auto">
+			<StackPanel Spacing="4">
 
 			<!-- セクションヘッダー -->
 			<StackPanel Spacing="4"
@@ -104,6 +103,7 @@
 				</StackPanel>
 			</Button>
 
-		</StackPanel>
-	</ScrollViewer>
+			</StackPanel>
+		</ScrollViewer>
+	</Grid>
 </Page>

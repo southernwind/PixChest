@@ -1,4 +1,5 @@
 using MediaDeck.Common.Base;
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Core.Models.Files.Filter.FilterItemObjects;
 using MediaDeck.Core.Primitives;
 
@@ -8,12 +9,14 @@ namespace MediaDeck.ViewModels.Filters.FilterItemCreators;
 /// 存在フィルター作成ViewModel
 /// </summary>
 public class ExistsFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel {
+	private readonly IStringProvider _stringProvider;
+
 	/// <summary>
 	/// 表示名
 	/// </summary>
 	public string Title {
 		get {
-			return "存在フィルター";
+			return this._stringProvider.GetString("FilterCreator_Exists_Title");
 		}
 	}
 
@@ -29,10 +32,7 @@ public class ExistsFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewMod
 	/// </summary>
 	public IEnumerable<DisplayObject<bool>> ExistsList {
 		get;
-	} = [
-		new DisplayObject<bool>("ファイルが存在する", true),
-		new DisplayObject<bool>("ファイルが存在しない", false)
-	];
+	}
 
 	/// <summary>
 	/// フィルター追加コマンド
@@ -41,7 +41,12 @@ public class ExistsFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewMod
 		get;
 	} = new();
 
-	public ExistsFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target) {
+	public ExistsFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target, IStringProvider stringProvider) {
+		this._stringProvider = stringProvider;
+		this.ExistsList = [
+			new DisplayObject<bool>(this._stringProvider.GetString("FilterCreator_Exists_True"), true),
+			new DisplayObject<bool>(this._stringProvider.GetString("FilterCreator_Exists_False"), false)
+		];
 		this.Exists.Value = this.ExistsList.First();
 		this.AddFilterCommand.Subscribe(vm => {
 			var filter = new ExistsFilterItemObject {

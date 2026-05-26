@@ -7,8 +7,9 @@
   x:DataType="viewModels:EnvironmentConfigPageViewModel"
   mc:Ignorable="d"
   Background="Transparent">
-  <ScrollViewer>
-	<StackPanel Spacing="4" Padding="36,24,36,36" MaxWidth="800">
+  <Grid MaxWidth="800" Margin="36,24,36,36">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+      <StackPanel Spacing="4">
 	  <StackPanel Spacing="4" Margin="0,0,0,16">
 		<TextBlock x:Uid="EnvironmentConfigPage_SectionHeader" Style="{StaticResource BodyStrongTextBlockStyle}" Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
 		<TextBlock x:Uid="EnvironmentConfigPage_SectionDescription" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
@@ -44,6 +45,7 @@
 		</Grid>
 	  </Border>
 	  <InfoBar x:Uid="EnvironmentConfigPage_RestartNotice" IsOpen="True" IsClosable="False" Severity="Informational" Margin="0,16,0,0" />
-	</StackPanel>
-  </ScrollViewer>
+      </StackPanel>
+    </ScrollViewer>
+  </Grid>
 </Page>

@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Reflection;
 using MediaDeck.Composition.Database;
 using MediaDeck.Composition.Enum;
+using MediaDeck.Composition.Interfaces.Services;
 using MediaDeck.Composition.Tables;
 using MediaDeck.Core.Services.FileHashUpdator;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +51,21 @@ public class UpdateFileHashBackgroundServiceTests : IDisposable {
 		return mock;
 	}
 
+	/// <summary>
+	/// テスト用のFileHashUpdatorServiceを生成します。
+	/// </summary>
+	/// <param name="dbFactory">データベースコンテキストファクトリー</param>
+	/// <param name="logger">ロガー</param>
+	/// <returns>テスト対象サービス</returns>
+	private FileHashUpdatorService CreateService(IDbContextFactory<MediaDeckDbContext> dbFactory, ILogger<FileHashUpdatorService> logger) {
+		var databaseWriteCoordinatorMock = new Mock<IDatabaseWriteCoordinator>();
+		databaseWriteCoordinatorMock
+			.Setup(x => x.ExecuteAsync(It.IsAny<Func<CancellationToken, Task>>(), It.IsAny<CancellationToken>()))
+			.Returns<Func<CancellationToken, Task>, CancellationToken>((operation, ct) => operation(ct));
+
+		return new FileHashUpdatorService(dbFactory, databaseWriteCoordinatorMock.Object, logger);
+	}
+
 	private async Task WaitUntilAsync<T>(ReactiveProperty<T> property, T expectedValue, int timeoutMs = 5000) {
 		var stopwatch = Stopwatch.StartNew();
 		while (!EqualityComparer<T>.Default.Equals(property.Value, expectedValue)) {
@@ -68,7 +84,7 @@ public class UpdateFileHashBackgroundServiceTests : IDisposable {
 		// Arrange
 		var dbFactoryMock = this.CreateDbFactoryMock();
 		var loggerMock = new Mock<ILogger<FileHashUpdatorService>>();
-		using var service = new FileHashUpdatorService(dbFactoryMock.Object, loggerMock.Object);
+		using var service = this.CreateService(dbFactoryMock.Object, loggerMock.Object);
 
 		// Act
 		service.EnqueueHashUpdate(1L);
@@ -90,7 +106,7 @@ public class UpdateFileHashBackgroundServiceTests : IDisposable {
 		// Arrange
 		var dbFactoryMock = this.CreateDbFactoryMock();
 		var loggerMock = new Mock<ILogger<FileHashUpdatorService>>();
-		using var service = new FileHashUpdatorService(dbFactoryMock.Object, loggerMock.Object);
+		using var service = this.CreateService(dbFactoryMock.Object, loggerMock.Object);
 		var ids = new List<long> { 1L, 2L, 3L };
 
 		// Act
@@ -119,7 +135,7 @@ public class UpdateFileHashBackgroundServiceTests : IDisposable {
 
 		var dbFactoryMock = this.CreateDbFactoryMock();
 		var loggerMock = new Mock<ILogger<FileHashUpdatorService>>();
-		using var service = new FileHashUpdatorService(dbFactoryMock.Object, loggerMock.Object);
+		using var service = this.CreateService(dbFactoryMock.Object, loggerMock.Object);
 
 		// Act
 		await service.CheckAndEnqueueFullHashUpdatesAsync();
@@ -138,7 +154,7 @@ public class UpdateFileHashBackgroundServiceTests : IDisposable {
 		var dbFactoryMock = this.CreateDbFactoryMock();
 		var loggerMock = new Mock<ILogger<FileHashUpdatorService>>();
 		// データベースが空の状態でも、キューに何かあればスキップされるはず
-		using var service = new FileHashUpdatorService(dbFactoryMock.Object, loggerMock.Object);
+		using var service = this.CreateService(dbFactoryMock.Object, loggerMock.Object);
 
 		// キューに要素を追加し、バックグラウンド処理が走らないように工夫（存在しないIDなどでもキューには残るはずだが即終わる可能性がある）
 		// ここでは大量に積むことで空にならない瞬間を狙うか、あるいは内部状態を直接いじる
@@ -173,7 +189,7 @@ public class UpdateFileHashBackgroundServiceTests : IDisposable {
 
 		var mockFactory = this.CreateDbFactoryMock();
 		var loggerMock = new Mock<ILogger<FileHashUpdatorService>>();
-		using var service = new FileHashUpdatorService(mockFactory.Object, loggerMock.Object);
+		using var service = this.CreateService(mockFactory.Object, loggerMock.Object);
 
 		// Act
 		service.EnqueueHashUpdate(MediaItemId);
@@ -205,7 +221,7 @@ public class UpdateFileHashBackgroundServiceTests : IDisposable {
 
 		var mockFactory = this.CreateDbFactoryMock();
 		var loggerMock = new Mock<ILogger<FileHashUpdatorService>>();
-		using var service = new FileHashUpdatorService(mockFactory.Object, loggerMock.Object);
+		using var service = this.CreateService(mockFactory.Object, loggerMock.Object);
 
 		// Act
 		service.EnqueueHashUpdate(MediaItemId);
@@ -236,7 +252,7 @@ public class UpdateFileHashBackgroundServiceTests : IDisposable {
 
 		var mockFactory = this.CreateDbFactoryMock();
 		var loggerMock = new Mock<ILogger<FileHashUpdatorService>>();
-		using var service = new FileHashUpdatorService(mockFactory.Object, loggerMock.Object);
+		using var service = this.CreateService(mockFactory.Object, loggerMock.Object);
 
 		// Act
 		service.EnqueueHashUpdate(MediaItemId);
@@ -274,7 +290,7 @@ public class UpdateFileHashBackgroundServiceTests : IDisposable {
 
 		var mockFactory = this.CreateDbFactoryMock();
 		var loggerMock = new Mock<ILogger<FileHashUpdatorService>>();
-		using var service = new FileHashUpdatorService(mockFactory.Object, loggerMock.Object);
+		using var service = this.CreateService(mockFactory.Object, loggerMock.Object);
 
 		// Act
 		service.FullHashUpdateQueue.Enqueue(MediaItemId);
@@ -310,7 +326,7 @@ public class UpdateFileHashBackgroundServiceTests : IDisposable {
 
 		var mockFactory = this.CreateDbFactoryMock();
 		var loggerMock = new Mock<ILogger<FileHashUpdatorService>>();
-		using var service = new FileHashUpdatorService(mockFactory.Object, loggerMock.Object);
+		using var service = this.CreateService(mockFactory.Object, loggerMock.Object);
 
 		var method = typeof(FileHashUpdatorService).GetMethod("EnqueueFullHashUpdatesForDuplicatePreHashAsync", BindingFlags.NonPublic | BindingFlags.Instance);
 		method.ShouldNotBeNull();

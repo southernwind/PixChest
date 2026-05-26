@@ -139,11 +139,23 @@
 			BorderThickness="1"
 			CornerRadius="8" >
 			<Grid>
-				<!-- 何も選択されていない場合 -->
+				<!-- 何も選択されておらず、登録フォルダが0件の場合（追加を促す） -->
 				<StackPanel HorizontalAlignment="Center"
 					VerticalAlignment="Center"
 					Spacing="16"
-					Visibility="{x:Bind ViewModel.SelectedFolder.Value, Mode=OneWay, Converter={StaticResource NullToVisibleConverter}}" >
+					Visibility="{x:Bind ViewModel.ShowEmptyMessage.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" >
+					<FontIcon Glyph="&#xE8B7;"
+						FontSize="48"
+						Foreground="{ThemeResource TextFillColorDisabledBrush}" />
+					<TextBlock x:Uid="FolderManager_EmptyFoldersMessage"
+						Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+				</StackPanel>
+
+				<!-- 何も選択されておらず、登録フォルダが1件以上の場合（選択を促す） -->
+				<StackPanel HorizontalAlignment="Center"
+					VerticalAlignment="Center"
+					Spacing="16"
+					Visibility="{x:Bind ViewModel.ShowSelectFolderMessage.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" >
 					<FontIcon Glyph="&#xE8B7;"
 						FontSize="48"
 						Foreground="{ThemeResource TextFillColorDisabledBrush}" />

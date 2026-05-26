@@ -68,7 +68,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Assets\thumbnail_creation_failed.png">
+    <None Update="Assets\*.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\*.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\ffmpeg.exe">

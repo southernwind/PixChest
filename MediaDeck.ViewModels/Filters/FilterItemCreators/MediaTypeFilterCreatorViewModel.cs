@@ -1,4 +1,5 @@
 using MediaDeck.Common.Base;
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Core.Models.Files.Filter.FilterItemObjects;
 using MediaDeck.Core.Primitives;
 
@@ -8,12 +9,14 @@ namespace MediaDeck.ViewModels.Filters.FilterItemCreators;
 /// メディアタイプフィルター作成ViewModel
 /// </summary>
 public class MediaTypeFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel {
+	private readonly IStringProvider _stringProvider;
+
 	/// <summary>
 	/// 表示名
 	/// </summary>
 	public string Title {
 		get {
-			return "メディアタイプフィルター";
+			return this._stringProvider.GetString("FilterCreator_MediaType_Title");
 		}
 	}
 
@@ -36,12 +39,14 @@ public class MediaTypeFilterCreatorViewModel : ViewModelBase, IFilterCreatorView
 	/// </summary>
 	public IEnumerable<DisplayObject<bool>> MediaTypeList {
 		get;
-	} = [
-		new DisplayObject<bool>("画像", false),
-		new DisplayObject<bool>("動画", true)
-	];
+	}
 
-	public MediaTypeFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target) {
+	public MediaTypeFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target, IStringProvider stringProvider) {
+		this._stringProvider = stringProvider;
+		this.MediaTypeList = [
+			new DisplayObject<bool>(this._stringProvider.GetString("FilterCreator_MediaType_Image"), false),
+			new DisplayObject<bool>(this._stringProvider.GetString("FilterCreator_MediaType_Video"), true)
+		];
 		this.MediaType.Value = this.MediaTypeList.First();
 		this.AddFilterCommand.Subscribe(vm => {
 			var filter = new MediaTypeFilterItemObject {

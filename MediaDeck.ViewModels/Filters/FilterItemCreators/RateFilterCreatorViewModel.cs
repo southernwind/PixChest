@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using MediaDeck.Common.Base;
 using MediaDeck.Common.Extensions;
 using MediaDeck.Composition.Enum;
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Core.Models.Files.Filter.FilterItemObjects;
 using MediaDeck.Core.Primitives;
 
@@ -12,12 +13,14 @@ namespace MediaDeck.ViewModels.Filters.FilterItemCreators;
 /// 評価フィルター作成ViewModel
 /// </summary>
 public class RateFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel {
+	private readonly IStringProvider _stringProvider;
+
 	/// <summary>
 	/// 表示名
 	/// </summary>
 	public string Title {
 		get {
-			return "評価フィルター";
+			return this._stringProvider.GetString("FilterCreator_Rate_Title");
 		}
 	}
 
@@ -41,13 +44,7 @@ public class RateFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel
 	/// </summary>
 	public IEnumerable<DisplayObject<SearchTypeComparison>> SearchTypeList {
 		get;
-	} = [
-		new DisplayObject<SearchTypeComparison>("を超える", SearchTypeComparison.GreaterThan),
-		new DisplayObject<SearchTypeComparison>("以上", SearchTypeComparison.GreaterThanOrEqual),
-		new DisplayObject<SearchTypeComparison>("と等しい", SearchTypeComparison.Equal),
-		new DisplayObject<SearchTypeComparison>("以下", SearchTypeComparison.LessThanOrEqual),
-		new DisplayObject<SearchTypeComparison>("未満", SearchTypeComparison.LessThan)
-	];
+	}
 
 	/// <summary>
 	/// フィルター追加コマンド
@@ -56,7 +53,15 @@ public class RateFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel
 		get;
 	}
 
-	public RateFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target) {
+	public RateFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target, IStringProvider stringProvider) {
+		this._stringProvider = stringProvider;
+		this.SearchTypeList = [
+			new DisplayObject<SearchTypeComparison>(this._stringProvider.GetString("FilterCreator_Comparison_GreaterThan"), SearchTypeComparison.GreaterThan),
+			new DisplayObject<SearchTypeComparison>(this._stringProvider.GetString("FilterCreator_Comparison_GreaterThanOrEqual"), SearchTypeComparison.GreaterThanOrEqual),
+			new DisplayObject<SearchTypeComparison>(this._stringProvider.GetString("FilterCreator_Comparison_Equal"), SearchTypeComparison.Equal),
+			new DisplayObject<SearchTypeComparison>(this._stringProvider.GetString("FilterCreator_Comparison_LessThanOrEqual"), SearchTypeComparison.LessThanOrEqual),
+			new DisplayObject<SearchTypeComparison>(this._stringProvider.GetString("FilterCreator_Comparison_LessThan"), SearchTypeComparison.LessThan)
+		];
 		this.RateText = new ReactiveProperty<string?>().ToBindableReactiveProperty().EnableValidation(() => this.RateText);
 		this.SearchType.Value = this.SearchTypeList.First(x => x.Value == SearchTypeComparison.GreaterThanOrEqual);
 		this.AddFilterCommand =

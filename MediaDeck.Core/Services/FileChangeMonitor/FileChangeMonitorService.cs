@@ -16,6 +16,7 @@ namespace MediaDeck.Core.Services.FileChangeMonitor;
 [Inject(InjectServiceLifetime.Singleton)]
 public class FileChangeMonitorService : ModelBase {
 	private readonly IDbContextFactory<MediaDeckDbContext> _dbFactory;
+	private readonly IDatabaseWriteCoordinator _databaseWriteCoordinator;
 	private readonly ILogger<FileChangeMonitorService> _logger;
 	private readonly AppNotificationDispatcher _appNotificationDispatcher;
 	private readonly FileRegistrar _fileRegistrar;
@@ -35,11 +36,12 @@ public class FileChangeMonitorService : ModelBase {
 	/// <param name="dbFactory">DBコンテキストファクトリー</param>
 	/// <param name="tracker">ファイル変更トラッカー</param>
 	/// <param name="logger">ロガー</param>
-	/// <param name="dispatcherGate">UIスレッドディスパッチャー</param>
 	/// <param name="appNotificationDispatcher">通知送信クラス</param>
 	/// <param name="fileRegistrar">ファイル登録クラス</param>
-	public FileChangeMonitorService(IStateStore stateStore, IDbContextFactory<MediaDeckDbContext> dbFactory, FileChangeTracker tracker, ILogger<FileChangeMonitorService> logger, AppNotificationDispatcher appNotificationDispatcher, FileRegistrar fileRegistrar) {
+	/// <param name="databaseWriteCoordinator">データベース書き込み直列化サービス</param>
+	public FileChangeMonitorService(IStateStore stateStore, IDbContextFactory<MediaDeckDbContext> dbFactory, FileChangeTracker tracker, ILogger<FileChangeMonitorService> logger, AppNotificationDispatcher appNotificationDispatcher, FileRegistrar fileRegistrar, IDatabaseWriteCoordinator databaseWriteCoordinator) {
 		this._dbFactory = dbFactory;
+		this._databaseWriteCoordinator = databaseWriteCoordinator;
 		this._logger = logger;
 		this._appNotificationDispatcher = appNotificationDispatcher;
 		this._fileRegistrar = fileRegistrar;
@@ -92,29 +94,37 @@ public class FileChangeMonitorService : ModelBase {
 	/// <param name="items">反映対象のアイテム一覧</param>
 	/// <param name="deleteFromDb">強制的に削除するかどうか</param>
 	public async Task ApplyChangesAsync(IEnumerable<FileChangeItem> items, bool deleteFromDb) {
+		var targetItems = items.ToArray();
 		try {
-			await using var db = await this._dbFactory.CreateDbContextAsync();
-			foreach (var item in items) {
-				if (item.ChangeType == FileChangeType.Added) {
-					// 新規追加アイテムが承認された場合はFileRegistrarへ回す
-					this._fileRegistrar.RegistrationQueue.Enqueue(item.NewPath);
-					continue;
-				}
+			foreach (var item in targetItems.Where(static x => x.ChangeType == FileChangeType.Added)) {
+				// 新規追加アイテムが承認された場合はFileRegistrarへ回す
+				this._fileRegistrar.RegistrationQueue.Enqueue(item.NewPath);
+			}
 
-				if (item.MediaItemId.HasValue) {
-					var file = await db.MediaItems.FirstOrDefaultAsync(mf => mf.MediaItemId == item.MediaItemId.Value);
-					if (file != null) {
-						if (deleteFromDb || item.ChangeType == FileChangeType.Deleted) {
-							db.MediaItems.Remove(file);
-						} else if (item.ChangeType == FileChangeType.Moved || item.ChangeType == FileChangeType.Renamed) {
-							file.FilePath = item.NewPath;
+			var dbUpdateItems = targetItems
+				.Where(static x => x.ChangeType != FileChangeType.Added)
+				.ToArray();
+
+			if (dbUpdateItems.Length > 0) {
+				await this._databaseWriteCoordinator.ExecuteAsync(async ct => {
+					await using var db = await this._dbFactory.CreateDbContextAsync(ct).ConfigureAwait(false);
+					foreach (var item in dbUpdateItems) {
+						if (item.MediaItemId.HasValue) {
+							var file = await db.MediaItems.FirstOrDefaultAsync(mf => mf.MediaItemId == item.MediaItemId.Value, ct).ConfigureAwait(false);
+							if (file != null) {
+								if (deleteFromDb || item.ChangeType == FileChangeType.Deleted) {
+									db.MediaItems.Remove(file);
+								} else if (item.ChangeType == FileChangeType.Moved || item.ChangeType == FileChangeType.Renamed) {
+									file.FilePath = item.NewPath;
+								}
+							}
 						}
 					}
-				}
+					await db.SaveChangesAsync(ct).ConfigureAwait(false);
+				}).ConfigureAwait(false);
 			}
-			await db.SaveChangesAsync();
 
-			this.Tracker.RemoveItems(items);
+			this.Tracker.RemoveItems(targetItems);
 		} catch (Exception ex) {
 			this._logger.LogError(ex, "Error applying file changes to DB");
 		}

@@ -1,5 +1,6 @@
 using MediaDeck.Common.Base;
 using MediaDeck.Composition.Enum;
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Core.Models.Files.Filter.FilterItemObjects;
 using MediaDeck.Core.Primitives;
 
@@ -9,12 +10,14 @@ namespace MediaDeck.ViewModels.Filters.FilterItemCreators;
 /// フォルダーグループフィルター作成ViewModel
 /// </summary>
 public class FolderGroupFilterCreatorViewModel : ViewModelBase, IFilterCreatorViewModel {
+	private readonly IStringProvider _stringProvider;
+
 	/// <summary>
 	/// 表示名
 	/// </summary>
 	public string Title {
 		get {
-			return "フォルダグループフィルター";
+			return this._stringProvider.GetString("FilterCreator_FolderGroup_Title");
 		}
 	}
 
@@ -37,10 +40,7 @@ public class FolderGroupFilterCreatorViewModel : ViewModelBase, IFilterCreatorVi
 	/// </summary>
 	public IEnumerable<DisplayObject<SearchTypeInclude>> SearchTypeList {
 		get;
-	} = [
-		new DisplayObject<SearchTypeInclude>("配下", SearchTypeInclude.Include),
-		new DisplayObject<SearchTypeInclude>("配下外", SearchTypeInclude.Exclude)
-	];
+	}
 
 	/// <summary>
 	/// フィルター追加コマンド
@@ -49,7 +49,12 @@ public class FolderGroupFilterCreatorViewModel : ViewModelBase, IFilterCreatorVi
 		get;
 	} = new();
 
-	public FolderGroupFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target) {
+	public FolderGroupFilterCreatorViewModel(ReactiveProperty<FilteringConditionEditorViewModel?> target, IStringProvider stringProvider) {
+		this._stringProvider = stringProvider;
+		this.SearchTypeList = [
+			new DisplayObject<SearchTypeInclude>(this._stringProvider.GetString("FilterCreator_FolderGroup_Include"), SearchTypeInclude.Include),
+			new DisplayObject<SearchTypeInclude>(this._stringProvider.GetString("FilterCreator_FolderGroup_Exclude"), SearchTypeInclude.Exclude)
+		];
 		this.SearchType.Value = this.SearchTypeList.First();
 		this.AddFilterCommand.Subscribe(_ => {
 			var filter = new FolderGroupFilterItemObject {

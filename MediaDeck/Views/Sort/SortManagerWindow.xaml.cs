@@ -1,3 +1,4 @@
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Core.Stores.Config;
 using MediaDeck.ViewModels.Sort;
 using MediaDeck.Views.Helpers;
@@ -8,9 +9,11 @@ namespace MediaDeck.Views.Sort;
 public sealed partial class SortManagerWindow : Microsoft.UI.Xaml.Window {
 	private readonly CompositeDisposable _disposable = new();
 
-	public SortManagerWindow(SortManagerViewModel viewModel, IConfigStore configStore) {
+	public SortManagerWindow(SortManagerViewModel viewModel, IConfigStore configStore, IStringProvider stringProvider) {
 		this.ViewModel = viewModel;
 		this.InitializeComponent();
+
+		this.Title = stringProvider.GetString("SortManager_WindowTitle");
 
 		// テーマのバインド
 		ThemeHelper.BindTheme(this, configStore, this._disposable);
