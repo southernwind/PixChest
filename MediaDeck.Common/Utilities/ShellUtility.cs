@@ -56,8 +56,11 @@ public static class ShellUtility {
 			return;
 		}
 
-		var psi = new ProcessStartInfo { FileName = "explorer.exe", UseShellExecute = false };
-		psi.ArgumentList.Add("/select," + filePath);
+		var psi = new ProcessStartInfo {
+			FileName = "explorer.exe",
+			Arguments = $"/select,\"{filePath}\"",
+			UseShellExecute = false
+		};
 		using var p = Process.Start(psi);
 	}
 
