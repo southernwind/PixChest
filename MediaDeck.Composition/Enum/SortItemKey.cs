@@ -10,5 +10,6 @@ public enum SortItemKey {
 	Location,
 	Rate,
 	Resolution,
-	UsageCount
+	UsageCount,
+	Duration
 }

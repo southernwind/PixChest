@@ -938,6 +938,9 @@
   <data name="SortItemKey_UsageCount" xml:space="preserve">
     <value>使用回数</value>
   </data>
+  <data name="SortItemKey_Duration" xml:space="preserve">
+    <value>再生時間</value>
+  </data>
 
   <!-- FilterCreator -->
   <data name="FilterCreator_Exists_Title" xml:space="preserve">

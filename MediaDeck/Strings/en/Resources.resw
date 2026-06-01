@@ -938,6 +938,9 @@
   <data name="SortItemKey_UsageCount" xml:space="preserve">
     <value>Usage Count</value>
   </data>
+  <data name="SortItemKey_Duration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
 
   <!-- FilterCreator -->
   <data name="FilterCreator_Exists_Title" xml:space="preserve">

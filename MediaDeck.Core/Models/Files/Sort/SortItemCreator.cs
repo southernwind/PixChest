@@ -16,6 +16,7 @@ public static class SortItemFactory {
 			SortItemKey.Location => new SortItem(sortItemObject.SortItemKey, mf => (object?)mf.Latitude, sortItemObject.Direction),
 			SortItemKey.Resolution => new SortItem(sortItemObject.SortItemKey, mf => (object?)((long)mf.Width * mf.Height), sortItemObject.Direction),
 			SortItemKey.UsageCount => new SortItem(sortItemObject.SortItemKey, mf => (object?)mf.UsageCount, sortItemObject.Direction),
+			SortItemKey.Duration => new SortItem(sortItemObject.SortItemKey, mf => (object?)(mf.VideoFile != null ? mf.VideoFile.Duration : null), sortItemObject.Direction),
 			_ => throw new ArgumentException(),
 		};
 	}
