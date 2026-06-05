@@ -35,47 +35,22 @@
 - **PDF**: Windows.Data.Pdf を利用した高速な表示とサムネイル生成
 - **アーカイブ**: ZIP, 7z, RAR 等
 
-## 技術スタック
-
-- **フレームワーク**: .NET 10 / WinUI 3 (Windows App SDK)
-- **アーキテクチャ**: MVVM パターン
-- **リアクティブ・状態管理**: [R3](https://github.com/Cysharp/R3)
-- **データベース**: SQLite (Entity Framework Core)
-- **画像・メタデータ**: Magick.NET, MetadataExtractor
-- **動画処理**: FFMpegCore
-- **ロギング**: Serilog
-- **設定管理**: GenJsonConfig
-- **DI・コード生成**: AutoDiAttributes
-
-## プロジェクト構成
-
-```
-MediaDeck/
-├── MediaDeck/                  # メインアプリケーション (WinUI 3 / Views / Styles)
-├── MediaDeck.ViewModels/       # ViewModels (R3ベースのReactiveProperty/Command)
-├── MediaDeck.Core/             # ビジネスロジック・検索エンジン・モデル
-├── MediaDeck.MediaItemTypes/   # メディアタイプの共通定義とロジック実装
-├── MediaDeck.MediaItemTypes.UI/# メディアタイプ別のUIコンポーネント
-├── MediaDeck.Store/            # 状態管理・設定永続化 (GenJsonConfig)
-├── MediaDeck.Composition/      # システム構成（DI、データベース層/EF Core）
-├── MediaDeck.Common/           # 共通ユーティリティ・基底クラス類
-└── lib/                        # 外部ライブラリ・サブモジュール
-```
-
 ## はじめかた
 
 ### 必要要件
 - Windows 10 (1809) 以降
-- .NET 10 ランタイム
 
-### インストール・ビルド
-```powershell
-# リポジトリのクローン
-git clone --recursive https://github.com/xm-i/MediaDeck.git
+### インストール
 
-# ソリューションのビルド
-dotnet build -r win-x64
-```
+以下のいずれかの方法でインストールできます。
+
+**Microsoft Store**
+
+[![Microsoft Store](https://img.shields.io/badge/Microsoft%20Store-からダウンロード-0078d4?logo=microsoft)](https://apps.microsoft.com/detail/9p4g7d3p2xm4)
+
+**GitHub Releases**
+
+[GitHub Releases](https://github.com/xm-i/MediaDeck/releases) から最新の zip ファイルをダウンロードして展開してください。
 
 ## 設定
 
@@ -91,3 +66,43 @@ dotnet build -r win-x64
 
 このプロジェクトは [MIT License](LICENSE) の下で公開されています。
 
+---
+
+## 開発者向け情報
+
+### 技術スタック
+
+- **フレームワーク**: .NET 10 / WinUI 3 (Windows App SDK)
+- **アーキテクチャ**: MVVM パターン
+- **リアクティブ・状態管理**: [R3](https://github.com/Cysharp/R3)
+- **データベース**: SQLite (Entity Framework Core)
+- **画像・メタデータ**: Magick.NET, MetadataExtractor
+- **動画処理**: FFMpegCore
+- **ロギング**: Serilog
+- **設定管理**: GenJsonConfig
+- **DI・コード生成**: AutoDiAttributes
+
+### プロジェクト構成
+
+```
+MediaDeck/
+├── MediaDeck/                  # メインアプリケーション (WinUI 3 / Views / Styles)
+├── MediaDeck.ViewModels/       # ViewModels (R3ベースのReactiveProperty/Command)
+├── MediaDeck.Core/             # ビジネスロジック・検索エンジン・モデル
+├── MediaDeck.MediaItemTypes/   # メディアタイプの共通定義とロジック実装
+├── MediaDeck.MediaItemTypes.UI/# メディアタイプ別のUIコンポーネント
+├── MediaDeck.Store/            # 状態管理・設定永続化 (GenJsonConfig)
+├── MediaDeck.Composition/      # システム構成（DI、データベース層/EF Core）
+├── MediaDeck.Common/           # 共通ユーティリティ・基底クラス類
+└── lib/                        # 外部ライブラリ・サブモジュール
+```
+
+### ビルド
+
+```powershell
+# リポジトリのクローン
+git clone --recursive https://github.com/xm-i/MediaDeck.git
+
+# ソリューションのビルド
+dotnet build -r win-x64
+```
