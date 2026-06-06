@@ -71,6 +71,7 @@
 3. **バージョン番号を更新する**（更新対象ファイルは以下の2箇所）
    - `Directory.Build.props` — `<Version>`, `<AssemblyVersion>`, `<FileVersion>` を新バージョンに変更する
    - `MediaDeck/Package.appxmanifest` — `<Identity Version="...">` を新バージョン（4桁形式）に変更する
+   - `MediaDeck/Package.Dev.appxmanifest` — `<Identity Version="...">` を新バージョン（4桁形式）に変更する（Debugビルドはこちらが使われるため忘れずに更新する）
 
 4. **CHANGELOG.md を更新する**
    - 手順2のコミットログをセクション4のルールに従って整理し、新バージョンのエントリを先頭に追加する
