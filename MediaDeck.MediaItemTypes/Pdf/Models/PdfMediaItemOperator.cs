@@ -86,9 +86,7 @@ public partial class PdfMediaItemOperator : BaseMediaItemOperator {
 	}
 
 	public override async Task UpdateMetadata(MediaItem mediaItem) {
-		using var fileMs = new MemoryStream();
 		try {
-			using var fileFs = File.OpenRead(mediaItem.FilePath);
 			var pdfDocument = await this._pdfDocumentOperator.GetPdfPropertiesAsync(mediaItem.FilePath);
 
 			mediaItem.Metadata = new() {
