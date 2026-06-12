@@ -47,7 +47,7 @@ public class FilesManager {
 		if (folderGroups.Any()) {
 			var targets = db.MediaItems.Where(x => folderGroups.Any(fg => fg == x.DirectoryPath || x.DirectoryPath.StartsWith(fg + Path.DirectorySeparatorChar))).ToArray();
 			foreach (var target in targets) {
-				target.IsUnderFolderGroup = db.MediaItems.Any(fg => target.DirectoryPath == fg.FilePath && target.DirectoryPath.StartsWith(fg.FilePath + Path.DirectorySeparatorChar));
+				target.IsUnderFolderGroup = db.MediaItems.Any(fg => target.DirectoryPath == fg.FilePath || target.DirectoryPath.StartsWith(fg.FilePath + Path.DirectorySeparatorChar));
 			}
 			db.UpdateRange(targets);
 		}
