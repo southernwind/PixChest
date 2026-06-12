@@ -118,9 +118,9 @@ public class DuplicateDetectorViewModel : ViewModelBase {
 
 
 		this.DetectCommand
-			.Subscribe(async _ => {
+			.SubscribeAwait(async (_, ct) => {
 				await this._detector.DetectDuplicatesAsync(this.SelectedHashType.Value.Value);
-			})
+			}, AwaitOperation.Drop)
 			.AddTo(this.CompositeDisposable);
 	}
 

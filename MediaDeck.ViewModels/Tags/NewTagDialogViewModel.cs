@@ -8,7 +8,7 @@ public class NewTagDialogViewModel : ViewModelBase {
 	public NewTagDialogViewModel(ITagsManager tagsManager, ITagModelFactory tagModelFactory) {
 		this.TagCategories = tagsManager.TagCategories.Select(x => new TagCategoryViewModel(x, tagsManager, tagModelFactory)).ToArray();
 		this.SelectedCategory.Value = this.TagCategories.FirstOrDefault();
-		this.ConfirmCommand.Subscribe(async _ => {
+		this.ConfirmCommand.SubscribeAwait(async (_, ct) => {
 			// タグを作成
 			this.CreatedTag.Value = await tagsManager.CreateTagImmediatelyAsync(this.SelectedCategory.Value?.Model.TagCategoryId,
 				this.TagName.Value,
@@ -16,7 +16,7 @@ public class NewTagDialogViewModel : ViewModelBase {
 				this.Detail.Value,
 				[]);
 			this.Result.Value = DialogResult.Confirmed;
-		}).AddTo(this.CompositeDisposable);
+		}, AwaitOperation.Drop).AddTo(this.CompositeDisposable);
 		this.CancelCommand.Subscribe(_ => {
 			this.Result.Value = DialogResult.Canceled;
 		}).AddTo(this.CompositeDisposable);

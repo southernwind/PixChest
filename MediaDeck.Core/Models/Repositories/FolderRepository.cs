@@ -20,7 +20,7 @@ public class FolderRepository : RepositoryBase {
 		FileNotifications
 			.FileRegistered
 			.ThrottleLast(TimeSpan.FromSeconds(10))
-			.Subscribe(async _ => await this.Load())
+			.SubscribeAwait(async (_, ct) => await this.Load(), AwaitOperation.Sequential)
 			.AddTo(this.CompositeDisposable);
 	}
 

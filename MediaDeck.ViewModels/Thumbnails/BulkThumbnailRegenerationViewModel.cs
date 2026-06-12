@@ -21,7 +21,7 @@ public class BulkThumbnailRegenerationViewModel : ViewModelBase {
 		this.ExecuteCommand = this.IsRunning
 			.Select(running => !running)
 			.ToReactiveCommand();
-		this.ExecuteCommand.Subscribe(async _ => await this.ExecuteAsync()).AddTo(this.CompositeDisposable);
+		this.ExecuteCommand.SubscribeAwait(async (_, ct) => await this.ExecuteAsync(), AwaitOperation.Drop).AddTo(this.CompositeDisposable);
 
 		this.CancelCommand = this.IsRunning.ToReactiveCommand();
 		this.CancelCommand.Subscribe(_ => this.Cancel()).AddTo(this.CompositeDisposable);

@@ -38,11 +38,11 @@ public class RepositorySelectorViewModel : ViewModelBase {
 				repositorySelector.SelectedRepository.Value = v.Model;
 			}
 		}).AddTo(this.CompositeDisposable);
-		this.LoadCommand.Subscribe(async _ => {
+		this.LoadCommand.SubscribeAwait(async (_, ct) => {
 			foreach (var repository in repositorySelector.Repositories) {
 				await repository.Load();
 			}
-		}).AddTo(this.CompositeDisposable);
+		}, AwaitOperation.Drop).AddTo(this.CompositeDisposable);
 	}
 
 	public ReactiveCommand LoadCommand {
