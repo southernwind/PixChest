@@ -85,8 +85,14 @@ public class FolderRepository : RepositoryBase {
 		});
 	}
 
+	/// <summary>
+	/// すべてのフォルダを取得します。
+	/// </summary>
+	/// <returns>フォルダオブジェクトの列挙子。ルートフォルダが未ロードの場合は空の列挙子を返します。</returns>
 	public IEnumerable<FolderObject> GetAllFolders() {
-		this.Load().Wait();
+		if (this.RootFolder.Value == null) {
+			return [];
+		}
 		IEnumerable<FolderObject> func(FolderObject fo) => fo.ChildFolders.SelectMany(x => func(x)).Concat([fo]).OrderBy(x => x.FolderPath);
 		return func(this.RootFolder.Value);
 	}

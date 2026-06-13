@@ -15,9 +15,6 @@ using Shouldly;
 
 namespace MediaDeck.Core.Tests.Models.Files;
 
-/// <summary>
-///     <see cref="SearchConditionManager" /> のテストクラスです。
-/// </summary>
 public class SearchConditionManagerTests {
 	private static IDbContextFactory<MediaDeckDbContext> CreateInMemoryDbFactory(string dbName) {
 		var options = new DbContextOptionsBuilder<MediaDeckDbContext>()
@@ -32,7 +29,7 @@ public class SearchConditionManagerTests {
 		return factoryMock.Object;
 	}
 
-	private static SearchConditionManagerTestContext CreateSut(string testName) {
+	private static (SearchConditionManager manager, Subject<ISearchCondition> addSubject, Subject<ISearchCondition> removeSubject, Subject<Action<ObservableList<ISearchCondition>>> updateSubject) CreateSut(string testName) {
 		var addSubject = new Subject<ISearchCondition>();
 		var removeSubject = new Subject<ISearchCondition>();
 		var updateSubject = new Subject<Action<ObservableList<ISearchCondition>>>();
@@ -54,7 +51,7 @@ public class SearchConditionManagerTests {
 		folderRepo.RootFolder.Value = new FolderObject(null, "", []);
 
 		var manager = new SearchConditionManager(dispatcherMock.Object, tagsManagerMock.Object, folderRepo, tabState);
-		return new SearchConditionManagerTestContext(manager, folderRepo, addSubject, removeSubject, updateSubject);
+		return (manager, addSubject, removeSubject, updateSubject);
 	}
 
 	/// <summary>
@@ -62,12 +59,12 @@ public class SearchConditionManagerTests {
 	/// </summary>
 	[Fact]
 	public void AddRequest_AddsSearchCondition() {
-		using var context = CreateSut(nameof(AddRequest_AddsSearchCondition));
+		var (manager, addSubject, _, _) = CreateSut(nameof(AddRequest_AddsSearchCondition));
 
 		var condition = new WordSearchCondition { Word = "test" };
-		context.AddSubject.OnNext(condition);
+		addSubject.OnNext(condition);
 
-		context.Manager.SearchConditions.ShouldContain(condition);
+		manager.SearchConditions.ShouldContain(condition);
 	}
 
 	/// <summary>
@@ -75,13 +72,13 @@ public class SearchConditionManagerTests {
 	/// </summary>
 	[Fact]
 	public void RemoveRequest_RemovesSearchCondition() {
-		using var context = CreateSut(nameof(RemoveRequest_RemovesSearchCondition));
+		var (manager, addSubject, removeSubject, _) = CreateSut(nameof(RemoveRequest_RemovesSearchCondition));
 
 		var condition = new WordSearchCondition { Word = "test" };
-		context.AddSubject.OnNext(condition);
-		context.RemoveSubject.OnNext(condition);
+		addSubject.OnNext(condition);
+		removeSubject.OnNext(condition);
 
-		context.Manager.SearchConditions.ShouldNotContain(condition);
+		manager.SearchConditions.ShouldNotContain(condition);
 	}
 
 	/// <summary>
@@ -89,12 +86,12 @@ public class SearchConditionManagerTests {
 	/// </summary>
 	[Fact]
 	public void UpdateRequest_ModifiesSearchConditions() {
-		using var context = CreateSut(nameof(UpdateRequest_ModifiesSearchConditions));
+		var (manager, _, _, updateSubject) = CreateSut(nameof(UpdateRequest_ModifiesSearchConditions));
 
 		var condition = new WordSearchCondition { Word = "injected" };
-		context.UpdateSubject.OnNext(list => list.Add(condition));
+		updateSubject.OnNext(list => list.Add(condition));
 
-		context.Manager.SearchConditions.ShouldContain(condition);
+		manager.SearchConditions.ShouldContain(condition);
 	}
 
 	/// <summary>
@@ -102,61 +99,8 @@ public class SearchConditionManagerTests {
 	/// </summary>
 	[Fact]
 	public void Candidates_ContainPropertySearchConditions() {
-		using var context = CreateSut(nameof(Candidates_ContainPropertySearchConditions));
+		var (manager, _, _, _) = CreateSut(nameof(Candidates_ContainPropertySearchConditions));
 
-		context.Manager.SearchConditionCandidates.OfType<PropertySearchCondition>().ShouldNotBeEmpty();
-	}
-
-	/// <summary>
-	///     テストで生成した依存オブジェクトをまとめて破棄するコンテキストです。
-	/// </summary>
-	private sealed class SearchConditionManagerTestContext(
-		SearchConditionManager manager,
-		FolderRepository folderRepository,
-		Subject<ISearchCondition> addSubject,
-		Subject<ISearchCondition> removeSubject,
-		Subject<Action<ObservableList<ISearchCondition>>> updateSubject) : IDisposable {
-		/// <summary>
-		///     テスト対象です。
-		/// </summary>
-		public SearchConditionManager Manager {
-			get;
-		} = manager;
-
-		/// <summary>
-		///     検索条件追加通知です。
-		/// </summary>
-		public Subject<ISearchCondition> AddSubject {
-			get;
-		} = addSubject;
-
-		/// <summary>
-		///     検索条件削除通知です。
-		/// </summary>
-		public Subject<ISearchCondition> RemoveSubject {
-			get;
-		} = removeSubject;
-
-		/// <summary>
-		///     検索条件更新通知です。
-		/// </summary>
-		public Subject<Action<ObservableList<ISearchCondition>>> UpdateSubject {
-			get;
-		} = updateSubject;
-
-		private FolderRepository FolderRepository {
-			get;
-		} = folderRepository;
-
-		/// <summary>
-		///     テストで生成した購読と通知元を破棄します。
-		/// </summary>
-		public void Dispose() {
-			this.Manager.Dispose();
-			this.FolderRepository.Dispose();
-			this.AddSubject.Dispose();
-			this.RemoveSubject.Dispose();
-			this.UpdateSubject.Dispose();
-		}
+		manager.SearchConditionCandidates.OfType<PropertySearchCondition>().ShouldNotBeEmpty();
 	}
 }
