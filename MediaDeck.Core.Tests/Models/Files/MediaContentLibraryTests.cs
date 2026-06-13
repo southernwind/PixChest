@@ -15,8 +15,13 @@ using Shouldly;
 
 namespace MediaDeck.Core.Tests.Models.Files;
 
-public class MediaContentLibraryTests {
+
+public class MediaContentLibraryTests : IDisposable {
 	private readonly MediaContentLibrary _sut;
+	private readonly SearchConditionManager _searchConditionManager;
+	private readonly FolderRepository _folderRepository;
+	private readonly SearchConditionNotificationDispatcher _dispatcher;
+	private readonly ServiceProvider _serviceProvider;
 
 	public MediaContentLibraryTests() {
 		var filesLoader = new Mock<FilesLoader>(
@@ -33,10 +38,10 @@ public class MediaContentLibraryTests {
 		services.AddSingleton<ViewerStateModel>();
 		services.AddSingleton<TabStateModel>();
 		services.AddSingleton<MediaDeck.Composition.Interfaces.IStringProvider, StubStringProvider>();
-		var sp = services.BuildServiceProvider();
-		var tabState = sp.GetRequiredService<TabStateModel>();
+		this._serviceProvider = services.BuildServiceProvider();
+		var tabState = this._serviceProvider.GetRequiredService<TabStateModel>();
 
-		var dispatcher = new SearchConditionNotificationDispatcher();
+		this._dispatcher = new SearchConditionNotificationDispatcher();
 		var tagsManager = new Mock<ITagsManager>();
 		tagsManager.Setup(x => x.Tags).Returns(new ObservableCollections.ObservableList<MediaDeck.Composition.Interfaces.Tags.ITagModel>());
 
@@ -47,13 +52,21 @@ public class MediaContentLibraryTests {
 		var dbFactoryMock = new Mock<IDbContextFactory<MediaDeckDbContext>>();
 		dbFactoryMock.Setup(x => x.CreateDbContextAsync(It.IsAny<CancellationToken>()))
 			.ReturnsAsync(() => new MediaDeckDbContext(dbOptions));
-		var folderRepo = new FolderRepository(dbFactoryMock.Object, dispatcher, tabState);
+		this._folderRepository = new FolderRepository(dbFactoryMock.Object, this._dispatcher, tabState);
 
-		var searchConditionManager = new SearchConditionManager(dispatcher, tagsManager.Object, folderRepo, tabState);
+		this._searchConditionManager = new SearchConditionManager(this._dispatcher, tagsManager.Object, this._folderRepository, tabState);
 
 		var uiDispatcher = new Mock<IUiDispatcher>();
 
-		this._sut = new MediaContentLibrary(filesLoader, searchConfig, searchConditionManager, dispatcher, uiDispatcher.Object);
+		this._sut = new MediaContentLibrary(filesLoader, searchConfig, this._searchConditionManager, this._dispatcher, uiDispatcher.Object);
+	}
+
+	public void Dispose() {
+		this._sut.Dispose();
+		this._searchConditionManager.Dispose();
+		this._folderRepository.Dispose();
+		this._dispatcher.Dispose();
+		this._serviceProvider.Dispose();
 	}
 
 	[Fact]
