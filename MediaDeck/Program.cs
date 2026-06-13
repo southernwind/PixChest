@@ -1,4 +1,6 @@
 using System.Threading;
+using MediaDeck.Composition.Constants;
+using MediaDeck.Composition.Startup;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 
@@ -10,6 +12,11 @@ public static class Program {
 
 	[STAThread]
 	public static void Main(string[] args) {
+		var runtimePathOptions = RuntimeArgumentsParser.Parse(args);
+		if (runtimePathOptions.BaseDirectory != null) {
+			FilePathConstants.OverrideBaseDirectory(runtimePathOptions.BaseDirectory);
+		}
+
 		XamlCheckProcessRequirements();
 
 		// 単一インスタンスチェック
