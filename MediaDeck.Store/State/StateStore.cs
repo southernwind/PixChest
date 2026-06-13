@@ -65,7 +65,7 @@ public class StateStore : DisposableBase, IStateStore {
 			if (File.Exists(this.StateFilePath)) {
 				try {
 					var json = File.ReadAllText(this.StateFilePath);
-					this._logger.LogInformation(json);
+					this._logger.LogDebug("状態設定JSONを読み込みました。Length: {Length}", json.Length);
 					var loaded = JsonSerializer.Deserialize<RootStateModelForJson>(json, this.JsonSerializerOptions);
 					if (loaded != null) {
 						this.RootState = RootStateModelForJson.CreateModel(loaded, scope.ServiceProvider);
@@ -110,7 +110,7 @@ public class StateStore : DisposableBase, IStateStore {
 
 			var jsonDto = RootStateModelForJson.CreateJson(this.RootState);
 			var json = JsonSerializer.Serialize(jsonDto, this.JsonSerializerOptions);
-			this._logger.LogInformation(json);
+			this._logger.LogDebug("状態設定JSONを生成しました。Length: {Length}", json.Length);
 			File.WriteAllText(this.StateFilePath, json);
 			this._logger.LogInformation("状態設定を保存しました: {FilePath}", this.StateFilePath);
 		} catch (IOException ie) {
