@@ -5,7 +5,6 @@ using MediaDeck.Composition.Interfaces.Tags;
 using MediaDeck.Composition.Stores.State.Model;
 using MediaDeck.Core.Models.Files.SearchConditions;
 using MediaDeck.Core.Models.Repositories;
-using R3;
 
 namespace MediaDeck.Core.Models.Files;
 
