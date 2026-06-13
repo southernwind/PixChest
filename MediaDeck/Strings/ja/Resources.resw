@@ -1123,4 +1123,64 @@
   <data name="TagCategory_Unassigned_Detail" xml:space="preserve">
     <value>カテゴリーが設定されていないタグ</value>
   </data>
+  <data name="NewTagDialog.Title" xml:space="preserve">
+    <value>新しいタグの作成</value>
+  </data>
+  <data name="NewTagDialog.PrimaryButtonText" xml:space="preserve">
+    <value>作成</value>
+  </data>
+  <data name="NewTagDialog.CloseButtonText" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="NewTagDialog_TagNameLabel.Text" xml:space="preserve">
+    <value>タグ名</value>
+  </data>
+  <data name="NewTagDialog_TagNameInput.PlaceholderText" xml:space="preserve">
+    <value>タグ名を入力</value>
+  </data>
+  <data name="NewTagDialog_RubyLabel.Text" xml:space="preserve">
+    <value>読み</value>
+  </data>
+  <data name="NewTagDialog_RubyInput.PlaceholderText" xml:space="preserve">
+    <value>読みを入力</value>
+  </data>
+  <data name="NewTagDialog_CategoryLabel.Text" xml:space="preserve">
+    <value>カテゴリ</value>
+  </data>
+  <data name="NewTagDialog_DescriptionLabel.Text" xml:space="preserve">
+    <value>説明（任意）</value>
+  </data>
+  <data name="NewTagDialog_DescriptionInput.PlaceholderText" xml:space="preserve">
+    <value>説明を入力</value>
+  </data>
+  <data name="BulkThumbnailRegenerationWindow.Title" xml:space="preserve">
+    <value>サムネイル一括再生成</value>
+  </data>
+  <data name="BulkThumbnailRegeneration_TargetFiles.Text" xml:space="preserve">
+    <value>対象ファイル</value>
+  </data>
+  <data name="BulkThumbnailRegeneration_MediaTypePrefix.Text" xml:space="preserve">
+    <value>メディアタイプ: </value>
+  </data>
+  <data name="BulkThumbnailRegeneration_CountPrefix.Text" xml:space="preserve">
+    <value>件数: </value>
+  </data>
+  <data name="BulkThumbnailRegeneration_Execute.Text" xml:space="preserve">
+    <value>実行</value>
+  </data>
+  <data name="BulkThumbnailRegeneration_Cancel.Text" xml:space="preserve">
+    <value>中断</value>
+  </data>
+  <data name="BackgroundTask_UpdateFileStatus" xml:space="preserve">
+    <value>ファイル状態を更新</value>
+  </data>
+  <data name="BackgroundTask_UpdateFileHash" xml:space="preserve">
+    <value>ファイルハッシュを更新</value>
+  </data>
+  <data name="BackgroundTask_UpdateFullHash" xml:space="preserve">
+    <value>フルハッシュを更新</value>
+  </data>
+  <data name="BackgroundTask_UpdateMetadata" xml:space="preserve">
+    <value>メタデータを更新</value>
+  </data>
 </root>

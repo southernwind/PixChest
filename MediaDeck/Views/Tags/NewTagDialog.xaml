@@ -7,27 +7,25 @@
 	xmlns:db="using:MediaDeck.Composition.Tables"
 	xmlns:tags="using:MediaDeck.ViewModels.Tags"
 	mc:Ignorable="d"
-	Title="Create New Tag"
-	PrimaryButtonText="Create"
-	CloseButtonText="Cancel"
+	x:Uid="NewTagDialog"
 	DefaultButton="Primary"
 	MinWidth="400" >
 	<StackPanel Spacing="16"
 		Padding="16" >
 		<StackPanel Spacing="6" >
-			<TextBlock Text="Tag Name"
+			<TextBlock x:Uid="NewTagDialog_TagNameLabel"
 				FontWeight="SemiBold" />
 			<TextBox Text="{x:Bind ViewModel.TagName.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-				PlaceholderText="Enter tag name" />
+				x:Uid="NewTagDialog_TagNameInput" />
 		</StackPanel>
 		<StackPanel Spacing="6" >
-			<TextBlock Text="読み"
+			<TextBlock x:Uid="NewTagDialog_RubyLabel"
 				FontWeight="SemiBold" />
 			<TextBox Text="{x:Bind ViewModel.Ruby.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-				PlaceholderText="読みを入力" />
+				x:Uid="NewTagDialog_RubyInput" />
 		</StackPanel>
 		<StackPanel Spacing="6" >
-			<TextBlock Text="Category"
+			<TextBlock x:Uid="NewTagDialog_CategoryLabel"
 				FontWeight="SemiBold" />
 			<ComboBox HorizontalAlignment="Stretch"
 				ItemsSource="{x:Bind ViewModel.TagCategories, Mode=OneWay}"
@@ -40,10 +38,10 @@
 			</ComboBox>
 		</StackPanel>
 		<StackPanel Spacing="6" >
-			<TextBlock Text="Description (Optional)"
+			<TextBlock x:Uid="NewTagDialog_DescriptionLabel"
 				FontWeight="SemiBold" />
 			<TextBox Text="{x:Bind ViewModel.Detail.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-				PlaceholderText="Enter description"
+				x:Uid="NewTagDialog_DescriptionInput"
 				Height="80"
 				AcceptsReturn="True"
 				TextWrapping="Wrap" />
