@@ -132,7 +132,7 @@
 							ItemsSource="{x:Bind ViewModel.CurrentCondition.Value.CandidateSortItemKeys.Value, Mode=OneWay}" >
 							<ComboBox.ItemTemplate>
 								<DataTemplate x:DataType="enum:SortItemKey" >
-									<TextBlock Text="{x:Bind Mode=OneWay, Converter={StaticResource SortKeyToDisplayNameConverter}}" />
+									<TextBlock Text="{x:Bind Mode=OneTime, Converter={StaticResource SortKeyToDisplayNameConverter}}" />
 								</DataTemplate>
 							</ComboBox.ItemTemplate>
 						</ComboBox>
