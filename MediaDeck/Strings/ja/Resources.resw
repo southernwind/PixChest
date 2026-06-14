@@ -942,6 +942,22 @@
     <value>再生時間</value>
   </data>
 
+  <data name="FileChangeFilter_All" xml:space="preserve">
+    <value>すべて</value>
+  </data>
+  <data name="FileChangeFilter_Moved" xml:space="preserve">
+    <value>移動</value>
+  </data>
+  <data name="FileChangeFilter_Deleted" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="FileChangeFilter_Renamed" xml:space="preserve">
+    <value>変更</value>
+  </data>
+  <data name="FileChangeFilter_Added" xml:space="preserve">
+    <value>追加</value>
+  </data>
+
   <!-- FilterCreator -->
   <data name="FilterCreator_Exists_Title" xml:space="preserve">
     <value>存在フィルター</value>
