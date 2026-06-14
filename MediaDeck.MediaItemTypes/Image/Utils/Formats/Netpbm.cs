@@ -22,6 +22,6 @@ public class Netpbm : ImageBase {
 	}
 
 	public override MediaMetadata CreateMetadata() {
-		return null;
+		return new MediaMetadata();
 	}
 }
