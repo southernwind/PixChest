@@ -92,7 +92,10 @@ public partial class VideoMediaItemOperator : BaseMediaItemOperator {
 			Height = metadata.PrimaryVideoStream?.Height ?? 0,
 			IsUnderFolderGroup = isUnderFolderGroup,
 			ThumbnailSize = this._config.ThumbnailConfig.ThumbnailSize.Value,
-			VideoFile = new() { Duration = metadata.PrimaryVideoStream?.Duration.TotalSeconds, Rotation = metadata.PrimaryVideoStream?.Rotation },
+			VideoFile = new() {
+				Duration = Math.Max(metadata.Duration.TotalSeconds, metadata.PrimaryVideoStream?.Duration.TotalSeconds ?? 0),
+				Rotation = metadata.PrimaryVideoStream?.Rotation
+			},
 			Metadata = new() {
 				Entries = this.CreateEntries(metadata)
 			}
@@ -112,6 +115,12 @@ public partial class VideoMediaItemOperator : BaseMediaItemOperator {
 			var metadata = await FFProbe.AnalyseAsync(mediaItem.FilePath);
 			mediaItem.Metadata = new() {
 				Entries = this.CreateEntries(metadata)
+			};
+			mediaItem.Width = metadata.PrimaryVideoStream?.Width ?? 0;
+			mediaItem.Height = metadata.PrimaryVideoStream?.Height ?? 0;
+			mediaItem.VideoFile = new() {
+				Duration = Math.Max(metadata.Duration.TotalSeconds, metadata.PrimaryVideoStream?.Duration.TotalSeconds ?? 0),
+				Rotation = metadata.PrimaryVideoStream?.Rotation
 			};
 		} catch (FFMpegException ex) {
 			this._logger.LogError(ex, "Failed to analyze video metadata for file {FilePath}", mediaItem.FilePath);
