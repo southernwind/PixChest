@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.12" />
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" />
     <ProjectReference Include="..\lib\GenJsonConfig\GenJsonConfig\GenJsonConfig.csproj" />
     <ProjectReference Include="..\lib\GenJsonConfig\GenJsonConfig.Generators\GenJsonConfig.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\lib\AutoDiAttributes\AutoDiAttributes\AutoDiAttributes.csproj" />
