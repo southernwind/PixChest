@@ -96,6 +96,15 @@
   <data name="Common_Delete_ToolTip.ToolTipService.ToolTip" xml:space="preserve">
     <value>削除</value>
   </data>
+  <data name="DialogButton_Yes" xml:space="preserve">
+    <value>はい</value>
+  </data>
+  <data name="DialogButton_No" xml:space="preserve">
+    <value>いいえ</value>
+  </data>
+  <data name="DialogButton_Cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
 
   <!-- ナビゲーションメニュー -->
   <data name="NavMenu_View.Title" xml:space="preserve">
@@ -1198,5 +1207,80 @@
   </data>
   <data name="BackgroundTask_UpdateMetadata" xml:space="preserve">
     <value>メタデータを更新</value>
+  </data>
+
+  <!-- FileChangeSyncWindow -->
+  <data name="FileChangeSync_Title" xml:space="preserve">
+    <value>ファイルの同期確認</value>
+  </data>
+  <data name="FileChangeSync_Header.Text" xml:space="preserve">
+    <value>未処理のファイル変更</value>
+  </data>
+  <data name="FileChangeSync_Description.Text" xml:space="preserve">
+    <value>外部でのファイル移動や削除が検出されました。</value>
+  </data>
+  <data name="FileChangeSync_ShowingPrefix.Text" xml:space="preserve">
+    <value>表示中:</value>
+  </data>
+  <data name="FileChangeSync_ShowingSuffix.Text" xml:space="preserve">
+    <value>件</value>
+  </data>
+  <data name="FileChangeSync_FilterRadioButtons.Header" xml:space="preserve">
+    <value>表示フィルター</value>
+  </data>
+  <data name="FileChangeSync_OldPathLabel.Text" xml:space="preserve">
+    <value>変更前：</value>
+  </data>
+  <data name="FileChangeSync_NewPathLabel.Text" xml:space="preserve">
+    <value>変更後：</value>
+  </data>
+  <data name="FileChangeSync_ApplyItemButton.Content" xml:space="preserve">
+    <value>反映</value>
+  </data>
+  <data name="FileChangeSync_DiscardItemButton.Content" xml:space="preserve">
+    <value>無視</value>
+  </data>
+  <data name="FileChangeSync_ApplyAllButton.Content" xml:space="preserve">
+    <value>表示中をすべて反映</value>
+  </data>
+  <data name="FileChangeSync_DiscardAllButton.Content" xml:space="preserve">
+    <value>表示中をすべて無視</value>
+  </data>
+
+  <!-- FileChangeType -->
+  <data name="FileChangeType_Deleted" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="FileChangeType_Renamed" xml:space="preserve">
+    <value>変更</value>
+  </data>
+  <data name="FileChangeType_Moved" xml:space="preserve">
+    <value>移動</value>
+  </data>
+  <data name="FileChangeType_Added" xml:space="preserve">
+    <value>追加</value>
+  </data>
+  <data name="FileChangeType_Unknown" xml:space="preserve">
+    <value>不明</value>
+  </data>
+
+  <!-- Viewer Context Menu & Dialogs -->
+  <data name="Viewer_ContextRemoveFileSingle" xml:space="preserve">
+    <value>ファイルをMediaDeckデータベースから削除しますか？</value>
+  </data>
+  <data name="Viewer_ContextRemoveFileMultiple" xml:space="preserve">
+    <value>{0}件のファイルをMediaDeckデータベースから削除しますか？</value>
+  </data>
+  <data name="Viewer_ContextOpenWithExternal" xml:space="preserve">
+    <value>外部プログラムで開く</value>
+  </data>
+  <data name="Viewer_ContextOpenWithFormat" xml:space="preserve">
+    <value>{0}で開く</value>
+  </data>
+  <data name="Viewer_ContextDefaultSuffix" xml:space="preserve">
+    <value> (既定)</value>
+  </data>
+  <data name="Viewer_ContextCreateNewAlbum" xml:space="preserve">
+    <value>アルバムを新規作成</value>
   </data>
 </root>

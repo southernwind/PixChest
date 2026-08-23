@@ -1,3 +1,4 @@
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Core.Services.FileChangeMonitor;
 using MediaDeck.Core.Stores.Config;
 using MediaDeck.ViewModels;
@@ -7,12 +8,22 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace MediaDeck.Views;
 
+/// <summary>
+/// 未処理のファイル変更の同期確認ウィンドウ。
+/// </summary>
 [Inject(InjectServiceLifetime.Transient)]
 public sealed partial class FileChangeSyncWindow : Window {
 	private readonly CompositeDisposable _disposable = new();
 
-	public FileChangeSyncWindow(FileChangeSyncViewModel viewModel, IConfigStore configStore) {
+	/// <summary>
+	/// <see cref="FileChangeSyncWindow"/> クラスの新しいインスタンスを初期化します。
+	/// </summary>
+	/// <param name="viewModel">ファイル変更同期 ViewModel</param>
+	/// <param name="configStore">設定ストア</param>
+	/// <param name="stringProvider">文字列リソースプロバイダー</param>
+	public FileChangeSyncWindow(FileChangeSyncViewModel viewModel, IConfigStore configStore, IStringProvider stringProvider) {
 		this.ViewModel = viewModel;
+		this.Title = stringProvider.GetString("FileChangeSync_Title");
 		this.InitializeComponent();
 
 		// テーマのバインド

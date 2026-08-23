@@ -2,6 +2,7 @@ using System.IO;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using MediaDeck.Common.Utilities;
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Composition.Interfaces.MediaItemTypes.ViewModels;
 using MediaDeck.Composition.Stores.Config.Model;
 using MediaDeck.Core.Stores.Config;
@@ -25,11 +26,13 @@ public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
 	private const string AddToAlbumCreateTag = "AddToAlbum:Create";
 	private readonly WindowService _windowService;
 	private readonly WindowManager _windowManager;
+	private readonly IStringProvider _stringProvider;
 	private IMediaItemViewModel? _contextMenuTargetFile;
 
 	public ViewerPaneBase() {
 		this._windowService = Ioc.Default.GetRequiredService<WindowService>();
 		this._windowManager = Ioc.Default.GetRequiredService<WindowManager>();
+		this._stringProvider = Ioc.Default.GetRequiredService<IStringProvider>();
 	}
 
 	protected virtual void List_SelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -128,15 +131,17 @@ public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
 				}
 				break;
 			case "RemoveFile": {
-					var message = targetFiles.Length == 1 ? "Remove file from MediaDeck database?" : $"Remove {targetFiles.Length} files from MediaDeck database?";
+					var message = targetFiles.Length == 1
+						? this._stringProvider.GetString("Viewer_ContextRemoveFileSingle")
+						: this._stringProvider.GetString("Viewer_ContextRemoveFileMultiple", targetFiles.Length);
 
 					var dialog = new ContentDialog {
 						XamlRoot = this.XamlRoot,
 						Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
 						Title = message,
-						PrimaryButtonText = "Yes",
-						SecondaryButtonText = "No",
-						CloseButtonText = "Cancel",
+						PrimaryButtonText = this._stringProvider.GetString("DialogButton_Yes"),
+						SecondaryButtonText = this._stringProvider.GetString("DialogButton_No"),
+						CloseButtonText = this._stringProvider.GetString("DialogButton_Cancel"),
 						DefaultButton = ContentDialogButton.Primary
 					};
 					using var disposable = new CompositeDisposable();
@@ -185,9 +190,11 @@ public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
 		if (programs.Count > 0) {
 			int index = 0;
 			foreach (var program in programs) {
-				var name = string.IsNullOrWhiteSpace(program.Name.Value) ? "外部プログラムで開く" : $"{program.Name.Value}で開く";
+				var name = string.IsNullOrWhiteSpace(program.Name.Value)
+					? this._stringProvider.GetString("Viewer_ContextOpenWithExternal")
+					: this._stringProvider.GetString("Viewer_ContextOpenWithFormat", program.Name.Value);
 				var item = new MenuFlyoutItem {
-					Text = program.IsDefault.Value ? $"{name} (既定)" : name,
+					Text = program.IsDefault.Value ? $"{name}{this._stringProvider.GetString("Viewer_ContextDefaultSuffix")}" : name,
 					Tag = $"ExecuteProgram:{program.GetHashCode()}",
 				};
 				item.Click += async (s, args) => {
@@ -222,7 +229,7 @@ public class ViewerPaneBase : UserControlBase<ViewerSelectorViewModel> {
 			addRoot.Items.Add(new MenuFlyoutSeparator());
 		}
 		var createItem = new MenuFlyoutItem {
-			Text = "アルバムを新規作成",
+			Text = this._stringProvider.GetString("Viewer_ContextCreateNewAlbum"),
 			Tag = AddToAlbumCreateTag,
 		};
 		createItem.Click += this.MenuFlyoutItem_Click;

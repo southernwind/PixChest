@@ -37,6 +37,7 @@
 	<converters:FileSizeConverter x:Key="FileSizeConverter" />
 	<converters:TagListConverter x:Key="TagListConverter" />
 	<converters:FileChangeFilterToDisplayNameConverter x:Key="FileChangeFilterToDisplayNameConverter" />
+	<converters:FileChangeTypeToDisplayNameConverter x:Key="FileChangeTypeToDisplayNameConverter" />
 	<converters:PinStateToBrushConverter x:Key="PinStateToBrushConverter" />
 	<converters:LocationConverter x:Key="LocationConverter" />
 	<converters:DoubleToGridLengthConverter x:Key="DoubleToGridLengthConverter" />

@@ -96,6 +96,15 @@
   <data name="Common_Delete_ToolTip.ToolTipService.ToolTip" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="DialogButton_Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="DialogButton_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="DialogButton_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
 
   <!-- Navigation menu -->
   <data name="NavMenu_View.Title" xml:space="preserve">
@@ -1198,5 +1207,80 @@
   </data>
   <data name="BackgroundTask_UpdateMetadata" xml:space="preserve">
     <value>Update metadata</value>
+  </data>
+
+  <!-- FileChangeSyncWindow -->
+  <data name="FileChangeSync_Title" xml:space="preserve">
+    <value>File Sync Confirmation</value>
+  </data>
+  <data name="FileChangeSync_Header.Text" xml:space="preserve">
+    <value>Unprocessed File Changes</value>
+  </data>
+  <data name="FileChangeSync_Description.Text" xml:space="preserve">
+    <value>External file moves or deletions were detected.</value>
+  </data>
+  <data name="FileChangeSync_ShowingPrefix.Text" xml:space="preserve">
+    <value>Showing:</value>
+  </data>
+  <data name="FileChangeSync_ShowingSuffix.Text" xml:space="preserve">
+    <value>items</value>
+  </data>
+  <data name="FileChangeSync_FilterRadioButtons.Header" xml:space="preserve">
+    <value>Display Filter</value>
+  </data>
+  <data name="FileChangeSync_OldPathLabel.Text" xml:space="preserve">
+    <value>Before: </value>
+  </data>
+  <data name="FileChangeSync_NewPathLabel.Text" xml:space="preserve">
+    <value>After: </value>
+  </data>
+  <data name="FileChangeSync_ApplyItemButton.Content" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="FileChangeSync_DiscardItemButton.Content" xml:space="preserve">
+    <value>Discard</value>
+  </data>
+  <data name="FileChangeSync_ApplyAllButton.Content" xml:space="preserve">
+    <value>Apply All Shown</value>
+  </data>
+  <data name="FileChangeSync_DiscardAllButton.Content" xml:space="preserve">
+    <value>Discard All Shown</value>
+  </data>
+
+  <!-- FileChangeType -->
+  <data name="FileChangeType_Deleted" xml:space="preserve">
+    <value>Deleted</value>
+  </data>
+  <data name="FileChangeType_Renamed" xml:space="preserve">
+    <value>Renamed</value>
+  </data>
+  <data name="FileChangeType_Moved" xml:space="preserve">
+    <value>Moved</value>
+  </data>
+  <data name="FileChangeType_Added" xml:space="preserve">
+    <value>Added</value>
+  </data>
+  <data name="FileChangeType_Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+
+  <!-- Viewer Context Menu & Dialogs -->
+  <data name="Viewer_ContextRemoveFileSingle" xml:space="preserve">
+    <value>Remove file from MediaDeck database?</value>
+  </data>
+  <data name="Viewer_ContextRemoveFileMultiple" xml:space="preserve">
+    <value>Remove {0} files from MediaDeck database?</value>
+  </data>
+  <data name="Viewer_ContextOpenWithExternal" xml:space="preserve">
+    <value>Open with external program</value>
+  </data>
+  <data name="Viewer_ContextOpenWithFormat" xml:space="preserve">
+    <value>Open with {0}</value>
+  </data>
+  <data name="Viewer_ContextDefaultSuffix" xml:space="preserve">
+    <value> (Default)</value>
+  </data>
+  <data name="Viewer_ContextCreateNewAlbum" xml:space="preserve">
+    <value>Create New Album</value>
   </data>
 </root>
