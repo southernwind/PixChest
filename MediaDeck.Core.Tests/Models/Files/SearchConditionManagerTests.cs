@@ -29,7 +29,7 @@ public class SearchConditionManagerTests {
 		return factoryMock.Object;
 	}
 
-	private static (SearchConditionManager manager, Subject<ISearchCondition> addSubject, Subject<ISearchCondition> removeSubject, Subject<Action<ObservableList<ISearchCondition>>> updateSubject) CreateSut(string testName) {
+	private static SearchConditionManagerTestContext CreateSut(string testName) {
 		var addSubject = new Subject<ISearchCondition>();
 		var removeSubject = new Subject<ISearchCondition>();
 		var updateSubject = new Subject<Action<ObservableList<ISearchCondition>>>();
@@ -45,13 +45,14 @@ public class SearchConditionManagerTests {
 		// FolderRepositoryにInMemory DBを渡して空のルートフォルダを返す状態にする
 		var dbFactory = CreateInMemoryDbFactory(testName);
 		var folderDispatcherMock = new Mock<ISearchConditionNotificationDispatcher>();
-		folderDispatcherMock.Setup(x => x.UpdateRequest).Returns(new Subject<Action<ObservableList<ISearchCondition>>>());
+		var folderUpdateSubject = new Subject<Action<ObservableList<ISearchCondition>>>();
+		folderDispatcherMock.Setup(x => x.UpdateRequest).Returns(folderUpdateSubject);
 		var tabState = new TabStateModel(null!, new SearchStateModel(), new ViewerStateModel());
 		var folderRepo = new FolderRepository(dbFactory, folderDispatcherMock.Object, tabState);
 		folderRepo.RootFolder.Value = new FolderObject(null, "", []);
 
 		var manager = new SearchConditionManager(dispatcherMock.Object, tagsManagerMock.Object, folderRepo, tabState);
-		return (manager, addSubject, removeSubject, updateSubject);
+		return new SearchConditionManagerTestContext(manager, folderRepo, addSubject, removeSubject, updateSubject, folderUpdateSubject);
 	}
 
 	/// <summary>
@@ -59,12 +60,12 @@ public class SearchConditionManagerTests {
 	/// </summary>
 	[Fact]
 	public void AddRequest_AddsSearchCondition() {
-		var (manager, addSubject, _, _) = CreateSut(nameof(AddRequest_AddsSearchCondition));
+		using var context = CreateSut(nameof(AddRequest_AddsSearchCondition));
 
 		var condition = new WordSearchCondition { Word = "test" };
-		addSubject.OnNext(condition);
+		context.AddSubject.OnNext(condition);
 
-		manager.SearchConditions.ShouldContain(condition);
+		context.Manager.SearchConditions.ShouldContain(condition);
 	}
 
 	/// <summary>
@@ -72,13 +73,13 @@ public class SearchConditionManagerTests {
 	/// </summary>
 	[Fact]
 	public void RemoveRequest_RemovesSearchCondition() {
-		var (manager, addSubject, removeSubject, _) = CreateSut(nameof(RemoveRequest_RemovesSearchCondition));
+		using var context = CreateSut(nameof(RemoveRequest_RemovesSearchCondition));
 
 		var condition = new WordSearchCondition { Word = "test" };
-		addSubject.OnNext(condition);
-		removeSubject.OnNext(condition);
+		context.AddSubject.OnNext(condition);
+		context.RemoveSubject.OnNext(condition);
 
-		manager.SearchConditions.ShouldNotContain(condition);
+		context.Manager.SearchConditions.ShouldNotContain(condition);
 	}
 
 	/// <summary>
@@ -86,12 +87,12 @@ public class SearchConditionManagerTests {
 	/// </summary>
 	[Fact]
 	public void UpdateRequest_ModifiesSearchConditions() {
-		var (manager, _, _, updateSubject) = CreateSut(nameof(UpdateRequest_ModifiesSearchConditions));
+		using var context = CreateSut(nameof(UpdateRequest_ModifiesSearchConditions));
 
 		var condition = new WordSearchCondition { Word = "injected" };
-		updateSubject.OnNext(list => list.Add(condition));
+		context.UpdateSubject.OnNext(list => list.Add(condition));
 
-		manager.SearchConditions.ShouldContain(condition);
+		context.Manager.SearchConditions.ShouldContain(condition);
 	}
 
 	/// <summary>
@@ -99,8 +100,49 @@ public class SearchConditionManagerTests {
 	/// </summary>
 	[Fact]
 	public void Candidates_ContainPropertySearchConditions() {
-		var (manager, _, _, _) = CreateSut(nameof(Candidates_ContainPropertySearchConditions));
+		using var context = CreateSut(nameof(Candidates_ContainPropertySearchConditions));
 
-		manager.SearchConditionCandidates.OfType<PropertySearchCondition>().ShouldNotBeEmpty();
+		context.Manager.SearchConditionCandidates.OfType<PropertySearchCondition>().ShouldNotBeEmpty();
+	}
+
+	private sealed class SearchConditionManagerTestContext(
+		SearchConditionManager manager,
+		FolderRepository folderRepository,
+		Subject<ISearchCondition> addSubject,
+		Subject<ISearchCondition> removeSubject,
+		Subject<Action<ObservableList<ISearchCondition>>> updateSubject,
+		Subject<Action<ObservableList<ISearchCondition>>> folderUpdateSubject) : IDisposable {
+		public SearchConditionManager Manager {
+			get;
+		} = manager;
+
+		public Subject<ISearchCondition> AddSubject {
+			get;
+		} = addSubject;
+
+		public Subject<ISearchCondition> RemoveSubject {
+			get;
+		} = removeSubject;
+
+		public Subject<Action<ObservableList<ISearchCondition>>> UpdateSubject {
+			get;
+		} = updateSubject;
+
+		private FolderRepository FolderRepository {
+			get;
+		} = folderRepository;
+
+		private Subject<Action<ObservableList<ISearchCondition>>> FolderUpdateSubject {
+			get;
+		} = folderUpdateSubject;
+
+		public void Dispose() {
+			this.Manager.Dispose();
+			this.FolderRepository.Dispose();
+			this.AddSubject.Dispose();
+			this.RemoveSubject.Dispose();
+			this.UpdateSubject.Dispose();
+			this.FolderUpdateSubject.Dispose();
+		}
 	}
 }

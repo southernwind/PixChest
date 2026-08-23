@@ -168,7 +168,7 @@ public partial class App {
 		Store.DIRegistration.AddGeneratedServices(serviceCollection);
 
 		// DataBase
-		var sb = new SqliteConnectionStringBuilder { DataSource = Path.Combine(FilePathConstants.BaseDirectory, "pix.db") };
+		var sb = new SqliteConnectionStringBuilder { DataSource = FilePathConstants.DatabaseFilePath };
 		serviceCollection.AddDbContextFactory<MediaDeckDbContext>(x => {
 			x.UseSqlite(sb.ConnectionString);
 		},
@@ -193,7 +193,7 @@ public partial class App {
 
 
 			splashViewModel?.UpdateStatus(stringProvider.GetString("Splash_InitializingDatabase"));
-			var dbPath = Path.Combine(FilePathConstants.BaseDirectory, "pix.db");
+			var dbPath = FilePathConstants.DatabaseFilePath;
 			if (!File.Exists(dbPath)) {
 				{
 					// 事前に0バイトファイルを作らないとEnsureCreatedAsyncで死ぬ

@@ -71,7 +71,7 @@ public abstract class BaseMediaItemOperator : IMediaItemOperator {
 	}
 
 	protected async Task<bool> GetIsUnderFolderGroup(MediaDeckDbContext dbContext, string directoryPath) {
-		return await dbContext.MediaItems.AnyAsync(x => directoryPath == x.FilePath && directoryPath.StartsWith(x.FilePath + Path.PathSeparator));
+		return await dbContext.MediaItems.AnyAsync(x => directoryPath == x.FilePath || directoryPath.StartsWith(x.FilePath + Path.DirectorySeparatorChar));
 	}
 
 	public abstract Task<MediaItem?> RegisterMediaItemAsync(string filePath);

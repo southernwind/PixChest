@@ -35,7 +35,60 @@
 - **PDF**: Windows.Data.Pdf を利用した高速な表示とサムネイル生成
 - **アーカイブ**: ZIP, 7z, RAR 等
 
-## 技術スタック
+## はじめかた
+
+### 必要要件
+- Windows 10 (1809) 以降
+
+### インストール
+
+以下のいずれかの方法でインストールできます。
+
+**Microsoft Store**
+
+[![Microsoft Store](https://img.shields.io/badge/Microsoft%20Store-からダウンロード-0078d4?logo=microsoft)](https://apps.microsoft.com/detail/9p4g7d3p2xm4)
+
+**GitHub Releases**
+
+[GitHub Releases](https://github.com/xm-i/MediaDeck/releases) から最新の zip ファイルをダウンロードして展開してください。
+
+## 設定
+
+初回起動時に設定ファイルが自動生成されます。アプリ内の設定画面から以下の調整が可能です。
+
+- **スキャン**: 対象リポジトリのパス、スキャン対象の拡張子管理。
+- **検索/読み込み**: バッチサイズや最大ロード件数の調整。
+- **実行プログラム**: 特定のメディアタイプを外部プログラム（VLC等）で開く設定。
+- **サムネイル**: 生成されるサムネイルのサイズ・品質設定。
+- **表示言語**: 日本語、英語の切り替え（システムの既定に従うことも可能）。
+
+### 起動引数
+
+指定形式（共通）:
+
+- `--<key> <value>`
+- `--<key>=<value>`
+- `/<key>:<value>`
+
+| 引数名 | 値 | 説明 |
+| --- | --- | --- |
+| `base` | `<path>` | 起動時に `BaseDirectory` を指定します。指定したディレクトリを基準に、状態ファイル・設定ファイル・サムネイルフォルダ・DBファイルの保存先が決まります。 |
+
+例:
+
+```powershell
+MediaDeck.exe --base C:\MediaDeckData
+```
+
+## ライセンス
+
+このプロジェクトは [MIT License](LICENSE) の下で公開されています。
+
+---
+
+## 開発者向け情報
+
+### 技術スタック
 
 - **フレームワーク**: .NET 10 / WinUI 3 (Windows App SDK)
 - **アーキテクチャ**: MVVM パターン
@@ -47,7 +100,7 @@
 - **設定管理**: GenJsonConfig
 - **DI・コード生成**: AutoDiAttributes
 
-## プロジェクト構成
+### プロジェクト構成
 
 ```
 MediaDeck/
@@ -62,13 +115,8 @@ MediaDeck/
 └── lib/                        # 外部ライブラリ・サブモジュール
 ```
 
-## はじめかた
+### ビルド
 
-### 必要要件
-- Windows 10 (1809) 以降
-- .NET 10 ランタイム
-
-### インストール・ビルド
 ```powershell
 # リポジトリのクローン
 git clone --recursive https://github.com/xm-i/MediaDeck.git
@@ -76,18 +124,3 @@ git clone --recursive https://github.com/xm-i/MediaDeck.git
 # ソリューションのビルド
 dotnet build -r win-x64
 ```
-
-## 設定
-
-初回起動時に設定ファイルが自動生成されます。アプリ内の設定画面から以下の調整が可能です。
-
-- **スキャン**: 対象リポジトリのパス、スキャン対象の拡張子管理。
-- **検索/読み込み**: バッチサイズや最大ロード件数の調整。
-- **実行プログラム**: 特定のメディアタイプを外部プログラム（VLC等）で開く設定。
-- **サムネイル**: 生成されるサムネイルのサイズ・品質設定。
-- **表示言語**: 日本語、英語の切り替え（システムの既定に従うことも可能）。
-
-## ライセンス
-
-このプロジェクトは [MIT License](LICENSE) の下で公開されています。
-

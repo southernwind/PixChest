@@ -96,6 +96,15 @@
   <data name="Common_Delete_ToolTip.ToolTipService.ToolTip" xml:space="preserve">
     <value>削除</value>
   </data>
+  <data name="DialogButton_Yes" xml:space="preserve">
+    <value>はい</value>
+  </data>
+  <data name="DialogButton_No" xml:space="preserve">
+    <value>いいえ</value>
+  </data>
+  <data name="DialogButton_Cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
 
   <!-- ナビゲーションメニュー -->
   <data name="NavMenu_View.Title" xml:space="preserve">
@@ -942,6 +951,22 @@
     <value>再生時間</value>
   </data>
 
+  <data name="FileChangeFilter_All" xml:space="preserve">
+    <value>すべて</value>
+  </data>
+  <data name="FileChangeFilter_Moved" xml:space="preserve">
+    <value>移動</value>
+  </data>
+  <data name="FileChangeFilter_Deleted" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="FileChangeFilter_Renamed" xml:space="preserve">
+    <value>変更</value>
+  </data>
+  <data name="FileChangeFilter_Added" xml:space="preserve">
+    <value>追加</value>
+  </data>
+
   <!-- FilterCreator -->
   <data name="FilterCreator_Exists_Title" xml:space="preserve">
     <value>存在フィルター</value>
@@ -1122,5 +1147,140 @@
   </data>
   <data name="TagCategory_Unassigned_Detail" xml:space="preserve">
     <value>カテゴリーが設定されていないタグ</value>
+  </data>
+  <data name="NewTagDialog.Title" xml:space="preserve">
+    <value>新しいタグの作成</value>
+  </data>
+  <data name="NewTagDialog.PrimaryButtonText" xml:space="preserve">
+    <value>作成</value>
+  </data>
+  <data name="NewTagDialog.CloseButtonText" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="NewTagDialog_TagNameLabel.Text" xml:space="preserve">
+    <value>タグ名</value>
+  </data>
+  <data name="NewTagDialog_TagNameInput.PlaceholderText" xml:space="preserve">
+    <value>タグ名を入力</value>
+  </data>
+  <data name="NewTagDialog_RubyLabel.Text" xml:space="preserve">
+    <value>読み</value>
+  </data>
+  <data name="NewTagDialog_RubyInput.PlaceholderText" xml:space="preserve">
+    <value>読みを入力</value>
+  </data>
+  <data name="NewTagDialog_CategoryLabel.Text" xml:space="preserve">
+    <value>カテゴリ</value>
+  </data>
+  <data name="NewTagDialog_DescriptionLabel.Text" xml:space="preserve">
+    <value>説明（任意）</value>
+  </data>
+  <data name="NewTagDialog_DescriptionInput.PlaceholderText" xml:space="preserve">
+    <value>説明を入力</value>
+  </data>
+  <data name="BulkThumbnailRegenerationWindow.Title" xml:space="preserve">
+    <value>サムネイル一括再生成</value>
+  </data>
+  <data name="BulkThumbnailRegeneration_TargetFiles.Text" xml:space="preserve">
+    <value>対象ファイル</value>
+  </data>
+  <data name="BulkThumbnailRegeneration_MediaTypePrefix.Text" xml:space="preserve">
+    <value>メディアタイプ: </value>
+  </data>
+  <data name="BulkThumbnailRegeneration_CountPrefix.Text" xml:space="preserve">
+    <value>件数: </value>
+  </data>
+  <data name="BulkThumbnailRegeneration_Execute.Text" xml:space="preserve">
+    <value>実行</value>
+  </data>
+  <data name="BulkThumbnailRegeneration_Cancel.Text" xml:space="preserve">
+    <value>中断</value>
+  </data>
+  <data name="BackgroundTask_UpdateFileStatus" xml:space="preserve">
+    <value>ファイル状態を更新</value>
+  </data>
+  <data name="BackgroundTask_UpdateFileHash" xml:space="preserve">
+    <value>ファイルハッシュを更新</value>
+  </data>
+  <data name="BackgroundTask_UpdateFullHash" xml:space="preserve">
+    <value>フルハッシュを更新</value>
+  </data>
+  <data name="BackgroundTask_UpdateMetadata" xml:space="preserve">
+    <value>メタデータを更新</value>
+  </data>
+
+  <!-- FileChangeSyncWindow -->
+  <data name="FileChangeSync_Title" xml:space="preserve">
+    <value>ファイルの同期確認</value>
+  </data>
+  <data name="FileChangeSync_Header.Text" xml:space="preserve">
+    <value>未処理のファイル変更</value>
+  </data>
+  <data name="FileChangeSync_Description.Text" xml:space="preserve">
+    <value>外部でのファイル移動や削除が検出されました。</value>
+  </data>
+  <data name="FileChangeSync_ShowingPrefix.Text" xml:space="preserve">
+    <value>表示中:</value>
+  </data>
+  <data name="FileChangeSync_ShowingSuffix.Text" xml:space="preserve">
+    <value>件</value>
+  </data>
+  <data name="FileChangeSync_FilterRadioButtons.Header" xml:space="preserve">
+    <value>表示フィルター</value>
+  </data>
+  <data name="FileChangeSync_OldPathLabel.Text" xml:space="preserve">
+    <value>変更前：</value>
+  </data>
+  <data name="FileChangeSync_NewPathLabel.Text" xml:space="preserve">
+    <value>変更後：</value>
+  </data>
+  <data name="FileChangeSync_ApplyItemButton.Content" xml:space="preserve">
+    <value>反映</value>
+  </data>
+  <data name="FileChangeSync_DiscardItemButton.Content" xml:space="preserve">
+    <value>無視</value>
+  </data>
+  <data name="FileChangeSync_ApplyAllButton.Content" xml:space="preserve">
+    <value>表示中をすべて反映</value>
+  </data>
+  <data name="FileChangeSync_DiscardAllButton.Content" xml:space="preserve">
+    <value>表示中をすべて無視</value>
+  </data>
+
+  <!-- FileChangeType -->
+  <data name="FileChangeType_Deleted" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="FileChangeType_Renamed" xml:space="preserve">
+    <value>変更</value>
+  </data>
+  <data name="FileChangeType_Moved" xml:space="preserve">
+    <value>移動</value>
+  </data>
+  <data name="FileChangeType_Added" xml:space="preserve">
+    <value>追加</value>
+  </data>
+  <data name="FileChangeType_Unknown" xml:space="preserve">
+    <value>不明</value>
+  </data>
+
+  <!-- Viewer Context Menu & Dialogs -->
+  <data name="Viewer_ContextRemoveFileSingle" xml:space="preserve">
+    <value>ファイルをMediaDeckデータベースから削除しますか？</value>
+  </data>
+  <data name="Viewer_ContextRemoveFileMultiple" xml:space="preserve">
+    <value>{0}件のファイルをMediaDeckデータベースから削除しますか？</value>
+  </data>
+  <data name="Viewer_ContextOpenWithExternal" xml:space="preserve">
+    <value>外部プログラムで開く</value>
+  </data>
+  <data name="Viewer_ContextOpenWithFormat" xml:space="preserve">
+    <value>{0}で開く</value>
+  </data>
+  <data name="Viewer_ContextDefaultSuffix" xml:space="preserve">
+    <value> (既定)</value>
+  </data>
+  <data name="Viewer_ContextCreateNewAlbum" xml:space="preserve">
+    <value>アルバムを新規作成</value>
   </data>
 </root>

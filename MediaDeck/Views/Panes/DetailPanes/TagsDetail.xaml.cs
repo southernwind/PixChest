@@ -25,9 +25,9 @@ public sealed partial class TagsDetail {
 		base.OnViewModelChanged(oldViewModel, newViewModel);
 
 		this._newTagRequestedSubscription?.Dispose();
-		this._newTagRequestedSubscription = newViewModel?.NewTagRequested.Subscribe(async context => {
+		this._newTagRequestedSubscription = newViewModel?.NewTagRequested.SubscribeAwait(async (context, ct) => {
 			await this.ShowNewTagDialogAsync(context);
-		});
+		}, AwaitOperation.Drop);
 
 		this._openTagManagerRequestedSubscription?.Dispose();
 		this._openTagManagerRequestedSubscription = newViewModel?.OpenTagManagerRequested.Subscribe(tag => {

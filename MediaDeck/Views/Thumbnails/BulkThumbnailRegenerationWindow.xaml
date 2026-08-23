@@ -7,7 +7,7 @@
 	xmlns:local="using:MediaDeck.Views.Thumbnails"
 	xmlns:vm="using:MediaDeck.ViewModels.Thumbnails"
 	mc:Ignorable="d"
-	Title="サムネイル一括再生成" >
+	x:Uid="BulkThumbnailRegenerationWindow" >
 	<Window.SystemBackdrop>
 		<DesktopAcrylicBackdrop/>
 	</Window.SystemBackdrop>
@@ -46,13 +46,13 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 			<StackPanel Grid.Row="0" Spacing="4" >
-				<TextBlock FontWeight="SemiBold" Text="対象ファイル" />
+				<TextBlock FontWeight="SemiBold" x:Uid="BulkThumbnailRegeneration_TargetFiles" />
 				<TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" >
-					<Run Text="メディアタイプ: " />
+					<Run x:Uid="BulkThumbnailRegeneration_MediaTypePrefix" />
 					<Run Text="{x:Bind ViewModel.TargetMediaType.Value, Mode=OneWay}" />
 				</TextBlock>
 				<TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" >
-					<Run Text="件数: " />
+					<Run x:Uid="BulkThumbnailRegeneration_CountPrefix" />
 					<Run Text="{x:Bind ViewModel.TotalCount.Value, Mode=OneWay}" />
 				</TextBlock>
 			</StackPanel>
@@ -108,11 +108,11 @@
 			</StackPanel>
 			<Button Grid.Column="1" Margin="8,0,0,0"
 				Command="{x:Bind ViewModel.ExecuteCommand}" >
-				<TextBlock Text="実行" />
+				<TextBlock x:Uid="BulkThumbnailRegeneration_Execute" />
 			</Button>
 			<Button Grid.Column="2" Margin="8,0,0,0"
 				Command="{x:Bind ViewModel.CancelCommand}" >
-				<TextBlock Text="中断" />
+				<TextBlock x:Uid="BulkThumbnailRegeneration_Cancel" />
 			</Button>
 		</Grid>
 	</Grid>

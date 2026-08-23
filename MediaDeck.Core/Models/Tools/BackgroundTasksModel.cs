@@ -1,4 +1,5 @@
 using MediaDeck.Common.Base;
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Core.Services.FileStatusUpdator;
 using MediaDeck.Core.Services.MediaItemMetadataUpdator;
 
@@ -12,6 +13,7 @@ public class BackgroundTasksModel : ModelBase {
 	private readonly FileStatusUpdatorService _fileStatusUpdater;
 	private readonly IFileHashUpdatorService _updateFileHashBackgroundService;
 	private readonly MediaItemMetadataUpdatorService _metadataUpdator;
+	private readonly IStringProvider _stringProvider;
 	private CancellationTokenSource _fileStatusUpdaterCts = new();
 	private CancellationTokenSource _metadataUpdatorCts = new();
 
@@ -34,14 +36,15 @@ public class BackgroundTasksModel : ModelBase {
 	/// </summary>
 	/// <param name="fileStatusUpdater">ファイル状態更新サービス</param>
 	/// <param name="updateFileHashBackgroundService">ファイルハッシュ更新サービス</param>
-	public BackgroundTasksModel(FileStatusUpdatorService fileStatusUpdater, IFileHashUpdatorService updateFileHashBackgroundService, MediaItemMetadataUpdatorService metadataUpdator) {
+	public BackgroundTasksModel(FileStatusUpdatorService fileStatusUpdater, IFileHashUpdatorService updateFileHashBackgroundService, MediaItemMetadataUpdatorService metadataUpdator, IStringProvider stringProvider) {
 		this._fileStatusUpdater = fileStatusUpdater;
 		this._updateFileHashBackgroundService = updateFileHashBackgroundService;
 		this._metadataUpdator = metadataUpdator;
+		this._stringProvider = stringProvider;
 
 		this.TaskItems = [
 			new BackgroundTaskStatusItemModel(
-				"Update file status",
+				this._stringProvider.GetString("BackgroundTask_UpdateFileStatus"),
 				this._fileStatusUpdater.CompletedCount,
 				this._fileStatusUpdater.TargetCount,
 				() => {
@@ -56,19 +59,19 @@ public class BackgroundTasksModel : ModelBase {
 					this._fileStatusUpdater.CompletedCount.Value = 0;
 				}),
 			new BackgroundTaskStatusItemModel(
-				"Update file hash",
+				this._stringProvider.GetString("BackgroundTask_UpdateFileHash"),
 				this._updateFileHashBackgroundService.CompletedCount,
 				this._updateFileHashBackgroundService.TargetCount,
 				() => this.Actions.OnNext(() => this._updateFileHashBackgroundService.EnqueueAllHashUpdatesAsync()),
 				() => this._updateFileHashBackgroundService.CancelUpdate()),
 			new BackgroundTaskStatusItemModel(
-				"Update full hash",
+				this._stringProvider.GetString("BackgroundTask_UpdateFullHash"),
 				this._updateFileHashBackgroundService.FullHashCompletedCount,
 				this._updateFileHashBackgroundService.FullHashTargetCount,
 				() => this.Actions.OnNext(() => this._updateFileHashBackgroundService.CheckAndEnqueueFullHashUpdatesAsync()),
 				() => this._updateFileHashBackgroundService.CancelFullHashUpdate()),
 			new BackgroundTaskStatusItemModel(
-				"Update metadata",
+				this._stringProvider.GetString("BackgroundTask_UpdateMetadata"),
 				this._metadataUpdator.CompletedCount,
 				this._metadataUpdator.TargetCount,
 				() => {

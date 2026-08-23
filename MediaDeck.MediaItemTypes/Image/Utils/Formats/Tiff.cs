@@ -15,6 +15,6 @@ public class Tiff : ImageBase {
 	public Tiff(Stream stream) : base(stream) { }
 
 	public override MediaMetadata CreateMetadata() {
-		return null;
+		return new MediaMetadata();
 	}
 }

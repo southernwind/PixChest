@@ -26,6 +26,6 @@ public class Pcx : ImageBase {
 	}
 
 	public override MediaMetadata CreateMetadata() {
-		return null;
+		return new MediaMetadata();
 	}
 }

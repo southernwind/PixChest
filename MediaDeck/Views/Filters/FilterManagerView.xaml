@@ -162,7 +162,7 @@
 											<ColumnDefinition Width="Auto" />
 										</Grid.ColumnDefinitions>
 										<TextBlock Grid.Column="0"
-											Text="{x:Bind Mode=OneWay, Converter={StaticResource FilterItemToDisplayNameConverter}}"
+											Text="{x:Bind Mode=OneTime, Converter={StaticResource FilterItemToDisplayNameConverter}}"
 											VerticalAlignment="Center" />
 										<Button Grid.Column="1"
 											Command="{Binding DataContext.CurrentCondition.Value.RemoveFilterCommand, Mode=OneWay, ElementName=ControlRoot}"

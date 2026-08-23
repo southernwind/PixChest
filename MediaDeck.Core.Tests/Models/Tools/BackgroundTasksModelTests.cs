@@ -1,10 +1,9 @@
+using MediaDeck.Composition.Interfaces;
 using MediaDeck.Composition.Interfaces.Services;
 using MediaDeck.Core.Models.Tools;
 using MediaDeck.Core.Services.FileStatusUpdator;
 using MediaDeck.Core.Services.MediaItemMetadataUpdator;
-
 using Moq;
-
 using Shouldly;
 
 namespace MediaDeck.Core.Tests.Models.Tools;
@@ -22,11 +21,16 @@ public class BackgroundTasksModelTests {
 
 		var mediaItemTypeService = new Mock<MediaDeck.Composition.Interfaces.MediaItemTypes.IMediaItemTypeService>();
 		var dbWriteCoord = new Mock<IDatabaseWriteCoordinator>();
+		var stringProvider = new Mock<IStringProvider>();
+		stringProvider.Setup(x => x.GetString("BackgroundTask_UpdateFileStatus")).Returns("Update file status");
+		stringProvider.Setup(x => x.GetString("BackgroundTask_UpdateFileHash")).Returns("Update file hash");
+		stringProvider.Setup(x => x.GetString("BackgroundTask_UpdateFullHash")).Returns("Update full hash");
+		stringProvider.Setup(x => x.GetString("BackgroundTask_UpdateMetadata")).Returns("Update metadata");
 
 		var fileStatusUpdator = new FileStatusUpdatorService(dbFactory.Object, hashService.Object, mediaItemTypeService.Object, dbWriteCoord.Object);
 		var metadataUpdator = new MediaItemMetadataUpdatorService(dbFactory.Object, mediaItemTypeService.Object);
 
-		this._sut = new BackgroundTasksModel(fileStatusUpdator, hashService.Object, metadataUpdator);
+		this._sut = new BackgroundTasksModel(fileStatusUpdator, hashService.Object, metadataUpdator, stringProvider.Object);
 	}
 
 	[Fact]

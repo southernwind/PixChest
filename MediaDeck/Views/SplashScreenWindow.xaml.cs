@@ -23,6 +23,9 @@ public sealed partial class SplashScreenWindow : Window {
 		// テーマを適用
 		ThemeHelper.BindTheme(this, configStore, this.ViewModel.CompositeDisposable);
 
+		// ウィンドウタイトルを設定
+		this.Title = "MediaDeck";
+
 		// タイトルバーを非表示にし、コンテンツを拡張する
 		this.ExtendsContentIntoTitleBar = true;
 		this.SetTitleBar(null);

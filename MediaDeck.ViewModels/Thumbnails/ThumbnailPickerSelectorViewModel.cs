@@ -7,7 +7,7 @@ namespace MediaDeck.ViewModels.Thumbnails;
 [Inject(InjectServiceLifetime.Transient)]
 public class ThumbnailPickerSelectorViewModel : ViewModelBase {
 	public ThumbnailPickerSelectorViewModel(IMediaItemTypeService MediaItemTypeService) {
-		this.FileViewModel.Subscribe(async x => {
+		this.FileViewModel.SubscribeAwait(async (x, ct) => {
 			if (x == null) {
 				this.ThumbnailPickerViewModel.Value = null;
 				return;
@@ -15,7 +15,7 @@ public class ThumbnailPickerSelectorViewModel : ViewModelBase {
 			var thumbnailPickerViewModel = MediaItemTypeService.CreateThumbnailPickerViewModel(x);
 			await thumbnailPickerViewModel.LoadAsync(x);
 			this.ThumbnailPickerViewModel.Value = thumbnailPickerViewModel;
-		}).AddTo(this.CompositeDisposable);
+		}, AwaitOperation.Switch).AddTo(this.CompositeDisposable);
 	}
 
 

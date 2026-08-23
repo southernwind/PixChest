@@ -12,7 +12,7 @@ public class PathConfigModel {
 
 	public ReactiveProperty<string> ThumbnailFolderPath {
 		get;
-	} = new(Path.Combine(FilePathConstants.BaseDirectory, "thumbs"));
+	} = new(FilePathConstants.ThumbnailDirectoryPath);
 
 	/// <summary>
 	/// 一時フォルダパス

@@ -1,31 +1,31 @@
-using System.Threading.Tasks;
+using System.IO;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media.Imaging;
-using Windows.Storage.Streams;
 
 namespace MediaDeck.Views.Resources.Converters;
 
+/// <summary>
+/// バイナリ形式の画像データを <see cref="BitmapImage"/> に変換します。
+/// </summary>
 public class BinaryToImageSourceConverter : IValueConverter {
+	/// <summary>
+	/// バイナリ形式の画像データから <see cref="BitmapImage"/> を生成します。
+	/// </summary>
 	public object? Convert(object value, Type targetType, object parameter, string language) {
 		if (value is not byte[] binary) {
 			return null;
 		}
-		var bi = new BitmapImage();
-		using var stream = new InMemoryRandomAccessStream();
-		using var writer = new DataWriter(stream);
-		writer.WriteBytes(binary);
-		Task.Run(async () => {
-			await writer.StoreAsync();
-			await writer.FlushAsync();
-		})
-			.Wait();
-		using var detachedStream = writer.DetachStream();
-		stream.Seek(0);
 
-		bi.SetSource(stream);
-		return bi;
+		var image = new BitmapImage();
+		using var stream = new MemoryStream(binary);
+		using var randomAccessStream = stream.AsRandomAccessStream();
+		image.SetSource(randomAccessStream);
+		return image;
 	}
 
+	/// <summary>
+	/// 逆変換はサポートしていません。
+	/// </summary>
 	public object ConvertBack(object value, Type targetType, object parameter, string language) {
 		throw new NotImplementedException();
 	}

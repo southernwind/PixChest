@@ -10,7 +10,13 @@ namespace MediaDeck.Core.Models.Files;
 
 [Inject(InjectServiceLifetime.Scoped)]
 public class SearchConditionManager : ModelBase {
+	private readonly ITagsManager _tagsManager;
+	private readonly FolderRepository _folderRepository;
+
 	public SearchConditionManager(ISearchConditionNotificationDispatcher dispatcher, ITagsManager tagsManager, FolderRepository folderRepository, TabStateModel tabState) {
+		this._tagsManager = tagsManager;
+		this._folderRepository = folderRepository;
+
 		// 検索ワード（トークン）の追加・削除・更新を SearchConditions リストに反映する
 		dispatcher.AddRequest.Subscribe(this.SearchConditions.Add).AddTo(this.CompositeDisposable);
 		dispatcher.RemoveRequest.Subscribe(x => this.SearchConditions.Remove(x)).AddTo(this.CompositeDisposable);
@@ -27,13 +33,21 @@ public class SearchConditionManager : ModelBase {
 			})
 			.AddTo(this.CompositeDisposable);
 
-		// 候補リストを初期化する
-		this.SearchConditionCandidates.AddRange(tagsManager.Tags.Select(x => new TagSearchCondition(tagsManager) { TagId = x.TagId } as ISearchCondition));
-		this.SearchConditionCandidates.AddRange(folderRepository.GetAllFolders().Select(x => new FolderSearchCondition { FolderPath = x.FolderPath } as ISearchCondition));
+		// タグおよびフォルダの変更を監視して、サジェスト候補をリアクティブに更新する
+		this._tagsManager.Tags.ObserveChanged()
+			.Subscribe(_ => {
+				this.UpdateCandidates();
+			})
+			.AddTo(this.CompositeDisposable);
 
-		// MediaItem の各プロパティに対する prop. サジェストスタブを登録する
-		this.SearchConditionCandidates.AddRange(
-			MediaItemPropertyCatalog.Descriptors.Select(d => new PropertySearchCondition { PropertyName = d.Name } as ISearchCondition));
+		this._folderRepository.RootFolder
+			.Subscribe(_ => {
+				this.UpdateCandidates();
+			})
+			.AddTo(this.CompositeDisposable);
+
+		// 候補リストを初期化する
+		this.UpdateCandidates();
 	}
 
 	/// <summary>現在の検索ワード（トークン）条件リスト</summary>
@@ -41,4 +55,23 @@ public class SearchConditionManager : ModelBase {
 
 	/// <summary>検索条件候補リスト（サジェスト用）</summary>
 	public ObservableList<ISearchCondition> SearchConditionCandidates { get; } = [];
+
+	/// <summary>
+	/// 検索条件の候補リストを最新の状態に更新します。
+	/// </summary>
+	private void UpdateCandidates() {
+		this.SearchConditionCandidates.Clear();
+
+		// タグ候補の追加
+		this.SearchConditionCandidates.AddRange(
+			this._tagsManager.Tags.Select(x => new TagSearchCondition(this._tagsManager) { TagId = x.TagId } as ISearchCondition));
+
+		// フォルダ候補の追加
+		this.SearchConditionCandidates.AddRange(
+			this._folderRepository.GetAllFolders().Select(x => new FolderSearchCondition { FolderPath = x.FolderPath } as ISearchCondition));
+
+		// MediaItem の各プロパティに対する prop. サジェストスタブを登録する
+		this.SearchConditionCandidates.AddRange(
+			MediaItemPropertyCatalog.Descriptors.Select(d => new PropertySearchCondition { PropertyName = d.Name } as ISearchCondition));
+	}
 }
